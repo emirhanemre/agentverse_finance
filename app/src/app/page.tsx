@@ -1,3 +1,5 @@
+import Onboarding from "../components/onboarding/Onboarding";
+
 export default function Page() {
-  return <main className="p-10 text-fg-2">Pub Hedge</main>;
+  return <Onboarding />;
 }
