@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -105,9 +105,16 @@ export function ImpactStep({ onNext, onBack }: Nav) {
   const share = maxLoss / AVG_MONTHLY_MARGIN;
   const worstActual = Math.min(...CASHFLOW.map((w) => w.actual));
   const worstHedged = Math.min(...CASHFLOW.map((w) => w.hedged));
+  const saved = useCountUp(BACKTEST.netBenefit, 1200);
 
   return (
     <div>
+      <div className="mb-6 text-center">
+        <p className="text-[36px] font-medium leading-[1.15] tracking-[-0.02em] text-fg">
+          You could have saved <span className="font-mono text-positive">{gbp(saved)}</span> over the last year
+        </p>
+        <p className="mt-2 text-[13px] text-fg-2">After paying for cover. Worked out from your own till data, week by week.</p>
+      </div>
       <div className="grid grid-cols-[1fr_240px] gap-4">
         <Panel
           title="Last year, week by week"
@@ -118,7 +125,7 @@ export function ImpactStep({ onNext, onBack }: Nav) {
             </div>
           }
         >
-          <div className="h-[300px]">
+          <div className="h-[232px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={CASHFLOW} margin={{ top: 8, right: 56, left: 0, bottom: 0 }}>
                 <CartesianGrid vertical={false} />
@@ -127,8 +134,9 @@ export function ImpactStep({ onNext, onBack }: Nav) {
                   tickLine={false}
                   axisLine={false}
                   width={64}
-                  domain={[-1500, 2000]}
-                  ticks={[-1500, -1000, -500, 0, 500, 1000, 1500, 2000]}
+                  domain={[-1200, 1800]}
+                  ticks={[-1000, 0, 1000]}
+                  interval={0}
                   tickFormatter={(v) => gbp(v)}
                 />
                 <ReferenceLine
@@ -144,7 +152,7 @@ export function ImpactStep({ onNext, onBack }: Nav) {
                   formatter={((v: number, name: string) => [gbp(v), name === "actual" ? "Without" : "With Pub Hedge"]) as never}
                 />
                 <Line type="monotone" dataKey="actual" stroke="var(--fg-3)" strokeWidth={1.5} dot={false} animationDuration={900} />
-                <Line type="monotone" dataKey="hedged" stroke="var(--accent)" strokeWidth={2} dot={false} animationDuration={900} animationBegin={500} />
+                <Line type="monotone" dataKey="hedged" stroke="var(--accent)" strokeWidth={2} dot={false} animationDuration={900} animationBegin={300} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -152,7 +160,14 @@ export function ImpactStep({ onNext, onBack }: Nav) {
 
         <div className="flex flex-col gap-4">
           <Panel className="flex-1">
-            <Metric label="Net benefit, after costs" value={gbp(BACKTEST.netBenefit, { sign: true })} sub="a year" tone="positive" size="lg" />
+            <Metric
+              label="Cover paid vs paid out"
+              value={
+                <span className="text-[18px]">
+                  {gbp(BACKTEST.spend)} <span className="text-fg-3">→</span> <span className="text-positive">{gbp(BACKTEST.payouts)}</span>
+                </span>
+              }
+            />
           </Panel>
           <Panel className="flex-1">
             <Metric
@@ -205,6 +220,22 @@ export function ImpactStep({ onNext, onBack }: Nav) {
       <StepFooter onBack={onBack} onNext={onNext} nextLabel="See recommendations" />
     </div>
   );
+}
+
+function useCountUp(target: number, ms: number) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    const start = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / ms);
+      setValue(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, ms]);
+  return value;
 }
 
 function Legend({ color, label }: { color: string; label: string }) {
