@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000. It opens in the light theme; the moon icon in the header switches to dark.
 
 ## Flow
 
