@@ -1,0 +1,64 @@
+{
+  "dataset_name": "uk_pub_daily_dataset",
+  "business_id": "uk_pub_london_se1_01",
+  "fictional_business_description": "Independent UK pub in London SE1 with 90 indoor seats and 60-70 outdoor beer garden seats.",
+  "random_seed": 20261107,
+  "row_count": 1461,
+  "date_range": {
+    "start": "2022-01-01",
+    "end": "2025-12-31"
+  },
+  "dataset_sha256": "5d05ae9a2d9a4eaf4b676eca0a90d573dbd0e31bc4bd95c3274edf7216a9e8ab",
+  "provenance": {
+    "weather_data": {
+      "source_name": "Open-Meteo Historical Weather API (ERA5 / ECMWF reanalysis)",
+      "endpoint": "https://archive-api.open-meteo.com/v1/archive",
+      "retrieved_at": "2026-11-07T19:10:38+00:00",
+      "location": "London, United Kingdom",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "timezone": "Europe/London",
+      "start_date": "2022-01-01",
+      "end_date": "2025-12-31",
+      "row_count": 1461,
+      "licence": "CC BY 4.0 (Open-Meteo.com)",
+      "is_synthetic": false,
+      "units": {
+        "temp_max_c": "degrees Celsius",
+        "temp_min_c": "degrees Celsius",
+        "temp_mean_c": "degrees Celsius",
+        "precipitation_mm": "millimetres",
+        "rain_mm": "millimetres",
+        "wind_max_kmh": "kilometres per hour",
+        "sunshine_hours": "hours"
+      }
+    },
+    "revenue_and_operations": {
+      "is_synthetic": true,
+      "generator_module": "src/business_data.py",
+      "seed": 20261107,
+      "disclosure": "Daily revenue (GBP), seating capacities, opening hours, and event flags are synthetically generated. Success on this dataset validates the engineering and statistical pipeline under stated synthetic assumptions and does NOT imply predictive accuracy for real pubs."
+    }
+  },
+  "assumptions_and_mechanics": [
+    "Weekday base demand peaks on Friday and Saturday and is lowest on Monday and Tuesday.",
+    "Outdoor beer garden revenue scales non-linearly with maximum temperature (above ~13C) and sunshine hours, and drops exponentially with daily rainfall (rain_mm) and high wind.",
+    "Heavy rainfall also reduces casual walk-in indoor trade, creating a compound adverse weather exposure on wet spring/summer weekends.",
+    "Outdoor capacity expanded from 60 to 70 seats in April 2023 and is reduced by 40% during winter months (Nov-Feb).",
+    "Includes a ~3.5% annual inflation/footfall drift, AR(1) autocorrelated demand noise (rho=0.32, sigma=175 GBP), and ~2.4% unlabelled exceptional days (private hires or operational disruptions) so the target cannot be trivially reproduced.",
+    "Lagged features (lag_7d_revenue_gbp and rolling_14d_mean_revenue_gbp) use strictly past values (t-7 and t-1..t-14) to prevent temporal leakage."
+  ],
+  "units": {
+    "daily_revenue_gbp": "GBP (pounds sterling)",
+    "temp_max_c": "degrees Celsius",
+    "temp_min_c": "degrees Celsius",
+    "temp_mean_c": "degrees Celsius",
+    "precipitation_mm": "millimetres",
+    "rain_mm": "millimetres",
+    "wind_max_kmh": "kilometres per hour",
+    "sunshine_hours": "hours",
+    "opening_hours": "hours per day",
+    "indoor_capacity": "seats",
+    "outdoor_capacity": "seats"
+  }
+}

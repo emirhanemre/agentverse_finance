@@ -1,0 +1,23 @@
+{
+  "source_name": "Open-Meteo Historical Weather API (ERA5 / ECMWF reanalysis)",
+  "endpoint": "https://archive-api.open-meteo.com/v1/archive",
+  "retrieved_at": "2026-11-07T19:10:38+00:00",
+  "location": "London, United Kingdom",
+  "latitude": 51.5074,
+  "longitude": -0.1278,
+  "timezone": "Europe/London",
+  "start_date": "2022-01-01",
+  "end_date": "2025-12-31",
+  "row_count": 1461,
+  "licence": "CC BY 4.0 (Open-Meteo.com)",
+  "is_synthetic": false,
+  "units": {
+    "temp_max_c": "degrees Celsius",
+    "temp_min_c": "degrees Celsius",
+    "temp_mean_c": "degrees Celsius",
+    "precipitation_mm": "millimetres",
+    "rain_mm": "millimetres",
+    "wind_max_kmh": "kilometres per hour",
+    "sunshine_hours": "hours"
+  }
+}
