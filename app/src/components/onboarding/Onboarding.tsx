@@ -49,47 +49,24 @@ export default function Onboarding() {
   ][step];
 
   return (
-    <div className="flex h-screen">
-      <aside className="flex w-[264px] shrink-0 flex-col border-r border-line bg-surface">
-        <div className="flex h-12 items-center border-b border-line px-5">
+    <div className="flex h-screen flex-col">
+      <header className="flex h-12 shrink-0 items-center justify-between border-b border-line px-6">
+        <div className="flex items-center gap-3">
           <Logo />
+          <span className="h-4 w-px bg-line-strong" />
+          <span className="text-[13px] text-fg-2">Set up {form.pubName.trim() || "your pub"}</span>
         </div>
-        <div className="px-5 pb-2 pt-6 text-[12px] text-fg-2">Set up {form.pubName.trim() || "your pub"}</div>
-        <ol className="px-2">
-          {STEPS.map((s, i) => {
-            const done = i < reached || (i === 6 && placed);
-            const active = i === step;
-            const reachable = i <= reached && !placed;
-            return (
-              <li key={s.title}>
-                <button
-                  onClick={() => reachable && setStep(i)}
-                  disabled={!reachable}
-                  className={cx(
-                    "flex h-9 w-full items-center gap-3 rounded px-3 text-left text-[13px] transition-colors",
-                    active ? "bg-surface-3 text-fg" : "text-fg-2",
-                    reachable && !active && "hover:bg-surface-2 hover:text-fg",
-                    !reachable && !active && "cursor-default text-fg-3"
-                  )}
-                >
-                  <StepDot index={i} done={done && !active} active={active} />
-                  {s.title}
-                </button>
-              </li>
-            );
-          })}
-        </ol>
-        <div className="mt-auto border-t border-line px-5 py-4 text-[12px] leading-5 text-fg-3">
-          <div className="flex items-center gap-2 text-fg-2">
-            <Icon name="lock" size={14} />
-            Read-only access to your data
-          </div>
-          <div className="mt-1">Signed in as {form.email}</div>
+        <div className="flex items-center gap-4 text-[12px] text-fg-3">
+          <span className="flex items-center gap-1.5 text-fg-2">
+            <Icon name="lock" size={13} />
+            Read-only access
+          </span>
+          <span>{form.email}</span>
         </div>
-      </aside>
+      </header>
 
-      <main className="flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-[920px] px-10 py-10">
+      <main className="min-h-0 flex-1 overflow-y-auto">
+        <div className="mx-auto max-w-[920px] px-10 pb-10 pt-12">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -98,35 +75,58 @@ export default function Onboarding() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
             >
-              <header className="mb-6">
-                <h1 className="text-[22px] font-medium tracking-[-0.01em]">{STEPS[step].title}</h1>
-                <p className="mt-1 max-w-[640px] text-fg-2">{STEPS[step].description}</p>
-              </header>
+              <div className="mb-7 text-center">
+                <h1 className="text-[24px] font-medium tracking-[-0.01em]">{STEPS[step].title}</h1>
+                <p className="mx-auto mt-1.5 max-w-[600px] text-fg-2">{STEPS[step].description}</p>
+              </div>
               {body}
             </motion.div>
           </AnimatePresence>
         </div>
       </main>
-    </div>
-  );
-}
 
-function StepDot({ index, done, active }: { index: number; done: boolean; active: boolean }) {
-  if (done)
-    return (
-      <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-positive-wash text-positive">
-        <Icon name="check" size={12} />
-      </span>
-    );
-  return (
-    <span
-      className={cx(
-        "flex h-[18px] w-[18px] items-center justify-center rounded-full border font-mono text-[10.5px]",
-        active ? "border-accent text-accent" : "border-line-strong text-fg-3"
-      )}
-    >
-      {index + 1}
-    </span>
+      <nav aria-label="Setup progress" className="shrink-0 border-t border-line bg-surface">
+        <ol className="mx-auto flex h-16 max-w-[1120px] items-center gap-2 px-8">
+          {STEPS.map((s, i) => {
+            const done = i < reached || (i === 6 && placed);
+            const active = i === step;
+            const reachable = i <= reached && !placed;
+            return (
+              <li key={s.title} className="flex-1">
+                <button
+                  onClick={() => reachable && setStep(i)}
+                  disabled={!reachable}
+                  aria-current={active ? "step" : undefined}
+                  className={cx("group block w-full text-left", reachable ? "cursor-pointer" : "cursor-default")}
+                >
+                  <span className="block h-[3px] overflow-hidden rounded-full bg-line-strong">
+                    <motion.span
+                      className={cx("block h-full rounded-full", active ? "bg-accent" : "bg-accent-strong")}
+                      initial={false}
+                      animate={{ width: done || active ? "100%" : "0%" }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                  </span>
+                  <span
+                    className={cx(
+                      "mt-2 flex items-center gap-1.5 truncate text-[12px] transition-colors",
+                      active ? "text-fg" : done ? "text-fg-2 group-hover:text-fg" : "text-fg-3"
+                    )}
+                  >
+                    {done && !active ? (
+                      <Icon name="check" size={12} className="shrink-0 text-positive" />
+                    ) : (
+                      <span className="font-mono text-[11px]">{i + 1}</span>
+                    )}
+                    {s.title}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+    </div>
   );
 }
 
