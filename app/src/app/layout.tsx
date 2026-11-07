@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const sans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+// IBM Plex, SIL Open Font License 1.1 (see src/fonts/OFL.txt). Local so builds never hit the network.
+const sans = localFont({
+  src: [
+    { path: "../fonts/ibm-plex-sans-latin-400-normal.woff2", weight: "400" },
+    { path: "../fonts/ibm-plex-sans-latin-500-normal.woff2", weight: "500" },
+    { path: "../fonts/ibm-plex-sans-latin-600-normal.woff2", weight: "600" },
+  ],
   variable: "--font-sans",
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+const mono = localFont({
+  src: [
+    { path: "../fonts/ibm-plex-mono-latin-400-normal.woff2", weight: "400" },
+    { path: "../fonts/ibm-plex-mono-latin-500-normal.woff2", weight: "500" },
+  ],
   variable: "--font-mono",
   display: "swap",
 });
