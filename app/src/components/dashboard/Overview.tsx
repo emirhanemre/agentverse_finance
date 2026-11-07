@@ -143,7 +143,7 @@ export function TodayView({
               key={d.date}
               className={cx(
                 "rounded border px-2 py-2",
-                d.covered ? "border-[rgba(76,144,240,0.45)] bg-accent-wash" : d.proposed && approval !== "declined" ? "border-[rgba(224,160,74,0.4)] bg-warning-wash" : "border-line bg-surface-2"
+                d.covered ? "border-accent-edge bg-accent-wash" : d.proposed && approval !== "declined" ? "border-warning-edge bg-warning-wash" : "border-line bg-surface-2"
               )}
             >
               <div className="flex items-baseline justify-between font-mono text-[11px]">
@@ -277,7 +277,7 @@ export function RainView({ hedges }: { hedges: Hedge[] }) {
       <div
         className={cx(
           "flex h-10 shrink-0 items-center gap-2.5 rounded-md border px-4 text-[13px]",
-          banner.tone === "positive" ? "border-[rgba(61,170,116,0.4)] bg-positive-wash text-positive" : "border-[rgba(224,160,74,0.4)] bg-warning-wash text-warning"
+          banner.tone === "positive" ? "border-positive-edge bg-positive-wash text-positive" : "border-warning-edge bg-warning-wash text-warning"
         )}
       >
         <Icon name={banner.tone === "positive" ? "check" : "rain"} />

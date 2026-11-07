@@ -322,7 +322,7 @@ function ToggleRow({ label, sub, on, onToggle }: { label: string; sub: string; o
         onClick={onToggle}
         className={cx("relative h-[18px] w-8 shrink-0 rounded-full transition-colors", on ? "bg-accent-strong" : "bg-surface-3")}
       >
-        <span className={cx("absolute top-[2px] h-[14px] w-[14px] rounded-full bg-white transition-[left]", on ? "left-[16px]" : "left-[2px]")} />
+        <span className={cx("absolute top-[2px] h-[14px] w-[14px] rounded-full bg-white shadow-sm transition-[left]", on ? "left-[16px]" : "left-[2px]")} />
       </button>
     </div>
   );

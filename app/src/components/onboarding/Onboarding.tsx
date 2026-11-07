@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button, Icon, Logo, cx } from "../ui";
+import { Button, Icon, Logo, ThemeToggle, cx } from "../ui";
 import { HEDGES, PUB } from "../../lib/data";
 import { BusinessStep, SourcesStep, VerifyStep } from "./IdentitySteps";
 import { AnalysisStep, ImpactStep, RecommendationsStep, ReviewStep } from "./PlanSteps";
@@ -62,6 +62,7 @@ export default function Onboarding() {
             Read-only access
           </span>
           <span>{form.email}</span>
+          <ThemeToggle />
         </div>
       </header>
 

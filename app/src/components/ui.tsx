@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 
 export function cx(...parts: (string | false | null | undefined)[]) {
   return parts.filter(Boolean).join(" ");
@@ -41,6 +41,8 @@ type IconName =
   | "alert"
   | "lock"
   | "spark"
+  | "sun"
+  | "moon"
   | "x";
 
 const PATHS: Record<IconName, string> = {
@@ -65,8 +67,36 @@ const PATHS: Record<IconName, string> = {
   alert: "M8 2l6.5 11.5h-13zM8 6.5v3M8 11.5v.5",
   lock: "M4 7.5h8v6H4zM5.5 7.5V5a2.5 2.5 0 015 0v2.5",
   spark: "M8 2v3M8 11v3M2 8h3M11 8h3M4 4l2 2M10 10l2 2M12 4l-2 2M6 10l-2 2",
+  sun: "M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1",
+  moon: "M13.5 9.5A5.5 5.5 0 016.5 2.5a5.5 5.5 0 107 7z",
   x: "M4 4l8 8M12 4l-8 8",
 };
+
+export const THEME_KEY = "pubhedge.theme";
+
+export function ThemeToggle() {
+  const [dark, setDark] = useState(false);
+  useEffect(() => setDark(document.documentElement.dataset.theme === "dark"), []);
+  const toggle = () => {
+    const next = !dark;
+    setDark(next);
+    if (next) document.documentElement.dataset.theme = "dark";
+    else delete document.documentElement.dataset.theme;
+    try {
+      localStorage.setItem(THEME_KEY, next ? "dark" : "light");
+    } catch {}
+  };
+  return (
+    <button
+      onClick={toggle}
+      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+      title={dark ? "Light theme" : "Dark theme"}
+      className="flex h-8 w-8 items-center justify-center rounded text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg"
+    >
+      <Icon name={dark ? "sun" : "moon"} />
+    </button>
+  );
+}
 
 export function Icon({ name, size = 16, className }: { name: IconName; size?: number; className?: string }) {
   return (

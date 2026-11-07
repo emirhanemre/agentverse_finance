@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon, Logo, cx } from "../ui";
+import { Icon, Logo, ThemeToggle, cx } from "../ui";
 import type { Timeline } from "../../lib/dashboard-data";
 
 export type NavId = "overview" | "protections" | "risks" | "activity" | "sources" | "settings";
@@ -117,6 +117,7 @@ export function TopBar({
             ))}
           </div>
         </div>
+        <ThemeToggle />
         <button aria-label="Notifications" className="relative flex h-8 w-8 items-center justify-center rounded text-fg-2 hover:bg-surface-2 hover:text-fg">
           <Icon name="bell" />
           {alert && <span className="absolute right-[7px] top-[7px] h-1.5 w-1.5 rounded-full bg-warning" />}

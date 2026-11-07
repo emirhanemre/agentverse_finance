@@ -3,6 +3,31 @@
 @tailwind utilities;
 
 :root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #f6f7f9;
+  --surface-3: #ebeef2;
+  --line: #e1e5ea;
+  --line-strong: #cdd3da;
+  --fg: #1c2127;
+  --fg-2: #536070;
+  --fg-3: #5f6976;
+  --accent: #2560c0;
+  --accent-strong: #215db0;
+  --accent-wash: rgba(45, 114, 210, 0.09);
+  --accent-edge: rgba(45, 114, 210, 0.4);
+  --positive: #18693f;
+  --positive-wash: rgba(35, 133, 81, 0.1);
+  --positive-edge: rgba(35, 133, 81, 0.35);
+  --negative: #c23a3e;
+  --negative-wash: rgba(205, 66, 70, 0.09);
+  --warning: #94560c;
+  --warning-wash: rgba(200, 118, 25, 0.11);
+  --warning-edge: rgba(200, 118, 25, 0.4);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
   --bg: #0f1217;
   --surface: #151a21;
   --surface-2: #1b2129;
@@ -11,16 +36,19 @@
   --line-strong: #323b46;
   --fg: #e3e7ec;
   --fg-2: #a1aab6;
-  --fg-3: #6c7684;
+  --fg-3: #8691a0;
   --accent: #4c90f0;
   --accent-strong: #2d72d2;
   --accent-wash: rgba(76, 144, 240, 0.12);
-  --positive: #3daa74;
+  --accent-edge: rgba(76, 144, 240, 0.45);
+  --positive: #4cbb85;
   --positive-wash: rgba(61, 170, 116, 0.12);
+  --positive-edge: rgba(61, 170, 116, 0.4);
   --negative: #e5675f;
   --negative-wash: rgba(229, 103, 95, 0.12);
   --warning: #e0a04a;
   --warning-wash: rgba(224, 160, 74, 0.12);
+  --warning-edge: rgba(224, 160, 74, 0.4);
   color-scheme: dark;
 }
 
@@ -35,7 +63,7 @@ body {
 }
 
 ::selection {
-  background: rgba(76, 144, 240, 0.35);
+  background: var(--accent-edge);
   color: var(--fg);
 }
 
