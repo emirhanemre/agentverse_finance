@@ -92,7 +92,7 @@ figures are involved.
 > | | Ours | Naive weekly hedge |
 > |---|---|---|
 > | Net cost per pub per year | £{-o['hedge_net_gbp_per_year']:,.0f} | £{-n['hedge_net_gbp_per_year']:,.0f} |
-> | 95% CI | {f(oc['hedge_net_gbp_per_year'][0], 0)} to {f(oc['hedge_net_gbp_per_year'][1], 0)} | {f(pol['naive']['ci95']['hedge_net_gbp_per_year'][0], 0)} to {f(pol['naive']['ci95']['hedge_net_gbp_per_year'][1], 0)} |
+> | 95% CI of net result (£, negative = cost) | {f(oc['hedge_net_gbp_per_year'][0], 0)} to {f(oc['hedge_net_gbp_per_year'][1], 0)} | {f(pol['naive']['ci95']['hedge_net_gbp_per_year'][0], 0)} to {f(pol['naive']['ci95']['hedge_net_gbp_per_year'][1], 0)} |
 > | Payroll-shortfall weeks per year (no hedge: {v['shortfall_weeks_per_year']:.1f}) | {o['shortfall_weeks_per_year']:.1f} | {n['shortfall_weeks_per_year']:.1f} |
 > | Weeks hedged | {pol['ours']['weeks_hedged_all']} of {pol['ours']['pub_weeks']} | {pol['naive']['weeks_hedged_all']} of {pol['naive']['pub_weeks']} |
 >

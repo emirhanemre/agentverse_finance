@@ -74,7 +74,7 @@ figures are involved.
 > | | Ours | Naive weekly hedge |
 > |---|---|---|
 > | Net cost per pub per year | £24 | £1,514 |
-> | 95% CI | −124 to 102 | −1,737 to −1,312 |
+> | 95% CI of net result (£, negative = cost) | −124 to 102 | −1,737 to −1,312 |
 > | Payroll-shortfall weeks per year (no hedge: 10.4) | 10.4 | 10.6 |
 > | Weeks hedged | 78 of 1260 | 1236 of 1260 |
 >
