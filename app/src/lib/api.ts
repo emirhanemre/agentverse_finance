@@ -4,6 +4,10 @@ import { useCallback, useEffect, useState } from "react";
 import { day, gbp } from "./format";
 
 export const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+// Deployed only: the API's access key. The bundle that carries it is itself behind the site password.
+const KEY = process.env.NEXT_PUBLIC_PUBHEDGE_ACCESS_KEY ?? "";
+/** A URL for EventSource, which cannot send headers: the key rides as ?key= when one is set. */
+export const withKey = (url: string) => (KEY ? `${url}${url.includes("?") ? "&" : "?"}key=${encodeURIComponent(KEY)}` : url);
 
 // Provenance strings come from the API verbatim: REAL, REAL · CACHED, SYNTHETIC, TEST MODE, PAPER, REPLAY, TEMPLATE, MODEL, ERROR.
 export type BadgeText = string;
@@ -192,7 +196,7 @@ export type ApproveResult = {
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API}${path}`, {
     ...init,
-    headers: init?.body ? { "content-type": "application/json" } : undefined,
+    headers: { ...(init?.body ? { "content-type": "application/json" } : {}), ...(KEY ? { "x-pubhedge-key": KEY } : {}) },
     cache: "no-store",
   });
   if (!res.ok) throw new Error(`${res.status} ${path}`);
