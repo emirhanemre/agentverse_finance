@@ -136,3 +136,24 @@ def test_changed_proposal_is_refused_and_decided_one_cannot_be_rejected(monkeypa
 def test_rain_window_opens_at_noon_london():
     assert window_opens("2026-08-29") == "2026-08-29T12:00:00+01:00"  # BST
     assert window_opens("2026-11-14") == "2026-11-14T12:00:00+00:00"  # GMT
+
+
+def test_rain_cover_settles_from_observed_rain_once():
+    c.post("/api/demo/reset")
+    run_scenario()
+    p = next(x for x in c.get("/api/state").json()["proposals"] if x["status"] == "pending" and x["market"]["date"] == "2026-08-29")
+    assert c.post(f"/api/proposals/{p['id']}/settle").status_code == 409  # nothing to settle before a fill
+    assert c.post(f"/api/proposals/{p['id']}/approve", json={"confirm_second": True}).json()["status"] == "filled"
+    s = c.post(f"/api/proposals/{p['id']}/settle").json()
+    assert s["status"] == "settled" and s["event_happened"] and s["payout_gbp"] == p["shares"]  # 6.1mm >= 3mm
+    assert "6.1 mm" in s["evidence"] and s["net_gbp"] == round(s["payout_gbp"] - s["cost_gbp"], 2)
+    assert c.post(f"/api/proposals/{p['id']}/settle").json() == s  # once: asking again changes nothing
+    assert [r["call"] for r in c.get("/api/audit").json()["rows"]].count("settle") == 1
+    assert c.get("/api/audit").json()["verify"]["ok"]
+
+
+def test_offer_awaits_official_resolution(monkeypatch):
+    pid = queue_offer(monkeypatch)
+    assert c.post(f"/api/proposals/{pid}/approve", json={"confirm_second": True}).json()["status"] == "filled"
+    s = c.post(f"/api/proposals/{pid}/settle").json()  # the recorded market is open: prices never settle it
+    assert s["status"] == "awaiting" and status(pid) == "filled"

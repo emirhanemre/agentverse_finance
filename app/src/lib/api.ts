@@ -78,7 +78,11 @@ export type Market = {
   kickoff?: string;
   /** ISO time after which it can't be approved: the rain window or kick-off. Absent or null on a scenario's frozen clock. */
   expires_at?: string | null;
+  settlement?: Settlement;
 };
+
+/** What a filled paper position paid, from observed rain or the market's official resolution. */
+export type Settlement = { status: "settled"; event_happened: boolean; payout_gbp: number; cost_gbp: number; net_gbp: number; evidence: string; receipt_id: string };
 export type Proposal = {
   id: string;
   run_id: string;
@@ -86,7 +90,7 @@ export type Proposal = {
   market: Market;
   shares: number;
   cost_pence: number;
-  status: "pending" | "blocked" | "filled" | "rejected" | "expired";
+  status: "pending" | "blocked" | "filled" | "rejected" | "expired" | "settled";
   decided: number | null;
   reason: string | null;
   receipt_id: string | null;
@@ -198,6 +202,7 @@ export const putLimits = (patch: Partial<Limits>) =>
 export const approve = (id: string, confirmSecond: boolean) =>
   api<ApproveResult>(`/api/proposals/${id}/approve`, { method: "POST", body: JSON.stringify({ confirm_second: confirmSecond }) });
 export const reject = (id: string) => api<unknown>(`/api/proposals/${id}/reject`, { method: "POST" });
+export const settle = (id: string) => api<Settlement | { status: "awaiting"; reason: string }>(`/api/proposals/${id}/settle`, { method: "POST" });
 
 export function useAppState() {
   const [state, setState] = useState<AppState | null>(null);

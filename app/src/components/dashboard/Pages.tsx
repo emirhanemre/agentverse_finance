@@ -8,7 +8,7 @@ import { Td, Th } from "./Shell";
 import { proposalTitle, proposals, type AppState } from "../../lib/api";
 import { gbp } from "../../lib/format";
 
-const TONE = { pending: "warning", blocked: "negative", filled: "positive", rejected: "neutral", expired: "neutral" } as const;
+const TONE = { pending: "warning", blocked: "negative", filled: "positive", rejected: "neutral", expired: "neutral", settled: "positive" } as const;
 
 export function ProtectionsPage({ s, refresh }: { s: AppState; refresh: () => void }) {
   const all = proposals(s);

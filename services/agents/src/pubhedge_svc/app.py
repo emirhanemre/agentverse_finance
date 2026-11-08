@@ -18,7 +18,7 @@ from . import audit, config
 from . import engines as E
 from .chain import run_chain
 from .config import DATA, RUNS
-from .tools import PUB, SCENARIO, SYN, binding, current_ledger, quote_offer
+from .tools import PUB, SCENARIO, SYN, binding, current_ledger, quote_offer, settle
 
 config.load_env()
 app = FastAPI(title="Pub Hedge agents")
@@ -319,6 +319,30 @@ def _reject(p):
     return {"status": "rejected", "receipt_id": row["receipt_id"]}
 
 
+@app.post("/api/proposals/{pid}/settle")
+def settle_position(pid: str):
+    """Check what a filled paper position paid. Settles once; asking again returns the same result."""
+    with _decide:
+        p = _proposal(pid)
+        if p["status"] == "settled":
+            return p["market"]["settlement"]
+        if p["status"] != "filled":
+            raise HTTPException(409, f"proposal is {p['status']}")
+        fill = json.loads(audit.db().execute("SELECT fill FROM executions WHERE proposal_id = ?", (pid,)).fetchone()["fill"])
+        try:
+            res = settle(p["market"], p["shares"], fill["cost_gbp"])
+        except Exception as exc:
+            raise HTTPException(503, f"couldn't fetch the result ({type(exc).__name__})") from exc
+        if res["status"] != "settled":
+            return res
+        row = audit.append(p["run_id"], "settle", "settle", {"proposal_id": pid}, res, res["badge"], None, 0)
+        res["receipt_id"] = row["receipt_id"]
+        audit.db().execute("UPDATE proposals SET status='settled', market=? WHERE id=?",
+                           (json.dumps({**p["market"], "settlement": res}), pid))
+        audit.db().commit()
+        return res
+
+
 @app.post("/api/offers/queue")
 def queue_offer():
     """Turn the priced match-day offer into an ordinary pending proposal: same limits, approval and paper fill."""
@@ -330,8 +354,8 @@ def queue_offer():
     run = latest_run()
     run_id = run["run_id"] if run else "offer"
     pid = f"p_offer_{uuid.uuid4().hex[:6]}"
-    market = {k: q[k] for k in ("market_id", "kind", "fixture", "competition", "venue", "kickoff", "market", "trigger", "offer",
-                                "covers_cap", "worst_case_gbp", "ask", "market_prob", "fee_rate", "cost_per_share",
+    market = {k: q[k] for k in ("market_id", "event_slug", "kind", "fixture", "competition", "venue", "kickoff", "market",
+                                "trigger", "offer", "covers_cap", "worst_case_gbp", "ask", "market_prob", "fee_rate", "cost_per_share",
                                 "payout_if_event_gbp", "fixed_cost_gbp")}
     market["price_badge"] = q["badge"]
     cost_pence = int(round(q["hedge_cost_gbp"] * 100))

@@ -14,6 +14,7 @@ from . import audit, cache
 from . import engines as E
 from .clients import companies_house as ch
 from .clients import metoffice as mo
+from .clients import openmeteo as om
 from .clients import polymarket as pm
 from .config import REPO, offline
 
@@ -61,6 +62,7 @@ def quote_offer(limits: dict, ledger: dict) -> dict:
     market_id = f"pm-{OFFER['event_slug']}-croatia"
     return {"badge": env["badge"], "source": env["source"], "licence": env["licence"], "fetched_at": env.get("fetched_at"),
             "url": f"https://polymarket.com/event/{OFFER['event_slug']}", "kind": "offer", "market_id": market_id,
+            "event_slug": OFFER["event_slug"],
             "fixture": OFFER["fixture"], "competition": OFFER["competition"], "venue": OFFER["venue"],
             "kickoff": ev.get("endDate"), "market": m["question"], "trigger": OFFER["trigger"], "offer": OFFER["offer"],
             "covers_cap": OFFER["covers_cap"], "avg_main_gbp": OFFER["avg_main_gbp"], "menu_badge": "SYNTHETIC",
@@ -71,6 +73,41 @@ def quote_offer(limits: dict, ledger: dict) -> dict:
             "verdict": E.check_limits(int(round(cost * 100)), market_id, limits, ledger),
             "summary": f"{OFFER['fixture']}: {OFFER['trigger'].lower()}, {OFFER['offer']} (worst case £{worst:,.0f}) "
                        f"· cover £{cost:,.2f} at {ask:.2f}"}
+
+
+ERA5_LAG_DAYS = 5  # Open-Meteo's observed archive runs about five days behind
+
+
+def settle(market: dict, shares: int, cost_gbp: float) -> dict:
+    """What a filled paper position paid, from what happened: observed rain, or the market's official resolution.
+    Never from a price. Returns status 'awaiting' with a reason while the result isn't known."""
+    if market.get("kind") == "offer":
+        env = pm.event(market.get("event_slug", OFFER["event_slug"]))  # older offers predate the field
+        m = next(x for x in env["data"][0]["markets"] if x.get("question") == market["market"])
+        prices = json.loads(m.get("outcomePrices") or "[]")
+        if not (m.get("closed") and m.get("umaResolutionStatus") == "resolved" and sorted(prices) == ["0", "1"]):
+            return {"status": "awaiting", "reason": "Polymarket hasn't officially resolved the match market yet"}
+        happened, badge = prices[0] == "1", env["badge"]
+        evidence = f"Polymarket resolved “{market['market']}” {'Yes' if happened else 'No'}"
+    else:
+        day = market["date"]
+        row = E.weather(PUB["weather_loc"]).get(day)
+        if row and row["pm_rain_mm"] != "":
+            mm, badge = float(row["pm_rain_mm"]), "REAL · CACHED"
+        elif date.fromisoformat(day) > date.today() - timedelta(days=ERA5_LAG_DAYS):
+            return {"status": "awaiting", "reason": f"observed rain is published about {ERA5_LAG_DAYS} days after the day"}
+        else:
+            env = om.daily(PUB["lat"], PUB["lon"], day, day)
+            h = env["data"]["hourly"]
+            if any(mm is None for t, mm in zip(h["time"], h["precipitation"]) if 12 <= int(t[11:13]) < 18):
+                return {"status": "awaiting", "reason": "the observed afternoon isn't complete yet"}
+            mm, badge = om.afternoon_rain(env)[day], env["badge"]
+        happened = mm >= E.CONTRACT_MM
+        d = date.fromisoformat(day)
+        evidence = f"{mm:g} mm fell 12:00–18:00 on {d:%a} {d.day} {d:%b} (contract pays at {E.CONTRACT_MM:g} mm)"
+    payout = float(shares) if happened else 0.0
+    return {"status": "settled", "event_happened": happened, "payout_gbp": payout, "cost_gbp": cost_gbp,
+            "net_gbp": round(payout - cost_gbp, 2), "evidence": evidence, "badge": badge}
 
 
 _bt = None

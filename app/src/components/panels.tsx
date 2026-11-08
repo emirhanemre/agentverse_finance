@@ -11,6 +11,7 @@ import {
   putLimits,
   queueOffer,
   reject,
+  settle,
   tool,
   type OfferQuote,
   type AppState,
@@ -875,7 +876,7 @@ export function PaperBanner() {
   );
 }
 
-const STATUS_TONE = { pending: "warning", blocked: "negative", filled: "positive", rejected: "neutral", expired: "neutral" } as const;
+const STATUS_TONE = { pending: "warning", blocked: "negative", filled: "positive", rejected: "neutral", expired: "neutral", settled: "positive" } as const;
 const until = (iso: string) =>
   new Date(iso).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/London" });
 
@@ -886,6 +887,7 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
   const [fill, setFill] = useState<Record<string, unknown> | null>(null);
   const [blockReceipt, setBlockReceipt] = useState<Receipt | null>(null);
   const [error, setError] = useState("");
+  const [awaiting, setAwaiting] = useState("");
 
   // A block by the owner's limits writes a receipt with fresh checks. Show those over the stale proposal-time verdict.
   useEffect(() => {
@@ -984,6 +986,41 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
             Paper fill: {String(fill?.shares ?? p.shares)} shares
             {fill?.fill_price ? ` at ${Number(fill.fill_price).toFixed(4)}` : ""}
             {fill?.cost_gbp ? `, ${gbp(Number(fill.cost_gbp), { pence: true })}` : ""}. {String(fill?.note ?? "No real order was placed.")}
+          </p>
+        )}
+        {p.status === "filled" && (
+          <div className="mt-3 flex items-center gap-3">
+            <Button
+              onClick={async () => {
+                setBusy(true);
+                setError("");
+                try {
+                  const r = await settle(p.id);
+                  setAwaiting(r.status === "awaiting" ? `No result yet: ${r.reason}.` : "");
+                  onChange();
+                } catch (e) {
+                  setError(String(e));
+                } finally {
+                  setBusy(false);
+                }
+              }}
+              disabled={busy}
+              data-testid={`settle-${p.id}`}
+            >
+              {busy && <Spinner size={12} />}
+              Check result
+            </Button>
+            {awaiting && <span className="text-xs text-fg-3">{awaiting}</span>}
+          </div>
+        )}
+        {p.status === "settled" && p.market.settlement && (
+          <p className="mt-4 rounded px-3 py-2 text-sm shadow-[inset_0_0_0_1px_var(--accent-edge)]" data-testid="settled-note">
+            <span className={p.market.settlement.event_happened ? "text-positive" : "text-fg"}>
+              {p.market.settlement.event_happened
+                ? `Paid ${gbp(p.market.settlement.payout_gbp, { pence: true })}, ${gbp(p.market.settlement.net_gbp, { pence: true, sign: true })} after its cost.`
+                : `Didn’t pay. The ${gbp(p.market.settlement.cost_gbp, { pence: true })} it cost is the loss.`}
+            </span>{" "}
+            <span className="text-fg-2">{p.market.settlement.evidence}.</span>
           </p>
         )}
         {p.status === "rejected" && <p className="mt-4 text-sm text-fg-2">You declined this. It won’t be placed.</p>}
