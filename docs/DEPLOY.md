@@ -1,5 +1,14 @@
 # Deploying Pub Hedge
 
+**Live now:** app at https://pubhedge.vercel.app (Vercel project `pubhedge`, team Finance Trackers), API at
+https://pubhedge-agents-493974186765.europe-west2.run.app (Cloud Run service `pubhedge-agents`, project
+`uclagentverse26lon-5545`, `europe-west2`). Keys are in that project's Secret Manager; the access key and API URL
+are in Vercel's production environment.
+
+To redeploy the app after a change, from `app/`: `vercel deploy --prod`. To redeploy the API, build the image with
+Cloud Build and run `gcloud run deploy pubhedge-agents --image <new image> --region europe-west2` (the secrets and
+settings carry over), or use `scripts/deploy.sh`.
+
 Two services, each on the host that suits it:
 
 | Part | Host | Why |
