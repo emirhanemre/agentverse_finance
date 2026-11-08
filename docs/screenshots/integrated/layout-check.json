@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "screenshots": [
+    {
+      "file": "docs/screenshots/integrated/overview-light-1440.png",
+      "layout": {
+        "left": 713.453125,
+        "right": 492.03125,
+        "overflow": false
+      }
+    },
+    {
+      "file": "docs/screenshots/integrated/overview-light-1024.png",
+      "layout": {
+        "left": 467.25,
+        "right": 322.25,
+        "overflow": false
+      }
+    },
+    {
+      "file": "docs/screenshots/integrated/overview-dark-1440.png",
+      "layout": {
+        "left": 713.453125,
+        "right": 492.03125,
+        "overflow": false
+      }
+    },
+    {
+      "file": "docs/screenshots/integrated/overview-dark-1024.png",
+      "layout": {
+        "left": 467.25,
+        "right": 322.25,
+        "overflow": false
+      }
+    }
+  ],
+  "theme_toggle_persists": true,
+  "page_errors": []
+}

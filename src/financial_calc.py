@@ -15,7 +15,7 @@ from src.schemas import HedgeCalculationResult, MarketCandidate, OrderBookLevel
 
 DEFAULT_FX_USD_PER_GBP = Decimal("1.2800")
 DEFAULT_FX_SOURCE = (
-    "Fixed simulation assumption (1.00 GBP = 1.2800 USD, Bank of England / WM Reuters indicative range)"
+    "Fixed paper simulation assumption (1.00 GBP = 1.2800 USD); not a live exchange rate"
 )
 DEFAULT_FEE_BPS = 50  # 0.50% simulated execution / spread-buffer fee in basis points
 

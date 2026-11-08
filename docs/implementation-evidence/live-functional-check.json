@@ -1,0 +1,438 @@
+{
+  "checked_at": "2026-11-08T01:20:00.060899+00:00",
+  "paper_only": true,
+  "business_records": "Explicit synthetic repository revenue, not private/real business sales.",
+  "forecast": {
+    "origin": "current_forecast",
+    "source": "Open-Meteo",
+    "source_url": "https://api.open-meteo.com/v1/forecast",
+    "retrieved_at": "2026-11-08T01:20:00+00:00",
+    "timezone": "Europe/London",
+    "coordinates": {
+      "latitude": 51.45,
+      "longitude": -0.07
+    },
+    "units": {
+      "temperature": "\u00b0C",
+      "rain": "mm",
+      "wind": "km/h",
+      "sunshine": "h"
+    },
+    "horizon_start": "2026-11-08",
+    "horizon_end": "2026-11-21",
+    "note": "Grid forecast at configured coordinates. Probability of precipitation is not probability of an exact contract threshold/station/window."
+  },
+  "live_assessment": {
+    "state": "complete",
+    "status": "recommend_paper_hedge",
+    "discovery": {
+      "ok": true,
+      "origin": "live_polymarket_api",
+      "retrieved_at": "2026-11-08T01:20:02.415635+00:00",
+      "scanned": 2407,
+      "weather_candidates": 2352,
+      "bounded_search": true,
+      "queries": [
+        "highest temperature London",
+        "rainfall London"
+      ],
+      "note": "Live targeted weather search for London, up to 3 pages per query, with dated-list fallback. Candidate rules determine the exact observation day; discovery is bounded, not exhaustive."
+    },
+    "spec": {
+      "date": "2026-11-09",
+      "station": "EGLC",
+      "station_name": "London City Airport",
+      "station_distance_km": 10.64,
+      "timezone": "Europe/London",
+      "metric": "daily_max_temperature",
+      "unit": "C",
+      "lower": null,
+      "upper": 6.0,
+      "lower_inclusive": true,
+      "upper_inclusive": true,
+      "rounding": "nearest_integer_half_upward",
+      "rules_hash": "58b6c5f9561a3d65aaf99af0e5db5d35cfdd53693725f81d2c10e85e5d05508e",
+      "source": "https://aviationweather.gov/api/data/metar?ids=EGLC&format=raw&date=2026-11-10T03:00:00Z&hours=30",
+      "basis_note": "London City Airport (EGLC), 10.6km from the business. Airport observations and gridded business-location weather can diverge. Station fallback/correction clauses in the original rules still apply; no numerical basis-risk score is claimed."
+    },
+    "scenario": "Explicit manual 4\u00b0C stress scenario. Synthetic business revenue model; real contracts and books.",
+    "inspected_candidates": 80,
+    "errors": null,
+    "market_id": "6772770",
+    "quote_timestamp": "2026-11-08T01:20:02+00:00",
+    "rejections": {
+      "6772771": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6772772": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6772773": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6772774": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6772775": [
+        "Unattractive entry price: volume-weighted ask price is $0.7922 USD (exceeds maximum acceptable price $0.72 USD; insufficient net payout ratio)."
+      ],
+      "6772776": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6772777": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6772778": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6772779": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6772780": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773317": [
+        "Insufficient order-book depth: only 0 contracts executable on the ask book (minimum required: 20).",
+        "Insufficient downside offset: net hedge profit if contract pays is only \u00a30.00 (minimum meaningful offset: \u00a325.00).",
+        "Total entry cost \u00a30.00 violates budget/limit bounds (0 < cost <= \u00a3100.00)."
+      ],
+      "6773321": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773325": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773328": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773332": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773335": [
+        "Insufficient order-book depth: only 0 contracts executable on the ask book (minimum required: 20).",
+        "Insufficient downside offset: net hedge profit if contract pays is only \u00a30.00 (minimum meaningful offset: \u00a325.00).",
+        "Total entry cost \u00a30.00 violates budget/limit bounds (0 < cost <= \u00a3100.00)."
+      ],
+      "6773340": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773343": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773348": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773352": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6773356": [
+        "This contract has the same payoff in the selected adverse and reference scenarios; it does not offset their difference."
+      ],
+      "6771811": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771812": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771813": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771814": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771815": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771816": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771817": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771818": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771819": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771820": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6771821": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773383": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773385": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773389": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773392": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773396": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773400": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773404": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773408": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773412": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773416": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6773420": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "2698457": [
+        "Resolution rules must identify exactly one supported airport station (EGLC, EGLL, EGCC, EGBB, EGPH or EGPF)."
+      ],
+      "6740638": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740639": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740640": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740641": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740642": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740643": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740644": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740645": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740646": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740647": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6740648": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741098": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741102": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741107": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741111": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741115": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741119": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741122": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741127": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741130": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741134": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6741138": [
+        "Observation date 2026-11-08 does not match exposure date 2026-11-09."
+      ],
+      "6739711": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739712": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739713": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739714": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739715": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739716": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739717": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739718": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739719": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739720": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6739721": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6741164": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ],
+      "6741168": [
+        "Contract is not a supported daily rainfall or maximum-temperature contract."
+      ]
+    },
+    "calculation": {
+      "market_id": "6772770",
+      "outcome_selected": "Yes",
+      "target_date": "2026-11-09",
+      "budget_gbp": 100.0,
+      "budget_pence": 10000,
+      "fx_rate_usd_per_gbp": 1.28,
+      "fx_rate_source": "User-configured fixed paper simulation rate; not a live FX quote",
+      "fee_bps": 50,
+      "executable_contracts": 99,
+      "average_ask_price_usd": 0.002,
+      "gross_entry_cost_usd": 0.2,
+      "estimated_fee_usd": 0.0,
+      "total_entry_cost_usd": 0.2,
+      "total_entry_cost_gbp": 0.16,
+      "total_entry_cost_pence": 16,
+      "unfilled_budget_gbp": 99.84,
+      "depth_exhausted": false,
+      "payout_if_win_usd": 99.0,
+      "payout_if_win_gbp": 77.34,
+      "net_profit_if_win_gbp": 77.18,
+      "net_loss_if_lose_gbp": -0.16,
+      "adverse_weather_pub_revenue_gbp": 2181.53,
+      "reference_weather_pub_revenue_gbp": 2259.09,
+      "estimated_unhedged_downside_gbp": 77.56,
+      "combined_outcome_if_adverse_and_contract_pays_gbp": 2258.71,
+      "combined_outcome_if_adverse_and_contract_fails_gbp": 2181.37,
+      "combined_outcome_if_benign_and_contract_fails_gbp": 2258.93,
+      "remaining_downside_if_contract_pays_gbp": 0.38,
+      "basis_risk_summary": "London City Airport (EGLC), 10.6km from the business. Airport observations and gridded business-location weather can diverge. Station fallback/correction clauses in the original rules still apply; no numerical basis-risk score is claimed. Sizing is capped to the isolated daily_max_temperature contribution (\u00a377.56), holding the other weather inputs fixed; it does not claim to cover the whole combined weather scenario. Contract resolves on 'daily_max_temperature' at 'London, UK' via https://aviationweather.gov/api/data/metar?ids=EGLC&format=raw&date=2026-11-10T03:00:00Z&hours=30. If the pub suffers adverse weather (\u00a32181.53 vs \u00a32259.09 reference) AND the contract pays out, remaining downside is reduced from \u00a377.56 to \u00a30.38. However, if the pub loses revenue while the contract does not trigger (basis mismatch), combined revenue + hedge outcome worsens to \u00a32181.37."
+    }
+  },
+  "isolated_paper_approval": {
+    "ok": true,
+    "position_id": "paper_pos_prop_2265278265924cb69cec882b1e130d8b",
+    "approval_state": "approved"
+  },
+  "settlement_refresh": {
+    "positions": [
+      {
+        "position_id": "paper_pos_prop_2265278265924cb69cec882b1e130d8b",
+        "proposal_id": "prop_2265278265924cb69cec882b1e130d8b",
+        "proposal_hash": "b117cf15f2f9cdacbbee9ee52d1926bade1497bbd7b15e61f722be561720f961",
+        "approved_at": "2026-11-08T01:20:03.156806+00:00",
+        "approver_note": "Human approved in local web application",
+        "target_date": "2026-11-09",
+        "market_id": "6772770",
+        "market_question": "Will the highest temperature in London be 6\u00b0C or below on November 9?",
+        "outcome_selected": "Yes",
+        "paper_quantity": 99,
+        "average_fill_price_usd": 0.002,
+        "total_entry_cost_usd": 0.2,
+        "total_entry_cost_gbp": 0.16,
+        "fx_rate_usd_per_gbp": 1.28,
+        "hypothetical_payout_if_win_gbp": 77.34,
+        "hypothetical_net_profit_if_win_gbp": 77.18,
+        "hypothetical_net_loss_if_lose_gbp": -0.16,
+        "actual_resolved_outcome": "UNRESOLVED",
+        "settlement_note": "Paper simulation only. Hypothetical payout; no supported settlement yet.",
+        "data_origin": "live_polymarket_api",
+        "is_simulated_paper_trade": 1,
+        "business_name": "Isolated Live Weather Test",
+        "resolution": null
+      }
+    ],
+    "note": "Checked 1 unresolved paper positions; 0 new official paper outcomes recorded. No real payouts or redemptions occurred.",
+    "checks": [
+      {
+        "position_id": "paper_pos_prop_2265278265924cb69cec882b1e130d8b",
+        "status": "unresolved",
+        "note": "Official resolution state is posed; a final payout vector is not established."
+      }
+    ],
+    "newly_resolved": 0
+  },
+  "training": {
+    "state": "complete",
+    "error": null,
+    "records_origin": "Repository synthetic revenue deliberately imported for integration verification.",
+    "model": {
+      "id": "business_model_ffe61ccae35b4938",
+      "fingerprint": "e7c69fa4692109132a6620bbc847e2a1c537b249527bbafaf8a416c85bcc9697",
+      "created_at": "2026-11-08T01:20:03+00:00",
+      "accepted": true,
+      "status": "holdout_pass",
+      "origin": "user_import",
+      "algorithm": "hist_gradient_boosting",
+      "validation_mae_by_model": {
+        "ridge": 517.6048312378291,
+        "hist_gradient_boosting": 369.51986722657784
+      },
+      "training_rows": 876,
+      "validation_rows": 292,
+      "test_rows": 293,
+      "matched_rows": 1461,
+      "unmatched_sales_rows": 0,
+      "training_start": "2022-01-01",
+      "training_end": "2024-05-25",
+      "validation_start": "2024-05-26",
+      "validation_end": "2025-03-13",
+      "test_start": "2025-03-14",
+      "test_end": "2025-12-31",
+      "test_mae_gbp": 512.38,
+      "baseline_test_mae_gbp": 1299.16,
+      "improvement_pct": 60.56,
+      "test_r2": 0.871509803519329,
+      "selection_rule": "Choose lowest validation MAE; activate only if untouched chronological holdout MAE beats training-only weekday baseline by \u22655%.",
+      "global_mean": 3518.2670890410955,
+      "residual_q_low": -297.70552999717194,
+      "residual_q_high": 685.7092708489065,
+      "weather_provenance": {
+        "origin": "historical_reanalysis",
+        "source": "Open-Meteo historical archive (gridded reanalysis; not an airport gauge)",
+        "source_url": "https://archive-api.open-meteo.com/v1/archive",
+        "coordinates": {
+          "latitude": 51.45,
+          "longitude": -0.07
+        },
+        "timezone": "Europe/London",
+        "start_date": "2022-01-01",
+        "end_date": "2025-12-31",
+        "retrieved_at": "2026-11-08T01:20:03+00:00",
+        "units": {
+          "temperature": "\u00b0C",
+          "rain": "mm",
+          "wind": "km/h",
+          "sunshine": "h"
+        }
+      },
+      "note": "Trained on user-supplied records; authenticity is unverified. Chronological holdout performance is internal evaluation, not proof of causality or external validation. Revenue is not margin or cashflow. Predictions outside training weather/calendar coverage are uncertain."
+    }
+  }
+}

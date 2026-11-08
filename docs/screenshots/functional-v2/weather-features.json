@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checked_at": "2026-11-08T01:37:10.790Z",
+  "records": "Explicit synthetic repository sales uploaded through CSV; actual historical weather fetched.",
+  "model_id": "business_model_ec738d7096394ee9",
+  "live_assessment_status": "recommend_paper_hedge",
+  "training_survives_reload": true,
+  "automatic_monitoring_completed": true,
+  "alerts_persist": true,
+  "page_errors": []
+}

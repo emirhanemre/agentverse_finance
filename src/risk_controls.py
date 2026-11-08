@@ -89,6 +89,10 @@ def check_contract_and_hedge_risk(
     max_quote_age_minutes: int = 120,
     decision_time_utc: str | None = None,
     allow_cached_or_replay_snapshot: bool = True,
+    business_location: str = "London, UK",
+    contract_event_date: str | None = None,
+    geography_verified: bool | None = None,
+    payoff_verified: bool = False,
 ) -> RiskControlResult:
     """Run all deterministic risk and suitability checks on a candidate contract and hedge sizing."""
     blocking: list[str] = []
@@ -119,18 +123,19 @@ def check_contract_and_hedge_risk(
     else:
         checks["market_status_valid"] = True
 
-    # 3. Geographic alignment check (Pub is in London, UK)
+    # 3. Geographic alignment against the configured business, not a default pub.
     loc_lower = market.location.lower()
-    if "london" not in loc_lower:
+    city = business_location.split(',')[0].strip().lower()
+    if geography_verified is False or (geography_verified is None and (not city or city not in loc_lower)):
         checks["geography_matches_pub"] = False
         blocking.append(
-            f"Geographic mismatch: contract covers '{market.location}', which does not match the pub's location (London, UK)."
+            f"Geographic mismatch: contract covers '{market.location}', business is '{business_location}'."
         )
     else:
         checks["geography_matches_pub"] = True
 
     # 4. Date alignment check
-    contract_date = extract_contract_event_date(market)
+    contract_date = contract_event_date or extract_contract_event_date(market)
     if contract_date != target_date:
         checks["date_matches_exposure"] = False
         blocking.append(
@@ -165,7 +170,7 @@ def check_contract_and_hedge_risk(
     else:
         # Also check that for a cold-temperature exposure, the contract bracket actually pays when it is cold!
         q_lower = market.question.lower()
-        if "cold" in driver and meas == "daily_max_temperature":
+        if "cold" in driver and meas == "daily_max_temperature" and not payoff_verified:
             # Look for "or higher" or warm brackets (> 45°F / 7.2°C) when hedging a cold snap
             if "or higher" in q_lower or "between 5" in q_lower or "between 46" in q_lower or "between 47" in q_lower or "between 48" in q_lower or "between 49" in q_lower:
                 if calc.outcome_selected == "Yes":

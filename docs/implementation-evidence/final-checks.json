@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-11-08T01:41:09.101199+00:00",
+  "branch": "luke-dev",
+  "backend_tests": {
+    "passed": 73,
+    "failed": 0
+  },
+  "frontend": {
+    "eslint": "passed",
+    "typescript": "passed",
+    "production_build": "passed"
+  },
+  "browser": {
+    "onboarding_and_dashboard": "docs/screenshots/functional-v2/acceptance.json",
+    "training_live_analysis_monitoring": "docs/screenshots/functional-v2/weather-features.json",
+    "isolated_databases": true
+  },
+  "launcher": {
+    "real_startup": "passed",
+    "duplicate_launch": "rejected without interrupting running instance",
+    "clean_shutdown": "passed"
+  },
+  "provider_connections": "Toast, Monzo, Xero and Companies House are visual demos only. No credentials or account imports.",
+  "live_evidence": "docs/implementation-evidence/live-functional-check.json",
+  "remote_changes": false
+}

@@ -1,0 +1,140 @@
+{
+  "nick_commit": "93a8f12ed52f4717d52bf7f49fe3762e0ace2d70",
+  "existing_branch_screenshots": [
+    {
+      "file": "docs/screenshots/baseline-nick-demo/01-business.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "425fc652d0c88c6d7e96a9068590cee51b486da6c02ae02dbfe41b69d6fae948"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/02a-verify-running.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "1a6652ec3da630de30777013b7aeeb1aabbd972752d3f5715affe91e28017d7b"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/02b-verified.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "bb5a645c94ee95eb963ecbbd993e0d8030501e67253f31d1563d13fdbb80c7e3"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/03a-importing.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "20777d0164c94968fe99d05c0957ccf1b4dfbcb4f45241a2214af2568d0dcfb4"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/03b-connected.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "77a0503759540fbb72808888da0f1679824fdefa1638228cc3f85a86142ba42e"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/04a-analysing.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "f5aa54cb4f07a2ea8e25a3360ac0aaeda9c8d2f3c3cd9ee68f973f05877443ed"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/04b-risks.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "2fa6b213f5fc097ae210c0e361d8d425c23c955c5889a27f61ba3f0eb46aa694"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/04c-tracker-back-verification.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "a115b7ed0399c4d360362499caaf6dc077eb9a1c8099b9e50de7a937a6d2ac91"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/05-impact.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "e8d97ab442e12ebf8931ea3d2442b174e071bf8fde70a01b1ab51aa5642099ae"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/06-recommendations.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "05ae528d762c85491d37111c099c27ecf03ec263b36f5759f83ff6e451a662f8"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/07a-review.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "bb99f91ffa4ce6a89c99df1e8551bb3028c1c0c4cb908bf61ef6ac7134eadf61"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/07b-placing.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "571b3fed9d54041e9a3cdfcf2c92030ea978f631a345286dafa1ad6fa117a6d1"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/07c-done.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "20c527f47b7318865bf4a8079decea5d5abcb5e39ee72d3465899da841316c06"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/08a-dashboard-today.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "6a7635e0fddc95e33e3d1f8f5634336bac07861c500a6195d446a5c427bf139c"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/08b-rain-live.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "e6d9c7df7c7212855b847fd91b045fe1d03163888e9ae8f32a22561c195d02b1"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/08c-rain-settled.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "44b20b8c15b49ecb38cd79fb846077d488a8957f86ee616a9993eb40b9f00998"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/08d-twelve-months.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "5e6ac9eb3e7a9f94d9b8bd5000274c842aa1d98913afc901aa959e2170d1ab3d"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/09-activity-year.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "7cd2d996c6e2563c1f41e291c699f28ed46fa0c74640691eb3ad830dd984c84c"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/09-activity.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "7cd2d996c6e2563c1f41e291c699f28ed46fa0c74640691eb3ad830dd984c84c"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/09-data-sources.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "b5a567d96f3b56d18ca0c57714ce8bc50e3a641fea0f184b01ab0ce274858e2d"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/09-protections-rain.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "9fa3bd3100cd49035067dd9ddc3b5b5306f506548cbc5210188d4af9d68392ab"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/09-protections-year.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "8fa8cd16d4aba415fd9a901ab8610d548c26a3895d0e18cbd96197f1248febe2"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/09-protections.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "8fa8cd16d4aba415fd9a901ab8610d548c26a3895d0e18cbd96197f1248febe2"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/09-risks.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "676ea30c53fdffc96792765f75496ff2c0051a13d4338dd2e148d81adbc2c6cf"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/09-settings.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "50f4892690ba04b8b793d04c66af2c9ac85ba9dae4e07500fdead239c918f3ec"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/10-dark-theme.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "64171993d7aa1190046d5340811edfb7933a74d28d8e3e9f72021afb9a7d05ea"
+    },
+    {
+      "file": "docs/screenshots/baseline-nick-demo/10b-dark-after-reload.png",
+      "matches_pinned_nick_commit": true,
+      "sha256": "fd07bd14e6c9d688cc97487c3b22161d2eb453a7e9d4b38214d2c351421d4a7d"
+    }
+  ]
+}

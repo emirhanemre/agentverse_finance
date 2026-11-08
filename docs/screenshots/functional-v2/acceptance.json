@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-11-08T01:40:39.928Z",
+  "journeys": [
+    "sample business → invalid import → sample sales → no suitable hedge → dashboard without positions",
+    "sample business → suitable synthetic scenario → explicit human approval → persisted paper position → reload",
+    "all dashboard pages in light/dark at 1440×1000 and 1024×768",
+    "settings persistence and unresolved settlement refresh"
+  ],
+  "positions": 1,
+  "forecast_origin": "current_forecast",
+  "page_errors": []
+}

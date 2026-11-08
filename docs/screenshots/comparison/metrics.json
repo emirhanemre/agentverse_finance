@@ -1,0 +1,866 @@
+[
+  {
+    "name": "Overview",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "overview-light-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Overview",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "overview-light-1440-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Protections",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "protections-light-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Protections",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "protections-light-1440-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Risks",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "risks-light-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Risks",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "risks-light-1440-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Activity",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "activity-light-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Activity",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "activity-light-1440-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Data sources",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "data-sources-light-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Data sources",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "data-sources-light-1440-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Settings",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "settings-light-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Settings",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "settings-light-1440-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Overview",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "overview-light-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Overview",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "overview-light-1024-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Protections",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "protections-light-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Protections",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "protections-light-1024-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Risks",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "risks-light-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Risks",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "risks-light-1024-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Activity",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "activity-light-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Activity",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "activity-light-1024-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Data sources",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "data-sources-light-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Data sources",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "data-sources-light-1024-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Settings",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "settings-light-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Settings",
+    "theme": "light",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "settings-light-1024-replay.png",
+    "metrics": {
+      "background": "rgb(244, 246, 248)",
+      "color": "rgb(28, 33, 39)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Overview",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "overview-dark-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Overview",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "overview-dark-1440-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Protections",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "protections-dark-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Protections",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "protections-dark-1440-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Risks",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "risks-dark-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Risks",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "risks-dark-1440-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Activity",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "activity-dark-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Activity",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "activity-dark-1440-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Data sources",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "data-sources-dark-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Data sources",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "data-sources-dark-1440-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Settings",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "baseline",
+    "file": "settings-dark-1440-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Settings",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "kind": "replay",
+    "file": "settings-dark-1440-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Overview",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "overview-dark-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Overview",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "overview-dark-1024-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Protections",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "protections-dark-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Protections",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "protections-dark-1024-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Risks",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "risks-dark-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Risks",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "risks-dark-1024-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Activity",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "activity-dark-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Activity",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "activity-dark-1024-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Data sources",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "data-sources-dark-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Data sources",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "data-sources-dark-1024-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Settings",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "baseline",
+    "file": "settings-dark-1024-baseline.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  },
+  {
+    "name": "Settings",
+    "theme": "dark",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "kind": "replay",
+    "file": "settings-dark-1024-replay.png",
+    "metrics": {
+      "background": "rgb(15, 18, 23)",
+      "color": "rgb(227, 231, 236)",
+      "font": "__IBM_Plex_Sans_987bfa, __IBM_Plex_Sans_Fallback_987bfa, system-ui, sans-serif",
+      "fontSize": "14px",
+      "sidebar": 196,
+      "panelRadius": "6px"
+    }
+  }
+]

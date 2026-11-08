@@ -148,6 +148,115 @@ class PolymarketConnector:
                     fix.untrusted_content_flags = sorted(set(list(fix.untrusted_content_flags) + flags))
                 self._candidates_by_id[fix.market_id] = fix
 
+    def _ingest_live(self, rec, event=None):
+        event = event or {}
+        def array(key):
+            value = rec.get(key) or []
+            return json.loads(value) if isinstance(value, str) else value
+        text = str(rec.get('question', '')) + ' ' + str(rec.get('description', ''))
+        city_match = re.search(r'(?:highest temperature|rainfall|precipitation) in (.+?) (?:be |on )', text, re.I)
+        location = city_match[1].strip() if city_match else 'Unverified location'
+        if 'london' in text.lower(): location = 'London, UK'
+        measurement = 'daily_max_temperature' if re.search(r'highest temperature|maximum temperature',text,re.I) else 'precipitation_or_rainfall' if re.search(r'rainfall|precipitation',text,re.I) else 'non_weather_event'
+        event_slug = event.get('slug') or (rec.get('events') or [{}])[0].get('slug') or rec.get('slug', '')
+        raw = dict(market_id=str(rec['id']),condition_id=rec.get('conditionId',''),source_url='https://polymarket.com/event/'+event_slug,
+            retrieval_timestamp=dt.datetime.now(dt.timezone.utc).isoformat(),data_origin='live_polymarket_api',
+            question=str(rec.get('question','')),resolution_rules=str(rec.get('description','')),resolution_source=str(rec.get('resolutionSource','')),
+            location=location,measurement=measurement,start_date=rec.get('startDate'),end_date=rec.get('endDate'),
+            status='active' if rec.get('active') and not rec.get('closed') and rec.get('acceptingOrders') else 'closed' if rec.get('closed') else 'inactive',
+            outcomes=array('outcomes'),outcome_prices=array('outcomePrices'),clob_token_ids=array('clobTokenIds'))
+        candidate=record_to_market_candidate(raw)
+        self._candidates_by_id[candidate.market_id]=candidate
+        self._raw_by_id[candidate.market_id]=raw
+        return candidate
+
+    def refresh_catalog(self, target_date: str, max_pages: int = 4, location: str = 'London') -> dict[str, Any]:
+        """Targeted weather discovery with paginated public search and dated-list fallback."""
+        if not self.allow_live_network:
+            return {'origin':'cached_polymarket_snapshot','ok':False,'note':'Live discovery disabled; saved catalogue inspection only.'}
+        saved=dict(self._candidates_by_id);self._candidates_by_id={}
+        scanned=0;queries=[];failures=0
+        city=location.split(',')[0].strip()
+        try:
+            for query in (f'highest temperature {city}', f'rainfall {city}'):
+                queries.append(query)
+                for page in range(1,min(max_pages,3)+1):
+                    response=requests.get(f'{GAMMA_BASE}/public-search',params={'q':query,'events_status':'active','limit_per_type':20,'page':page,'keep_closed_markets':0,'search_profiles':'false','search_tags':'false'},timeout=8)
+                    response.raise_for_status();data=response.json()
+                    if isinstance(data,list):
+                        for rec in data: self._ingest_live(rec);scanned+=1
+                        break
+                    for event in data.get('events') or []:
+                        for rec in event.get('markets') or []:
+                            self._ingest_live(rec,event);scanned+=1
+                    if not (data.get('pagination') or {}).get('hasMore'): break
+            if not self._candidates_by_id:
+                end=(dt.date.fromisoformat(target_date)+dt.timedelta(days=2)).isoformat()
+                for page in range(max_pages):
+                    response=requests.get(f'{GAMMA_BASE}/markets',params={'active':'true','closed':'false','limit':100,'offset':page*100,'end_date_min':target_date+'T00:00:00Z','end_date_max':end+'T00:00:00Z'},timeout=8)
+                    response.raise_for_status();records=response.json()
+                    if not isinstance(records,list): raise ValueError('Invalid catalogue response')
+                    scanned+=len(records)
+                    for rec in records:
+                        if re.search(r'temperature|rainfall|precipitation',str(rec.get('question','')),re.I): self._ingest_live(rec)
+                    if len(records)<100: break
+            return {'ok':True,'origin':'live_polymarket_api','retrieved_at':dt.datetime.now(dt.timezone.utc).isoformat(),
+                'scanned':scanned,'weather_candidates':len(self._candidates_by_id),'bounded_search':True,'queries':queries,
+                'note':f'Live targeted weather search for {city}, up to {min(max_pages,3)} pages per query, with dated-list fallback. Candidate rules determine the exact observation day; discovery is bounded, not exhaustive.'}
+        except (requests.RequestException,ValueError,TypeError,KeyError):
+            if self._candidates_by_id:
+                return {'ok':True,'partial':True,'origin':'live_polymarket_api','scanned':scanned,'weather_candidates':len(self._candidates_by_id),'bounded_search':True,'note':'Partial live discovery; one search failed. Only successfully retrieved candidates are assessed.'}
+            self._candidates_by_id=saved
+            return {'ok':False,'origin':'cached_polymarket_snapshot','note':'Live discovery failed. Saved catalogue is inspection-only; current approvals are disabled.'}
+
+    def refresh_market(self, market_id):
+        if not self.allow_live_network: raise ValueError('Live market refresh disabled.')
+        response=requests.get(f'{GAMMA_BASE}/markets/{market_id}',timeout=8)
+        response.raise_for_status()
+        return self._ingest_live(response.json())
+
+    def resolution(self, condition_id):
+        """Official finalized payout vector; proposed/disputed/price-only data cannot settle."""
+        if not self.allow_live_network: return {'status':'unavailable','note':'Live settlement retrieval disabled.'}
+        if not re.fullmatch(r'0x[0-9a-fA-F]{64}',condition_id or ''): return {'status':'unavailable','note':'Missing valid condition identifier.'}
+        url='https://data-api.polymarket.com/v2/resolutions'
+        try:
+            response=requests.get(url,params={'condition':condition_id},timeout=8);response.raise_for_status()
+            data=response.json()
+            for row in data.get('data') or []:
+                if row.get('condition_id','').lower()!=condition_id.lower(): continue
+                state=str(row.get('status','')).lower()
+                if state not in ('resolved','settled','finalized') or not row.get('transaction_hash') or row.get('extended_review'):
+                    return {'status':'unresolved','note':f'Official resolution state is {state or "pending"}; a final payout vector is not established.'}
+                payouts=[Decimal(str(x)) for x in (row.get('payouts') or [])]
+                corroboration=None
+                # Historical final records omit payout vectors. Require a second
+                # official source's closed flag AND explicit winner token flags;
+                # indicative prices never determine settlement.
+                if not payouts:
+                    book_url=f'{CLOB_BASE}/markets/{condition_id}'
+                    clob=requests.get(book_url,timeout=8);clob.raise_for_status();info=clob.json()
+                    tokens=info.get('tokens') or []
+                    if info.get('condition_id','').lower()!=condition_id.lower() or info.get('closed') is not True or len(tokens)!=2 or {t.get('outcome') for t in tokens}!={'Yes','No'} or sum(t.get('winner') is True for t in tokens)!=1:
+                        return {'status':'unresolved','note':'Final resolution exists but an unambiguous official payout vector/winner mapping is not available.'}
+                    mapping={t['outcome']:Decimal(int(t.get('winner') is True)) for t in tokens}
+                    payouts=[mapping['Yes'],mapping['No']]
+                    corroboration={'source_url':book_url,'condition_id':info['condition_id'],'closed':True,'tokens':tokens,'method':'Explicit winner flags; prices ignored.'}
+                if len(payouts)!=2 or any(not x.is_finite() or x<0 for x in payouts) or sum(payouts)<=0:
+                    return {'status':'unresolved','note':'Official final payout vector is incomplete or invalid.'}
+                resolved_at=row.get('resolved_at')
+                if not resolved_at and row.get('last_update_timestamp'):
+                    resolved_at=dt.datetime.fromtimestamp(float(row['last_update_timestamp']),dt.timezone.utc).isoformat()
+                if not resolved_at: return {'status':'unresolved','note':'The official final record has no usable resolution timestamp.'}
+                total=sum(payouts)
+                return {'status':'resolved','payouts':[str(x/total) for x in payouts], 'resolved_at':resolved_at,
+                    'timestamp_basis':'resolved_at' if row.get('resolved_at') else 'last_update_timestamp of the final official record',
+                    'checked_at':dt.datetime.now(dt.timezone.utc).isoformat(),'source_url':url+'?condition='+condition_id,
+                    'transaction_hash':row['transaction_hash'],'condition_id':condition_id,'evidence':row,'corroboration':corroboration}
+            return {'status':'unresolved','note':'No finalized official resolution record for this condition.'}
+        except (requests.RequestException,ValueError,TypeError,KeyError,ArithmeticError):
+            return {'status':'unavailable','note':'Official resolution feed is unavailable; previous records remain unchanged.'}
+
     def search_markets(
         self,
         query: str = "",
@@ -253,6 +362,7 @@ class PolymarketConnector:
         if mc is None:
             return {"error": f"Market {market_id} not found."}
 
+        live_refresh_succeeded = False
         if self.allow_live_network and mc.status == "active" and mc.clob_token_ids:
             try:
                 idx = mc.outcomes.index(outcome) if outcome in mc.outcomes else 0
@@ -260,6 +370,7 @@ class PolymarketConnector:
                 resp = requests.get(f"{CLOB_BASE}/book", params={"token_id": token_id}, timeout=6)
                 if resp.status_code == 200:
                     data = resp.json()
+                    live_refresh_succeeded = True
                     asks = _parse_order_book_levels(data.get("asks", []), sort_ascending=True)
                     bids = _parse_order_book_levels(data.get("bids", []), sort_ascending=False)
                     mc.asks_by_outcome[outcome] = asks
@@ -268,7 +379,7 @@ class PolymarketConnector:
                     mc.retrieval_timestamp = (
                         dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
                     )
-            except requests.RequestException:
+            except (requests.RequestException, ValueError, TypeError, KeyError):
                 pass
 
         asks = mc.asks_by_outcome.get(outcome, [])
@@ -278,6 +389,7 @@ class PolymarketConnector:
 
         return {
             "market_id": mc.market_id,
+            "live_refresh_succeeded": live_refresh_succeeded,
             "outcome": outcome,
             "status": mc.status,
             "data_origin": mc.data_origin,

@@ -1,0 +1,198 @@
+{
+  "method": "Identical fixture data, theme, viewport and 1.8-second animation settling; bottom 30px replay disclosure excluded.",
+  "comparisons": [
+    {
+      "baseline": "activity-dark-1024-baseline.png",
+      "replay": "activity-dark-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "activity-dark-1440-baseline.png",
+      "replay": "activity-dark-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "activity-light-1024-baseline.png",
+      "replay": "activity-light-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "activity-light-1440-baseline.png",
+      "replay": "activity-light-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "data-sources-dark-1024-baseline.png",
+      "replay": "data-sources-dark-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "data-sources-dark-1440-baseline.png",
+      "replay": "data-sources-dark-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "data-sources-light-1024-baseline.png",
+      "replay": "data-sources-light-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "data-sources-light-1440-baseline.png",
+      "replay": "data-sources-light-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "overview-dark-1024-baseline.png",
+      "replay": "overview-dark-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "overview-dark-1440-baseline.png",
+      "replay": "overview-dark-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "overview-light-1024-baseline.png",
+      "replay": "overview-light-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "overview-light-1440-baseline.png",
+      "replay": "overview-light-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "protections-dark-1024-baseline.png",
+      "replay": "protections-dark-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "protections-dark-1440-baseline.png",
+      "replay": "protections-dark-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 2e-06,
+      "passed": true
+    },
+    {
+      "baseline": "protections-light-1024-baseline.png",
+      "replay": "protections-light-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "protections-light-1440-baseline.png",
+      "replay": "protections-light-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "risks-dark-1024-baseline.png",
+      "replay": "risks-dark-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "risks-dark-1440-baseline.png",
+      "replay": "risks-dark-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "risks-light-1024-baseline.png",
+      "replay": "risks-light-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "risks-light-1440-baseline.png",
+      "replay": "risks-light-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "settings-dark-1024-baseline.png",
+      "replay": "settings-dark-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "settings-dark-1440-baseline.png",
+      "replay": "settings-dark-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "settings-light-1024-baseline.png",
+      "replay": "settings-light-1024-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    },
+    {
+      "baseline": "settings-light-1440-baseline.png",
+      "replay": "settings-light-1440-replay.png",
+      "excluded_bottom_pixels": 30,
+      "fraction_pixels_delta_gt_16": 0.0,
+      "mean_channel_delta": 0.0,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

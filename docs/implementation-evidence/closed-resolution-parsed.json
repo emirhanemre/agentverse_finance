@@ -1,0 +1,47 @@
+{
+  "status": "resolved",
+  "payouts": [
+    "0",
+    "1"
+  ],
+  "resolved_at": "2025-01-22T19:07:05+00:00",
+  "timestamp_basis": "last_update_timestamp of the final official record",
+  "checked_at": "2026-11-08T01:24:27.543093+00:00",
+  "source_url": "https://data-api.polymarket.com/v2/resolutions?condition=0x611eb3f568821a86fc5e6b1f6afc97439f13f5712f9ad31240b3ed0e386390b9",
+  "transaction_hash": "0x1f56f7621f50fe1cdd0a4cc3eabf568be959cda86400ce32ca148b05c0df3cc0",
+  "condition_id": "0x611eb3f568821a86fc5e6b1f6afc97439f13f5712f9ad31240b3ed0e386390b9",
+  "evidence": {
+    "question_id": "0xbc341f0c45e431281fc41c5b5c730fefb19b9c1940f95d4177082b518d5bba41",
+    "condition_id": "0x611eb3f568821a86fc5e6b1f6afc97439f13f5712f9ad31240b3ed0e386390b9",
+    "status": "resolved",
+    "extended_review": false,
+    "was_disputed": false,
+    "new_version_q": true,
+    "proposed_price": "0",
+    "reproposed_price": "69",
+    "price": "0",
+    "transaction_hash": "0x1f56f7621f50fe1cdd0a4cc3eabf568be959cda86400ce32ca148b05c0df3cc0",
+    "log_index": "459",
+    "last_update_timestamp": "1737572825"
+  },
+  "corroboration": {
+    "source_url": "https://clob.polymarket.com/markets/0x611eb3f568821a86fc5e6b1f6afc97439f13f5712f9ad31240b3ed0e386390b9",
+    "condition_id": "0x611eb3f568821a86fc5e6b1f6afc97439f13f5712f9ad31240b3ed0e386390b9",
+    "closed": true,
+    "tokens": [
+      {
+        "token_id": "73439111871544915884989273941750392895028543305983411751150409293893087227601",
+        "outcome": "Yes",
+        "price": 0,
+        "winner": false
+      },
+      {
+        "token_id": "85562251874865992044690433865507007534823163031628388446970470881921995560704",
+        "outcome": "No",
+        "price": 1,
+        "winner": true
+      }
+    ],
+    "method": "Explicit winner flags; prices ignored."
+  }
+}

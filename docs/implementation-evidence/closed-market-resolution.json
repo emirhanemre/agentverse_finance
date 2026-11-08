@@ -1,0 +1,80 @@
+{
+  "checked_at": "2026-11-08T01:22:49.509906+00:00",
+  "market_id": "519338",
+  "condition_id": "0x611eb3f568821a86fc5e6b1f6afc97439f13f5712f9ad31240b3ed0e386390b9",
+  "official_resolution": {
+    "data": [
+      {
+        "question_id": "0xbc341f0c45e431281fc41c5b5c730fefb19b9c1940f95d4177082b518d5bba41",
+        "condition_id": "0x611eb3f568821a86fc5e6b1f6afc97439f13f5712f9ad31240b3ed0e386390b9",
+        "status": "resolved",
+        "extended_review": false,
+        "was_disputed": false,
+        "new_version_q": true,
+        "proposed_price": "0",
+        "reproposed_price": "69",
+        "price": "0",
+        "transaction_hash": "0x1f56f7621f50fe1cdd0a4cc3eabf568be959cda86400ce32ca148b05c0df3cc0",
+        "log_index": "459",
+        "last_update_timestamp": "1737572825"
+      }
+    ]
+  },
+  "legacy_clob": {
+    "enable_order_book": false,
+    "active": true,
+    "closed": true,
+    "archived": false,
+    "accepting_orders": false,
+    "accepting_order_timestamp": "2025-01-21T16:47:17Z",
+    "minimum_order_size": 5,
+    "minimum_tick_size": 0.001,
+    "condition_id": "0x611eb3f568821a86fc5e6b1f6afc97439f13f5712f9ad31240b3ed0e386390b9",
+    "question_id": "0x2f6ae77ff15de81dab39b2c1f3a32c3970e399cf21d56c2196f44c8995a4f200",
+    "question": "Will the highest temperature in London be 35\u00b0F or lower on January 22?",
+    "description": "Highest temperature in London on Jan 22?This market will resolve to the temperature range that contains the highest temperature recorded at the London City Airport Station in degrees Fahrenheit on January 22, 2025.\n\nThe resolution source for this market will be information from Wunderground, specifically the highest temperature recorded for all times on this day by the Forecast for the London City Airport Station once information is finalized, available here: https://www.wunderground.com/history/daily/gb/london/EGLC.\n\nThe resolution source for this market measures temperatures to whole degrees Fahrenheit (eg, 21\u00b0F). Thus, this is the level of precision that will be used when resolving the market.\n\nAny revisions to temperatures recorded after data is finalized for this market\u2019s timeframe will not be considered for this market's resolution.",
+    "market_slug": "highest-temperature-in-london-on-jan-22-will-the-highest-temperature-in-london-be-35f-or-lower-on-january-22",
+    "end_date_iso": "2025-01-22T00:00:00Z",
+    "game_start_time": null,
+    "seconds_delay": 0,
+    "fpmm": "",
+    "maker_base_fee": 0,
+    "taker_base_fee": 0,
+    "notifications_enabled": true,
+    "neg_risk": true,
+    "neg_risk_market_id": "0x2f6ae77ff15de81dab39b2c1f3a32c3970e399cf21d56c2196f44c8995a4f200",
+    "neg_risk_request_id": "0xbc341f0c45e431281fc41c5b5c730fefb19b9c1940f95d4177082b518d5bba41",
+    "icon": "https://polymarket-upload.s3.us-east-2.amazonaws.com/highest-temperature-in-london-on-jan-22-eouu0bkjph8i.jpg",
+    "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/highest-temperature-in-london-on-jan-22-eouu0bkjph8i.jpg",
+    "rewards": {
+      "rates": [
+        {
+          "asset_address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+          "rewards_daily_rate": 20
+        }
+      ],
+      "min_size": 20,
+      "max_spread": 3.5
+    },
+    "is_50_50_outcome": false,
+    "tokens": [
+      {
+        "token_id": "73439111871544915884989273941750392895028543305983411751150409293893087227601",
+        "outcome": "Yes",
+        "price": 0,
+        "winner": false
+      },
+      {
+        "token_id": "85562251874865992044690433865507007534823163031628388446970470881921995560704",
+        "outcome": "No",
+        "price": 1,
+        "winner": true
+      }
+    ],
+    "tags": [
+      "Science",
+      "Weather"
+    ],
+    "version": "v1"
+  }
+}

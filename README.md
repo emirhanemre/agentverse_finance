@@ -1,115 +1,112 @@
-# UK Pub Weather Exposure & Polymarket Paper Hedge Assessment
+# Pub Hedge — local weather paper trading
 
-A working Python machine-learning and decision-agent web application built for the **Agentverse 2026 Finance Track**.
+Nick’s Next.js interface, connected to the reusable Python weather model and paper-trading services on `luke-dev`.
 
-It helps an **independent UK pub owner with outdoor beer garden seating (London SE1)** answer a specific financial risk question:
+Business setup → sample sales or CSV import → train/evaluate imported sales → weather scenario / current forecast → conditional revenue analysis → market suitability → recommendation or explained rejection → human decision → persisted paper position → dashboard. You can complete setup without a hedge.
 
-> *"How exposed is my business to the forecast weather, and would any available Polymarket contract meaningfully offset that exposure within my budget?"*
+## Install and launch
 
----
-
-## Prominent Disclosures (Data Provenance & Paper Trading)
-
-1. **Synthetic Business Revenue Data:** Daily pub revenue (`daily_revenue_gbp`), seating capacity schedules, opening hours, and event indicators are synthetically generated (`src/business_data.py`, `seed=20261107`). They are paired with **real historical daily London weather observations** (`2022-01-01` to `2025-12-31`, 1,461 days) from the Open-Meteo ERA5 archive (`data/raw/london_weather_real_2022_2025.csv`, CC-BY 4.0). Model metrics demonstrate pipeline performance under stated synthetic assumptions and **never imply predictive accuracy for real pubs**.
-2. **Real Polymarket Public Data:** Market discovery and order-book inspection use Polymarket's public read-only Gamma (`https://gamma-api.polymarket.com`) and CLOB (`https://clob.polymarket.com`) endpoints, with 36 authentic timestamped snapshots cached in `data/polymarket_cache/authentic_polymarket_snapshots.json` for reproducible offline demonstration.
-3. **Human-Approved Paper Trading Only:** All positions are simulated paper records stored in local SQLite (`data/runtime/app_state.db`). No wallet keys are requested, no blockchain transactions are signed, and no real orders are ever submitted.
-4. **Never Promises Universal Protection:** On live Polymarket data today, no active London daily rainfall contract exists; the system honestly returns `no_suitable_hedge` after inspecting and rejecting unsuitable contracts (such as global temperature or historical London daily max-temperature contracts that carry basis risk against rainfall).
-
----
-
-## Quick Start (Beginner-Friendly Local Launch)
-
-### 1. Install Dependencies
-
-From the project root (`/Users/lukecamilleri/Desktop/agentverse_finance`), run:
+Use Python 3.10–3.12 and Node.js 22 LTS. From the repository root:
 
 ```bash
-pip3 install -r requirements.txt
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+npm --prefix app ci
+cp -n .env.example .env
+python3 scripts/start.py
 ```
 
-### 2. Optional: Configure Server-Side Gemini 4 Argon Credentials (`.env`)
+Open **http://localhost:3000**. API documentation: **http://127.0.0.1:8000/docs**. Ctrl-C stops both services. No credentials are required for the primary application. Fonts are self-hosted, using the exact IBM Plex files and fallback metrics from Nick’s current application; builds do not need Google Fonts access.
 
-Never paste API keys into chat or commit them to Git. `.env` is ignored by `.gitignore`.
-If you have an event-provided `GEMINI_API_KEY` for standalone Python server calls to `gemini-4-argon`:
+Run the launcher once, in one terminal. If either port is occupied, it reports the conflict before starting any new services. An already running app can be opened at the address above; stop its original launcher with Ctrl-C before restarting. The ready URLs are printed only after both services respond successfully.
+
+For a production build running locally:
 
 ```bash
-cp .env.example .env
+npm --prefix app run build
+python3 scripts/start.py --production
 ```
 
-Then open `.env` in your local text editor (outside chat) and set `GEMINI_API_KEY=<your-key-here>`.
-*(If `.env` has no key configured, the web app clearly marks Live Gemini Server Integration as `BLOCKED` and lets you run the clearly labelled **Deterministic Contract-Matching Comparator** across the exact same 10 tools without faking a Gemini response.)*
+Keep the services bound to loopback. This is a single-operator local application, not an authenticated multi-user deployment. Run one API process; interrupted analysis jobs become failed on restart and can be retried.
 
-### 3. Re-Run Dataset Generation, Model Training & Held-Out Agent Evaluation (Optional — Artifacts Already Saved)
+## First journey
+
+1. Enter your business details and weather coordinates, or explicitly choose **Use sample business**. Review the self-reported details. A Companies House visual connection demo is available; actual company, licensing and identity checks are unavailable.
+2. Select **Use synthetic sample sales**, or import a CSV in the existing data-source panel. Toast, Monzo and Xero have explicit demo connection animations. These do not access accounts or import records. For an import, use at least 180 daily records and click **Train and evaluate sales model**; inspect the chronological holdout report before analysis.
+3. Choose a target date and an explicit manual weather scenario, or retrieve a current Open-Meteo forecast. Choose live discovery, cached inspection, or a labelled synthetic test market.
+4. Run analysis. Progress reflects saved backend task events. Review the conditional revenue comparison, assumptions and candidate rejection reasons.
+5. For a controlled approval example choose **Synthetic test · suitable contract**, with 14mm daily rain and a £100 budget. The fictional contract pays at ≥10mm at a fictional business-site gauge. Select it, acknowledge the paper risk and approve. For a no-hedge example choose **Synthetic test · no suitable hedge**, which deliberately uses a mismatched location.
+6. Complete setup and open the dashboard. Profiles, sales, runs, decisions, settings, positions and activity survive reloads and service restarts. Test positions remain visibly labelled synthetic and unresolved.
+
+Nick’s original demonstration is available at **/replay** and **/replay/setup**, behind an explicit fictional-replay label. It has no access to current API records. Its fictional timeline, provider connections and payouts are not evidence of real integrations.
+
+## Sales CSV
+
+The exact columns are `date,revenue_gbp,currency`:
+
+```csv
+date,revenue_gbp,currency
+2026-10-01,1200.00,GBP
+2026-10-02,1600.50,GBP
+```
+
+Use real ISO calendar dates, no future sales, one row per day, GBP only, finite nonnegative amounts with at most two decimals. Maximum 10,000 rows and 2 MB. Invalid imports explain the row/column issue and preserve the previously selected dataset. The frontend includes a downloadable template. Records are user-supplied and their authenticity is unverified.
+
+Imports supply sales totals and monthly history immediately. **Train and evaluate sales model** joins sales to Open-Meteo historical weather at your saved coordinates. The oldest 60% fits two candidate models; the next 20% selects by MAE; the newest 20% evaluates the selected model once. Activation requires at least 180 matched days and ≥5% lower holdout MAE than a training-only weekday baseline. Missing days are excluded, not filled with zero sales. Failed evaluations remain visible and do not activate a model. Changing sales or business details requires new training. This is internal evaluation on unverified records, not proof of weather causality or external validation. A downloadable four-year **synthetic training sample** is provided for testing. Uploading it does not make it real business data.
+
+## Evidence, assumptions and supported scope
+
+- **Revenue model:** accepted per-business Ridge or histogram gradient boosting models are stored with their evaluation and weather provenance. Automatic analysis uses the accepted model for the exact current profile/data fingerprint; imports without one receive an actionable training requirement. The explicit synthetic demo option retains the original London-only fitted pipeline (`artifacts/models/fitted_pipeline.joblib`, scikit-learn 1.6.0). Its training revenue is synthetic. Both approaches produce conditional comparisons, not proven causal losses. Model version, validation-derived intervals and out-of-range assumptions are shown. Calendar extrapolation remains uncertain.
+- **Business records:** synthetic sample sales and user imports have different, visible provenance. Neither is presented as verified private financial data.
+- **Weather:** current [Open-Meteo forecasts](https://open-meteo.com/en/docs) include coordinates, source, retrieval time, units, timezone and horizon. Failed retrieval returns an explicitly labelled cache for the same coordinates, or unavailable. A stale cache is never silently treated as current. Manual scenarios are assumptions. Historical observations remain in `data/raw` with provenance records.
+- **Markets:** bounded public Gamma weather searches target the configured location, with dated-list fallback. Search is not exhaustive. Eligible contracts require a fresh CLOB order book; caches are inspection-only. Live approval retrieves the contract and book again; changed rules, cost, quantity or average price require renewed assessment.
+- **Supported live contracts:** explicit binary Yes/No daily maximum-temperature brackets, or daily rainfall ≥N mm, at EGLC, EGLL, EGCC, EGBB, EGPH or EGPF. Rules must specify the station, event day, local observation window, units and supported rounding. Station distance is calculated and capped by a setting (30km default). METAR routine/SPECI/remark rules are checked. Other/ambiguous contracts get specific rejection reasons. Pure total-precipitation contracts are rejected because snow is not equivalent to rain. Yes/No payoff direction and sizing use the relevant temperature/rain contribution to the conditional downside, rather than all estimated weather loss. An airport station and gridded forecast can diverge; suitability does not guarantee protection.
+- **Paper settlement:** Refresh settlements checks the official Polymarket final-resolution feed, requiring a final state, transaction and valid payout vector. Historical final records without vectors additionally require matching closed CLOB records with explicit unambiguous winner flags; prices never establish settlement. Recorded payouts/net P&L use entry-time fixed FX and include original paper costs. Disputed, provisional, unavailable and synthetic records remain unresolved. Recording is atomic and idempotent; no actual redemption/payment occurs.
+- **Monitoring and alerts:** opt in under Settings, choose interval (5–1440 minutes), horizon (1–7 days) and budget. While the single API process runs, monitoring fetches current forecasts, checks settlements, assesses the largest positive conditional downside and saves deduplicated in-app alerts/proposals. It never approves positions. Status, next check and failures persist. It is not an operating-system background service, push/email delivery or an always-on hosted worker.
+- **Probability / value:** no exact-event contract probability, expected value, numeric basis-risk score or historical saving is fabricated. A forecast’s probability of any precipitation is not the probability of an exact contract threshold, station and window. Order-book prices are prices, not calibrated model probabilities.
+- **Financial assumptions:** GBP accounts; configurable fixed USD/GBP simulation rate (default 1.28), configurable flat paper fee (default 50 bps). Decimal order-book walking supplies quantity, cost and conditional payout. These are not actual exchange fees or live FX quotes. Revenue is distinct from margin and cashflow; expense and payment-timing models are unavailable.
+- **Execution:** deterministic Python orchestration with a frozen regression model. The primary application does not use an LLM or claim Gemini access. The legacy agent and Streamlit code remain development references.
+- **Demo-only / unsupported:** Toast, Monzo, Xero and Companies House connections are visual demos at your request. Company/licence/identity checks, sports, beer duty, margin/cashflow models, real-money trading and LLM orchestration remain outside the implemented weather-paper workflow.
+
+## Paper controls and persistence
+
+Authoritative records live in SQLite at `data/runtime/weather_app.db` (override with `APP_DB_PATH`). Browser storage holds the theme only; replay uses its separate legacy demo preference. Back up the SQLite database with services stopped. Runtime databases are ignored by Git.
+
+Proposals bind the exact contract, outcome, quantity, maximum cost and quote timestamp. They expire after 15 minutes. Business, dataset, accepted model or financial risk-setting changes invalidate dependent analysis and pending approvals. Monitoring schedule changes do not invalidate approvals. Analysis completion verifies that its input revision is still current.
+
+A SQLite `BEGIN IMMEDIATE` transaction serializes approvals, rejections, reservations and profile changes. Tampered, expired, stale, already-decided and duplicate approvals are rejected. Calculations and risk checks remain server-side. Every paper position requires human approval, including small positions.
+
+Risk limits apply across all local portfolio records:
+
+- Weekly spend: entry costs approved since Monday 00:00 Europe/London, plus unexpired pending reservations.
+- Monthly worst-case loss allowance: current-month entry costs, plus earlier unresolved entry costs, earlier positions’ realized paper losses settled this month, and unexpired pending reservations. Hypothetical payouts never credit this allowance.
+- Per-contract concentration: unresolved positions and unexpired pending proposals in that market.
+
+Rejected, invalidated and expired proposals do not reserve new spending. Existing positions remain in the portfolio after profile edits so they cannot evade limits. There is no automatic exchange submission, wallet signing or payment operation.
+
+## Verification
 
 ```bash
-python3 -m src.business_data
-python3 -m src.training
-python3 -m src.agent_eval
+.venv/bin/python -m pytest -q
+npm --prefix app run lint
+npm --prefix app run typecheck
+npm --prefix app run build
+.venv/bin/python -m scripts.check_live
+.venv/bin/python -m scripts.verify_weather_live
 ```
 
-### 4. Run the Automated Test Suite (`pytest`)
+`tests/test_application.py` and `tests/test_weather_features.py` use isolated temporary databases and mocked transport for deterministic failure tests. Existing backend tests are retained. Live provider checks are separate in `docs/live-verification.json`; passing mocked tests does not verify an external integration.
+
+For browser tests, launch with a **fresh test database**, then run the acceptance script (install Playwright Chromium first; set `CHROME_PATH` to use another compatible browser):
 
 ```bash
-python3 -m pytest -v
+APP_DB_PATH=/tmp/pub-hedge-browser-test.sqlite3 python3 scripts/start.py --production
+# In another terminal:
+node scripts/browser_acceptance.cjs
 ```
 
-### 5. Launch the Browser Application (`Streamlit`)
+Install the matching browser first with `(cd app && npx playwright install chromium)`. The script refuses an existing business profile and never clears a user's records. Baseline captures, comparison methodology and test results are documented in [docs/INTEGRATION.md](docs/INTEGRATION.md) and [docs/VERIFICATION.md](docs/VERIFICATION.md).
 
-```bash
-streamlit run app.py
-```
+## Retained development work
 
-Open the local URL printed by Streamlit (typically `http://localhost:8501`) in your browser.
-
----
-
-## Repository Structure
-
-```text
-agentverse_finance/
-├── app.py                                      # Streamlit browser interface (Views A, B, C, D)
-├── requirements.txt                            # Pinned compatible Python dependencies
-├── .env.example                                # Safe empty placeholders for server credentials
-├── .gitignore                                  # Excludes .env, private keys, and runtime SQLite DBs
-├── src/
-│   ├── schemas.py                              # Pydantic v2 input/output schemas & secret redaction
-│   ├── weather_data.py                         # Real Open-Meteo London weather loader & range checks
-│   ├── business_data.py                        # Reproducible synthetic pub sales generator (seed=20261107)
-│   ├── features.py                             # Strictly causal feature engineering & WeekdayMeanBaseline
-│   ├── training.py                             # Chronological 60/20/20 split, model selection & saving
-│   ├── evaluation.py                           # MAE/RMSE, subset analysis & 80% residual intervals
-│   ├── inference.py                            # Saved-model loader & scenario exposure comparator
-│   ├── polymarket_client.py                    # Public Gamma/CLOB connector, snapshot cache & injection scan
-│   ├── financial_calc.py                       # Decimal ask-ladder walking, bps fees, FX & scenario P&L
-│   ├── risk_controls.py                        # 10 deterministic risk & suitability checks enforced in code
-│   ├── paper_execution.py                      # SQLite persistence & SHA-256 human approval binding
-│   ├── agent.py                                # Gemini 4 Argon tool-calling agent & deterministic comparator
-│   └── agent_eval.py                           # 12 held-out evaluation cases & comparator benchmark
-├── scripts/
-│   └── fetch_external_data.py                  # Script used to fetch real Polymarket & Open-Meteo data
-├── data/
-│   ├── raw/
-│   │   ├── london_weather_real_2022_2025.csv   # Real daily London weather (1,461 days, Open-Meteo ERA5)
-│   │   └── london_weather_provenance.json      # Weather source metadata, coordinates, and CC-BY 4.0 licence
-│   ├── processed/
-│   │   ├── uk_pub_daily_dataset.csv            # Combined weather + synthetic pub revenue dataset
-│   │   └── dataset_provenance_and_assumptions.json
-│   └── polymarket_cache/
-│       └── authentic_polymarket_snapshots.json # 36 authentic Polymarket Gamma + CLOB snapshots
-├── artifacts/
-│   └── models/
-│       ├── fitted_pipeline.joblib              # Saved frozen scikit-learn model bundle
-│       ├── feature_schema.json                 # Validated model feature schema
-│       ├── training_config.json                # Split dates, hyperparameter search & SHA-256 fingerprints
-│       ├── evaluation_report.json              # Full validation/test/subset metrics & worst misses
-│       ├── test_set_predictions.csv            # Out-of-sample test predictions (2025-03-15 to 2025-12-31)
-│       └── agent_evaluation_report.json        # Held-out agent evaluation results across 12 cases
-├── docs/
-│   ├── MODEL_EVALUATION.md                     # Detailed revenue model evaluation report
-│   ├── AGENT_EVALUATION.md                     # Held-out agent & risk control evaluation report
-│   ├── PITCH_EVIDENCE.md                       # Factual pitch deck evidence & failure analysis
-│   ├── DEMO_SCRIPT_4MIN.md                     # Four-minute step-by-step judge demo script
-│   └── SECRET_SCAN_REPORT.md                   # Secret scan verification report
-└── tests/
-    └── test_suite.py                           # 15 pytest tests covering all Section 16 requirements
-```
+The original Streamlit app is available with `.venv/bin/python -m streamlit run app.py`. It is not the primary interface and uses its own legacy defaults and database. Historical setup notes are preserved in [docs/STREAMLIT_REFERENCE.md](docs/STREAMLIT_REFERENCE.md); their old model-access and universal-market claims are not current evidence. Existing model evaluation, source datasets, provenance and tests remain intact. No remote branches were modified.

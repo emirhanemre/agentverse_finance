@@ -1,0 +1,213 @@
+{
+  "resolution": {
+    "data": [
+      {
+        "question_id": "0xc4f119be6251f178d5b7b494d2c8a2c551d027f4004ec620bec1cbea4b8d2c62",
+        "condition_id": "0x0ffb891562ab59e74dbdb735844c399c8e819c00c87bf546c9ae99bdc7b34898",
+        "status": "posed",
+        "extended_review": false,
+        "was_disputed": false,
+        "new_version_q": true,
+        "proposed_price": "69",
+        "reproposed_price": "69",
+        "price": "69",
+        "transaction_hash": "0xbf45b0a6e53ef14434dec5a677cd36c620bea3a2ad01cb8f0fc347a6561f8db6",
+        "log_index": "203",
+        "last_update_timestamp": "1793944554"
+      }
+    ]
+  },
+  "book": {
+    "market": "0x0ffb891562ab59e74dbdb735844c399c8e819c00c87bf546c9ae99bdc7b34898",
+    "asset_id": "77764096552678765422941537241761560299640804854330772214004546242341454319321",
+    "timestamp": "1794100004324",
+    "hash": "65845a39ab3a4bbfe5dbf618d2bf1bc5ba56e3cc",
+    "bids": [],
+    "asks": [
+      {
+        "price": "0.999",
+        "size": "50"
+      },
+      {
+        "price": "0.994",
+        "size": "1166.66"
+      },
+      {
+        "price": "0.99",
+        "size": "700"
+      },
+      {
+        "price": "0.98",
+        "size": "3010"
+      },
+      {
+        "price": "0.974",
+        "size": "2500"
+      },
+      {
+        "price": "0.97",
+        "size": "10"
+      },
+      {
+        "price": "0.967",
+        "size": "1000"
+      },
+      {
+        "price": "0.96",
+        "size": "10"
+      },
+      {
+        "price": "0.95",
+        "size": "155"
+      },
+      {
+        "price": "0.93",
+        "size": "99.99"
+      },
+      {
+        "price": "0.929",
+        "size": "59"
+      },
+      {
+        "price": "0.9",
+        "size": "75"
+      },
+      {
+        "price": "0.85",
+        "size": "96.66"
+      },
+      {
+        "price": "0.84",
+        "size": "5"
+      },
+      {
+        "price": "0.82",
+        "size": "38.88"
+      },
+      {
+        "price": "0.77",
+        "size": "30.43"
+      },
+      {
+        "price": "0.75",
+        "size": "5"
+      },
+      {
+        "price": "0.7",
+        "size": "73.33"
+      },
+      {
+        "price": "0.65",
+        "size": "20"
+      },
+      {
+        "price": "0.55",
+        "size": "31.1"
+      },
+      {
+        "price": "0.5",
+        "size": "64"
+      },
+      {
+        "price": "0.499",
+        "size": "50"
+      },
+      {
+        "price": "0.47",
+        "size": "30"
+      },
+      {
+        "price": "0.34",
+        "size": "40"
+      },
+      {
+        "price": "0.338",
+        "size": "192"
+      },
+      {
+        "price": "0.222",
+        "size": "10"
+      },
+      {
+        "price": "0.204",
+        "size": "20"
+      },
+      {
+        "price": "0.18",
+        "size": "50"
+      },
+      {
+        "price": "0.179",
+        "size": "20"
+      },
+      {
+        "price": "0.172",
+        "size": "10"
+      },
+      {
+        "price": "0.128",
+        "size": "75"
+      },
+      {
+        "price": "0.02",
+        "size": "15"
+      },
+      {
+        "price": "0.019",
+        "size": "5.09"
+      },
+      {
+        "price": "0.015",
+        "size": "5.1"
+      },
+      {
+        "price": "0.014",
+        "size": "5.07"
+      },
+      {
+        "price": "0.01",
+        "size": "65"
+      },
+      {
+        "price": "0.009",
+        "size": "10"
+      },
+      {
+        "price": "0.008",
+        "size": "10"
+      },
+      {
+        "price": "0.007",
+        "size": "310"
+      },
+      {
+        "price": "0.006",
+        "size": "40.18"
+      },
+      {
+        "price": "0.005",
+        "size": "15.02"
+      },
+      {
+        "price": "0.004",
+        "size": "10"
+      },
+      {
+        "price": "0.003",
+        "size": "20.02"
+      },
+      {
+        "price": "0.002",
+        "size": "320"
+      },
+      {
+        "price": "0.001",
+        "size": "697.89"
+      }
+    ],
+    "min_order_size": "5",
+    "tick_size": "0.001",
+    "neg_risk": true,
+    "last_trade_price": "0.999"
+  }
+}

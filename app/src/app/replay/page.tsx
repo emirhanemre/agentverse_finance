@@ -1,0 +1,2 @@
+import Dashboard from "../../replay/Dashboard";
+export default function Replay() { return <><Dashboard /><div className="fixed bottom-0 left-0 right-0 z-50 border-t border-warning-edge bg-warning-wash px-4 py-1 text-center text-[12px] text-warning backdrop-blur">Nick’s fictional demonstration replay · all providers, trades and payouts on this page are sample data · <a className="underline" href="/dashboard">Return to current application</a></div></>; }

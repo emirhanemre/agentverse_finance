@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-11-08T00:08:52.384899+00:00",
+  "location": "Explicit London sample coordinates",
+  "forecast": {
+    "origin": "current_forecast",
+    "source": "Open-Meteo",
+    "source_url": "https://api.open-meteo.com/v1/forecast",
+    "retrieved_at": "2026-11-08T00:08:51+00:00",
+    "timezone": "Europe/London",
+    "coordinates": {
+      "latitude": 51.45,
+      "longitude": -0.07
+    },
+    "units": {
+      "temperature": "\u00b0C",
+      "rain": "mm",
+      "wind": "km/h",
+      "sunshine": "h"
+    },
+    "horizon_start": "2026-11-08",
+    "horizon_end": "2026-11-21",
+    "note": "Grid forecast at configured coordinates. Probability of precipitation is not probability of an exact contract threshold/station/window."
+  },
+  "forecast_days_received": 14,
+  "gamma_catalogue": {
+    "ok": true,
+    "origin": "live_polymarket_api",
+    "retrieved_at": "2026-11-08T00:08:51.557546+00:00",
+    "scanned": 400,
+    "weather_candidates": 0,
+    "bounded_search": true,
+    "note": "Gamma discovery: at most 400 contracts in a two-day end-date window; not an exhaustive exchange search."
+  },
+  "clob": {
+    "tested": false,
+    "note": "No suitable, verified live rainfall contract yet. No live order, payment or OAuth test."
+  }
+}
