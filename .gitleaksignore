@@ -1,0 +1,4 @@
+# False positives: Polymarket market slugs for Bodø/Glimt ("will-bodglimt-…"), not GitLab mail tokens.
+# The Finance Kit's push check ignores this file by design; record these in its review report instead.
+1315a76536478b9f8489466ab5b85da449ce2778:fixtures/recorded/polymarket/c6c1d576ad0b41b2.json:gitlab-incoming-mail-token:5805
+1315a76536478b9f8489466ab5b85da449ce2778:fixtures/recorded/polymarket/c6c1d576ad0b41b2.json:gitlab-incoming-mail-token:18871
