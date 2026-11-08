@@ -1,6 +1,7 @@
 """FastAPI service: streams agent runs over SSE and serves receipts, approvals, limits,
 the audit log and results. Paper trading only: no real order is ever placed."""
 import asyncio
+import hmac
 import json
 import os
 import re
@@ -9,9 +10,9 @@ import time
 import uuid
 from datetime import datetime
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 from pubhedge_core.limits import DEFAULT_LIMITS
@@ -24,9 +25,26 @@ from .tools import OFFER, SCENARIO, binding, current_ledger, identity, pick_offe
 
 config.load_env()
 app = FastAPI(title="Pub Hedge agents")
-# PUBHEDGE_APP_ORIGIN: the app's origin when it runs on another port than 3000
+
+
+@app.middleware("http")
+async def access_key(request: Request, call_next):
+    """Deployed, PUBHEDGE_ACCESS_KEY keeps the API to the password-gated app: every /api call but the health
+    check carries the key (header, or ?key= for the SSE stream). Unset locally, so dev needs nothing."""
+    key = os.environ.get("PUBHEDGE_ACCESS_KEY", "")
+    path = request.url.path
+    if key and request.method != "OPTIONS" and path.startswith("/api") and path != "/api/health":
+        given = request.headers.get("x-pubhedge-key") or request.query_params.get("key") or ""
+        if not hmac.compare_digest(given.encode(), key.encode()):
+            return JSONResponse({"detail": "access key required"}, status_code=401)
+    return await call_next(request)
+
+
+# Registered after the key check, so CORS wraps it and a 401 still reaches the browser readably.
+# PUBHEDGE_APP_ORIGIN: the app's origin when it runs elsewhere (comma-separated for several, e.g. the Vercel URL)
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000", "http://127.0.0.1:3000",
-                                                  *filter(None, [os.environ.get("PUBHEDGE_APP_ORIGIN")])],
+                                                  *[o.strip() for o in os.environ.get("PUBHEDGE_APP_ORIGIN", "").split(",")
+                                                    if o.strip()]],
                    allow_methods=["*"], allow_headers=["*"])
 DEMO_FIXTURE = RUNS / "demo-run.json"
 # One decision at a time: approve, reject, expiry and limit re-checks read the ledger and then write, so two
