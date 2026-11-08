@@ -10,7 +10,7 @@
    "cycle_precision": 1.0,
    "cycle_recall": 1.0,
    "cycle_f1": 1.0,
-   "true_positive_records": 62,
+   "true_positive_records": 53,
    "false_positive_records": 0,
    "missed_records": 0
   },
@@ -19,9 +19,9 @@
    "wins_vs_buy_and_hold": 10,
    "losses_vs_buy_and_hold": 10,
    "ties": 0,
-   "beat_cash": 8,
-   "median_excess_vs_buy_and_hold_bps_of_capital": -314,
-   "mean_max_drawdown_bps": 410,
+   "beat_cash": 6,
+   "median_excess_vs_buy_and_hold_bps_of_capital": -34,
+   "mean_max_drawdown_bps": 471,
    "sign_test_p_value": 1.0,
    "verdict": "Not distinguishable from buy-and-hold on these paths; more paths or a better edge is needed."
   }
@@ -31,18 +31,19 @@
   "errors": 0,
   "market_summary": {
    "paths": 60,
-   "wins_vs_buy_and_hold": 30,
-   "losses_vs_buy_and_hold": 30,
+   "wins_vs_buy_and_hold": 23,
+   "losses_vs_buy_and_hold": 37,
    "ties": 0,
-   "beat_cash": 20,
-   "median_excess_vs_buy_and_hold_bps_of_capital": 1,
-   "mean_max_drawdown_bps": 655,
-   "sign_test_p_value": 1.0,
+   "beat_cash": 25,
+   "median_excess_vs_buy_and_hold_bps_of_capital": -90,
+   "mean_max_drawdown_bps": 704,
+   "sign_test_p_value": 0.09246098107292373,
    "verdict": "Not distinguishable from buy-and-hold on these paths; more paths or a better edge is needed."
   }
  },
  "commitments": {
-  "mixed_60": "427c8668c9bebd33021a1e44f8d11bd715df75822466eb7fe0b12a9a200358bf",
-  "real_markets_60": "ee74742a05597eb6c3240ace657e9912227d00b36a799eb200f3cfc7620f18df"
- }
+  "mixed_60": "84745cdd2f30473498d066ab907557bfd1710df29bb6b9d243de195c3d470540",
+  "real_markets_60": "1f050866366bc47cfd708f577433e286c3cc75e6c5f0a982cf5a37a10db45d36"
+ },
+ "project_commit": "53991bb"
 }

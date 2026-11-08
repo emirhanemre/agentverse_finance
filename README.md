@@ -21,7 +21,7 @@ tells the owner whether payroll clears. Our own self-serve challenge results are
 [docs/challenge/](docs/challenge/README.md). They are our own check, not official judging:
 
 - mixed pack: 40/40 exact checks, transactions F1 100%, 0 errors;
-- market rule: no edge over buy-and-hold, 30/30 on real-markets.
+- market rule: no edge over buy-and-hold (23 wins, 37 losses on real-market windows, p = 0.09).
 
 ## Run it
 
