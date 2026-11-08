@@ -46,23 +46,27 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   await page.waitForTimeout(500); // let the step fade-in finish
   await page.screenshot({ path: `${SHOTS}/01-agent-sees.png` });
 
-  // A badge opens its receipt, with the hash chain
+  // Quiet view by default; S switches to the audit view, where every figure shows its badge and opens its receipt, with the hash chain
+  await page.keyboard.press("s");
+  await expect(page.getByTestId("audit-switch")).toHaveAttribute("aria-checked", "true");
   await page.getByTestId("panel-verify").getByTestId("badge").nth(1).click();
   await expect(page.getByTestId("receipt-drawer")).toContainText("hash");
   await expect(page.getByTestId("receipt-drawer")).toContainText("companies_house");
   await page.keyboard.press("Escape");
   await expect(page.getByTestId("receipt-drawer")).toBeHidden();
+  await page.keyboard.press("s");
+  await expect(page.getByTestId("audit-switch")).toHaveAttribute("aria-checked", "false");
   await page.getByRole("button", { name: "Confirm details" }).click();
 
   // Risks
   await hasBadge(page, "panel-risks");
   await page.getByRole("button", { name: "See the impact" }).click();
 
-  // Cashflow: the payroll week that doesn't clear
-  await hasBadge(page, "panel-cashflow");
-  await expect(page.getByTestId("panel-cashflow")).toContainText("SYNTHETIC — modelled for a pub of this profile");
+  // Impact: payday either side of the payroll line, how cover gets there, and the exact table
+  await hasBadge(page, "panel-payday");
+  await hasBadge(page, "panel-bridge");
+  await expect(page.getByTestId("panel-bridge")).toContainText("SYNTHETIC — modelled for a pub of this profile");
   await expect(page.getByTestId("outcomes")).toContainText("Dry");
-  await expect(page.getByTestId("backtest-honest")).toContainText("does not reduce");
   await page.getByRole("button", { name: "See the recommendation" }).click();
 
   // Recommendation with rationale
@@ -80,6 +84,7 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   await expect(page.getByTestId(`approve-${first}`)).toBeVisible();
   await hasBadge(page, "panel-approval");
   await hasBadge(page, "panel-cashflow");
+  await expect(page.getByTestId("panel-cashflow")).toContainText("SYNTHETIC — modelled for a pub of this profile");
   await expect(approval).toContainText("PAPER TRADING — no real orders");
   await expect(approval.getByTestId("check-weekly_spend")).toBeVisible();
   await expect(approval.getByTestId("check-per_market_concentration")).toBeVisible();
@@ -104,6 +109,10 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   await expect(page.getByTestId("blocked-reason")).toContainText("weekly spend");
   await expect(page.getByTestId(`approve-${second}`)).toHaveCount(0);
   await page.screenshot({ path: `${SHOTS}/04-limit-blocks.png` });
+
+  // The honest backtest moved from the impact step to the dashboard's Backtest page
+  await page.getByRole("button", { name: "Backtest", exact: true }).click();
+  await expect(page.getByTestId("backtest-honest")).toContainText("does not reduce");
 
   expect(errors, "console errors").toEqual([]);
 });

@@ -10,11 +10,11 @@ export function Logo({ compact }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2">
       <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden>
-        <rect x="0.5" y="0.5" width="19" height="19" rx="4" fill="var(--surface-3)" stroke="var(--line-strong)" />
+        <rect x="0.5" y="0.5" width="19" height="19" rx="6" fill="var(--surface-3)" stroke="var(--line-strong)" />
         <path d="M5 14V8.5L10 5l5 3.5V14" fill="none" stroke="var(--fg)" strokeWidth="1.5" strokeLinejoin="round" />
         <path d="M8 14v-3h4v3" fill="none" stroke="var(--accent)" strokeWidth="1.5" strokeLinejoin="round" />
       </svg>
-      {!compact && <span className="text-[14px] font-medium tracking-[-0.01em]">Pub Hedge</span>}
+      {!compact && <span className="font-display text-md font-medium tracking-[var(--tracking-display)]">Pub Hedge</span>}
     </div>
   );
 }
@@ -72,26 +72,28 @@ const PATHS: Record<IconName, string> = {
   x: "M4 4l8 8M12 4l-8 8",
 };
 
-export const THEME_KEY = "pubhedge.theme";
+export const THEME_KEY = "pubhedge.theme.dusk"; // new key: the old one stored "light" when light was the default
 
+/** Dusk slate is the default; light is Dusk day. */
 export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
-  useEffect(() => setDark(document.documentElement.dataset.theme === "dark"), []);
+  const [dark, setDark] = useState(true);
+  useEffect(() => setDark(document.documentElement.dataset.theme !== "light"), []);
   const toggle = () => {
     const next = !dark;
     setDark(next);
-    if (next) document.documentElement.dataset.theme = "dark";
-    else delete document.documentElement.dataset.theme;
+    if (next) delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = "light";
     try {
       localStorage.setItem(THEME_KEY, next ? "dark" : "light");
     } catch {}
   };
   return (
     <button
+      type="button"
       onClick={toggle}
       aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
       title={dark ? "Light theme" : "Dark theme"}
-      className="flex h-8 w-8 items-center justify-center rounded text-fg-2 transition-colors hover:bg-surface-2 hover:text-fg"
+      className="hit press flex h-8 w-8 items-center justify-center rounded-pill text-fg-2 hover:bg-surface-3 hover:text-fg"
     >
       <Icon name={dark ? "sun" : "moon"} />
     </button>
@@ -111,6 +113,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: "sm" | "md";
 };
 
+/** Pills: one periwinkle primary, a ghost pill beside it, a bare ghost for back links. 40px (md) or 32px (sm), 44px hit target. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { variant = "secondary", size = "md", className, ...rest },
   ref
@@ -119,10 +122,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     <button
       ref={ref}
       className={cx(
-        "inline-flex items-center justify-center gap-1.5 rounded font-medium transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40",
-        size === "md" ? "h-8 px-3 text-[13px]" : "h-7 px-2.5 text-[12px]",
-        variant === "primary" && "bg-accent-strong text-white hover:bg-accent",
-        variant === "secondary" && "border border-line-strong bg-surface-2 text-fg hover:bg-surface-3",
+        "hit press inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-pill font-semibold disabled:cursor-not-allowed disabled:opacity-[0.55]",
+        size === "md" ? "h-10 px-4 text-sm" : "h-8 px-3 text-xs",
+        variant === "primary" && "bg-accent-fill text-accent-ink shadow-[inset_0_1px_0_var(--line-strong)] hover:bg-accent-hi",
+        variant === "secondary" && "bg-surface-2 text-fg shadow-[inset_0_0_0_1px_var(--line-strong)] hover:bg-surface-3",
         variant === "ghost" && "text-fg-2 hover:bg-surface-2 hover:text-fg",
         className
       )}
@@ -131,6 +134,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   );
 });
 
+/** The glass panel: a title in the display face, quiet actions on the right, rows split by hairlines. */
 export function Panel({
   title,
   actions,
@@ -145,32 +149,33 @@ export function Panel({
   bodyClassName?: string;
 }) {
   return (
-    <section className={cx("rounded-md border border-line bg-surface", className)}>
+    <section className={cx("glass", className)}>
       {(title || actions) && (
-        <header className="flex h-10 items-center justify-between border-b border-line px-4">
-          <h2 className="text-[13px] font-medium text-fg">{title}</h2>
-          {actions && <div className="flex items-center gap-2">{actions}</div>}
+        <header className="flex min-h-12 items-center justify-between gap-4 border-b border-line px-6 py-2">
+          <h2 className="max-w-none font-display text-md font-medium text-fg">{title}</h2>
+          {actions && <div className="flex items-center gap-4 text-xs text-fg-3">{actions}</div>}
         </header>
       )}
-      <div className={cx("p-4", bodyClassName)}>{children}</div>
+      <div className={bodyClassName ?? "px-6 py-4"}>{children}</div>
     </section>
   );
 }
 
 export type Tone = "neutral" | "accent" | "positive" | "negative" | "warning";
 
+// State words: periwinkle is done or on, apricot is open, owed or blocked. Text and a mark, never a fill.
 const TONE: Record<Tone, string> = {
-  neutral: "bg-surface-3 text-fg-2",
-  accent: "bg-accent-wash text-accent",
-  positive: "bg-positive-wash text-positive",
-  negative: "bg-negative-wash text-negative",
-  warning: "bg-warning-wash text-warning",
+  neutral: "text-fg-2",
+  accent: "text-accent",
+  positive: "text-positive",
+  negative: "text-warning",
+  warning: "text-warning",
 };
 
 export function Badge({ tone = "neutral", children, dot }: { tone?: Tone; children: React.ReactNode; dot?: boolean }) {
   return (
-    <span className={cx("inline-flex h-5 items-center gap-1.5 whitespace-nowrap rounded px-1.5 text-[11.5px] font-medium", TONE[tone])}>
-      {dot && <span className="h-1.5 w-1.5 rounded-full bg-current" />}
+    <span className={cx("inline-flex items-center gap-2 whitespace-nowrap text-xs font-medium", TONE[tone])}>
+      {dot && <span className="h-2 w-2 rounded-full bg-current" aria-hidden />}
       {children}
     </span>
   );
@@ -178,7 +183,7 @@ export function Badge({ tone = "neutral", children, dot }: { tone?: Tone; childr
 
 export function Spinner({ size = 14, className }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 16 16" className={cx("animate-spin", className)} aria-label="Working">
+    <svg width={size} height={size} viewBox="0 0 16 16" className={cx("keep-motion animate-spin", className)} aria-label="Working">
       <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="1.5" />
       <path d="M8 1.75a6.25 6.25 0 016.25 6.25" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
@@ -189,15 +194,16 @@ export function KeyValue({ rows, className }: { rows: { label: string; value: Re
   return (
     <dl className={cx("divide-y divide-line", className)}>
       {rows.map((r) => (
-        <div key={r.label} className="grid grid-cols-[180px_1fr] items-baseline gap-4 py-2.5">
-          <dt className="text-[12.5px] text-fg-2">{r.label}</dt>
-          <dd className={cx("text-[13px] text-fg", r.mono && "font-mono text-[12.5px]")}>{r.value}</dd>
+        <div key={r.label} className="grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)] items-baseline gap-4 py-3">
+          <dt className="text-xs text-fg-3">{r.label}</dt>
+          <dd className={cx("text-sm text-fg", r.mono && "font-mono text-xs")}>{r.value}</dd>
         </div>
       ))}
     </dl>
   );
 }
 
+/** A figure and its label. Shortfalls are apricot, never red. */
 export function Metric({
   label,
   value,
@@ -213,31 +219,30 @@ export function Metric({
 }) {
   return (
     <div>
-      <div className="text-[12px] text-fg-2">{label}</div>
+      <div className="text-xs text-fg-3">{label}</div>
       <div
         className={cx(
-          "mt-1 font-mono font-medium tracking-[-0.02em]",
-          size === "lg" ? "text-[30px] leading-[36px]" : "text-[20px] leading-[28px]",
+          "mt-1 font-display font-medium tracking-[var(--tracking-display)]",
+          size === "lg" ? "text-3xl" : "text-xl",
           tone === "positive" && "text-positive",
-          tone === "negative" && "text-negative",
-          tone === "warning" && "text-warning",
+          (tone === "negative" || tone === "warning") && "text-warning",
           !tone && "text-fg"
         )}
       >
         {value}
       </div>
-      {sub && <div className="mt-0.5 text-[12px] text-fg-3">{sub}</div>}
+      {sub && <div className="mt-1 text-xs text-fg-3">{sub}</div>}
     </div>
   );
 }
 
 export function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label?: React.ReactNode }) {
   return (
-    <label className="inline-flex cursor-pointer items-center gap-2 text-[13px] text-fg">
+    <label className="inline-flex cursor-pointer items-center gap-2 text-sm text-fg">
       <span
         className={cx(
-          "flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] border transition-colors",
-          checked ? "border-accent-strong bg-accent-strong text-white" : "border-line-strong bg-surface-2"
+          "flex h-4 w-4 shrink-0 items-center justify-center rounded-full border",
+          checked ? "border-accent-fill bg-accent-fill text-accent-ink" : "border-field-edge bg-surface-2"
         )}
       >
         {checked && <Icon name="check" size={12} />}
@@ -250,14 +255,15 @@ export function Checkbox({ checked, onChange, label }: { checked: boolean; onCha
 
 export const tooltipStyle = {
   contentStyle: {
-    background: "var(--surface-2)",
-    border: "1px solid var(--line-strong)",
-    borderRadius: 4,
-    fontSize: 12,
-    fontFamily: "var(--font-mono)",
-    padding: "6px 10px",
+    background: "var(--popover)",
+    border: "0",
+    borderRadius: "var(--radius-inner)",
+    boxShadow: "var(--panel-hi), var(--panel-shadow)",
+    fontSize: "var(--text-xs)",
+    fontFamily: "var(--font-body)",
+    padding: "var(--space-xs) var(--space-sm)",
     color: "var(--fg)",
   },
-  labelStyle: { color: "var(--fg-2)", marginBottom: 2 },
+  labelStyle: { color: "var(--fg-3)", marginBottom: "var(--space-3xs)" },
   itemStyle: { padding: 0 },
 };

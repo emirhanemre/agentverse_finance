@@ -20,7 +20,7 @@ export default function DashboardPage() {
 
   if (!s)
     return (
-      <div className="flex h-screen items-center justify-center text-[13px] text-fg-2">
+      <div className="flex h-screen items-center justify-center text-sm text-fg-2">
         {error ? <span className="text-negative">Can’t reach the Pub Hedge API at {API}. Is it running?</span> : <Spinner className="text-accent" />}
       </div>
     );
@@ -34,14 +34,18 @@ export default function DashboardPage() {
           title={title}
           right={
             s.run && (
-              <span className="flex items-center gap-2 font-mono text-[11.5px] text-fg-3">
-                {s.scenario.name} · {s.run.mode} · {s.run.run_id}
+              <span className="flex items-center gap-3 whitespace-nowrap text-xs text-fg-3">
+                <span>{s.scenario.name}</span>
+                <span className="h-3 w-px bg-line-strong" aria-hidden />
+                <span>{s.run.mode}</span>
+                <span className="h-3 w-px bg-line-strong" aria-hidden />
+                <span className="font-mono">{s.run.run_id}</span>
                 <ModelChip model={s.run.summary?.narration?.rationale?.model ?? (s.run.summary?.live_models ? "model" : "template")} />
               </span>
             )
           }
         />
-        <main className="min-h-0 flex-1 overflow-y-auto p-4">
+        <main className="min-h-0 flex-1 overflow-y-auto p-6">
           {nav === "overview" && <TodayView s={s} refresh={refresh} tick={tick} />}
           {nav === "protections" && <ProtectionsPage s={s} refresh={refresh} />}
           {nav === "risks" && <RisksPage s={s} />}

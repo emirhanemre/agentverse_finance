@@ -44,7 +44,13 @@ export type Outcomes = {
   hedge_payout_if_wet_gbp: number;
   /** wet minus dry shortfall; newer API only */
   wet_extra_shortfall_gbp?: number;
+  /** ISO date */
   payroll_date: string;
+  // Lowest balance up to payroll day: positive clears with that much to spare, negative is short by that much. Newer API only.
+  wet_no_hedge_headroom_gbp?: number;
+  wet_with_hedge_headroom_gbp?: number;
+  dry_no_hedge_headroom_gbp?: number;
+  dry_with_hedge_headroom_gbp?: number;
 };
 
 export type Check = { name: string; value_pence: number; cap_pence: number; pass: boolean };

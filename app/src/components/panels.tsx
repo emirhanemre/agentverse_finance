@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, ReferenceArea, ReferenceDot, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import {
   api,
   approve,
@@ -23,11 +23,14 @@ import {
 } from "../lib/api";
 import { day, gbp, pct } from "../lib/format";
 import { Bullets, ModelChip } from "./AgentRun";
-import { Num, ProvBadge, getReceipt } from "./Provenance";
+import { Glyph, Num, ProvBadge, ProvPanel, getReceipt, useAudit } from "./Provenance";
 import { Badge, Button, Icon, KeyValue, Panel, Spinner, cx, tooltipStyle } from "./ui";
 
 type S = { s: AppState };
 const money = (v: unknown) => gbp(Number(v));
+
+/** A tool result as a panel's provenance: `<ProvPanel prov={provOf(r)}>`. */
+export const provOf = (r?: ToolResult) => (r ? { badge: r.badge, meta: r, receiptId: r.receipt_id } : undefined);
 
 /** Badge for a tool result, with the result itself as provenance. */
 export function ToolBadge({ r }: { r?: ToolResult }) {
@@ -37,26 +40,33 @@ export function ToolBadge({ r }: { r?: ToolResult }) {
 
 export function Legend({ color, label, dashed }: { color: string; label: string; dashed?: boolean }) {
   return (
-    <span className="flex items-center gap-1.5">
+    <span className="flex items-center gap-2 whitespace-nowrap">
       <svg width="14" height="6" aria-hidden>
-        <line x1="0" y1="3" x2="14" y2="3" stroke={color} strokeWidth="1.5" strokeDasharray={dashed ? "3 2" : undefined} />
+        <line x1="0" y1="3" x2="14" y2="3" stroke={color} strokeWidth="1.75" strokeLinecap="round" strokeDasharray={dashed ? "3 3" : undefined} />
       </svg>
       {label}
     </span>
   );
 }
 
+/** The one quiet line at the foot of a money screen. The exact SYNTHETIC label stays for screen readers and the audit view. */
 export function SyntheticNote({ s, className }: S & { className?: string }) {
+  const { audit } = useAudit();
+  const exact = s.pub.financials_label.replace(/^SYNTHETIC:\s*/, "SYNTHETIC — ");
+  const plain = s.pub.financials_label.replace(/^SYNTHETIC:\s*/, "");
   return (
-    <p className={cx("flex items-center gap-2 text-[12px] text-warning", className)} data-testid="synthetic-label">
-      <Icon name="alert" size={13} className="shrink-0" />
-      {s.pub.financials_label.replace(/^SYNTHETIC:\s*/, "SYNTHETIC — ")}
+    <p className={cx("flex items-start gap-2 text-xs text-fg-3", className)} data-testid="synthetic-label">
+      <span className="mt-1">
+        <Glyph badge="SYNTHETIC" />
+      </span>
+      <span aria-hidden>{audit ? exact : `Illustrative scenario: ${plain}.`}</span>
+      <span className="sr-only">{exact}</span>
     </p>
   );
 }
 
 export function Empty({ children }: { children: React.ReactNode }) {
-  return <p className="text-[12.5px] text-fg-3">{children}</p>;
+  return <p className="text-sm text-fg-3">{children}</p>;
 }
 
 // ---------- What the agent sees ----------
@@ -67,32 +77,25 @@ export function VerifyPanel({ s }: S) {
   const pc = tool(s, "locate_postcode");
   const row = (label: string, value: React.ReactNode, r?: ToolResult) => ({
     label,
-    value: (
-      <span className="flex items-center justify-between gap-3">
-        <Num rid={r?.receipt_id}>{value}</Num>
-        <ToolBadge r={r} />
-      </span>
-    ),
+    value: r ? <Num r={r}>{value}</Num> : value,
   });
   return (
     <div data-testid="panel-verify">
-      <Panel
+      <ProvPanel
         title={String(ch?.company_name ?? s.pub.trading_name)}
+        prov={{ badge: s.pub.identity_badge, meta: { source: "Companies House and postcodes.io, matched on company number and postcode" } }}
         actions={
-          <>
-            <ProvBadge badge={s.pub.identity_badge} meta={{ source: "Companies House and postcodes.io, matched on company number and postcode" }} />
-            {ch && (
-              <Badge tone={ch.company_status === "active" ? "positive" : "warning"} dot>
-                {ch.company_status === "active" ? "Verified" : String(ch.company_status)}
-              </Badge>
-            )}
-          </>
+          ch && (
+            <Badge tone={ch.company_status === "active" ? "positive" : "warning"} dot>
+              {ch.company_status === "active" ? "Verified" : String(ch.company_status)}
+            </Badge>
+          )
         }
       >
         {!ch ? (
           <Empty>Run the agent to check the public registers.</Empty>
         ) : (
-          <div className="grid grid-cols-2 gap-x-8">
+          <div className="grid grid-cols-2 gap-x-10">
             <KeyValue
               rows={[
                 row("Trading as", s.pub.trading_name),
@@ -112,7 +115,7 @@ export function VerifyPanel({ s }: S) {
             />
           </div>
         )}
-      </Panel>
+      </ProvPanel>
     </div>
   );
 }
@@ -130,36 +133,38 @@ const SOURCE_ROWS: { tool: string; name: string; kind: string; icon: Parameters<
 export function SourcesPanel({ s }: S) {
   return (
     <div data-testid="panel-sources">
-      <Panel title="Data sources" actions={<span className="text-[12px] text-fg-3">Read-only access</span>} bodyClassName="p-0">
+      <Panel title="Data sources" actions={<span>Read-only access</span>} bodyClassName="p-0">
         <ul className="divide-y divide-line">
           {SOURCE_ROWS.map((row) => {
             const r = tool(s, row.tool);
             return (
-              <li key={row.tool} className="flex min-h-14 items-center gap-4 px-4 py-2.5">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-line-strong bg-surface-2 text-fg-2">
-                  <Icon name={row.icon} />
-                </span>
+              <li key={row.tool} className="flex min-h-16 items-center gap-4 px-6 py-3">
+                <Icon name={row.icon} className="shrink-0 text-fg-3" />
                 <div className="min-w-0 flex-1">
-                  <div className="text-[13px] font-medium">{row.name}</div>
-                  <div className="truncate text-[12px] text-fg-3">{r?.source ? `${row.kind} · ${r.source}` : row.kind}</div>
+                  <div className="text-sm font-medium">{row.name}</div>
+                  <div className="truncate text-xs text-fg-3">{r?.source ? `${row.kind} · ${r.source}` : row.kind}</div>
                 </div>
-                <div className="w-[300px] text-right font-mono text-[12px] text-fg-2">
-                  {r ? <Num rid={r.receipt_id}>{r.summary || "no result"}</Num> : "Not read yet"}
+                <div className="w-[300px] text-right text-sm text-fg-2">
+                  {r ? (
+                    <Num rid={r.receipt_id} mark={false}>
+                      {r.summary || "no result"}
+                    </Num>
+                  ) : (
+                    "Not read yet"
+                  )}
                 </div>
-                <div className="flex w-[110px] justify-end">
+                <div className="flex w-[124px] justify-end">
                   <ToolBadge r={r} />
                 </div>
               </li>
             );
           })}
           {["Smarkets", "Betfair Exchange"].map((v) => (
-            <li key={v} className="flex h-14 items-center gap-4 px-4 opacity-70">
-              <span className="flex h-8 w-8 items-center justify-center rounded border border-line bg-surface-2 text-fg-3">
-                <Icon name="plug" />
-              </span>
+            <li key={v} className="flex min-h-16 items-center gap-4 px-6 py-3">
+              <Icon name="plug" className="shrink-0 text-fg-3" />
               <div className="min-w-0 flex-1">
-                <div className="text-[13px]">{v}</div>
-                <div className="text-[12px] text-fg-3">UK betting exchange</div>
+                <div className="text-sm text-fg-2">{v}</div>
+                <div className="text-xs text-fg-3">UK betting exchange</div>
               </div>
               <Badge>Not connected in demo</Badge>
             </li>
@@ -171,6 +176,8 @@ export function SourcesPanel({ s }: S) {
 }
 
 // ---------- Risks ----------
+
+const TH = "py-2 font-medium";
 
 export function RisksPanel({ s }: S) {
   const fit = tool(s, "fit_takings_model");
@@ -185,7 +192,7 @@ export function RisksPanel({ s }: S) {
     );
   const e = (k: string) => fit[k] as Estimate;
   const rows: { name: string; driver: string; est: Estimate; unit: string }[] = [
-    { name: "Rain on a Friday–Sunday afternoon", driver: "Weather", est: e("rain_weekend_gbp_per_mm"), unit: "per mm" },
+    { name: "Rain on a Friday to Sunday afternoon", driver: "Weather", est: e("rain_weekend_gbp_per_mm"), unit: "per mm" },
     { name: "Rain on a weekday afternoon", driver: "Weather", est: e("rain_weekday_gbp_per_mm"), unit: "per mm" },
     { name: "Warmer days", driver: "Weather", est: e("heat_gbp_per_c"), unit: "per °C" },
     { name: "Match days", driver: "Sport", est: e("match_day_gbp"), unit: "per day" },
@@ -193,62 +200,57 @@ export function RisksPanel({ s }: S) {
   ].filter((r) => r.est);
   return (
     <div data-testid="panel-risks">
-      <Panel
+      <ProvPanel
         title="What moves your takings"
+        prov={provOf(fit)}
         actions={
-          <>
-            <span className="font-mono text-[11.5px] text-fg-3">
-              <Num rid={fit.receipt_id}>R² {Number(fit.r2_holdout).toFixed(3)} held-out</Num> · n = {String(fit.n_holdout)}
-            </span>
-            <ToolBadge r={fit} />
-          </>
+          <span>
+            <Num rid={fit.receipt_id}>R² {Number(fit.r2_holdout).toFixed(3)} held-out</Num> · n = {String(fit.n_holdout)}
+          </span>
         }
         bodyClassName="p-0"
       >
         <table className="w-full text-left">
           <thead>
-            <tr className="border-b border-line bg-surface-2 text-[11px] uppercase tracking-[0.04em] text-fg-3">
-              <th className="px-4 py-2 font-medium">Driver</th>
-              <th className="px-4 py-2 font-medium">Type</th>
-              <th className="px-4 py-2 text-right font-medium">Effect on takings</th>
-              <th className="px-4 py-2 text-right font-medium">95% interval</th>
+            <tr className="border-b border-line text-xs text-fg-3">
+              <th className={cx(TH, "px-6")}>Driver</th>
+              <th className={cx(TH, "px-4")}>Type</th>
+              <th className={cx(TH, "px-4 text-right")}>Effect on takings</th>
+              <th className={cx(TH, "px-6 text-right")}>95% interval</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
             {rows.map((r) => (
               <tr key={r.name}>
-                <td className="px-4 py-2.5 text-[13px]">{r.name}</td>
-                <td className="px-4 py-2.5 text-[12.5px] text-fg-2">{r.driver}</td>
-                <td className={cx("px-4 py-2.5 text-right font-mono text-[13px]", r.est.estimate < 0 ? "text-negative" : "text-positive")}>
+                <td className="px-6 py-3 text-sm">{r.name}</td>
+                <td className="px-4 py-3 text-sm text-fg-3">{r.driver}</td>
+                <td className={cx("px-4 py-3 text-right text-sm", r.est.estimate < 0 ? "text-warning" : "text-positive")}>
                   <Num rid={fit.receipt_id}>
                     {gbp(r.est.estimate, { sign: true })} {r.unit}
                   </Num>
                 </td>
-                <td className="px-4 py-2.5 text-right font-mono text-[12px] text-fg-2">
+                <td className="px-6 py-3 text-right text-sm text-fg-3">
                   {gbp(r.est.ci95[0])} to {gbp(r.est.ci95[1])}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="flex items-center justify-between gap-4 border-t border-line px-4 py-3">
-          <p className="text-[12.5px] text-fg-2">
-            {exp ? (
-              <>
-                A {String(exp.wet_scenario_mm)}mm Friday–Sunday afternoon costs about{" "}
-                <Num rid={exp.receipt_id} className="font-mono text-negative">
-                  {gbp(-Number(exp.loss_wet_day_gbp))}
-                </Num>{" "}
-                in takings. That is the risk worth covering.
-              </>
-            ) : (
-              "Rain exposure not computed yet."
-            )}
-          </p>
-          <ToolBadge r={exp} />
-        </div>
-        <p className="border-t border-line px-4 py-2 text-[11.5px] text-fg-3">{String(fit.label)}</p>
-      </Panel>
+        <p className="border-t border-line px-6 py-4 text-sm text-fg-2">
+          {exp ? (
+            <>
+              A {String(exp.wet_scenario_mm)}mm Friday to Sunday afternoon costs about{" "}
+              <Num r={exp} className="text-warning">
+                {gbp(-Number(exp.loss_wet_day_gbp))}
+              </Num>{" "}
+              in takings. That is the risk worth covering.
+            </>
+          ) : (
+            "Rain exposure not computed yet."
+          )}
+        </p>
+        <p className="border-t border-line px-6 py-3 text-xs text-fg-3">{String(fit.label)}</p>
+      </ProvPanel>
     </div>
   );
 }
@@ -260,37 +262,26 @@ export function ForecastPanel({ s }: S) {
   const contracts = (prices?.contracts ?? []) as { date: string; model_prob: number; ask: number }[];
   return (
     <div data-testid="panel-forecast">
-      <Panel
-        title="The weekend"
-        actions={
-          <>
-            <span className="font-mono text-[11.5px] text-fg-3">{s.scenario.name}</span>
-            <ToolBadge r={f} />
-          </>
-        }
-      >
+      <ProvPanel title="The weekend" prov={provOf(f)} actions={<span>{s.scenario.name}</span>}>
         {!f || f.badge === "ERROR" ? (
           <Empty>No forecast available for this run.</Empty>
         ) : (
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-3">
             {Object.entries(days).map(([d, v]) => {
               const c = contracts.find((x) => x.date === d);
               return (
-                <div key={d} className="rounded border border-line bg-surface-2 px-3 py-2.5">
-                  <div className="flex items-baseline justify-between font-mono text-[11.5px]">
+                <div key={d} className="rounded bg-surface-2 px-4 py-3">
+                  <div className="flex items-baseline justify-between text-xs text-fg-3">
                     <span className="text-fg-2">{day(d)}</span>
-                    <span className="text-fg-3">afternoon</span>
+                    <span>afternoon</span>
                   </div>
-                  <div className="mt-1 flex items-center gap-1.5 font-mono text-[18px]">
-                    <Icon name="rain" size={15} className={v.mm >= 1 ? "text-accent" : "text-fg-3"} />
+                  <div className="mt-1 flex items-center gap-2 font-display text-xl font-medium">
+                    <Icon name="rain" size={16} className={v.mm >= 1 ? "text-fg-2" : "text-fg-3"} />
                     <Num rid={f.receipt_id}>{v.mm.toFixed(1)} mm</Num>
                   </div>
                   {c && (
-                    <div className="mt-1 flex items-center justify-between font-mono text-[11.5px] text-fg-3">
-                      <span>
-                        P(≥3mm) <Num rid={prices?.receipt_id}>{pct(c.model_prob, 0)}</Num> · ask {c.ask.toFixed(2)}
-                      </span>
-                      <ToolBadge r={prices} />
+                    <div className="mt-1 text-xs text-fg-3">
+                      P(≥3mm) <Num r={prices}>{pct(c.model_prob, 0)}</Num> · ask {c.ask.toFixed(2)}
                     </div>
                   )}
                 </div>
@@ -298,43 +289,78 @@ export function ForecastPanel({ s }: S) {
             })}
           </div>
         )}
-        <p className="mt-2 text-[11.5px] text-fg-3">{String(f?.grid_note ?? f?.source ?? "")}</p>
-      </Panel>
+        <p className="mt-3 text-xs text-fg-3">{String(f?.grid_note ?? f?.source ?? "")}</p>
+      </ProvPanel>
     </div>
   );
 }
 
 // ---------- Cashflow: the failure that hurts ----------
 
-function mergeTimelines(s: AppState) {
+type CashRow = { key: string; date: string; t?: number; wet?: number; covered?: number; dry?: number };
+
+/** The cash path, one point per cash event: wet and wet-with-cover from size_hedges, dry from the dry payroll projection. */
+function cashRows(s: AppState): CashRow[] {
   const wet = payroll(s, "wet");
   const dry = payroll(s, "dry");
-  const close = (rows?: { date: string; balance_gbp: number }[]) => {
-    const m = new Map<string, number>();
-    rows?.forEach((r) => m.set(r.date, r.balance_gbp));
-    return m;
-  };
-  const w = close(wet?.timeline);
-  const d = close(dry?.timeline);
-  const dates = Array.from(new Set([...Array.from(w.keys()), ...Array.from(d.keys())])).sort();
-  return dates.map((date) => ({ date, wet: w.get(date), dry: d.get(date) }));
+  const dryById = new Map((dry?.timeline ?? []).map((r) => [r.id, r.balance_gbp]));
+  const sized = (tool(s, "size_hedges")?.timeline ?? []) as { date: string; id: string; wet_gbp: number; wet_with_hedge_gbp: number }[];
+  if (sized.length) return sized.map((r) => ({ key: r.id, date: r.date, wet: r.wet_gbp, covered: r.wet_with_hedge_gbp, dry: dryById.get(r.id) }));
+  return (wet?.timeline ?? []).map((r) => ({ key: r.id, date: r.date, wet: r.balance_gbp, dry: dryById.get(r.id) }));
 }
+
+/** The payroll week that matters: the last four days, ending on the payday low; the y-range fits the last three days so the gap shows. */
+function payrollWindow(rows: CashRow[]) {
+  const dates = Array.from(new Set(rows.map((r) => r.date))).sort();
+  if (dates.length === 0) return { rows, domain: undefined as [number, number] | undefined, ticks: undefined as number[] | undefined, days: [] as string[] };
+  const lastDay = dates[dates.length - 1];
+  const payday = rows.filter((r) => r.date === lastDay).reduce((lo, r) => ((r.wet ?? Infinity) < (lo.wet ?? Infinity) ? r : lo));
+  const end = rows.indexOf(payday);
+  const win = rows.slice(0, end + 1).filter((r) => r.date >= dates[Math.max(0, dates.length - 4)]);
+  const fit = win.filter((r) => r.date >= dates[Math.max(0, dates.length - 3)]);
+  const vals = fit.flatMap((r) => [r.wet, r.covered, r.dry]).filter((v): v is number => typeof v === "number");
+  const hi = Math.max(0, ...vals);
+  const lo = Math.min(0, ...vals);
+  const step = niceStep((hi - lo) / 4);
+  // x is time: day number plus the event's place within its day, so a busy Tuesday does not take half the axis.
+  const days = Array.from(new Set(win.map((r) => r.date)));
+  const timed = win.map((r) => {
+    const same = rows.filter((x) => x.date === r.date);
+    return { ...r, t: days.indexOf(r.date) + same.indexOf(r) / same.length };
+  });
+  const domain: [number, number] = [lo - (hi - lo) * 0.15, Math.ceil(hi / step) * step];
+  const ticks: number[] = [];
+  for (let v = Math.ceil(domain[0] / step) * step; v <= domain[1]; v += step) ticks.push(v);
+  return { rows: timed, domain, ticks, days };
+}
+
+function niceStep(raw: number) {
+  const p = Math.pow(10, Math.floor(Math.log10(Math.max(raw, 1))));
+  return [1, 2, 2.5, 5, 10].map((m) => m * p).find((x) => x >= raw) ?? 10 * p;
+}
+
+const LINE_NAME: Record<string, string> = { wet: "Wet, no cover", dry: "Dry weekend", covered: "Wet, with cover" };
+const endNote = (v: number) => (v >= 0 ? `${gbp(v)} to spare` : `${gbp(-v)} short`);
 
 export function CashflowPanel({ s, compact }: S & { compact?: boolean }) {
   const wet = payroll(s, "wet");
   const dry = payroll(s, "dry");
   const sized = tool(s, "size_hedges");
   const o = sized?.outcomes as Outcomes | undefined;
-  const data = mergeTimelines(s);
+  const { rows: data, domain, ticks: yTicks, days } = payrollWindow(cashRows(s));
+  const last = data[data.length - 1];
+  const hasCover = data.some((r) => typeof r.covered === "number");
+  const dayAt = (t: unknown) => day(days[Math.floor(Number(t))]);
   return (
     <div data-testid="panel-cashflow" className="flex min-h-0 flex-col">
-      <Panel
+      <ProvPanel
         title="Payroll week after a wet weekend"
+        prov={provOf(wet)}
         actions={
           <>
-            <Legend color="var(--negative)" label="Wet weekend" />
+            <Legend color="var(--warning)" label="Wet, no cover" />
+            {hasCover && <Legend color="var(--accent)" label="Wet, with cover" />}
             <Legend color="var(--fg-3)" label="Dry weekend" dashed />
-            <ToolBadge r={wet} />
           </>
         }
       >
@@ -342,84 +368,256 @@ export function CashflowPanel({ s, compact }: S & { compact?: boolean }) {
           <Empty>Run the agent to project payroll.</Empty>
         ) : (
           <>
-            <div className="grid grid-cols-4 gap-px overflow-hidden rounded border border-line bg-line">
+            <div className="grid grid-cols-4 divide-x divide-line">
               {[
-                { l: "First day overdrawn", v: day(wet.first_negative_date), rid: wet.receipt_id, c: "text-negative" },
+                { l: "First day overdrawn", v: day(wet.first_negative_date), rid: wet.receipt_id, c: wet.first_negative_date ? "text-warning" : undefined },
                 { l: "Payroll due", v: day(wet.payroll_date), rid: wet.receipt_id },
-                { l: "Short on payroll day, wet", v: gbp(-wet.shortfall_gbp, { pence: true }), rid: wet.receipt_id, c: "text-negative" },
-                { l: "Short on payroll day, dry", v: dry ? gbp(-dry.shortfall_gbp, { pence: true }) : "—", rid: dry?.receipt_id, c: "text-warning" },
+                { l: "Short on payroll day, wet", v: gbp(-wet.shortfall_gbp, { pence: true }), rid: wet.receipt_id, c: wet.shortfall_gbp > 0 ? "text-warning" : undefined },
+                { l: "Short on payroll day, dry", v: dry ? gbp(-dry.shortfall_gbp, { pence: true }) : "—", rid: dry?.receipt_id, c: dry && dry.shortfall_gbp > 0 ? "text-warning" : undefined },
               ].map((m) => (
-                <div key={m.l} className="bg-surface-2 px-3 py-2">
-                  <div className="text-[11.5px] text-fg-3">{m.l}</div>
-                  <Num rid={m.rid} className={cx("font-mono text-[16px]", m.c)}>
+                <div key={m.l} className="px-4 first:pl-0 last:pr-0">
+                  <div className="text-xs text-fg-3">{m.l}</div>
+                  <Num rid={m.rid} className={cx("font-display text-lg font-medium", m.c)}>
                     {m.v}
                   </Num>
                 </div>
               ))}
             </div>
-            <p className="mt-2.5 text-[12.5px] leading-5 text-fg-2">
+            <p className="mt-4 text-sm text-fg-2">
               {wet.payroll_clears
                 ? "Payroll clears in both cases."
                 : `The account goes overdrawn on ${day(wet.first_negative_date)} when rent, suppliers and the VAT sweep land, and payroll on ${day(
                     wet.payroll_date
                   )} doesn’t clear. A wet weekend makes it ${gbp(o?.wet_extra_shortfall_gbp ?? wet.shortfall_gbp - (dry?.shortfall_gbp ?? 0))} worse.`}
             </p>
-            <div className={cx("mt-2", compact ? "h-[150px]" : "h-[190px]")}>
+            <div className={cx("mt-3", compact ? "h-[200px]" : "h-[260px]")} role="img" aria-label="Cash balance from the rent and supplier run to payday: dry weekend, wet weekend, wet weekend with cover">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data} margin={{ top: 6, right: 56, left: 0, bottom: 0 }}>
+                <LineChart data={data} margin={{ top: 16, right: 120, left: 0, bottom: 0 }}>
                   <CartesianGrid vertical={false} strokeDasharray="2 4" />
-                  <XAxis dataKey="date" tickLine={false} axisLine={false} tickFormatter={(d: string) => day(d)} />
-                  <YAxis tickLine={false} axisLine={false} width={64} tickFormatter={money} />
-                  <ReferenceLine y={0} stroke="var(--negative)" strokeDasharray="4 4" strokeOpacity={0.6} label={{ value: "£0", position: "right", fill: "var(--fg-3)", fontSize: 11 }} />
-                  <ReferenceLine x={wet.payroll_date} stroke="var(--fg-3)" strokeDasharray="3 3" label={{ value: "Payroll", position: "insideTopRight", fill: "var(--fg-3)", fontSize: 11 }} />
-                  <Tooltip {...tooltipStyle} labelFormatter={(d) => day(String(d))} formatter={(v, n) => [gbp(Number(v), { pence: true }), n === "wet" ? "Wet weekend" : "Dry weekend"]} />
+                  <XAxis dataKey="t" type="number" domain={[0, "dataMax"]} ticks={days.map((_, i) => i)} padding={{ left: 24 }} tickLine={false} axisLine={false} tickFormatter={dayAt} />
+                  <YAxis tickLine={false} axisLine={false} width={80} tickFormatter={money} domain={domain ?? ["auto", "auto"]} ticks={yTicks} allowDataOverflow />
+                  {domain && <ReferenceArea y1={domain[0]} y2={0} fill="var(--warning)" fillOpacity={0.07} stroke="none" ifOverflow="hidden" />}
+                  <ReferenceLine y={0} stroke="var(--fg-2)" strokeWidth={1.5} label={{ value: "Payroll line", position: "insideBottomLeft", fill: "var(--fg-2)", fontSize: 12 }} />
+                  {last && <ReferenceLine x={last.t} stroke="var(--fg-3)" strokeDasharray="3 3" label={{ value: "Payday", position: "insideTopRight", fill: "var(--fg-3)", fontSize: 12 }} />}
+                  <Tooltip {...tooltipStyle} labelFormatter={dayAt} formatter={(v, n) => [gbp(Number(v), { pence: true }), LINE_NAME[String(n)] ?? String(n)]} />
                   <Line type="stepAfter" dataKey="dry" stroke="var(--fg-3)" strokeWidth={1.25} strokeDasharray="4 3" dot={false} connectNulls isAnimationActive={false} />
-                  <Line type="stepAfter" dataKey="wet" stroke="var(--negative)" strokeWidth={1.75} dot={false} connectNulls isAnimationActive={false} />
+                  <Line type="stepAfter" dataKey="wet" stroke="var(--warning)" strokeWidth={1.75} dot={false} connectNulls isAnimationActive={false} />
+                  {hasCover && <Line type="stepAfter" dataKey="covered" stroke="var(--accent)" strokeWidth={2.75} dot={false} connectNulls isAnimationActive={false} />}
+                  {typeof last?.wet === "number" && (
+                    <ReferenceDot x={last.t} y={last.wet} r={3.5} fill="var(--warning)" stroke="none" label={{ value: endNote(last.wet), position: "right", dy: 10, fill: "var(--warning)", fontSize: 12 }} />
+                  )}
+                  {typeof last?.covered === "number" && (
+                    <ReferenceDot x={last.t} y={last.covered} r={4} fill="var(--accent)" stroke="none" label={{ value: endNote(last.covered), position: "right", dy: -10, fill: "var(--accent)", fontSize: 12 }} />
+                  )}
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </>
         )}
-        {o && <OutcomesTable o={o} rid={sized?.receipt_id} r={sized} />}
-        <SyntheticNote s={s} className="mt-3" />
-      </Panel>
+        {o && <OutcomesTable o={o} rid={sized?.receipt_id} />}
+        <SyntheticNote s={s} className="mt-6 border-t border-line pt-3" />
+      </ProvPanel>
     </div>
   );
 }
 
-function OutcomesTable({ o, rid, r }: { o: Outcomes; rid?: string; r?: ToolResult }) {
-  const cell = (v: number, tone?: string) => (
-    <td className={cx("px-3 py-2 text-right font-mono text-[12.5px]", tone)}>
-      <Num rid={rid}>{v > 0 ? gbp(-v, { pence: true }) : "Clears"}</Num>
-    </td>
-  );
+// ---------- Payday: three bars either side of the payroll line ----------
+
+/** The lead picture: lowest balance before payroll on payday, dry, wet and wet with cover, from one £0 line. */
+export function PaydayPanel({ s }: S) {
+  const sized = tool(s, "size_hedges");
+  const o = sized?.outcomes as Outcomes | undefined;
+  if (!hasBridge(o)) return null;
+  const rid = sized?.receipt_id;
+  const rows = [
+    { l: "Dry weekend", v: o.dry_no_hedge_headroom_gbp, bar: "bg-surface-3 shadow-[inset_0_0_0_1px_var(--line-strong)]", ink: "text-fg" },
+    { l: "Wet weekend, no cover", v: o.wet_no_hedge_headroom_gbp, bar: o.wet_no_hedge_headroom_gbp < 0 ? "bg-warning" : "bg-surface-3", ink: o.wet_no_hedge_headroom_gbp < 0 ? "text-warning" : "text-fg" },
+    { l: "Wet weekend, with cover", v: o.wet_with_hedge_headroom_gbp, bar: o.wet_with_hedge_headroom_gbp >= 0 ? "bg-accent" : "bg-warning", ink: o.wet_with_hedge_headroom_gbp >= 0 ? "text-positive" : "text-warning" },
+  ];
+  const max = 1.15 * Math.max(...rows.map((r) => Math.abs(r.v)), 1);
+  const w = (v: number) => (Math.abs(v) / max) * 50;
   return (
-    <div className="mt-3 rounded border border-line" data-testid="outcomes">
-      <div className="flex items-center justify-between border-b border-line px-3 py-2">
-        <span className="text-[12.5px] font-medium">What the hedge does to payroll on {day(o.payroll_date)}</span>
-        {r && <ToolBadge r={r} />}
-      </div>
-      <table className="w-full">
+    <div data-testid="panel-payday">
+      <ProvPanel title={`Payday, ${day(o.payroll_date)}`} prov={provOf(sized)} actions={<span>Lowest balance before payroll</span>}>
+        <div className="grid grid-cols-[12rem_minmax(0,1fr)] gap-x-4" role="img" aria-label="Payday balance after payroll: dry weekend, wet weekend without cover, wet weekend with cover">
+          <div className="flex flex-col gap-3">
+            {rows.map((r, i) => (
+              <span key={r.l} className={cx("flex h-14 items-center text-sm", i === 2 ? "font-medium text-fg" : "text-fg-2")}>
+                {r.l}
+              </span>
+            ))}
+          </div>
+          <div className="relative flex flex-col gap-3 pb-6">
+            {rows.map((r, i) => (
+              <div key={r.l} className="relative h-14">
+                <div
+                  className={cx("pd-bar absolute inset-y-0 rounded", r.bar)}
+                  style={{
+                    ...(r.v >= 0 ? { left: "50%", transformOrigin: "left center" } : { right: "50%", transformOrigin: "right center" }),
+                    width: `${w(r.v)}%`,
+                    ["--i" as string]: i,
+                  }}
+                />
+                {/* A long bar carries its figure inside its end; a short one beside it. */}
+                <div
+                  className={cx(
+                    "absolute inset-y-0 flex items-center whitespace-nowrap px-4 font-display text-xl font-medium",
+                    w(r.v) > 25 ? (r.bar.startsWith("bg-surface") ? "text-fg" : "text-accent-ink") : r.ink
+                  )}
+                  style={
+                    w(r.v) > 25
+                      ? r.v >= 0
+                        ? { right: `${50 - w(r.v)}%` }
+                        : { left: `${50 - w(r.v)}%` }
+                      : r.v >= 0
+                        ? { left: `${50 + w(r.v)}%` }
+                        : { right: `${50 + w(r.v)}%` }
+                  }
+                >
+                  <Num rid={rid}>{endNote(r.v)}</Num>
+                </div>
+              </div>
+            ))}
+            <div aria-hidden className="absolute bottom-6 left-1/2 top-0 w-0.5 -translate-x-1/2 bg-fg-2" />
+            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs text-fg-2">Payroll line</span>
+          </div>
+        </div>
+      </ProvPanel>
+    </div>
+  );
+}
+
+// ---------- The payroll bridge: dry, what rain takes, what cover does ----------
+
+type Bridge = Outcomes & Required<Pick<Outcomes, "dry_no_hedge_headroom_gbp" | "wet_no_hedge_headroom_gbp" | "wet_with_hedge_headroom_gbp" | "wet_extra_shortfall_gbp">>;
+export const hasBridge = (o?: Outcomes): o is Bridge =>
+  !!o && [o.dry_no_hedge_headroom_gbp, o.wet_no_hedge_headroom_gbp, o.wet_with_hedge_headroom_gbp, o.wet_extra_shortfall_gbp, o.hedge_payout_if_wet_gbp, o.hedge_cost_gbp].every((v) => typeof v === "number");
+
+/** A waterfall from the size_hedges outcomes: each bar starts where the last ended; totals stand on the payroll line. */
+export function PayrollBridge({ s }: S) {
+  const sized = tool(s, "size_hedges");
+  const o = sized?.outcomes as Outcomes | undefined;
+  if (!hasBridge(o)) return null;
+  const rid = sized?.receipt_id;
+  const steps: { l: string; v: number; total?: boolean; tone: "muted" | "warning" | "accent" }[] = [
+    { l: o.dry_no_hedge_headroom_gbp >= 0 ? "Dry weekend: payroll clears" : "Dry weekend: payroll short", v: o.dry_no_hedge_headroom_gbp, total: true, tone: "muted" },
+    { l: "Rain takes", v: -o.wet_extra_shortfall_gbp, tone: "warning" },
+    { l: "Wet, no cover", v: o.wet_no_hedge_headroom_gbp, total: true, tone: o.wet_no_hedge_headroom_gbp < 0 ? "warning" : "muted" },
+    { l: "Cover pays", v: o.hedge_payout_if_wet_gbp, tone: "accent" },
+    { l: "Cover costs", v: -o.hedge_cost_gbp, tone: "muted" },
+    { l: "Wet, with cover", v: o.wet_with_hedge_headroom_gbp, total: true, tone: o.wet_with_hedge_headroom_gbp >= 0 ? "accent" : "warning" },
+  ];
+  // Totals are the API's own; a step starts at the total before it.
+  let level = 0;
+  const bars = steps.map((st) => {
+    const from = st.total ? 0 : level;
+    const to = st.total ? st.v : level + st.v;
+    level = to;
+    return { ...st, from, to, end: to };
+  });
+  const all = bars.flatMap((b) => [b.from, b.to, 0]);
+  const pad = (Math.max(...all) - Math.min(...all)) * 0.16;
+  const top = Math.max(...all) + pad;
+  const bottom = Math.min(...all) - pad;
+  const y = (v: number) => ((top - v) / (top - bottom)) * 100;
+  const fill = {
+    muted: "bg-surface-3 shadow-[inset_0_0_0_1px_var(--line-strong)]",
+    warning: "bg-warning-wash shadow-[inset_0_0_0_1px_var(--warning-edge)]",
+    accent: "bg-accent-wash shadow-[inset_0_0_0_1px_var(--accent-edge)]",
+  };
+  const solid = { muted: fill.muted, warning: "bg-warning", accent: "bg-accent" };
+  const ink = { muted: "text-fg", warning: "text-warning", accent: "text-positive" };
+  return (
+    <div data-testid="panel-bridge">
+      <ProvPanel title="How the cover gets you there" prov={provOf(sized)}>
+        <div className="relative h-[260px]" role="img" aria-label="Waterfall: dry weekend headroom, what rain takes, wet without cover, what cover pays and costs, wet with cover">
+          <div className="absolute inset-x-0 bottom-0 bg-warning-wash" style={{ top: `${y(0)}%` }} aria-hidden />
+          <div className="absolute inset-x-0 grid h-full grid-cols-6">
+            {bars.map((b, i) => {
+              const hi = Math.max(b.from, b.to);
+              const lo = Math.min(b.from, b.to);
+              const h = y(lo) - y(hi);
+              const origin = h > 0 ? ((y(b.total ? 0 : b.from) - y(hi)) / h) * 100 : 50;
+              return (
+                <div key={b.l} className="relative h-full">
+                  <div
+                    className={cx("wf-bar absolute inset-x-[22%] rounded", b.total ? solid[b.tone] : fill[b.tone])}
+                    style={{ top: `${y(hi)}%`, height: `${h}%`, transformOrigin: `50% ${origin}%`, ["--i" as string]: i }}
+                  />
+                  {i < bars.length - 1 && <div aria-hidden className="absolute left-[78%] right-[-22%] border-t border-dashed border-line-strong" style={{ top: `${y(b.end)}%` }} />}
+                  <div
+                    className={cx("absolute inset-x-0 text-center text-sm font-medium", ink[b.tone], b.v >= 0 ? "-translate-y-full pb-1" : "pt-1")}
+                    style={{ top: `${b.v >= 0 ? y(hi) : y(lo)}%` }}
+                  >
+                    <Num rid={rid}>{b.total ? gbp(b.v) : gbp(b.v, { sign: true })}</Num>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div aria-hidden className="absolute inset-x-0 h-0.5 bg-fg-2" style={{ top: `${y(0)}%` }} />
+          <span className="absolute left-0 pt-1 text-xs text-fg-2" style={{ top: `${y(0)}%` }}>
+            Payroll line
+          </span>
+        </div>
+        <div className="mt-3 grid grid-cols-6 border-t border-line pt-2">
+          {bars.map((b) => (
+            <span key={b.l} className="px-2 text-center text-xs text-fg-3">
+              {b.l}
+            </span>
+          ))}
+        </div>
+        <OutcomesTable o={o} rid={rid} />
+        <SyntheticNote s={s} className="mt-6 border-t border-line pt-3" />
+      </ProvPanel>
+    </div>
+  );
+}
+
+/** Payroll headroom both ways: positive clears with that much to spare, negative is short. Older API results carry the shortfall only. */
+function headroom(v: number | undefined, shortfall: number) {
+  if (typeof v !== "number") return shortfall > 0 ? { text: `${gbp(shortfall, { pence: true })} short`, tone: "text-warning" } : { text: "Clears", tone: "text-positive" };
+  return v >= 0 ? { text: `Clears, ${gbp(v, { pence: true })} to spare`, tone: "text-positive" } : { text: `${gbp(-v, { pence: true })} short`, tone: "text-warning" };
+}
+
+export function OutcomesTable({ o, rid }: { o: Outcomes; rid?: string }) {
+  const cell = (v: number | undefined, shortfall: number) => {
+    const h = headroom(v, shortfall);
+    return (
+      <td className={cx("whitespace-nowrap px-4 py-3 text-right text-sm", h.tone)}>
+        <Num rid={rid}>{h.text}</Num>
+      </td>
+    );
+  };
+  const closes = typeof o.wet_with_hedge_headroom_gbp === "number" ? o.wet_with_hedge_headroom_gbp >= 0 : o.wet_with_hedge_shortfall_gbp <= 0;
+  return (
+    <div className="mt-6" data-testid="outcomes">
+      <h3 className="font-sans text-sm font-medium tracking-normal text-fg">What the hedge does to payroll on {day(o.payroll_date)}</h3>
+      <table className="mt-2 w-full">
         <thead>
-          <tr className="text-[11px] uppercase tracking-[0.04em] text-fg-3">
-            <th className="px-3 py-1.5 text-left font-medium">Weekend</th>
-            <th className="px-3 py-1.5 text-right font-medium">Without hedge</th>
-            <th className="px-3 py-1.5 text-right font-medium">With hedge</th>
-            <th className="px-3 py-1.5 text-left font-medium">Why</th>
+          <tr className="border-b border-line text-xs text-fg-3">
+            <th className={cx(TH, "pr-4 text-left")}>Weekend</th>
+            <th className={cx(TH, "px-4 text-right")}>Without hedge</th>
+            <th className={cx(TH, "px-4 text-right")}>With hedge</th>
+            <th className={cx(TH, "pl-4 text-left")}>Why</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-line border-t border-line">
+        <tbody className="divide-y divide-line">
           <tr>
-            <td className="px-3 py-2 text-[12.5px]">Wet</td>
-            {cell(o.wet_no_hedge_shortfall_gbp, "text-negative")}
-            {cell(o.wet_with_hedge_shortfall_gbp, "text-negative")}
-            <td className="px-3 py-2 text-[12px] text-fg-2">Pays {gbp(o.hedge_payout_if_wet_gbp, { pence: true })}. Narrows the gap, doesn’t close it.</td>
+            <td className="py-3 pr-4 text-sm">Wet</td>
+            {cell(o.wet_no_hedge_headroom_gbp, o.wet_no_hedge_shortfall_gbp)}
+            {cell(o.wet_with_hedge_headroom_gbp, o.wet_with_hedge_shortfall_gbp)}
+            <td className="py-3 pl-4 text-sm text-fg-2">
+              Pays <Num rid={rid}>{gbp(o.hedge_payout_if_wet_gbp, { pence: true })}</Num>. {closes ? "Closes the gap." : "Narrows the gap, doesn’t close it."}
+            </td>
           </tr>
           <tr>
-            <td className="px-3 py-2 text-[12.5px]">Dry</td>
-            {cell(o.dry_no_hedge_shortfall_gbp, "text-warning")}
-            {cell(o.dry_with_hedge_shortfall_gbp, "text-warning")}
-            <td className="px-3 py-2 text-[12px] text-fg-2">Expires worthless. The {gbp(o.hedge_cost_gbp, { pence: true })} is lost.</td>
+            <td className="py-3 pr-4 text-sm">Dry</td>
+            {cell(o.dry_no_hedge_headroom_gbp, o.dry_no_hedge_shortfall_gbp)}
+            {cell(o.dry_with_hedge_headroom_gbp, o.dry_with_hedge_shortfall_gbp)}
+            <td className="py-3 pl-4 text-sm text-fg-2">
+              Expires worthless. The <Num rid={rid}>{gbp(o.hedge_cost_gbp, { pence: true })}</Num> is lost.
+            </td>
           </tr>
         </tbody>
       </table>
@@ -452,33 +650,33 @@ export function WeeklyBacktestChart({ s }: S) {
   const shortOurs = ours.filter((w) => w.shortfall).length;
   return (
     <div data-testid="panel-weekly">
-      <Panel
+      <ProvPanel
         title="Weekly cash after costs · backtest on held-out months"
+        prov={{ badge: "SYNTHETIC", meta: btMeta(s) }}
         actions={
           <>
             <Legend color="var(--accent)" label="With Pub Hedge" />
             <Legend color="var(--fg-3)" label="Without" dashed />
-            <ProvBadge badge="SYNTHETIC" meta={btMeta(s)} />
           </>
         }
       >
-        <div className="h-[200px]">
+        <div className="h-[200px]" role="img" aria-label="Weekly cash after costs, with and without Pub Hedge">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 6, right: 16, left: 0, bottom: 0 }}>
+            <LineChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
               <CartesianGrid vertical={false} strokeDasharray="2 4" />
               <XAxis dataKey="start" tickLine={false} axisLine={false} interval={12} tickFormatter={(d: string) => new Date(d).toLocaleDateString("en-GB", { month: "short", year: "2-digit" })} />
-              <YAxis tickLine={false} axisLine={false} width={64} tickFormatter={money} />
-              <ReferenceLine y={0} stroke="var(--negative)" strokeDasharray="4 4" strokeOpacity={0.6} />
+              <YAxis tickLine={false} axisLine={false} width={80} tickFormatter={money} />
+              <ReferenceLine y={0} stroke="var(--fg-3)" strokeDasharray="4 4" strokeOpacity={0.5} />
               <Tooltip {...tooltipStyle} labelFormatter={(d) => `Week of ${day(String(d), true)}`} formatter={(v, n) => [money(v), n === "ours" ? "With Pub Hedge" : "Without"]} />
               <Line type="monotone" dataKey="none" stroke="var(--fg-3)" strokeWidth={1.25} strokeDasharray="4 3" dot={false} isAnimationActive={false} />
-              <Line type="monotone" dataKey="ours" stroke="var(--accent)" strokeWidth={1.5} dot={false} isAnimationActive={false} />
+              <Line type="monotone" dataKey="ours" stroke="var(--accent)" strokeWidth={1.75} dot={false} isAnimationActive={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <p className="mt-2 text-[12px] text-fg-2">
+        <p className="mt-3 text-sm text-fg-2">
           Weeks below zero over {none.length} held-out weeks: {shortNone} without cover, {shortOurs} with it. The two lines sit almost on top of each other.
         </p>
-      </Panel>
+      </ProvPanel>
     </div>
   );
 }
@@ -496,24 +694,22 @@ export function BacktestPanel({ s }: S) {
   const naive = p.naive.point;
   return (
     <div data-testid="panel-backtest">
-      <Panel
+      <ProvPanel
         title="Backtest"
+        prov={{ badge: "SYNTHETIC", meta: btMeta(s) }}
         actions={
-          <>
-            <span className="font-mono text-[11.5px] text-fg-3">
-              {s.backtest.setup.pubs} pubs · {s.backtest.setup.bootstrap}
-            </span>
-            <ProvBadge badge="SYNTHETIC" meta={btMeta(s)} />
-          </>
+          <span>
+            {s.backtest.setup.pubs} pubs · {s.backtest.setup.bootstrap}
+          </span>
         }
         bodyClassName="p-0"
       >
         <table className="w-full text-left">
           <thead>
-            <tr className="border-b border-line bg-surface-2 text-[11px] uppercase tracking-[0.04em] text-fg-3">
-              <th className="px-4 py-2 font-medium">Policy</th>
-              {cols.map((c) => (
-                <th key={c.k} className="px-4 py-2 text-right font-medium">
+            <tr className="border-b border-line text-xs text-fg-3">
+              <th className={cx(TH, "px-6")}>Policy</th>
+              {cols.map((c, i) => (
+                <th key={c.k} className={cx(TH, "text-right", i === cols.length - 1 ? "px-6" : "px-4")}>
                   {c.l}
                 </th>
               ))}
@@ -522,12 +718,12 @@ export function BacktestPanel({ s }: S) {
           <tbody className="divide-y divide-line">
             {(Object.keys(POLICY_LABEL) as (keyof typeof p)[]).map((k) =>
               p[k] ? (
-                <tr key={k} className={k === "ours" ? "bg-accent-wash" : undefined}>
-                  <td className="px-4 py-2.5 text-[13px]">{POLICY_LABEL[k]}</td>
-                  {cols.map((c) => (
-                    <td key={c.k} className="px-4 py-2.5 text-right">
-                      <div className="font-mono text-[13px]">{c.f(p[k].point[c.k])}</div>
-                      <div className="font-mono text-[11px] text-fg-3">
+                <tr key={k}>
+                  <td className={cx("px-6 py-3 text-sm", k === "ours" ? "font-medium text-accent" : "text-fg")}>{POLICY_LABEL[k]}</td>
+                  {cols.map((c, i) => (
+                    <td key={c.k} className={cx("py-3 text-right", i === cols.length - 1 ? "px-6" : "px-4")}>
+                      <div className="text-sm">{c.f(p[k].point[c.k])}</div>
+                      <div className="text-xs text-fg-3">
                         {c.f(p[k].ci95[c.k][0])} to {c.f(p[k].ci95[c.k][1])}
                       </div>
                     </td>
@@ -537,19 +733,35 @@ export function BacktestPanel({ s }: S) {
             )}
           </tbody>
         </table>
-        <p className="border-t border-line px-4 py-3 text-[12.5px] leading-5 text-fg-2" data-testid="backtest-honest">
+        <p className="border-t border-line px-6 py-4 text-sm text-fg-2" data-testid="backtest-honest">
           {Math.abs(ours.shortfall_weeks_per_year - none.shortfall_weeks_per_year) < 0.05
             ? `At these caps, Pub Hedge does not reduce the number of weeks a pub can’t cover its costs: ${ours.shortfall_weeks_per_year.toFixed(1)} a year with or without it.`
             : `Weeks short: ${none.shortfall_weeks_per_year.toFixed(1)} a year without cover, ${ours.shortfall_weeks_per_year.toFixed(1)} with it.`}{" "}
           It costs about {gbp(-ours.hedge_net_gbp_per_year)} a pub-year net, against {gbp(-naive.hedge_net_gbp_per_year)} for naive daily cover. Raising the caps five-fold
           doesn’t help either. Intervals are 95% bootstrap. Held-out {s.backtest.setup.test[0]} to {s.backtest.setup.test[1]}.
         </p>
-      </Panel>
+      </ProvPanel>
     </div>
   );
 }
 
 // ---------- Recommendation ----------
+
+/** A ruled tally of figures: label over figure, hairlines between. */
+export function Tally({ items, rid, r }: { items: { l: string; v: string; c?: string }[]; rid?: string; r?: ToolResult }) {
+  return (
+    <div className="grid grid-flow-col divide-x divide-line" style={{ gridAutoColumns: "minmax(0, 1fr)" }}>
+      {items.map((x) => (
+        <div key={x.l} className="px-4 first:pl-0 last:pr-0">
+          <div className="text-xs text-fg-3">{x.l}</div>
+          <Num rid={rid} r={r} className={cx("font-display text-lg font-medium", x.c)}>
+            {x.v}
+          </Num>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export function ProposalPanel({ s, p }: S & { p?: Proposal }) {
   const rat = s.run?.summary?.narration?.rationale;
@@ -561,7 +773,11 @@ export function ProposalPanel({ s, p }: S & { p?: Proposal }) {
       <div data-testid="panel-recommendation">
         <Panel title="Recommendation">
           <Empty>Nothing is worth buying at today’s prices, so nothing is proposed.</Empty>
-          {rat && <div className="mt-3"><Bullets text={rat.text} /></div>}
+          {rat && (
+            <div className="mt-3">
+              <Bullets text={rat.text} />
+            </div>
+          )}
         </Panel>
       </div>
     );
@@ -569,32 +785,35 @@ export function ProposalPanel({ s, p }: S & { p?: Proposal }) {
   const cost = p.cost_pence / 100;
   return (
     <div data-testid="panel-recommendation">
-      <Panel title={`Rain cover, ${day(m.date)}`} actions={<ProvBadge badge={m.price_badge} meta={{ source: "Synthetic rain contract", method: m.rule, label: "No London rain market exists on Polymarket, so this contract is priced from calibrated forecasts" }} receiptId={sized?.receipt_id} />}>
-        <div className="text-[12px] text-fg-2">Pays out if</div>
-        <p className="mt-1 text-[13px] leading-5">At least 3mm of rain falls on the afternoon of {day(m.date, true)} at the grid cell nearest {s.pub.postcode}.</p>
+      <ProvPanel
+        title={`Rain cover, ${day(m.date)}`}
+        prov={{
+          badge: m.price_badge,
+          meta: { source: "Synthetic rain contract", method: m.rule, label: "No London rain market exists on Polymarket, so this contract is priced from calibrated forecasts" },
+          receiptId: sized?.receipt_id,
+        }}
+      >
+        <div className="text-xs text-fg-3">Pays out if</div>
+        <p className="mt-1 text-md">At least 3mm of rain falls on the afternoon of {day(m.date, true)} at the grid cell nearest {s.pub.postcode}.</p>
 
-        <div className="mt-4 grid grid-cols-4 gap-px overflow-hidden rounded border border-line bg-line">
-          {[
-            { l: "Cost", v: gbp(cost, { pence: true }) },
-            { l: "Pays if wet", v: gbp(m.payout_if_event_gbp, { pence: true }), c: "text-positive" },
-            { l: "Max loss", v: gbp(cost, { pence: true }), c: "text-negative" },
-            { l: "Shares", v: String(p.shares) },
-          ].map((x) => (
-            <div key={x.l} className="bg-surface-2 px-3 py-2">
-              <div className="text-[11.5px] text-fg-3">{x.l}</div>
-              <Num rid={sized?.receipt_id} className={cx("font-mono text-[14px]", x.c)}>
-                {x.v}
-              </Num>
-            </div>
-          ))}
+        <div className="mt-6">
+          <Tally
+            rid={sized?.receipt_id}
+            items={[
+              { l: "Cost", v: gbp(cost, { pence: true }) },
+              { l: "Pays if wet", v: gbp(m.payout_if_event_gbp, { pence: true }), c: "text-positive" },
+              { l: "Max loss", v: gbp(cost, { pence: true }), c: "text-warning" },
+              { l: "Shares", v: String(p.shares) },
+            ]}
+          />
         </div>
 
         {rat && (
           <>
-            <h3 className="mt-5 flex items-center gap-2 text-[12px] font-medium text-fg-2">
+            <h3 className="mt-6 flex items-center gap-2 font-sans text-sm font-medium tracking-normal text-fg-2">
               Why it was suggested
               {rat.model && <ModelChip model={rat.model} />}
-              <ProvBadge badge={rat.badge} receiptId={rat.receipt_id} />
+              <ProvBadge badge={rat.badge} receiptId={rat.receipt_id} variant="label" />
             </h3>
             <div className="mt-2" data-testid="rationale">
               <Bullets text={rat.text} />
@@ -602,8 +821,8 @@ export function ProposalPanel({ s, p }: S & { p?: Proposal }) {
           </>
         )}
 
-        <h3 className="mt-5 text-[12px] font-medium text-fg-2">How it was calculated</h3>
-        <dl className="mt-2 rounded border border-line bg-surface-2 px-3 py-2 font-mono text-[12px] leading-6">
+        <h3 className="mt-6 font-sans text-sm font-medium tracking-normal text-fg-2">How it was calculated</h3>
+        <dl className="mt-2 rounded bg-surface-2 px-4 py-3 text-sm leading-6">
           <CalcRow k="Forecast" v={`${m.forecast_mm.toFixed(1)} mm`} />
           <CalcRow k="P(rain ≥ 3mm)" v={`${pct(m.model_prob)} (calibrated on archived forecasts)`} />
           <CalcRow k="Ask" v={`${m.ask.toFixed(4)} → ${m.cost_per_share.toFixed(4)} a share all in (1% slippage + taker fee ${m.fee_rate} × p × (1 − p))`} />
@@ -611,19 +830,19 @@ export function ProposalPanel({ s, p }: S & { p?: Proposal }) {
           {noValue.length > 0 && <CalcRow k="Not proposed" v={`${noValue.join(", ")}: no value at the price`} />}
         </dl>
         {pricer && (
-          <p className="mt-3 flex items-start gap-2 text-[12px] leading-5 text-fg-3">
+          <p className="mt-3 flex items-start gap-2 text-xs text-fg-3">
             <span className="flex-1">{pricer.text}</span>
-            <ProvBadge badge={pricer.badge} receiptId={pricer.receipt_id} />
+            <ProvBadge badge={pricer.badge} receiptId={pricer.receipt_id} variant="label" />
           </p>
         )}
-      </Panel>
+      </ProvPanel>
     </div>
   );
 }
 
 function CalcRow({ k, v }: { k: string; v: string }) {
   return (
-    <div className="grid grid-cols-[130px_1fr]">
+    <div className="grid grid-cols-[9rem_minmax(0,1fr)] gap-3">
       <dt className="text-fg-3">{k}</dt>
       <dd className="text-fg">{v}</dd>
     </div>
@@ -640,8 +859,11 @@ const CHECK_LABEL: Record<string, string> = {
 
 export function PaperBanner() {
   return (
-    <div className="flex items-center gap-2 rounded border border-accent-edge bg-accent-wash px-3 py-1.5 text-[12px] font-medium text-accent" data-testid="paper-banner">
-      <Icon name="lock" size={13} />
+    <div
+      className="flex items-center gap-2 rounded px-3 py-2 text-xs font-medium text-accent shadow-[inset_0_0_0_1px_var(--accent-edge)]"
+      data-testid="paper-banner"
+    >
+      <Icon name="lock" size={14} />
       PAPER TRADING — no real orders
       <span className="ml-auto">
         <ProvBadge badge="PAPER" meta={{ source: "Paper execution against synthetic prices. Nothing is sent to any venue." }} />
@@ -701,69 +923,69 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
 
   return (
     <div data-testid="panel-approval">
-      <Panel
+      <ProvPanel
         title="Needs approval"
+        prov={{ badge: "PAPER", meta: { source: "Paper trading. Limits are enforced in code by the API before any fill." }, receiptId: p.receipt_id }}
         actions={
-          <>
-            <ProvBadge badge="PAPER" meta={{ source: "Paper trading. Limits are enforced in code by the API before any fill." }} receiptId={p.receipt_id} />
-            <Badge tone={STATUS_TONE[p.status]} dot>
-              <span data-testid={`status-${p.id}`}>{p.status}</span>
-            </Badge>
-          </>
+          <Badge tone={STATUS_TONE[p.status]} dot>
+            <span data-testid={`status-${p.id}`}>{p.status}</span>
+          </Badge>
         }
       >
         <PaperBanner />
-        <div className="mt-3 flex items-start justify-between gap-4">
+        <div className="mt-4 flex items-start justify-between gap-4">
           <div>
-            <div className="text-[13px] font-medium">Rain cover, {day(p.market.date)}</div>
-            <div className="mt-0.5 font-mono text-[11.5px] text-fg-3">
-              {p.market.market_id} · {p.shares} shares at {p.market.cost_per_share.toFixed(4)}
+            <div className="text-sm font-medium">Rain cover, {day(p.market.date)}</div>
+            <div className="mt-0.5 text-xs text-fg-3">
+              <span className="font-mono">{p.market.market_id}</span> · {p.shares} shares at {p.market.cost_per_share.toFixed(4)}
             </div>
           </div>
-          <div className="text-right font-mono text-[12.5px]">
-            <Num rid={tool(s, "size_hedges")?.receipt_id}>{gbp(cost, { pence: true })}</Num>
-            <div className="text-[11.5px] text-fg-3">pays {gbp(p.market.payout_if_event_gbp, { pence: true })}</div>
+          <div className="text-right">
+            <Num r={tool(s, "size_hedges")} className="font-display text-lg font-medium">
+              {gbp(cost, { pence: true })}
+            </Num>
+            <div className="text-xs text-fg-3">pays {gbp(p.market.payout_if_event_gbp, { pence: true })}</div>
           </div>
         </div>
 
-        <ul className="mt-3 divide-y divide-line rounded border border-line text-[12.5px]" data-testid="limit-checks">
+        <ul className="mt-4 divide-y divide-line border-y border-line text-sm" data-testid="limit-checks">
           {checks.map((c) => (
-            <li key={c.name} className="flex h-9 items-center justify-between px-3" data-testid={`check-${c.name}`}>
+            <li key={c.name} className="flex h-10 items-center justify-between" data-testid={`check-${c.name}`}>
               <span className="text-fg-2">{CHECK_LABEL[c.name] ?? c.name}</span>
-              <span className="flex items-center gap-2 font-mono">
+              <span className="flex items-center gap-2">
                 {pence(c.value_pence)} <span className="text-fg-3">of {pence(c.cap_pence)}</span>
-                <span className={c.pass ? "text-positive" : "text-negative"}>
+                <span className={c.pass ? "text-positive" : "text-warning"}>
                   <Icon name={c.pass ? "check" : "x"} size={14} />
                 </span>
               </span>
             </li>
           ))}
-          <li className="flex h-9 items-center justify-between px-3">
+          <li className="flex h-10 items-center justify-between">
             <span className="text-fg-2">Second approval over {pence(s.limits.approval_threshold_pence)}</span>
-            <span className="font-mono">{p.cost_pence > s.limits.approval_threshold_pence ? "Needed" : "Not needed"}</span>
+            <span>{p.cost_pence > s.limits.approval_threshold_pence ? "Needed" : "Not needed"}</span>
           </li>
         </ul>
 
         {p.status === "blocked" && (
-          <p className="mt-3 flex items-start gap-2 rounded border border-negative bg-negative-wash px-3 py-2 text-[12.5px] text-negative">
-            <Icon name="alert" size={14} className="mt-0.5 shrink-0" />
+          <p className="mt-4 flex items-start gap-2 rounded px-3 py-2 text-sm text-warning shadow-[inset_0_0_0_1px_var(--warning-edge)]">
+            <Icon name="alert" size={14} className="mt-1 shrink-0" />
             <span>
               Blocked by your limits: <span data-testid="blocked-reason">{p.reason}</span>
             </span>
           </p>
         )}
         {p.status === "filled" && (
-          <p className="mt-3 rounded border border-positive-edge bg-positive-wash px-3 py-2 text-[12.5px] text-positive" data-testid="filled-note">
+          <p className="mt-4 rounded px-3 py-2 text-sm text-positive shadow-[inset_0_0_0_1px_var(--accent-edge)]" data-testid="filled-note">
             Paper fill: {String(fill?.shares ?? p.shares)} shares
             {fill?.fill_price ? ` at ${Number(fill.fill_price).toFixed(4)}` : ""}
             {fill?.cost_gbp ? `, ${gbp(Number(fill.cost_gbp), { pence: true })}` : ""}. {String(fill?.note ?? "No real order was placed.")}
           </p>
         )}
-        {p.status === "rejected" && <p className="mt-3 text-[12.5px] text-fg-2">You declined this. It won’t be placed.</p>}
-        {error && <p className="mt-3 text-[12.5px] text-negative">{error}</p>}
+        {p.status === "rejected" && <p className="mt-4 text-sm text-fg-2">You declined this. It won’t be placed.</p>}
+        {error && <p className="mt-4 text-sm text-negative">{error}</p>}
 
         {p.status === "pending" && (
-          <div className="mt-3 flex items-center gap-2">
+          <div className="mt-4 flex flex-wrap items-center gap-3">
             {needsSecond ? (
               <>
                 <Button variant="primary" onClick={() => go(true)} disabled={busy} data-testid={`confirm-second-${p.id}`}>
@@ -773,7 +995,7 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
                 <Button onClick={() => setNeedsSecond(false)} disabled={busy}>
                   Cancel
                 </Button>
-                <span className="text-[12px] text-warning">Over {pence(s.limits.approval_threshold_pence)}, so it needs a second confirm.</span>
+                <span className="text-xs text-warning">Over {pence(s.limits.approval_threshold_pence)}, so it needs a second confirm.</span>
               </>
             ) : (
               <>
@@ -791,12 +1013,12 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
                 >
                   Decline
                 </Button>
-                <span className="text-[12px] text-fg-3">If it stays dry you lose {gbp(cost, { pence: true })}.</span>
+                <span className="text-xs text-fg-3">If it stays dry you lose {gbp(cost, { pence: true })}.</span>
               </>
             )}
           </div>
         )}
-      </Panel>
+      </ProvPanel>
     </div>
   );
 }
@@ -835,47 +1057,47 @@ export function LimitsPanel({ s, onChange }: S & { onChange: () => void }) {
 
   return (
     <div data-testid="panel-limits">
-      <Panel title="Limits" actions={<ProvBadge badge="PAPER" meta={{ source: "Enforced by the API on every approval. Lowering a cap re-checks pending cover at once." }} />}>
+      <ProvPanel title="Limits" prov={{ badge: "PAPER", meta: { source: "Enforced by the API on every approval. Lowering a cap re-checks pending cover at once." } }}>
         <div className="grid grid-cols-2 gap-x-4 gap-y-3">
           {LIMIT_FIELDS.map((f) => (
             <label key={f.k} className="block">
-              <span className="text-[12px] text-fg-2">{f.l}</span>
-              <div className="mt-1 flex h-8 items-center rounded border border-line-strong bg-surface-2 px-2.5 focus-within:border-accent">
-                <span className="font-mono text-[13px] text-fg-3">£</span>
+              <span className="text-xs text-fg-2">{f.l}</span>
+              <div className="field mt-1 flex h-10 items-center px-3">
+                <span className="text-sm text-fg-3">£</span>
                 <input
                   data-testid={f.id}
                   inputMode="decimal"
                   value={form[f.k]}
                   onChange={(e) => setForm({ ...form, [f.k]: e.target.value })}
-                  className="ml-1 w-full bg-transparent font-mono text-[13px] text-fg outline-none"
+                  className="ml-1 w-full bg-transparent text-sm text-fg"
                 />
               </div>
             </label>
           ))}
         </div>
-        <div className="mt-3 flex items-center gap-3">
+        <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button variant="primary" size="sm" onClick={save} disabled={saving || invalid} data-testid="limits-save">
             {saving && <Spinner size={12} />}
             Save limits
           </Button>
-          <span className="font-mono text-[11.5px] text-fg-3">
+          <span className="text-xs text-fg-3">
             Spent this week {pence(s.ledger.spent_this_week_pence)} · at risk this month {pence(s.ledger.at_risk_this_month_pence)}
           </span>
         </div>
-        {invalid && <p className="mt-2 text-[12px] text-negative">Enter amounts in pounds, like 30 or 30.50.</p>}
-        {error && <p className="mt-2 text-[12px] text-negative">{error}</p>}
+        {invalid && <p className="mt-2 text-xs text-negative">Enter amounts in pounds, like 30 or 30.50.</p>}
+        {error && <p className="mt-2 text-xs text-negative">{error}</p>}
         {result && (
-          <p className="mt-2 text-[12px] text-fg-2" data-testid="limits-result">
+          <p className="mt-2 text-xs text-fg-2" data-testid="limits-result">
             {result.length === 0
               ? "Saved. Nothing pending breaks the new limits."
               : result.map((b) => (
-                  <span key={b.id} className="block text-negative">
-                    Blocked {b.id}: <Num rid={b.receipt_id}>{b.reason}</Num>
+                  <span key={b.id} className="block text-warning">
+                    Blocked {b.id}: <Num rid={b.receipt_id} className="text-left !whitespace-normal">{b.reason}</Num>
                   </span>
                 ))}
           </p>
         )}
-      </Panel>
+      </ProvPanel>
     </div>
   );
 }
@@ -894,14 +1116,16 @@ export function ActivityFeed({ limit = 40, refreshKey }: { limit?: number; refre
   return (
     <ul className="divide-y divide-line">
       {rows.map((r) => (
-        <li key={r.seq} className="grid grid-cols-[60px_72px_1fr_auto] items-center gap-3 py-1.5">
-          <span className="font-mono text-[11.5px] text-fg-3">
+        <li key={r.seq} className="grid grid-cols-[4.5rem_5rem_minmax(0,1fr)_auto] items-center gap-3 py-2">
+          <span className="text-xs text-fg-3">
             {new Date(r.ts * 1000).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
           </span>
-          <span className="truncate font-mono text-[11px] text-fg-3">{r.step}</span>
-          <Num rid={r.receipt_id} className="truncate text-left font-mono text-[12px] text-fg-2">
-            {r.call}
-          </Num>
+          <span className="truncate text-xs text-fg-3">{r.step}</span>
+          <span className="min-w-0 truncate">
+            <Num rid={r.receipt_id} mark={false} className="text-left font-mono text-xs text-fg-2">
+              {r.call}
+            </Num>
+          </span>
           <ProvBadge badge={r.badge} receiptId={r.receipt_id} />
         </li>
       ))}

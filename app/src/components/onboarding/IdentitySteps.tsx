@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import AgentRun from "../AgentRun";
-import { ProvBadge } from "../Provenance";
+import { ProvPanel } from "../Provenance";
 import { SourcesPanel, VerifyPanel } from "../panels";
-import { Icon, Panel, cx } from "../ui";
+import { Icon, cx } from "../ui";
 import type { AppState } from "../../lib/api";
 import { StepFooter, type Form } from "./Onboarding";
 
@@ -35,19 +35,19 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
         submit();
       }}
     >
-      <Panel actions={<ProvBadge badge={s.pub.identity_badge} meta={{ source: "Companies House and postcodes.io" }} />} title="Pub">
-        <div className="grid grid-cols-3 gap-x-5 gap-y-4">
+      <ProvPanel prov={{ badge: s.pub.identity_badge, meta: { source: "Companies House and postcodes.io" } }} title="Pub">
+        <div className="grid gap-x-6 gap-y-4 sm:grid-cols-3">
           <Field label="Pub name" value={form.pubName} onChange={set("pubName")} error={touched ? errors.pubName : ""} autoFocus />
           <Field label="Postcode" value={form.postcode} onChange={(v) => set("postcode")(v.toUpperCase())} error={touched ? errors.postcode : ""} mono />
           <Field label="Your name" value={form.owner} onChange={set("owner")} error={touched ? errors.owner : ""} />
         </div>
-      </Panel>
-      <div className="mt-4 flex items-start gap-2.5 text-[12.5px] text-fg-2">
-        <Icon name="search" size={14} className="mt-0.5 shrink-0 text-fg-3" />
+      </ProvPanel>
+      <div className="mt-4 flex items-start gap-3 text-sm text-fg-2">
+        <Icon name="search" size={14} className="mt-1 shrink-0 text-fg-3" />
         We’ll look up your company on Companies House and your premises on postcodes.io. You won’t need to type them.
       </div>
       {differs && (
-        <p className="mt-2 text-[12.5px] text-warning">
+        <p className="mt-2 text-sm text-warning">
           This demo is set up for {s.pub.trading_name}, {s.pub.postcode}. The agent will check that pub.
         </p>
       )}
@@ -73,19 +73,18 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-[12px] text-fg-2">{label}</span>
+      <span className="text-xs text-fg-2">{label}</span>
       <input
         value={value}
         autoFocus={autoFocus}
         onChange={(e) => onChange(e.target.value)}
         aria-invalid={!!error}
         className={cx(
-          "mt-1.5 h-9 w-full rounded border bg-surface-2 px-3 text-[13px] text-fg outline-none transition-colors placeholder:text-fg-3",
-          error ? "border-negative" : "border-line-strong focus:border-accent",
-          mono && "font-mono tracking-wide"
+          "field mt-2 h-10 w-full px-3 text-sm placeholder:text-fg-3",
+          mono && "font-mono"
         )}
       />
-      {error && <span className="mt-1 block text-[12px] text-negative">{error}</span>}
+      {error && <span className="mt-1 block text-xs text-negative">{error}</span>}
     </label>
   );
 }
@@ -104,9 +103,9 @@ export function VerifyStep({ s, onEdit, onNext, onBack }: Nav & { s: AppState; o
     <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className="space-y-4">
       <VerifyPanel s={s} />
       <SourcesPanel s={s} />
-      <div className="text-[12.5px] text-fg-2">
+      <div className="text-sm text-fg-2">
         Something wrong?{" "}
-        <button onClick={onEdit} className="text-accent hover:underline">
+        <button type="button" onClick={onEdit} className="hit text-accent underline-offset-4 hover:underline">
           Edit your details
         </button>
       </div>

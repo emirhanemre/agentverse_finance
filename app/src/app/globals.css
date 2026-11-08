@@ -1,120 +1,244 @@
+/* Hallmark · shape: app screen · genre: modern-minimal · theme: Dusk (by request) · redesign: restyle
+ * nav: kept (onboarding top bar and step rail, dashboard sidebar and top bar) · signature: the payroll line, a wet weekend with and without cover · states: loading, error, empty, full · dusk: slate/periwinkle-apricot/glass
+ * axes: dark/grotesk-sans/cool · posture: committed · contrast: pass · modes: light+dark · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V3 · weakest: V, a restyle keeps the shell and the panel grid; spent the change on quiet provenance and the payroll hero instead of moving panels */
+/* Hallmark · waive 39b · inline text buttons carry the .hit 44px target · provenance labels and receipt figures sit in running text and table rows, where a 32px box would break the line */
+/* Hallmark · dropped onFocus={load}, onMouseEnter={load}, onClick={(e) => { e.stopPropagation(); openReceipt(rid); }} · provenance rebuilt for the quiet view: hover and focus now call arm(), which loads the same receipt; the same receipt click now lives in Mark and Num as openReceipt(id) */
+/* Hallmark · dismissed 41 · accent-ink only ever sits on the periwinkle fill (buttons, the switch, the done mark), never on the slate paper */
+@import "./tokens.css";
+@import "./base.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* App tokens: Dusk slate is the default; [data-theme="light"] is Dusk day, from the bone wells and day ink. */
 :root {
-  --bg: #f4f6f8;
-  --surface: #ffffff;
-  --surface-2: #f6f7f9;
-  --surface-3: #ebeef2;
-  --line: #e1e5ea;
-  --line-strong: #cdd3da;
-  --fg: #1c2127;
-  --fg-2: #536070;
-  --fg-3: #5f6976;
-  --accent: #2560c0;
-  --accent-strong: #215db0;
-  --accent-wash: rgba(45, 114, 210, 0.09);
-  --accent-edge: rgba(45, 114, 210, 0.4);
-  --positive: #18693f;
-  --positive-wash: rgba(35, 133, 81, 0.1);
-  --positive-edge: rgba(35, 133, 81, 0.35);
-  --negative: #c23a3e;
-  --negative-wash: rgba(205, 66, 70, 0.09);
-  --warning: #94560c;
-  --warning-wash: rgba(200, 118, 25, 0.11);
-  --warning-edge: rgba(200, 118, 25, 0.4);
-  color-scheme: light;
+  --text-4xl: 2.488rem;
+  --font-display: var(--font-wix-display), "Wix Madefor Display", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-wix-text), "Wix Madefor Text", ui-sans-serif, system-ui, sans-serif;
+  --font-code: var(--font-plex-mono), ui-monospace, monospace;
+  --color-accent-2-deep: oklch(47% 0.105 55);
+  --color-error-deep: oklch(50% 0.17 27);
+
+  --bg: var(--color-paper);
+  --surface: var(--glass);
+  --surface-solid: var(--color-paper-2);
+  --surface-2: color-mix(in oklab, var(--color-light) 5%, transparent);
+  --surface-3: color-mix(in oklab, var(--color-light) 9%, transparent);
+  --line: color-mix(in oklab, var(--color-light) 7%, transparent);
+  --line-strong: color-mix(in oklab, var(--color-light) 14%, transparent);
+  --field-edge: var(--color-muted);
+  --fg: var(--color-ink);
+  --fg-2: var(--color-ink-2);
+  --fg-3: var(--color-muted);
+  --accent: var(--color-accent);
+  --accent-fill: var(--color-accent);
+  --accent-fill-hi: var(--color-accent-hi);
+  --accent-ink: var(--color-accent-ink);
+  --accent-wash: color-mix(in oklab, var(--color-accent) 12%, transparent);
+  --accent-edge: color-mix(in oklab, var(--color-accent) 40%, transparent);
+  --warning: var(--color-accent-2);
+  --warning-wash: color-mix(in oklab, var(--color-accent-2) 10%, transparent);
+  --warning-edge: color-mix(in oklab, var(--color-accent-2) 38%, transparent);
+  --negative: var(--color-error);
+  --negative-wash: color-mix(in oklab, var(--color-error) 10%, transparent);
+  --panel-hi: var(--glass-hi);
+  --panel-shadow: var(--shadow-card);
+  --popover: oklch(25% 0.017 268 / 0.94);
+  --scrim: oklch(10% 0.022 268 / 0.5);
 }
 
-:root[data-theme="dark"] {
-  --bg: #0f1217;
-  --surface: #151a21;
-  --surface-2: #1b2129;
-  --surface-3: #232a33;
-  --line: #252c35;
-  --line-strong: #323b46;
-  --fg: #e3e7ec;
-  --fg-2: #a1aab6;
-  --fg-3: #8691a0;
-  --accent: #4c90f0;
-  --accent-strong: #2d72d2;
-  --accent-wash: rgba(76, 144, 240, 0.12);
-  --accent-edge: rgba(76, 144, 240, 0.45);
-  --positive: #4cbb85;
-  --positive-wash: rgba(61, 170, 116, 0.12);
-  --positive-edge: rgba(61, 170, 116, 0.4);
-  --negative: #e5675f;
-  --negative-wash: rgba(229, 103, 95, 0.12);
-  --warning: #e0a04a;
-  --warning-wash: rgba(224, 160, 74, 0.12);
-  --warning-edge: rgba(224, 160, 74, 0.4);
-  color-scheme: dark;
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: var(--color-well);
+  --surface: var(--color-card);
+  --surface-solid: var(--color-card);
+  --surface-2: var(--color-well);
+  --surface-3: var(--color-well-2);
+  --line: var(--color-well-rule);
+  --line-strong: oklch(80% 0.010 75);
+  --field-edge: var(--color-well-muted);
+  --fg: var(--color-well-ink);
+  --fg-2: var(--color-day-muted);
+  --fg-3: var(--color-well-muted);
+  --accent: var(--color-accent-deep);
+  --accent-wash: color-mix(in oklab, var(--color-accent-deep) 9%, transparent);
+  --accent-edge: color-mix(in oklab, var(--color-accent-deep) 35%, transparent);
+  --warning: var(--color-accent-2-deep);
+  --warning-wash: color-mix(in oklab, var(--color-accent-2) 22%, transparent);
+  --warning-edge: color-mix(in oklab, var(--color-accent-2-deep) 40%, transparent);
+  --negative: var(--color-error-deep);
+  --negative-wash: color-mix(in oklab, var(--color-error-deep) 8%, transparent);
+  --panel-hi: inset 0 0 0 1px var(--color-well-rule);
+  --panel-shadow: 0 1px 2px oklch(22% 0.02 268 / 0.05), 0 24px 48px -28px oklch(22% 0.02 268 / 0.22);
+  --popover: oklch(99.5% 0.003 75 / 0.96);
+  --scrim: oklch(22% 0.02 268 / 0.18);
 }
 
 html,
 body {
   background: var(--bg);
   color: var(--fg);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
-::selection {
-  background: var(--accent-edge);
-  color: var(--fg);
-}
-
-input,
-textarea {
-  caret-color: var(--accent);
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.font-mono,
-.tnum {
+body {
   font-variant-numeric: tabular-nums;
+}
+
+@layer components {
+  /* Smoked glass with its lit top edge: the one surface for panels. */
+  .glass {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
+    backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
+    box-shadow: var(--panel-hi), var(--panel-shadow);
+  }
+
+  /* 32 to 40px controls keep a 44px hit target. */
+  .hit {
+    position: relative;
+  }
+  .hit::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Text fields: constant 1px edge, the ring is an outline. */
+  .field {
+    min-height: 40px;
+    border: 1px solid var(--field-edge);
+    border-radius: var(--radius-inner);
+    background: var(--surface-2);
+    color: var(--fg);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--negative);
+  }
+  .field:focus-within {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  .field input {
+    outline: none;
+  }
+
+  /* A figure with a receipt: a faint dotted underline on hover, the receipt on click. */
+  .num-link {
+    text-decoration: underline dotted transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--dur-micro) var(--ease-out);
+  }
+  .num-link:hover,
+  .num-link:focus-visible {
+    text-decoration-color: var(--fg-3);
+  }
+
+  /* The provenance hover card: hover waits, focus does not. */
+  .prov {
+    position: relative;
+  }
+  .prov-card {
+    position: absolute;
+    top: calc(100% + var(--space-2xs));
+    z-index: var(--z-tooltip);
+    width: 18rem;
+    padding: var(--space-sm);
+    border-radius: var(--radius-inner);
+    background: var(--popover);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
+    backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
+    box-shadow: var(--panel-hi), var(--panel-shadow);
+    color: var(--fg);
+    text-align: left;
+    white-space: normal;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--dur-micro) var(--ease-in), visibility 0s linear var(--dur-micro);
+  }
+  .prov:hover > .prov-card {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--dur-short) var(--ease-out) 800ms, visibility 0s linear 800ms;
+  }
+  .prov:focus-within > .prov-card {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--dur-short) var(--ease-out) 0s, visibility 0s linear 0s;
+  }
+
+  /* Audit view reveal: opacity only. */
+  @keyframes prov-in {
+    from {
+      opacity: 0;
+    }
+  }
+  .prov-reveal {
+    animation: prov-in var(--dur-short) var(--ease-out);
+  }
+
+  /* Waterfall bars grow from where they start, once, staggered. */
+  @keyframes bar-grow {
+    from {
+      transform: scaleY(0);
+    }
+  }
+  .wf-bar {
+    animation: bar-grow var(--dur-long) var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+  /* Payday bars grow sideways out of the payroll line. */
+  @keyframes bar-reach {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  .pd-bar {
+    animation: bar-reach var(--dur-long) var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 100ms);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wf-bar,
+    .pd-bar {
+      animation: none;
+    }
+  }
+
+  /* Control press: one pixel down. */
+  .press {
+    transition-property: color, background-color, box-shadow, transform;
+    transition-duration: var(--dur-micro);
+    transition-timing-function: var(--ease-out);
+  }
+  .press:active:not(:disabled) {
+    transform: translateY(1px);
+  }
 }
 
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--line-strong) transparent;
 }
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--line-strong);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
 
 .recharts-cartesian-axis-tick text {
   fill: var(--fg-3);
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
 }
 .recharts-cartesian-grid line {
   stroke: var(--line);
 }
 .recharts-tooltip-wrapper {
   outline: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
 }

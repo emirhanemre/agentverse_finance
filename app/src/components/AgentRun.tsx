@@ -23,7 +23,7 @@ const CHAIN = [
   { step: "monitor", label: "Checking limits and queueing for approval" },
 ];
 
-type ToolLine = { call: string; result_summary: string; source_badge: string; receipt_id: string; model: string; ms: number };
+type ToolLine = { call: string; result_summary: string; source_badge: string; receipt_id: string; model: string; ms: number; source?: Record<string, unknown> };
 type Step = {
   step: string;
   label: string;
@@ -127,11 +127,11 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
   const models = Array.from(new Set(steps.map((s) => s.model).filter(Boolean).concat(rationale ? [rationale.model] : [])));
 
   return (
-    <div className="overflow-hidden rounded-md border border-line bg-surface" data-testid="agent-run">
-      <div className="flex h-10 items-center justify-between border-b border-line px-4">
-        <div className="flex items-center gap-2.5">
+    <div className="glass" data-testid="agent-run">
+      <div className="flex min-h-12 items-center justify-between gap-4 px-6 py-2">
+        <div className="flex items-center gap-3">
           {done ? (
-            <span data-testid="run-done" className="flex h-4 w-4 items-center justify-center rounded-full bg-positive text-bg">
+            <span data-testid="run-done" className="flex h-4 w-4 items-center justify-center rounded-full bg-accent-fill text-accent-ink">
               <Icon name="check" size={11} />
             </span>
           ) : phase === "running" ? (
@@ -139,23 +139,28 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
           ) : (
             <Icon name="spark" size={15} className="text-fg-3" />
           )}
-          <span className="text-[13px] font-medium">{title}</span>
+          <h2 className="max-w-none font-display text-md font-medium">{title}</h2>
           {models.map((m) => (
             <ModelChip key={m} model={m!} />
           ))}
           {replay && <ProvBadge badge="REPLAY" meta={{ source: "Recorded run, played back from fixtures/runs/demo-run.json" }} />}
         </div>
-        <div className="flex items-center gap-4 font-mono text-[11.5px] text-fg-3">
-          {runId && <span>{runId}</span>}
+        <div className="flex items-center gap-4 text-xs text-fg-3">
+          {runId && <span className="font-mono">{runId}</span>}
           {phase !== "idle" && <span className="text-fg-2">{elapsed.toFixed(1)}s</span>}
         </div>
       </div>
       <div className="h-px bg-line">
-        <motion.div className="h-px bg-accent" initial={false} animate={{ width: `${progress * 100}%` }} transition={{ duration: 0.4 }} />
+        <motion.div
+          className="h-px origin-left bg-accent"
+          initial={false}
+          animate={{ scaleX: progress }}
+          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+        />
       </div>
 
-      <div className="flex items-center gap-3 border-b border-line px-4 py-2.5">
-        <div role="tablist" aria-label="Run mode" className="flex rounded border border-line-strong bg-surface-2 p-0.5">
+      <div className="flex items-center gap-4 border-b border-line px-6 py-3">
+        <div role="tablist" aria-label="Run mode" className="flex items-center gap-4">
           {MODES.map((m) => (
             <button
               key={m.id}
@@ -165,70 +170,71 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
               disabled={phase === "running"}
               onClick={() => setMode(m.id)}
               className={cx(
-                "h-6 rounded-[3px] px-2.5 text-[12px] transition-colors disabled:cursor-not-allowed",
-                mode === m.id ? "bg-surface text-fg shadow-sm" : "text-fg-2 hover:text-fg"
+                "hit press flex h-8 items-center gap-2 whitespace-nowrap text-sm disabled:cursor-not-allowed disabled:opacity-[0.55]",
+                mode === m.id ? "text-fg" : "text-fg-3 hover:text-fg-2"
               )}
             >
+              <span aria-hidden className={cx("h-2 w-2 rounded-full", mode === m.id ? "bg-accent" : "shadow-[inset_0_0_0_1px_var(--line-strong)]")} />
               {m.label}
             </button>
           ))}
         </div>
-        <span className="flex-1 truncate text-[12px] text-fg-3">{MODES.find((m) => m.id === mode)?.hint}</span>
+        <span className="flex-1 truncate text-xs text-fg-3">{MODES.find((m) => m.id === mode)?.hint}</span>
         <Button size="sm" variant={phase === "idle" ? "primary" : "secondary"} onClick={start} disabled={phase === "running"} data-testid="run-start">
           {phase === "idle" ? "Run the agent" : "Run again"}
         </Button>
       </div>
 
       {phase === "idle" && (
-        <p className="px-4 py-4 text-[12.5px] text-fg-2">
+        <p className="px-6 py-4 text-sm text-fg-2">
           Five agents check the register, read the books, cost the weather, price cover and queue it for you. Every call is logged with a receipt.
         </p>
       )}
 
       {steps.length > 0 && (
-        <ol className="px-4 py-2">
+        <ol className="px-6 py-3">
           {steps.map((s) => (
             <li key={s.step} className="py-2" data-testid={`step-${s.step}`}>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <StepMarker state={s.state} />
-                <span className={cx("text-[13px]", s.state === "pending" ? "text-fg-3" : s.state === "active" ? "text-fg" : "text-fg-2")}>
+                <span className={cx("text-sm", s.state === "pending" ? "text-fg-3" : s.state === "active" ? "text-fg" : "text-fg-2")}>
                   {s.label}
                   {s.state === "active" && <span className="text-fg-3">…</span>}
                 </span>
                 {s.model && <ModelChip model={s.model} />}
                 {s.state === "done" && (
-                  <span className="ml-auto flex items-center gap-2 font-mono text-[11.5px] text-fg-3">
+                  <span className="ml-auto flex items-center gap-2 text-xs text-fg-3">
                     {s.tools.length} calls · {((s.ms ?? 0) / 1000).toFixed(1)}s
                   </span>
                 )}
               </div>
               {s.tools.length > 0 && (
-                <ul className="ml-[7px] mt-1.5 space-y-1 border-l border-line pl-[22px]">
+                <ul className="ml-2 mt-2 space-y-1 border-l border-line pl-4">
                   {s.tools.map((c, j) => (
                     <motion.li
                       key={c.receipt_id + j}
                       initial={{ opacity: 0, y: 3 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.18 }}
-                      className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-3 font-mono text-[11.5px] leading-5"
+                      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                      className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,7.5rem)] items-center gap-3 text-xs leading-5"
                     >
-                      <span className="truncate text-fg-2">
-                        <span className="text-accent">{c.call.split("(")[0]}</span>
+                      <span className="truncate font-mono text-fg-2">
+                        <span className="text-fg">{c.call.split("(")[0]}</span>
                         {c.call.includes("(") && <span className="text-fg-3">({c.call.split("(").slice(1).join("(")}</span>}
                       </span>
-                      <Num rid={c.receipt_id} className="text-right text-fg-2">
+                      <Num rid={c.receipt_id} mark={false} className="text-right text-fg-2">
                         {c.result_summary || "no result"}
                       </Num>
-                      <ProvBadge badge={c.source_badge} receiptId={c.receipt_id} />
+                      <ProvBadge badge={c.source_badge} meta={c.source && Object.keys(c.source).length ? c.source : undefined} receiptId={c.receipt_id} />
                     </motion.li>
                   ))}
                 </ul>
               )}
               {s.narration && (
-                <div className="ml-[29px] mt-1.5 flex items-start gap-2 text-[12.5px] leading-5 text-fg">
+                <div className="ml-6 mt-2 flex items-start gap-3 text-sm text-fg">
                   <p className="flex-1">{s.narration}</p>
                   <ProvBadge badge={s.narration_badge ?? "TEMPLATE"} receiptId={s.receipt_id} />
-                  {s.grounding_ok === false && <span className="font-mono text-[11px] text-negative">ungrounded</span>}
+                  {s.grounding_ok === false && <span className="text-xs text-negative">ungrounded</span>}
                 </div>
               )}
             </li>
@@ -237,8 +243,8 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
       )}
 
       {rationale && (
-        <div className="border-t border-line px-4 py-3" data-testid="run-rationale">
-          <div className="mb-1.5 flex items-center gap-2 text-[12px] text-fg-2">
+        <div className="border-t border-line px-6 py-4" data-testid="run-rationale">
+          <div className="mb-2 flex items-center gap-2 text-sm text-fg-2">
             Why the agent recommends this
             <ModelChip model={rationale.model} />
             <ProvBadge badge={rationale.badge} receiptId={rationale.receipt_id} />
@@ -247,14 +253,14 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
         </div>
       )}
 
-      {phase === "error" && <p className="border-t border-line px-4 py-3 text-[12.5px] text-negative">{error}</p>}
+      {phase === "error" && <p className="border-t border-line px-6 py-3 text-sm text-negative">{error}</p>}
     </div>
   );
 }
 
 export function ModelChip({ model }: { model: string }) {
   return (
-    <span data-testid="model-chip" className="rounded bg-surface-3 px-1.5 py-px font-mono text-[11px] text-fg-2">
+    <span data-testid="model-chip" className="whitespace-nowrap rounded-pill px-2 py-px text-xs text-fg-3 shadow-[inset_0_0_0_1px_var(--line-strong)]">
       {model}
     </span>
   );
@@ -262,14 +268,16 @@ export function ModelChip({ model }: { model: string }) {
 
 export function Bullets({ text }: { text: string }) {
   return (
-    <ul className="space-y-1.5">
+    <ul className="space-y-2">
       {text
         .split("\n")
         .map((l) => l.replace(/^\s*-\s*/, "").trim())
         .filter(Boolean)
         .map((l) => (
-          <li key={l} className="flex gap-2.5 text-[12.5px] leading-5 text-fg">
-            <Icon name="chevron-right" size={12} className="mt-1 shrink-0 text-fg-3" />
+          <li key={l} className="flex gap-3 text-sm leading-6 text-fg">
+            <span className="flex h-6 shrink-0 items-center text-fg-3">
+              <Icon name="chevron-right" size={12} />
+            </span>
             {l}
           </li>
         ))}
@@ -285,5 +293,9 @@ function StepMarker({ state }: { state: Step["state"] }) {
       </span>
     );
   if (state === "active") return <Spinner className="text-accent" size={16} />;
-  return <span className="mx-[3px] h-2.5 w-2.5 rounded-full border border-line-strong" />;
+  return (
+    <span className="flex h-4 w-4 items-center justify-center">
+      <span className="h-2 w-2 rounded-full shadow-[inset_0_0_0_1px_var(--line-strong)]" />
+    </span>
+  );
 }
