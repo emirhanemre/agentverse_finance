@@ -53,6 +53,9 @@ export function ProvenanceProvider({ children }: { children: React.ReactNode }) 
     []
   );
   useEffect(() => {
+    document.documentElement.dataset.audit = audit ? "on" : "off"; // scroll areas leave room for the key
+  }, [audit]);
+  useEffect(() => {
     try {
       setAuditState(localStorage.getItem(AUDIT_KEY) === "1");
     } catch {}
@@ -70,7 +73,7 @@ export function ProvenanceProvider({ children }: { children: React.ReactNode }) 
       <MotionConfig reducedMotion="user">
       <Ctx.Provider value={setOpen}>
         {children}
-        {audit && <AuditLegend />}
+        {audit && !open && <AuditLegend />}
         <AnimatePresence>{open && <ReceiptDrawer key={open} id={open} onClose={() => setOpen(null)} />}</AnimatePresence>
       </Ctx.Provider>
       </MotionConfig>

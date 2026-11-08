@@ -344,3 +344,8 @@ body {
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
   backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
 }
+
+/* While the sources key is up, scroll areas end above it. */
+[data-audit="on"] main {
+  padding-bottom: calc(var(--space-2xl) + var(--space-xl));
+}
