@@ -209,8 +209,13 @@ def rationale_template(f: dict) -> str:
     if not s["positions"]:
         return (f"- Nothing is worth buying at today's prices, so nothing is proposed.\n"
                 f"- If the weekend is wet, payroll on {wet['payroll_date']} is short £{wet['shortfall_gbp']:,.2f}.")
-    p = s["positions"][0]
+    p, o = s["positions"][0], s.get("outcomes", {})
+
+    def payroll_line(headroom):
+        return f"clears with £{headroom:,.2f} to spare" if headroom >= 0 else f"is short £{-headroom:,.2f}"
+    wet_h = o.get("wet_with_hedge_headroom_gbp", -wet["shortfall_gbp"])
+    dry_h = o.get("dry_with_hedge_headroom_gbp", -dry["shortfall_gbp"])
     return (f"- A wet afternoon costs about £{f['exposure']['loss_wet_day_gbp']:,.2f} in takings.\n"
-            f"- The proposed position costs £{s['total_cost_gbp']:.2f} and pays £{p['payout_if_event_gbp']:,.2f} if it rains.\n"
-            f"- If it stays dry the £{s['total_cost_gbp']:.2f} is lost, and payroll on {dry['payroll_date']} is still "
-            f"short £{dry['shortfall_gbp']:,.2f}.")
+            f"- The proposed position costs £{s['total_cost_gbp']:.2f} and pays £{p['payout_if_event_gbp']:,.2f} if it rains, "
+            f"so payroll on {wet['payroll_date']} {payroll_line(wet_h)}.\n"
+            f"- If it stays dry the £{s['total_cost_gbp']:.2f} is lost, and payroll {payroll_line(dry_h)}.")

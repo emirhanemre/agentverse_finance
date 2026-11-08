@@ -69,18 +69,22 @@ def append(run_id, step, call, args, result, badge, model=None, ms=0, tokens_in=
 def rows(run_id=None, limit=500) -> list:
     q = "SELECT * FROM audit" + (" WHERE run_id = ?" if run_id else "") + " ORDER BY seq DESC LIMIT ?"
     args = (run_id, limit) if run_id else (limit,)
-    return [dict(r) for r in db().execute(q, args).fetchall()]
+    with _lock:  # one shared connection: reads mid-insert from another thread can return duplicate rows
+        return [dict(r) for r in db().execute(q, args).fetchall()]
 
 
 def receipt(receipt_id: str):
-    r = db().execute("SELECT * FROM audit WHERE receipt_id = ?", (receipt_id,)).fetchone()
+    with _lock:
+        r = db().execute("SELECT * FROM audit WHERE receipt_id = ?", (receipt_id,)).fetchone()
     return dict(r) if r else None
 
 
 def verify() -> dict:
     prev = "genesis"
     n = 0
-    for r in db().execute("SELECT * FROM audit ORDER BY seq").fetchall():
+    with _lock:
+        all_rows = db().execute("SELECT * FROM audit ORDER BY seq").fetchall()
+    for r in all_rows:
         d = dict(r)
         seq, h = d.pop("seq"), d.pop("hash")
         if d["prev_hash"] != prev or _digest(d) != h:
