@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ProvenanceProvider } from "../components/Provenance";
 
 // IBM Plex, SIL Open Font License 1.1 (see src/fonts/OFL.txt). Local so builds never hit the network.
 const sans = localFont({
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <ProvenanceProvider>{children}</ProvenanceProvider>
+      </body>
     </html>
   );
 }
