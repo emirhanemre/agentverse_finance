@@ -2,7 +2,7 @@
  "events": [
   {
    "type": "run",
-   "run_id": "run_a7e7884f6c",
+   "run_id": "run_b7db74937b",
    "mode": "scenario",
    "live_models": true
   },
@@ -19,7 +19,7 @@
    "args_summary": "company_number=05770953",
    "result_summary": "BACCHUS INNS LIMITED \u00b7 active \u00b7 SIC 56302",
    "source_badge": "REAL \u00b7 CACHED",
-   "receipt_id": "r_bdeb8294a1fd",
+   "receipt_id": "r_303e9c336a27",
    "source": {
     "source": "Companies House",
     "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
@@ -35,7 +35,7 @@
    "args_summary": "company_number=05770953",
    "result_summary": "1 active director on register \u00b7 match",
    "source_badge": "REAL \u00b7 CACHED",
-   "receipt_id": "r_8aca111286eb",
+   "receipt_id": "r_43d47ed5c384",
    "source": {
     "source": "Companies House",
     "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
@@ -51,7 +51,7 @@
    "args_summary": "postcode=N4 3HB",
    "result_summary": "Haringey \u00b7 51.5687, -0.1086",
    "source_badge": "REAL \u00b7 CACHED",
-   "receipt_id": "r_668ba9a78962",
+   "receipt_id": "r_2509d9e3e89b",
    "source": {
     "source": "postcodes.io (ONS Postcode Directory)",
     "licence": "Open Government Licence v3.0 (ONS)",
@@ -65,12 +65,12 @@
    "step": "verifier",
    "label": "Verifying the business",
    "model": "gemini-3.8-flash",
-   "narration": "The business checks out on public registers as an active company under company number 05770953 with SIC code 56302, 1 active director, and a valid Haringey postcode at latitude 51.568656 and longitude -0.108575.",
+   "narration": "The business checks out as active on Companies House under company number 05770953 with SIC code 56302, 1 active director on register, and a valid postcode location at coordinates 51.568656, -0.108575.",
    "narration_badge": "MODEL",
    "grounding_ok": true,
-   "receipt_id": "r_404ee55b353b",
-   "ms": 5262,
-   "tokens": 1383
+   "receipt_id": "r_3dab06b135d0",
+   "ms": 3722,
+   "tokens": 1387
   },
   {
    "type": "step_start",
@@ -83,15 +83,15 @@
    "step": "ingest",
    "call": "load_takings_history()",
    "args_summary": "",
-   "result_summary": "2,130 trading days \u00b7 avg \u00a32,441/day",
+   "result_summary": "2,130 trading days \u00b7 avg \u00a38,545/day",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_9088e7d12144",
+   "receipt_id": "r_b9365927b94c",
    "source": {
     "generator": "scripts/gen_synthetic.py",
     "seed": 20261108
    },
    "model": "gemini-3.8-flash",
-   "ms": 49
+   "ms": 0
   },
   {
    "type": "tool",
@@ -100,34 +100,34 @@
    "args_summary": "",
    "result_summary": "120 test charges \u00b7 \u00a3371,004",
    "source_badge": "TEST MODE",
-   "receipt_id": "r_2363086f83f0",
+   "receipt_id": "r_a7f4f796207a",
    "source": {
     "source": "Stripe test mode",
-    "fetched_at": "2026-11-08T00:19:00Z"
+    "fetched_at": "2026-11-08T07:24:53Z"
    },
    "model": "gemini-3.8-flash",
-   "ms": 1
+   "ms": 0
   },
   {
    "type": "tool",
    "step": "ingest",
    "call": "load_bank_feed()",
    "args_summary": "",
-   "result_summary": "3,264 transactions \u00b7 payroll \u00a35,078/wk",
+   "result_summary": "3,264 transactions \u00b7 payroll \u00a317,773/wk",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_41371d621e88",
+   "receipt_id": "r_f4103dcffaeb",
    "source": {},
    "model": "gemini-3.8-flash",
-   "ms": 6
+   "ms": 2
   },
   {
    "type": "tool",
    "step": "ingest",
    "call": "check_bank_feed()",
    "args_summary": "",
-   "result_summary": "0 payment loops \u00b7 17 transfers \u2265\u00a35,000",
+   "result_summary": "0 payment loops \u00b7 130 transfers \u2265\u00a35,000",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_cabd6a793fdd",
+   "receipt_id": "r_b7973804d8b0",
    "source": {},
    "model": "gemini-3.8-flash",
    "ms": 1
@@ -139,23 +139,23 @@
    "args_summary": "",
    "result_summary": "2,130 days \u00b7 134 afternoons \u22653mm",
    "source_badge": "REAL \u00b7 CACHED",
-   "receipt_id": "r_bbd4e1fe2083",
+   "receipt_id": "r_49a9b7ad74e0",
    "source": {
     "source": "Open-Meteo archive (ERA5) and historical forecast API",
     "licence": "CC BY 4.0 \u00b7 Weather data by Open-Meteo.com (https://open-meteo.com/en/license)",
     "fetched_at": "2026-11-07T23:58:09Z"
    },
    "model": "gemini-3.8-flash",
-   "ms": 3
+   "ms": 1
   },
   {
    "type": "tool",
    "step": "ingest",
    "call": "load_match_and_duty_dates()",
    "args_summary": "",
-   "result_summary": "87 match days \u00b7 4 duty dates",
+   "result_summary": "87 England/Ireland match days (football and rugby) \u00b7 4 duty dates",
    "source_badge": "REAL \u00b7 CACHED",
-   "receipt_id": "r_7d08294f3d9c",
+   "receipt_id": "r_37d3ff52a044",
    "source": {
     "source": "openfootball (CC0), Wikipedia (CC BY-SA 4.0), HMRC/legislation.gov.uk (OGL)"
    },
@@ -167,12 +167,12 @@
    "step": "ingest",
    "label": "Reading takings, bank feed and history",
    "model": "gemini-3.8-flash",
-   "narration": "Loaded data includes synthetic 2,130 days of till takings (\u00a35,200,237.26 total), synthetic bank feed data covering 3,264 transactions (showing 0 payment loops and 17 large transfers across 137 recent transactions), 120 Stripe test mode charges (\u00a3371,004.31 total), alongside real cached weather history across 2,130 days and real records of 87 match days and 4 duty change dates.",
+   "narration": "Loaded 2,130 days of synthetic till takings (\u00a318,200,830.07 total), 120 Stripe test mode charges (\u00a3371,004.31 total), and synthetic bank feed records (3,264 transactions with 130 large transfers \u2265\u00a35,000 and 0 payment loops over 137 window transactions), alongside real historical data comprising 2,130 days of weather (134 wet afternoons), 87 match days, and 4 duty change dates.",
    "narration_badge": "MODEL",
    "grounding_ok": true,
-   "receipt_id": "r_aa455b98f0cc",
-   "ms": 5569,
-   "tokens": 2067
+   "receipt_id": "r_9dbd51f39b3c",
+   "ms": 4116,
+   "tokens": 1890
   },
   {
    "type": "step_start",
@@ -185,36 +185,36 @@
    "step": "risk",
    "call": "fit_takings_model()",
    "args_summary": "",
-   "result_summary": "R\u00b2 0.924 held-out \u00b7 \u00a3116 per mm (Fri\u2013Sun)",
+   "result_summary": "R\u00b2 0.924 held-out \u00b7 \u00a3406 per mm (Fri\u2013Sun)",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_73bf6f9c444d",
+   "receipt_id": "r_6d3354ee8c94",
    "source": {},
    "model": "gemini-3.8-flash",
-   "ms": 17
+   "ms": 16
   },
   {
    "type": "tool",
    "step": "risk",
    "call": "weekend_rain_exposure()",
    "args_summary": "",
-   "result_summary": "\u2212\u00a3695 on a 6mm afternoon",
+   "result_summary": "\u2212\u00a32,433 on a 6mm afternoon",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_d7b943c50001",
+   "receipt_id": "r_11366553f315",
    "source": {},
    "model": "gemini-3.8-flash",
-   "ms": 29
+   "ms": 9
   },
   {
    "type": "step_end",
    "step": "risk",
    "label": "Finding what weather costs",
    "model": "gemini-3.8-flash",
-   "narration": "Weekend rain reduces takings by \u00a3115.88 per mm, resulting in an estimated loss of \u00a3695.28 during a 6mm wet-day scenario. The model fits held-out months strongly, achieving an r2_holdout of 0.924 across 730 holdout days compared to an r2_train of 0.936 across 1400 training days.",
+   "narration": "Weekend rain exposure is estimated at \u00a3405.58 per mm, resulting in an expected loss of \u00a32433.48 on a 6mm afternoon. The takings model fits the held-out months well, achieving an R\u00b2 of 0.924 across 730 holdout days compared to an R\u00b2 of 0.936 across 1400 training days.",
    "narration_badge": "MODEL",
    "grounding_ok": true,
-   "receipt_id": "r_c2fcadefbed4",
-   "ms": 3978,
-   "tokens": 1132
+   "receipt_id": "r_cc54a4301901",
+   "ms": 4291,
+   "tokens": 1164
   },
   {
    "type": "step_start",
@@ -229,7 +229,7 @@
    "args_summary": "",
    "result_summary": "08-29 2.6mm \u00b7 08-30 0.0mm",
    "source_badge": "REAL \u00b7 CACHED",
-   "receipt_id": "r_e3efee9ce492",
+   "receipt_id": "r_60ee47c3bf15",
    "source": {
     "source": "Open-Meteo historical forecast archive (what was forecast then)",
     "licence": "CC BY 4.0"
@@ -244,12 +244,12 @@
    "args_summary": "",
    "result_summary": "2 temperature ladders \u00b7 0 rain markets",
    "source_badge": "REAL",
-   "receipt_id": "r_b416ddb6d45b",
+   "receipt_id": "r_5c259cd69c24",
    "source": {
     "source": "Polymarket Gamma API (read-only)"
    },
    "model": "gemini-3.8-flash",
-   "ms": 362
+   "ms": 4
   },
   {
    "type": "tool",
@@ -258,58 +258,58 @@
    "args_summary": "",
    "result_summary": "08-29 @ 0.24 \u00b7 08-30 @ 0.05",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_1e36999fbca2",
+   "receipt_id": "r_7282f549c79f",
    "source": {},
    "model": "gemini-3.8-flash",
-   "ms": 1
+   "ms": 0
   },
   {
    "type": "tool",
    "step": "pricer",
    "call": "project_payroll(scenario=dry)",
    "args_summary": "scenario=dry",
-   "result_summary": "dry: payroll Fri 04 Sep short \u00a32,515",
+   "result_summary": "dry: payroll Fri 04 Sep clears",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_6f996bd08e32",
+   "receipt_id": "r_c23599945542",
    "source": {},
    "model": "gemini-3.8-flash",
-   "ms": 37
+   "ms": 41
   },
   {
    "type": "tool",
    "step": "pricer",
    "call": "project_payroll(scenario=wet)",
    "args_summary": "scenario=wet",
-   "result_summary": "wet: payroll Fri 04 Sep short \u00a33,477",
+   "result_summary": "wet: payroll Fri 04 Sep short \u00a3808",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_443e430230a1",
+   "receipt_id": "r_7f4678b0cdfd",
    "source": {},
    "model": "gemini-3.8-flash",
-   "ms": 26
+   "ms": 66
   },
   {
    "type": "tool",
    "step": "pricer",
    "call": "size_hedges()",
    "args_summary": "",
-   "result_summary": "1 positions \u00b7 \u00a359.16",
+   "result_summary": "1 positions \u00b7 \u00a3591.60",
    "source_badge": "SYNTHETIC",
-   "receipt_id": "r_b22e1ad7a255",
+   "receipt_id": "r_c9e2d3807673",
    "source": {},
    "model": "gemini-3.8-flash",
-   "ms": 5
+   "ms": 82
   },
   {
    "type": "step_end",
    "step": "pricer",
    "label": "Pricing protection for the weekend",
    "model": "gemini-3.8-flash",
-   "narration": "Payroll projects a cash shortfall of \u00a32514.65 under the dry scenario and \u00a33476.7 under the wet scenario, with 0 real Polymarket rain contracts available. Sizing hedges recommends purchasing 240 shares of the 2026-08-29 synthetic rain contract at a total cost of \u00a359.16, providing a payout of \u00a3240 if the event occurs, while finding no value at the offered price for 2026-08-30.",
+   "narration": "With payroll projected to clear with \u00a33490.22 headroom under a dry scenario but facing a \u00a3808.28 shortfall if wet, Polymarket offers 0 rain markets while synthetic contracts price Saturday at 0.2351 ask (cost per share 0.2465) and Sunday at 0.0459 ask. The sizing engine rejects Sunday as having no value at price and recommends buying 2400 shares for Saturday at a total cost of \u00a3591.60 to secure a payout of \u00a32400.00.",
    "narration_badge": "MODEL",
    "grounding_ok": true,
-   "receipt_id": "r_68c250cd683b",
-   "ms": 4954,
-   "tokens": 2624
+   "receipt_id": "r_68b30fa755b1",
+   "ms": 5564,
+   "tokens": 4335
   },
   {
    "type": "step_start",
@@ -324,7 +324,7 @@
    "args_summary": "",
    "result_summary": "1/1 within limits",
    "source_badge": "PAPER",
-   "receipt_id": "r_4bb544ad007e",
+   "receipt_id": "r_91a4d397b54a",
    "source": {},
    "model": "gemini-3.8-flash",
    "ms": 0
@@ -336,10 +336,10 @@
    "args_summary": "",
    "result_summary": "1 awaiting owner approval",
    "source_badge": "PAPER",
-   "receipt_id": "r_a719805edac7",
+   "receipt_id": "r_42c974fb6bad",
    "source": {},
    "model": "gemini-3.8-flash",
-   "ms": 0
+   "ms": 1
   },
   {
    "type": "tool",
@@ -348,46 +348,62 @@
    "args_summary": "",
    "result_summary": "re-check Fri 09:00 and Sat 08:00",
    "source_badge": "PAPER",
-   "receipt_id": "r_dfdd4f0dffa8",
+   "receipt_id": "r_2d61ce9fb35d",
    "source": {},
    "model": "gemini-3.8-flash",
    "ms": 0
+  },
+  {
+   "type": "tool",
+   "step": "monitor",
+   "call": "price_match_offer()",
+   "args_summary": "",
+   "result_summary": "England v Croatia: if england lose, mains half price (worst case \u00a3600) \u00b7 cover \u00a357.02 at 0.09",
+   "source_badge": "REAL \u00b7 CACHED",
+   "receipt_id": "r_225838214fa2",
+   "source": {
+    "source": "Polymarket Gamma",
+    "licence": "Polymarket public market data (read-only API), docs.polymarket.com; not redistributed for trading",
+    "fetched_at": "2026-11-08T07:39:56Z"
+   },
+   "model": "gemini-3.8-flash",
+   "ms": 1
   },
   {
    "type": "step_end",
    "step": "monitor",
    "label": "Checking limits and queueing for approval",
    "model": "gemini-3.8-flash",
-   "narration": "There is 1 proposal awaiting owner approval in the queue for 5916 pence, and nothing executes without a human.",
+   "narration": "Proposal p_74937b_08-29 now sits in the owner's queue awaiting approval before any trade can execute, with scheduled re-checks set for 2026-08-28 09:00 and 2026-08-29 08:00.\nFor the England v Croatia match-day offer, the worst-case exposure is \u00a3600 with a fixed hedging cost of \u00a357.02.",
    "narration_badge": "MODEL",
    "grounding_ok": true,
-   "receipt_id": "r_a75f150b94ae",
-   "ms": 14361,
-   "tokens": 3141
+   "receipt_id": "r_1c757bce275f",
+   "ms": 8674,
+   "tokens": 3697
   },
   {
    "type": "rationale",
    "model": "gemini-4-argon",
-   "text": "- We propose buying 240 shares in the 2026-08-29 rain contract at a total cost of \u00a359.16, whilst taking no position for 2026-08-30 as it offers no value at the price of \u00a30.0486 per share.\n- If the weather is wet, the hedge pays out \u00a3240.0, which reduces your projected 2026-09-04 payroll shortfall from \u00a33476.7 to \u00a33295.86.\n- If it stays dry, the hedge does not pay out and the \u00a359.16 cost increases your projected payroll shortfall from \u00a32514.65 to \u00a32573.81.",
+   "text": "- To protect the 2026-09-04 payroll against a modelled wet-day loss of \u00a32433.48, we propose buying 2400 shares in market syn-rain-2026-08-29 at \u00a30.2465 per share, for a total cost of \u00a3591.60 (we are not proposing a position in syn-rain-2026-08-30 as it offers no value at \u00a30.0486 per share).\n- In the wet scenario without a hedge, payroll fails to clear with a \u00a3808.28 shortfall (a minimum balance of -\u00a3808.28), whereas this hedge pays out \u00a32400.0, reducing the shortfall to \u00a30.0 and leaving \u00a31000.12 in headroom.\n- Please note that if it stays dry, the \u00a3591.60 hedge cost is not recovered and reduces your cash headroom from \u00a33490.22 to \u00a32898.62, though payroll still clears with a \u00a30.0 shortfall.",
    "badge": "MODEL",
    "grounding_ok": true,
-   "receipt_id": "r_34f14729ded5",
-   "ms": 7926
+   "receipt_id": "r_5d6b31ebdca7",
+   "ms": 11323
   },
   {
    "type": "done",
-   "run_id": "run_a7e7884f6c",
-   "wall_ms": 42054
+   "run_id": "run_b7db74937b",
+   "wall_ms": 37693
   }
  ],
  "proposals": [
   {
-   "id": "p_884f6c_08-29",
-   "run_id": "run_a7e7884f6c",
-   "created": 1794098276.8547761,
-   "market": "{\"market_id\": \"syn-rain-2026-08-29\", \"date\": \"2026-08-29\", \"forecast_mm\": 2.6, \"model_prob\": 0.1951, \"mid\": 0.2251, \"ask\": 0.2351, \"cost_per_share\": 0.2465, \"fee_rate\": 0.05, \"price_badge\": \"SYNTHETIC\", \"rule\": \"calibrated P(rain>=3.0mm | forecast) + 0.03 margin, \\u00b10.01 spread\", \"payout_if_event_gbp\": 240.0, \"verdict\": {\"market_id\": \"syn-rain-2026-08-29\", \"allowed\": true, \"checks\": [{\"name\": \"weekly_spend\", \"value_pence\": 5916, \"cap_pence\": 12000, \"pass\": true}, {\"name\": \"monthly_max_loss\", \"value_pence\": 5916, \"cap_pence\": 40000, \"pass\": true}, {\"name\": \"per_market_concentration\", \"value_pence\": 5916, \"cap_pence\": 6000, \"pass\": true}], \"reason\": null, \"needs_second_approval\": true}}",
-   "shares": 240,
-   "cost_pence": 5916,
+   "id": "p_74937b_08-29",
+   "run_id": "run_b7db74937b",
+   "created": 1794123716.522006,
+   "market": "{\"market_id\": \"syn-rain-2026-08-29\", \"date\": \"2026-08-29\", \"forecast_mm\": 2.6, \"model_prob\": 0.1951, \"mid\": 0.2251, \"ask\": 0.2351, \"cost_per_share\": 0.2465, \"fee_rate\": 0.05, \"price_badge\": \"SYNTHETIC\", \"rule\": \"calibrated P(rain>=3.0mm | forecast) + 0.03 margin, \\u00b10.01 spread\", \"payout_if_event_gbp\": 2400.0, \"verdict\": {\"market_id\": \"syn-rain-2026-08-29\", \"allowed\": true, \"checks\": [{\"name\": \"weekly_spend\", \"value_pence\": 59160, \"cap_pence\": 80000, \"pass\": true}, {\"name\": \"monthly_max_loss\", \"value_pence\": 59160, \"cap_pence\": 200000, \"pass\": true}, {\"name\": \"per_market_concentration\", \"value_pence\": 59160, \"cap_pence\": 60000, \"pass\": true}], \"reason\": null, \"needs_second_approval\": true}}",
+   "shares": 2400,
+   "cost_pence": 59160,
    "status": "pending",
    "decided": null,
    "reason": null,
@@ -413,7 +429,7 @@
     "source": "Companies House",
     "summary": "BACCHUS INNS LIMITED \u00b7 active \u00b7 SIC 56302",
     "url": "https://api.company-information.service.gov.uk/company/05770953",
-    "receipt_id": "r_bdeb8294a1fd"
+    "receipt_id": "r_303e9c336a27"
    }
   ],
   "companies_house_officer_match": [
@@ -425,7 +441,7 @@
     "match": true,
     "source": "Companies House",
     "summary": "1 active director on register \u00b7 match",
-    "receipt_id": "r_8aca111286eb"
+    "receipt_id": "r_43d47ed5c384"
    }
   ],
   "locate_postcode": [
@@ -438,12 +454,12 @@
     "lon": -0.108575,
     "source": "postcodes.io (ONS Postcode Directory)",
     "summary": "Haringey \u00b7 51.5687, -0.1086",
-    "receipt_id": "r_668ba9a78962"
+    "receipt_id": "r_2509d9e3e89b"
    }
   ],
   "load_takings_history": [
    {
-    "avg_day_gbp": 2441.43,
+    "avg_day_gbp": 8544.99,
     "badge": "SYNTHETIC",
     "days": 2130,
     "first": "2021-01-01",
@@ -451,20 +467,20 @@
     "label": "SYNTHETIC: modelled for a pub of this profile, not The Faltering Fullback's actual figures",
     "last": "2026-10-31",
     "seed": 20261108,
-    "summary": "2,130 trading days \u00b7 avg \u00a32,441/day",
-    "total_gbp": 5200237.26,
-    "receipt_id": "r_9088e7d12144"
+    "summary": "2,130 trading days \u00b7 avg \u00a38,545/day",
+    "total_gbp": 18200830.07,
+    "receipt_id": "r_b9365927b94c"
    }
   ],
   "load_stripe_test_charges": [
    {
     "badge": "TEST MODE",
     "charges": 120,
-    "fetched_at": "2026-11-08T00:19:00Z",
+    "fetched_at": "2026-11-08T07:24:53Z",
     "source": "Stripe test mode",
     "summary": "120 test charges \u00b7 \u00a3371,004",
     "total_gbp": 371004.31,
-    "receipt_id": "r_2363086f83f0"
+    "receipt_id": "r_a7f4f796207a"
    }
   ],
   "load_bank_feed": [
@@ -472,10 +488,10 @@
     "badge": "SYNTHETIC",
     "label": "SYNTHETIC: modelled for a pub of this profile, not The Faltering Fullback's actual figures",
     "monthly_fixed_gbp": 14400.0,
-    "summary": "3,264 transactions \u00b7 payroll \u00a35,078/wk",
+    "summary": "3,264 transactions \u00b7 payroll \u00a317,773/wk",
     "transactions": 3264,
-    "weekly_payroll_gbp": 5077.98,
-    "receipt_id": "r_41371d621e88"
+    "weekly_payroll_gbp": 17772.93,
+    "receipt_id": "r_f4103dcffaeb"
    }
   ],
   "check_bank_feed": [
@@ -484,20 +500,21 @@
     "engine": "pubhedge_core.transactions (the kit-scored engine)",
     "label": "SYNTHETIC: modelled for a pub of this profile, not The Faltering Fullback's actual figures",
     "large_by_kind": {
-     "CARD_SETTLEMENT": 3,
+     "CARD_SETTLEMENT": 88,
      "HMRC_VAT": 1,
-     "PAYROLL": 11,
-     "RENT": 2
+     "PAYROLL": 13,
+     "RENT": 2,
+     "SUPPLIER": 26
     },
-    "large_transfers": 17,
+    "large_transfers": 130,
     "payment_loops": 0,
-    "summary": "0 payment loops \u00b7 17 transfers \u2265\u00a35,000",
+    "summary": "0 payment loops \u00b7 130 transfers \u2265\u00a35,000",
     "transactions": 137,
     "window": [
      "2026-08-02",
      "2026-10-31"
     ],
-    "receipt_id": "r_cabd6a793fdd"
+    "receipt_id": "r_b7973804d8b0"
    }
   ],
   "load_weather_history": [
@@ -509,7 +526,7 @@
     "source": "Open-Meteo archive (ERA5) and historical forecast API",
     "summary": "2,130 days \u00b7 134 afternoons \u22653mm",
     "wet_afternoons": 134,
-    "receipt_id": "r_bbd4e1fe2083"
+    "receipt_id": "r_49a9b7ad74e0"
    }
   ],
   "load_match_and_duty_dates": [
@@ -523,8 +540,8 @@
     ],
     "match_days": 87,
     "source": "openfootball (CC0), Wikipedia (CC BY-SA 4.0), HMRC/legislation.gov.uk (OGL)",
-    "summary": "87 match days \u00b7 4 duty dates",
-    "receipt_id": "r_7d08294f3d9c"
+    "summary": "87 England/Ireland match days (football and rugby) \u00b7 4 duty dates",
+    "receipt_id": "r_37d3ff52a044"
    }
   ],
   "fit_takings_model": [
@@ -532,17 +549,17 @@
     "badge": "SYNTHETIC",
     "duty_rise_gbp_per_day": {
      "ci95": [
-      -74.73,
-      15.86
+      -261.55,
+      55.51
      ],
-     "estimate": -29.43
+     "estimate": -103.02
     },
     "heat_gbp_per_c": {
      "ci95": [
-      63.84,
-      73.56
+      223.45,
+      257.47
      ],
-     "estimate": 68.7
+     "estimate": 240.46
     },
     "holdout_period": [
      "2024-11-01",
@@ -551,10 +568,10 @@
     "label": "fitted on SYNTHETIC takings driven by REAL weather and dates",
     "match_day_gbp": {
      "ci95": [
-      619.65,
-      758.2
+      2168.79,
+      2653.71
      ],
-     "estimate": 688.93
+     "estimate": 2411.25
     },
     "n_holdout": 730,
     "n_train": 1400,
@@ -562,34 +579,34 @@
     "r2_train": 0.936,
     "rain_weekday_gbp_per_mm": {
      "ci95": [
-      -86.15,
-      -62.84
+      -301.52,
+      -219.92
      ],
-     "estimate": -74.49
+     "estimate": -260.72
     },
     "rain_weekend_gbp_per_mm": {
      "ci95": [
-      -127.83,
-      -103.93
+      -447.4,
+      -363.77
      ],
-     "estimate": -115.88
+     "estimate": -405.58
     },
-    "summary": "R\u00b2 0.924 held-out \u00b7 \u00a3116 per mm (Fri\u2013Sun)",
-    "receipt_id": "r_73bf6f9c444d"
+    "summary": "R\u00b2 0.924 held-out \u00b7 \u00a3406 per mm (Fri\u2013Sun)",
+    "receipt_id": "r_6d3354ee8c94"
    }
   ],
   "weekend_rain_exposure": [
    {
     "badge": "SYNTHETIC",
     "ci95_gbp_per_mm": [
-     103.93,
-     127.83
+     363.77,
+     447.4
     ],
-    "gbp_per_mm": 115.88,
-    "loss_wet_day_gbp": 695.28,
-    "summary": "\u2212\u00a3695 on a 6mm afternoon",
+    "gbp_per_mm": 405.58,
+    "loss_wet_day_gbp": 2433.48,
+    "summary": "\u2212\u00a32,433 on a 6mm afternoon",
     "wet_scenario_mm": 6.0,
-    "receipt_id": "r_d7b943c50001"
+    "receipt_id": "r_11366553f315"
    }
   ],
   "weekend_forecast": [
@@ -607,7 +624,7 @@
     "licence": "CC BY 4.0",
     "source": "Open-Meteo historical forecast archive (what was forecast then)",
     "summary": "08-29 2.6mm \u00b7 08-30 0.0mm",
-    "receipt_id": "r_e3efee9ce492"
+    "receipt_id": "r_60ee47c3bf15"
    }
   ],
   "check_real_weather_markets": [
@@ -618,14 +635,14 @@
     "summary": "2 temperature ladders \u00b7 0 rain markets",
     "temperature_events": [
      {
-      "badge": "REAL",
+      "badge": "REAL \u00b7 CACHED",
       "buckets": 11,
       "date": "2026-08-29",
       "event": "highest-temperature-in-london-on-august-29-2026",
       "top_bucket": "Will the highest temperature in London be 20\u00b0C on August 29?"
      },
      {
-      "badge": "REAL",
+      "badge": "REAL \u00b7 CACHED",
       "buckets": 11,
       "date": "2026-08-30",
       "event": "highest-temperature-in-london-on-august-30-2026",
@@ -633,7 +650,7 @@
      }
     ],
     "uk_trading": "blocked for UK users; read-only",
-    "receipt_id": "r_b416ddb6d45b"
+    "receipt_id": "r_5c259cd69c24"
    }
   ],
   "price_rain_contracts": [
@@ -667,241 +684,241 @@
     ],
     "method": "probability calibrated on 2021-2024 archived forecasts vs observed rain; price = probability + 3% venue margin + 1% spread",
     "summary": "08-29 @ 0.24 \u00b7 08-30 @ 0.05",
-    "receipt_id": "r_1e36999fbca2"
+    "receipt_id": "r_7282f549c79f"
    }
   ],
   "project_payroll": [
    {
     "badge": "SYNTHETIC",
     "engine": "pubhedge_core.cashflow (the kit-scored engine)",
-    "first_negative_date": "2026-09-01",
+    "first_negative_date": null,
     "label": "SYNTHETIC: modelled for a pub of this profile, not The Faltering Fullback's actual figures",
-    "minimum_balance_gbp": -2514.65,
-    "opening_balance_gbp": 12820.0,
+    "minimum_balance_gbp": 3490.22,
+    "opening_balance_gbp": 56230.06,
     "opening_date": "2026-08-27",
-    "payroll_clears": false,
+    "payroll_clears": true,
     "payroll_date": "2026-09-04",
     "scenario": "dry",
-    "shortfall_gbp": 2514.65,
-    "summary": "dry: payroll Fri 04 Sep short \u00a32,515",
+    "shortfall_gbp": 0.0,
+    "summary": "dry: payroll Fri 04 Sep clears",
     "timeline": [
      {
-      "amount_gbp": 2716.7,
-      "balance_gbp": 15536.7,
+      "amount_gbp": 9508.47,
+      "balance_gbp": 65738.53,
       "date": "2026-08-28",
       "id": "card-2026-08-28"
      },
      {
-      "amount_gbp": -6456.68,
-      "balance_gbp": 9080.02,
+      "amount_gbp": -22598.39,
+      "balance_gbp": 43140.14,
       "date": "2026-08-28",
       "id": "e2ae6b594258c2f2"
      },
      {
-      "amount_gbp": 3358.97,
-      "balance_gbp": 12438.99,
+      "amount_gbp": 11756.42,
+      "balance_gbp": 54896.56,
       "date": "2026-08-29",
       "id": "card-2026-08-29"
      },
      {
-      "amount_gbp": 3457.23,
-      "balance_gbp": 15896.22,
+      "amount_gbp": 13031.67,
+      "balance_gbp": 67928.23,
       "date": "2026-08-30",
       "id": "card-2026-08-30"
      },
      {
-      "amount_gbp": 2840.83,
-      "balance_gbp": 18737.05,
+      "amount_gbp": 9942.9,
+      "balance_gbp": 77871.13,
       "date": "2026-08-31",
       "id": "card-2026-08-31"
      },
      {
-      "amount_gbp": -4169.45,
-      "balance_gbp": 14567.6,
+      "amount_gbp": -14593.07,
+      "balance_gbp": 63278.06,
       "date": "2026-09-01",
       "id": "11a0471b5162f033"
      },
      {
-      "amount_gbp": -2600.0,
-      "balance_gbp": 11967.6,
+      "amount_gbp": -9100.0,
+      "balance_gbp": 54178.06,
       "date": "2026-09-01",
       "id": "85f5ef2b944ff1a0"
      },
      {
-      "amount_gbp": -9500.0,
-      "balance_gbp": 2467.6,
+      "amount_gbp": -33250.0,
+      "balance_gbp": 20928.06,
       "date": "2026-09-01",
       "id": "c5119ff447119caa"
      },
      {
-      "amount_gbp": -2720.56,
-      "balance_gbp": -252.96,
+      "amount_gbp": -9521.96,
+      "balance_gbp": 11406.1,
       "date": "2026-09-01",
       "id": "c55d652dda2f20ed"
      },
      {
-      "amount_gbp": 1914.4,
-      "balance_gbp": 1661.44,
+      "amount_gbp": 6700.41,
+      "balance_gbp": 18106.51,
       "date": "2026-09-01",
       "id": "card-2026-09-01"
      },
      {
-      "amount_gbp": -2300.0,
-      "balance_gbp": -638.56,
+      "amount_gbp": -8050.0,
+      "balance_gbp": 10056.51,
       "date": "2026-09-01",
       "id": "dca75e086e9b5ca8"
      },
      {
-      "amount_gbp": 2073.17,
-      "balance_gbp": 1434.61,
+      "amount_gbp": 7256.11,
+      "balance_gbp": 17312.62,
       "date": "2026-09-02",
       "id": "card-2026-09-02"
      },
      {
-      "amount_gbp": 2230.86,
-      "balance_gbp": 3665.47,
+      "amount_gbp": 7808.01,
+      "balance_gbp": 25120.63,
       "date": "2026-09-03",
       "id": "card-2026-09-03"
      },
      {
-      "amount_gbp": -6180.12,
-      "balance_gbp": -2514.65,
+      "amount_gbp": -21630.41,
+      "balance_gbp": 3490.22,
       "date": "2026-09-04",
       "id": "9c53297bc74c37fa"
      },
      {
-      "amount_gbp": 2791.36,
-      "balance_gbp": 276.71,
+      "amount_gbp": 9769.78,
+      "balance_gbp": 13260.0,
       "date": "2026-09-04",
       "id": "card-2026-09-04"
      }
     ],
-    "receipt_id": "r_6f996bd08e32"
+    "receipt_id": "r_c23599945542"
    },
    {
     "badge": "SYNTHETIC",
     "engine": "pubhedge_core.cashflow (the kit-scored engine)",
-    "first_negative_date": "2026-09-01",
+    "first_negative_date": "2026-09-04",
     "label": "SYNTHETIC: modelled for a pub of this profile, not The Faltering Fullback's actual figures",
-    "minimum_balance_gbp": -3476.7,
-    "opening_balance_gbp": 12820.0,
+    "minimum_balance_gbp": -808.28,
+    "opening_balance_gbp": 56230.06,
     "opening_date": "2026-08-27",
     "payroll_clears": false,
     "payroll_date": "2026-09-04",
     "scenario": "wet",
-    "shortfall_gbp": 3476.7,
-    "summary": "wet: payroll Fri 04 Sep short \u00a33,477",
+    "shortfall_gbp": 808.28,
+    "summary": "wet: payroll Fri 04 Sep short \u00a3808",
     "timeline": [
      {
-      "amount_gbp": 2716.7,
-      "balance_gbp": 15536.7,
+      "amount_gbp": 9508.47,
+      "balance_gbp": 65738.53,
       "date": "2026-08-28",
       "id": "card-2026-08-28"
      },
      {
-      "amount_gbp": -6456.68,
-      "balance_gbp": 9080.02,
+      "amount_gbp": -22598.39,
+      "balance_gbp": 43140.14,
       "date": "2026-08-28",
       "id": "e2ae6b594258c2f2"
      },
      {
-      "amount_gbp": 3358.97,
-      "balance_gbp": 12438.99,
+      "amount_gbp": 11756.42,
+      "balance_gbp": 54896.56,
       "date": "2026-08-29",
       "id": "card-2026-08-29"
      },
      {
-      "amount_gbp": 3109.26,
-      "balance_gbp": 15548.25,
+      "amount_gbp": 10882.42,
+      "balance_gbp": 65778.98,
       "date": "2026-08-30",
       "id": "card-2026-08-30"
      },
      {
-      "amount_gbp": 2226.75,
-      "balance_gbp": 17775.0,
+      "amount_gbp": 7793.65,
+      "balance_gbp": 73572.63,
       "date": "2026-08-31",
       "id": "card-2026-08-31"
      },
      {
-      "amount_gbp": -4169.45,
-      "balance_gbp": 13605.55,
+      "amount_gbp": -14593.07,
+      "balance_gbp": 58979.56,
       "date": "2026-09-01",
       "id": "11a0471b5162f033"
      },
      {
-      "amount_gbp": -2600.0,
-      "balance_gbp": 11005.55,
+      "amount_gbp": -9100.0,
+      "balance_gbp": 49879.56,
       "date": "2026-09-01",
       "id": "85f5ef2b944ff1a0"
      },
      {
-      "amount_gbp": -9500.0,
-      "balance_gbp": 1505.55,
+      "amount_gbp": -33250.0,
+      "balance_gbp": 16629.56,
       "date": "2026-09-01",
       "id": "c5119ff447119caa"
      },
      {
-      "amount_gbp": -2720.56,
-      "balance_gbp": -1215.01,
+      "amount_gbp": -9521.96,
+      "balance_gbp": 7107.6,
       "date": "2026-09-01",
       "id": "c55d652dda2f20ed"
      },
      {
-      "amount_gbp": 1914.4,
-      "balance_gbp": 699.39,
+      "amount_gbp": 6700.41,
+      "balance_gbp": 13808.01,
       "date": "2026-09-01",
       "id": "card-2026-09-01"
      },
      {
-      "amount_gbp": -2300.0,
-      "balance_gbp": -1600.61,
+      "amount_gbp": -8050.0,
+      "balance_gbp": 5758.01,
       "date": "2026-09-01",
       "id": "dca75e086e9b5ca8"
      },
      {
-      "amount_gbp": 2073.17,
-      "balance_gbp": 472.56,
+      "amount_gbp": 7256.11,
+      "balance_gbp": 13014.12,
       "date": "2026-09-02",
       "id": "card-2026-09-02"
      },
      {
-      "amount_gbp": 2230.86,
-      "balance_gbp": 2703.42,
+      "amount_gbp": 7808.01,
+      "balance_gbp": 20822.13,
       "date": "2026-09-03",
       "id": "card-2026-09-03"
      },
      {
-      "amount_gbp": -6180.12,
-      "balance_gbp": -3476.7,
+      "amount_gbp": -21630.41,
+      "balance_gbp": -808.28,
       "date": "2026-09-04",
       "id": "9c53297bc74c37fa"
      },
      {
-      "amount_gbp": 2791.36,
-      "balance_gbp": -685.34,
+      "amount_gbp": 9769.78,
+      "balance_gbp": 8961.5,
       "date": "2026-09-04",
       "id": "card-2026-09-04"
      }
     ],
-    "receipt_id": "r_443e430230a1"
+    "receipt_id": "r_7f4678b0cdfd"
    }
   ],
   "size_hedges": [
    {
     "badge": "SYNTHETIC",
-    "expected_value_pence": 960,
+    "expected_value_pence": 9600,
     "inputs": [
      {
       "causes_shortfall": true,
       "cost_per_share": 0.2465,
-      "loss_if_event_gbp": 393.99199999999996,
+      "loss_if_event_gbp": 2433.48,
       "market_id": "syn-rain-2026-08-29",
       "model_prob": 0.1951
      },
      {
       "causes_shortfall": true,
       "cost_per_share": 0.0486,
-      "loss_if_event_gbp": 695.28,
+      "loss_if_event_gbp": 2433.48,
       "market_id": "syn-rain-2026-08-30",
       "model_prob": 0.0059
      }
@@ -910,28 +927,32 @@
      "syn-rain-2026-08-30"
     ],
     "outcomes": {
-     "dry_no_hedge_shortfall_gbp": 2514.65,
-     "dry_with_hedge_shortfall_gbp": 2573.81,
-     "hedge_cost_gbp": 59.16,
-     "hedge_payout_if_wet_gbp": 240.0,
+     "dry_no_hedge_headroom_gbp": 3490.22,
+     "dry_no_hedge_shortfall_gbp": 0.0,
+     "dry_with_hedge_headroom_gbp": 2898.62,
+     "dry_with_hedge_shortfall_gbp": 0.0,
+     "hedge_cost_gbp": 591.6,
+     "hedge_payout_if_wet_gbp": 2400.0,
      "payroll_date": "2026-09-04",
-     "wet_extra_shortfall_gbp": 962.05,
-     "wet_no_hedge_shortfall_gbp": 3476.7,
-     "wet_with_hedge_shortfall_gbp": 3295.86
+     "wet_extra_shortfall_gbp": 4298.5,
+     "wet_no_hedge_headroom_gbp": -808.28,
+     "wet_no_hedge_shortfall_gbp": 808.28,
+     "wet_with_hedge_headroom_gbp": 1000.12,
+     "wet_with_hedge_shortfall_gbp": 0.0
     },
     "positions": [
      {
-      "cost_gbp": 59.16,
+      "cost_gbp": 591.6,
       "market_id": "syn-rain-2026-08-29",
-      "payout_if_event_gbp": 240.0,
-      "shares": 240
+      "payout_if_event_gbp": 2400.0,
+      "shares": 2400
      }
     ],
     "solver": "pubhedge_core.sizing (exact, whole shares)",
     "status": "ok",
-    "summary": "1 positions \u00b7 \u00a359.16",
-    "total_cost_gbp": 59.16,
-    "receipt_id": "r_b22e1ad7a255"
+    "summary": "1 positions \u00b7 \u00a3591.60",
+    "total_cost_gbp": 591.6,
+    "receipt_id": "r_c9e2d3807673"
    }
   ],
   "check_limits": [
@@ -943,22 +964,22 @@
       "allowed": true,
       "checks": [
        {
-        "cap_pence": 12000,
+        "cap_pence": 80000,
         "name": "weekly_spend",
         "pass": true,
-        "value_pence": 5916
+        "value_pence": 59160
        },
        {
-        "cap_pence": 40000,
+        "cap_pence": 200000,
         "name": "monthly_max_loss",
         "pass": true,
-        "value_pence": 5916
+        "value_pence": 59160
        },
        {
-        "cap_pence": 6000,
+        "cap_pence": 60000,
         "name": "per_market_concentration",
         "pass": true,
-        "value_pence": 5916
+        "value_pence": 59160
        }
       ],
       "market_id": "syn-rain-2026-08-29",
@@ -966,17 +987,17 @@
       "reason": null
      }
     ],
-    "receipt_id": "r_4bb544ad007e"
+    "receipt_id": "r_91a4d397b54a"
    }
   ],
   "queue_for_approval": [
    {
     "badge": "PAPER",
     "proposals": [
-     "p_884f6c_08-29"
+     "p_74937b_08-29"
     ],
     "summary": "1 awaiting owner approval",
-    "receipt_id": "r_a719805edac7"
+    "receipt_id": "r_42c974fb6bad"
    }
   ],
   "schedule_monitor": [
@@ -987,7 +1008,65 @@
      "2026-08-29 08:00"
     ],
     "summary": "re-check Fri 09:00 and Sat 08:00",
-    "receipt_id": "r_dfdd4f0dffa8"
+    "receipt_id": "r_2d61ce9fb35d"
+   }
+  ],
+  "price_match_offer": [
+   {
+    "ask": 0.09,
+    "avg_main_gbp": 15.0,
+    "badge": "REAL \u00b7 CACHED",
+    "competition": "UEFA Nations League",
+    "cost_per_share": 0.095,
+    "covers_cap": 80,
+    "fee_rate": 0.05,
+    "fetched_at": "2026-11-08T07:39:56Z",
+    "fixed_cost_gbp": 57.02,
+    "fixture": "England v Croatia",
+    "hedge_cost_gbp": 57.02,
+    "kickoff": "2026-11-12T19:45:00Z",
+    "kind": "offer",
+    "licence": "Polymarket public market data (read-only API), docs.polymarket.com; not redistributed for trading",
+    "market": "Will Croatia win on 2026-11-12?",
+    "market_id": "pm-unl-eng-hrv-2026-11-12-croatia",
+    "market_prob": 0.08,
+    "menu_badge": "SYNTHETIC",
+    "offer": "mains half price",
+    "payout_if_event_gbp": 600.0,
+    "shares": 600,
+    "source": "Polymarket Gamma",
+    "summary": "England v Croatia: if england lose, mains half price (worst case \u00a3600) \u00b7 cover \u00a357.02 at 0.09",
+    "trigger": "If England lose",
+    "uncovered_gbp": 0.0,
+    "url": "https://polymarket.com/event/unl-eng-hrv-2026-11-12",
+    "venue": "Wembley",
+    "verdict": {
+     "allowed": true,
+     "checks": [
+      {
+       "cap_pence": 80000,
+       "name": "weekly_spend",
+       "pass": true,
+       "value_pence": 5702
+      },
+      {
+       "cap_pence": 200000,
+       "name": "monthly_max_loss",
+       "pass": true,
+       "value_pence": 5702
+      },
+      {
+       "cap_pence": 60000,
+       "name": "per_market_concentration",
+       "pass": true,
+       "value_pence": 5702
+      }
+     ],
+     "needs_second_approval": true,
+     "reason": null
+    },
+    "worst_case_gbp": 600.0,
+    "receipt_id": "r_225838214fa2"
    }
   ]
  }

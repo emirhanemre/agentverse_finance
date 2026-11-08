@@ -25,3 +25,4 @@ app/playwright-report/
 fixtures/cache/
 *.log
 .spend.json
+fixtures/runs/run_*.json
