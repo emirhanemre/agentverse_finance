@@ -84,9 +84,9 @@ block":
 
 | Placeholder | Replace with |
 |---|---|
-| +£1,840 /pub/yr | **−£24 /pub/yr** net cost (95% CI −£124 to +£102), against −£1,514 for hedging every weekend |
+| +£1,840 /pub/yr | **+£42 /pub/yr** net (95% CI −£30 to +£146, i.e. break-even), against −£1,514 for hedging every weekend |
 | Median £1,220 | Payroll-shortfall weeks: **10.4 a year, with or without our hedge** |
-| 95% CI lower £640 | Weeks hedged: **78 of 1,260** pub-weeks |
+| 95% CI lower £640 | Weeks hedged: **51 of 1,260** pub-weeks |
 | Worst month −£340 | Worst week: −£13.7k across the panel; the hedge doesn't move it |
 | 2 of 12 losing months | Cut it. No 4-week window lost money before owner drawings |
 
@@ -109,7 +109,7 @@ shop pays 43% of their rent…" is unsourced: cut it or source it.
 | Toast / Square / Lightspeed (4, 6, 10) | No POS integration exists. The demo uses Stripe test charges and synthetic data. | "Reads a till export or card processor (demo: Stripe test mode)." |
 | "in 60 seconds" (6) | Measured live: 35.2 s. Argon latency varies (4–40 s per call). | "Under a minute (35 s measured live)." Replay mode is available if wifi fails. |
 | "50 UK pubs · 2022–2024 · Polymarket historical prices" (11) | 12 synthetic pubs; test window Nov 2024–Oct 2026; no London rain market exists, so prices are synthetic. | "12 synthetic pubs, real weather, synthetic contract prices with real fees." |
-| +£1,840 a pub-year, "saved" (11) | Hedging costs money on average: −£24 (ours), −£1,514 (naive). | Use the real block above. |
+| +£1,840 a pub-year, "saved" (11) | Ours is break-even (+£42, CI −£30 to +£146); hedging every weekend loses £1,514. | Use the real block above. |
 | "£11,000 lost to rain", "The Oak Tree" (2, 7) | Fictional. | Real pub, public identity only; modelled numbers labelled synthetic. |
 | "Sells you a £20 hedge" (1, 4, 12) | The recorded run proposes one £59.90 position (243 shares at 0.24) on the bank holiday Saturday. That needs a second confirmation (over £50). | "Small, capped hedges (£120 a week cap)". Or show the real proposal. |
 | "Runs 24/7, not on a prompt" (5) | The monitor schedules re-checks; no daemon runs in the demo. | "Re-checks before the weekend; notifies only when exposure × price crosses the line" (as designed). |

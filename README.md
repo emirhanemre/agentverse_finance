@@ -55,7 +55,7 @@ In the app, **Historical scenario** replays a real wet weekend: the August bank 
 | England and Ireland match days; beer duty change dates | The 12-pub backtest panel |
 
 Full list with licences: [docs/data-sources.md](docs/data-sources.md). Backtest on held-out months:
-[docs/backtest-results.md](docs/backtest-results.md). Our policy costs about £24 a pub-year, against £1,514 for
+[docs/backtest-results.md](docs/backtest-results.md). Our policy is about break-even (+£42 a pub-year, 95% CI −£30 to +£146), against −£1,514 for
 hedging every weekend, but it does not cut payroll-shortfall weeks at these caps. We say so.
 
 ## Architecture

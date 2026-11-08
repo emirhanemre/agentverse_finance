@@ -40,23 +40,25 @@ figures are involved.
 
 | Metric | No hedge | Naive: £20 on Sat and Sun every weekend | Ours: cashflow-triggered LP | Ours, caps x5 (sensitivity) |
 |---|---|---|---|---|
-| Net hedge result, £/pub-year | 0 [0, 0] | −1,514 [−1,737, −1,312] | −24 [−124, 102] | −59 [−215, 131] |
-| Premium paid, £/pub-year | 0 [0, 0] | 2,042 [2,069, 2,081] | 189 [113, 283] | 333 [203, 517] |
-| Payouts, £/pub-year | 0 [0, 0] | 528 [340, 765] | 166 [72, 311] | 274 [117, 503] |
+| Net hedge result, £/pub-year | 0 [0, 0] | −1,514 [−1,737, −1,312] | 42 [−30, 146] | 21 [−101, 196] |
+| Premium paid, £/pub-year | 0 [0, 0] | 2,042 [2,069, 2,081] | 122 [79, 181] | 253 [161, 387] |
+| Payouts, £/pub-year | 0 [0, 0] | 528 [340, 765] | 165 [72, 309] | 274 [117, 503] |
 | Payroll-shortfall weeks/pub-year | 10.4 [9.0, 11.7] | 10.6 [9.0, 11.9] | 10.4 [9.0, 11.6] | 10.4 [8.9, 11.8] |
-| Shortfall depth, £/pub-year | 36,458 [28,535, 45,917] | 37,325 [29,070, 46,341] | 36,685 [28,347, 46,348] | 36,908 [28,647, 46,778] |
-| Worst week, £ | −13,665 [−13,665, −11,475] | −13,705 [−13,705, −11,515] | −13,725 [−13,725, −11,535] | −13,777 [−13,777, −11,639] |
-| Worst 4-week period, £ | 1,626 [1,626, 2,178] | 1,466 [1,466, 2,018] | 1,626 [1,626, 2,178] | 1,626 [1,626, 2,035] |
+| Shortfall depth, £/pub-year | 36,458 [28,535, 45,917] | 37,325 [29,070, 46,341] | 36,602 [28,284, 46,279] | 36,811 [28,541, 46,628] |
+| Worst week, £ | −13,665 [−13,665, −11,475] | −13,705 [−13,705, −11,515] | −13,724 [−13,724, −11,535] | −13,777 [−13,777, −11,639] |
+| Worst 4-week period, £ | 1,626 [1,626, 2,178] | 1,466 [1,466, 2,018] | 1,626 [1,626, 2,178] | 1,626 [1,626, 2,146] |
 | Losing 4-week periods/pub-year | 0.0 [0.0, 0.0] | 0.0 [0.0, 0.0] | 0.0 [0.0, 0.0] | 0.0 [0.0, 0.0] |
-| Weekly cash s.d., £ | 6,108 [5,376, 6,772] | 6,106 [5,391, 6,780] | 6,110 [5,376, 6,823] | 6,113 [5,432, 6,826] |
-| 5% CVaR of weekly cash, £ | −11,424 [−12,275, −9,888] | −11,453 [−12,346, −9,930] | −11,426 [−12,328, −10,011] | −11,435 [−12,364, −10,008] |
-| Pub-weeks with a hedge | 0 / 1260 | 1236 / 1260 | 78 / 1260 | 78 / 1260 |
+| Weekly cash s.d., £ | 6,108 [5,376, 6,772] | 6,106 [5,391, 6,780] | 6,109 [5,375, 6,822] | 6,112 [5,431, 6,824] |
+| 5% CVaR of weekly cash, £ | −11,424 [−12,275, −9,888] | −11,453 [−12,346, −9,930] | −11,423 [−12,321, −10,003] | −11,430 [−12,344, −10,008] |
+| Pub-weeks with a hedge | 0 / 1260 | 1236 / 1260 | 51 / 1260 | 51 / 1260 |
 
 ## What the data says
 
-- **Hedging costs money on average, as expected.** The naive policy loses £1,514 a
-  pub-year. Ours loses £24 (95% CI −124 to
-  102), because it only buys in the weeks when a wet weekend would break payroll.
+- **Hedging every weekend costs money.** The naive policy loses £1,514 a pub-year.
+  Ours nets +£42 a pub-year (95% CI −£30 to
+  +£146): **indistinguishable from break-even**. It buys in only
+  51 of 1260 pub-weeks, when a wet weekend would break payroll
+  and the contract is cheap enough. The contract is priced near its calibrated probability, so we don't claim an edge.
 - **It misses the benchmark that matters.** Ours does not reduce payroll-shortfall weeks
   (10.4 against 10.4 with no hedge), worst week or
   CVaR in any meaningful way. Raising the caps five-fold doesn't change that.
@@ -73,13 +75,14 @@ figures are involved.
 >
 > | | Ours | Naive weekly hedge |
 > |---|---|---|
-> | Net cost per pub per year | £24 | £1,514 |
-> | 95% CI of net result (£, negative = cost) | −124 to 102 | −1,737 to −1,312 |
+> | Net result per pub per year | +£42 | −£1,514 |
+> | 95% CI | −£30 to +£146 | −£1,737 to −£1,312 |
 > | Payroll-shortfall weeks per year (no hedge: 10.4) | 10.4 | 10.6 |
-> | Weeks hedged | 78 of 1260 | 1236 of 1260 |
+> | Weeks hedged | 51 of 1260 | 1236 of 1260 |
 >
 > Caption: "Synthetic takings driven by real London weather; synthetic rain-contract prices with real Polymarket
-> fees. Our policy costs about £24 a year against £1,514
-> for hedging every weekend, but it does not cut shortfall weeks at these caps. The warning is the product."
+> fees. Our policy is about break-even (+£42/yr, CI −£30 to
+> +£146) against −£1,514/yr for hedging every weekend, but it does not
+> cut payroll-shortfall weeks at these caps. The warning is the product."
 
 Reproduce: `uv run --project services/agents python scripts/backtest.py && python3 scripts/backtest_report.py`

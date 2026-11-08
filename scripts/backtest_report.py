@@ -18,6 +18,10 @@ def f(v, nd):
     return f"{v:,.{nd}f}".replace("-", "−")
 
 
+def g(v):
+    return ("+" if v > 0 else "−" if v < 0 else "") + f"£{abs(v):,.0f}"
+
+
 def main():
     pol = R["policies"]
     head = "| Metric | " + " | ".join(NAMES[p] for p in pol) + " |\n|---|" + "---|" * len(pol) + "\n"
@@ -72,9 +76,11 @@ figures are involved.
 
 ## What the data says
 
-- **Hedging costs money on average, as expected.** The naive policy loses £{-n['hedge_net_gbp_per_year']:,.0f} a
-  pub-year. Ours loses £{-o['hedge_net_gbp_per_year']:,.0f} (95% CI {f(oc['hedge_net_gbp_per_year'][0], 0)} to
-  {f(oc['hedge_net_gbp_per_year'][1], 0)}), because it only buys in the weeks when a wet weekend would break payroll.
+- **Hedging every weekend costs money.** The naive policy loses £{-n['hedge_net_gbp_per_year']:,.0f} a pub-year.
+  Ours nets {g(o['hedge_net_gbp_per_year'])} a pub-year (95% CI {g(oc['hedge_net_gbp_per_year'][0])} to
+  {g(oc['hedge_net_gbp_per_year'][1])}): **indistinguishable from break-even**. It buys in only
+  {pol['ours']['weeks_hedged_all']} of {pol['ours']['pub_weeks']} pub-weeks, when a wet weekend would break payroll
+  and the contract is cheap enough. The contract is priced near its calibrated probability, so we don't claim an edge.
 - **It misses the benchmark that matters.** Ours does not reduce payroll-shortfall weeks
   ({o['shortfall_weeks_per_year']:.1f} against {v['shortfall_weeks_per_year']:.1f} with no hedge), worst week or
   CVaR in any meaningful way. Raising the caps five-fold doesn't change that.
@@ -91,14 +97,15 @@ figures are involved.
 >
 > | | Ours | Naive weekly hedge |
 > |---|---|---|
-> | Net cost per pub per year | £{-o['hedge_net_gbp_per_year']:,.0f} | £{-n['hedge_net_gbp_per_year']:,.0f} |
-> | 95% CI of net result (£, negative = cost) | {f(oc['hedge_net_gbp_per_year'][0], 0)} to {f(oc['hedge_net_gbp_per_year'][1], 0)} | {f(pol['naive']['ci95']['hedge_net_gbp_per_year'][0], 0)} to {f(pol['naive']['ci95']['hedge_net_gbp_per_year'][1], 0)} |
+> | Net result per pub per year | {g(o['hedge_net_gbp_per_year'])} | {g(n['hedge_net_gbp_per_year'])} |
+> | 95% CI | {g(oc['hedge_net_gbp_per_year'][0])} to {g(oc['hedge_net_gbp_per_year'][1])} | {g(pol['naive']['ci95']['hedge_net_gbp_per_year'][0])} to {g(pol['naive']['ci95']['hedge_net_gbp_per_year'][1])} |
 > | Payroll-shortfall weeks per year (no hedge: {v['shortfall_weeks_per_year']:.1f}) | {o['shortfall_weeks_per_year']:.1f} | {n['shortfall_weeks_per_year']:.1f} |
 > | Weeks hedged | {pol['ours']['weeks_hedged_all']} of {pol['ours']['pub_weeks']} | {pol['naive']['weeks_hedged_all']} of {pol['naive']['pub_weeks']} |
 >
 > Caption: "Synthetic takings driven by real London weather; synthetic rain-contract prices with real Polymarket
-> fees. Our policy costs about £{-o['hedge_net_gbp_per_year']:,.0f} a year against £{-n['hedge_net_gbp_per_year']:,.0f}
-> for hedging every weekend, but it does not cut shortfall weeks at these caps. The warning is the product."
+> fees. Our policy is about break-even ({g(o['hedge_net_gbp_per_year'])}/yr, CI {g(oc['hedge_net_gbp_per_year'][0])} to
+> {g(oc['hedge_net_gbp_per_year'][1])}) against {g(n['hedge_net_gbp_per_year'])}/yr for hedging every weekend, but it does not
+> cut payroll-shortfall weeks at these caps. The warning is the product."
 
 Reproduce: `uv run --project services/agents python scripts/backtest.py && python3 scripts/backtest_report.py`
 """
