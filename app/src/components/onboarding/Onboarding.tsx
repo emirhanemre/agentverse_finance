@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { Button, Icon, Logo, Spinner, ThemeToggle, cx } from "../ui";
 import { API, useAppState } from "../../lib/api";
 import { AuditSwitch } from "../Provenance";
@@ -62,8 +63,15 @@ export default function Onboarding() {
     );
 
   return (
-    <div className="flex h-screen flex-col">
-      <header className="flex h-14 shrink-0 items-center justify-between border-b border-line px-6">
+    <>
+    {/* The hour: the dusk photograph behind the first step, faded back once the flow starts */}
+    <div className="hour" data-faded={step > 0} aria-hidden>
+      <Image src="/hero/pub-dusk.jpg" alt="" fill priority sizes="100vw" className="hour__img hour__img--sharp" />
+      <Image src="/hero/pub-dusk.jpg" alt="" fill sizes="100vw" className="hour__img hour__img--soft" />
+      <div className="hour__scrim" />
+    </div>
+    <div className="relative z-[1] flex h-screen flex-col">
+      <header className="chrome-glass flex h-14 shrink-0 items-center justify-between border-b border-line px-6">
         <div className="flex items-center gap-3">
           <Logo />
           <span className="hidden h-4 w-px bg-line-strong sm:block" />
@@ -80,7 +88,7 @@ export default function Onboarding() {
       </header>
 
       <main ref={main} className="min-h-0 flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-[1040px] px-4 pb-10 pt-10 sm:px-10">
+        <div className={cx("mx-auto px-4 pb-10 pt-10 sm:px-10", step === 0 ? "max-w-[1200px]" : "max-w-[1040px]")}>
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -89,17 +97,19 @@ export default function Onboarding() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="mb-10 text-center">
-                <h1 className="mx-auto font-display text-2xl font-medium">{STEPS[step].title}</h1>
-                <p className="mx-auto mt-2 max-w-[640px] text-md text-fg-2">{STEPS[step].description}</p>
-              </div>
+              {step > 0 && (
+                <div className="mb-10 text-center">
+                  <h1 className="mx-auto font-display text-2xl font-medium">{STEPS[step].title}</h1>
+                  <p className="mx-auto mt-2 max-w-[640px] text-md text-fg-2">{STEPS[step].description}</p>
+                </div>
+              )}
               {body}
             </motion.div>
           </AnimatePresence>
         </div>
       </main>
 
-      <nav aria-label="Setup progress" className="shrink-0 border-t border-line bg-bg">
+      <nav aria-label="Setup progress" className="chrome-glass shrink-0 border-t border-line">
         <ol className="mx-auto flex h-16 max-w-[1120px] items-center gap-2 px-4 sm:px-10">
           {STEPS.map((s, i) => {
             const done = i < reached;
@@ -141,6 +151,7 @@ export default function Onboarding() {
         </ol>
       </nav>
     </div>
+    </>
   );
 }
 

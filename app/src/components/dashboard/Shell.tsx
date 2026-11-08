@@ -87,7 +87,32 @@ export function Sidebar({
   );
 }
 
-export function TopBar({ title, right }: { title: string; right?: React.ReactNode }) {
+export type View = "simple" | "advanced";
+
+/** Simple for the owner, Advanced for the full working. Same switch shape as "Show sources". */
+export function ViewSwitch({ view, onChange }: { view: View; onChange: (v: View) => void }) {
+  const on = view === "advanced";
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      onClick={() => onChange(on ? "simple" : "advanced")}
+      data-testid="view-switch"
+      className="hit press flex h-8 items-center gap-2 whitespace-nowrap rounded-pill px-3 text-xs text-fg-2 hover:bg-surface-3 hover:text-fg"
+    >
+      <span
+        aria-hidden
+        className={cx("relative h-4 w-6 shrink-0 rounded-pill transition-colors", on ? "bg-accent-fill" : "bg-surface-3 shadow-[inset_0_0_0_1px_var(--field-edge)]")}
+      >
+        <span className={cx("absolute top-0.5 h-3 w-3 rounded-full transition-transform", on ? "translate-x-[10px] bg-accent-ink" : "translate-x-0.5 bg-fg-3")} />
+      </span>
+      Advanced
+    </button>
+  );
+}
+
+export function TopBar({ title, right }: { title: React.ReactNode; right?: React.ReactNode }) {
   return (
     <header className="flex h-14 shrink-0 items-center justify-between border-b border-line bg-bg px-6">
       <h1 className="font-display text-lg font-medium">{title}</h1>

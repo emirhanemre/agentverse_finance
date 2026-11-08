@@ -218,6 +218,8 @@ def state():
         "scenario": SCENARIO,
         "run": ({**run, "summary": json.loads(run["summary"] or "{}")} if run else None),
         "tools": results_for(run) if run else {},
+        # the recorded demo weekend, for the first screen's preview (same before and after any run)
+        "demo_tools": json.loads(DEMO_FIXTURE.read_text()).get("tool_results", {}) if DEMO_FIXTURE.exists() else {},
         "proposals": props,
         "limits": get_limits(),
         "ledger": current_ledger(None),

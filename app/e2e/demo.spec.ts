@@ -80,8 +80,13 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   await page.getByRole("button", { name: "Review", exact: true }).click();
   await page.getByRole("button", { name: "Open dashboard" }).click();
 
-  // Dashboard: approve with limit checks, paper only
+  // Dashboard opens in the owner's Simple view: one sentence, the payday bars, one decision
   await page.waitForURL("**/dashboard");
+  await expect(page.getByTestId("simple-headline")).toContainText("Payroll is at risk this weekend.");
+  await expect(page.getByTestId("simple-decision")).toContainText("PAPER TRADING — no real orders");
+  // Advanced: the full working, approve with limit checks, paper only
+  await page.getByTestId("view-switch").click();
+  await expect(page.getByTestId("view-switch")).toHaveAttribute("aria-checked", "true");
   const first = await latestPending(page);
   const approval = page.getByTestId("panel-approval");
   await expect(page.getByTestId(`approve-${first}`)).toBeVisible();
