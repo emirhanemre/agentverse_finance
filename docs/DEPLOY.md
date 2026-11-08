@@ -14,7 +14,7 @@ Two services, each on the host that suits it:
 | Part | Host | Why |
 |---|---|---|
 | Front end (`app/`, Next.js) | **Vercel** (free Hobby plan) | Made for Next.js: connect the repo and it builds on every push |
-| Agent API (`services/agents/`, FastAPI) | **Google Cloud Run** | Runs the existing Dockerfile, streams the 40-second agent run without a timeout, scales to zero, and sits next to Gemini |
+| Agent API (`services/agents/`, FastAPI) | **Google Cloud Run** | Runs the existing Dockerfile, streams the 40-second agent run without a timeout and sits next to Gemini |
 
 The API can't run on Vercel: an agent run streams for about 40 seconds and the audit log is a SQLite file,
 which serverless functions don't keep.
@@ -59,8 +59,8 @@ Then deploy (the Vercel URL can be a placeholder the first time and updated afte
 GCP_PROJECT=your-project APP_ORIGIN=https://your-app.vercel.app scripts/deploy.sh
 ```
 
-The script builds the image, deploys it with the keys from Secret Manager, `--max-instances 1` (the SQLite
-audit log lives in one instance) and the app's origin for CORS. Then it deploys the front end with the CLI.
+The script builds the image, deploys it with the keys from Secret Manager, `--min-instances 1 --max-instances 1`
+(the SQLite audit log lives in one instance, kept warm so judges never hit a cold start or a reset log) and the app's origin for CORS. Then it deploys the front end with the CLI.
 To use the Vercel dashboard instead, do step 3.
 
 ## 3. Front end on Vercel (dashboard route)
@@ -101,5 +101,8 @@ Or one at a time: **Settings → Secrets and variables → Actions → New repos
 - Cloud Run and Vercel Hobby are free at demo traffic. Gemini spend stops at `PUBHEDGE_SPEND_CAP_USD`
   (default $8).
 - The audit log and proposals live in the container's `/tmp` and reset when Cloud Run starts a fresh instance.
+  `--min-instances 1` keeps that instance running, at the cost of one always-on instance. To change a service that is
+  already deployed: `gcloud run services update pubhedge-agents --region "$REGION" --min-instances 1`. Set it back to
+  0 after judging to stop paying for idle time.
   Use **Replay** or a fresh run after a cold start.
 - Execution stays paper only. Nothing in a deployment can place a real order.
