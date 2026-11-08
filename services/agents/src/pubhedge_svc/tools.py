@@ -356,6 +356,7 @@ def make_tools(run: Run) -> dict:
             "wet_no_hedge_shortfall_gbp": wet["shortfall_gbp"],
             "wet_with_hedge_shortfall_gbp": round(max(0.0, wet["shortfall_gbp"] - payout + cost), 2),
             "dry_no_hedge_shortfall_gbp": dry["shortfall_gbp"],
+            "wet_extra_shortfall_gbp": round(wet["shortfall_gbp"] - dry["shortfall_gbp"], 2),
             "dry_with_hedge_shortfall_gbp": round(dry["shortfall_gbp"] + cost, 2),
             "hedge_cost_gbp": cost, "hedge_payout_if_wet_gbp": payout}
         res["summary"] = (f"{len(res['positions'])} positions · £{res['total_cost_gbp']:.2f}" if res["positions"]
