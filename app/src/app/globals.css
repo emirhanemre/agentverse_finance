@@ -317,7 +317,7 @@ body {
 }
 /* Chrome over the photograph: slate glass, so its light text keeps its contrast. */
 .chrome-glass {
-  background: color-mix(in oklab, var(--color-paper) 58%, transparent);
+  background: color-mix(in oklab, var(--bg) 62%, transparent); /* the theme's own paper, so its text keeps contrast in both modes */
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
   backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
 }
