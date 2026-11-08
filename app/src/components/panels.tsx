@@ -141,7 +141,16 @@ export function VerifyPanel({ s }: S) {
                       row("Incorporated", day(String(ch?.incorporated), true), ch),
                       row("SIC code", (ch?.sic_codes as string[] | undefined)?.join(", ") ?? "—", ch),
                       row("Directors", off ? String(off.summary) : "—"),
-                      row("Control", reg ? (reg.parent_company ? `Controlled by ${String(reg.parent_company)}` : `${Number(reg.individual_controllers)} ${Number(reg.individual_controllers) === 1 ? "person" : "people"} with significant control`) : "—"),
+                      row(
+                        "Control",
+                        !reg
+                          ? "—"
+                          : reg.parent_company
+                            ? `Controlled by ${String(reg.parent_company)}`
+                            : Number(reg.individual_controllers)
+                              ? `${Number(reg.individual_controllers)} ${Number(reg.individual_controllers) === 1 ? "person" : "people"} with significant control`
+                              : "None listed on the register"
+                      ),
                     ]}
                   />
                 ) : (
