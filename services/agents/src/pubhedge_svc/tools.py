@@ -205,7 +205,8 @@ def make_tools(run: Run) -> dict:
         with open(E.DATA / "reference" / "duty_changes.csv") as f:
             duty = [r["effective_date"] for r in csv.DictReader(f)]
         return {"badge": "REAL · CACHED", "source": "openfootball (CC0), Wikipedia (CC BY-SA 4.0), HMRC/legislation.gov.uk"
-                " (OGL)", "match_days": n, "duty_changes": duty, "summary": f"{n} match days · {len(duty)} duty dates"}
+                " (OGL)", "match_days": n, "duty_changes": duty,
+                "summary": f"{n} England/Ireland match days (football and rugby) · {len(duty)} duty dates"}
 
     # ---------- 3. risk analyst ----------
     @tool
