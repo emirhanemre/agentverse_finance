@@ -37,3 +37,40 @@ def test_offline_without_cache_raises_not_fakes():
 def test_polymarket_client_refuses_trading_paths():
     with pytest.raises(AssertionError):
         pm._fetch("/order", {})
+
+
+def test_stripe_reads_recorded_test_charges_only():
+    from pubhedge_svc.clients import stripe_client
+    env = stripe_client.list_charges()
+    assert env["badge"] == "REAL · CACHED" and len(env["data"]) >= 100
+    assert all(c["livemode"] is False and c["business_date"] for c in env["data"])
+
+
+def test_stripe_refuses_live_key(monkeypatch):
+    from pubhedge_svc.clients import stripe_client
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_live_example")
+    with pytest.raises(PermissionError):
+        stripe_client._key()
+
+
+def test_openmeteo_afternoon_window():
+    from pubhedge_svc.clients import openmeteo
+    env = {"data": {"hourly": {"time": ["2026-08-29T11:00", "2026-08-29T12:00", "2026-08-29T17:00", "2026-08-29T18:00"],
+                               "precipitation": [5.0, 1.5, 2.0, 9.0]}}}
+    assert openmeteo.afternoon_rain(env) == {"2026-08-29": 3.5}
+
+
+def test_metoffice_afternoon_window_shape():
+    # Met Office DataHub responses are not committed (licence); this pins the parser to the documented shape.
+    from pubhedge_svc.clients import metoffice
+    ts = [{"time": "2026-11-14T12:00Z", "totalPrecipAmount": 0.4, "probOfPrecipitation": 40},
+          {"time": "2026-11-14T15:00Z", "totalPrecipAmount": 1.1, "probOfPrecipitation": 65},
+          {"time": "2026-11-14T18:00Z", "totalPrecipAmount": 3.0, "probOfPrecipitation": 90}]
+    env = {"data": {"features": [{"properties": {"timeSeries": ts}}]}}
+    assert metoffice.afternoon_rain(env) == {"2026-11-14": {"mm": 1.5, "prob_max": 65}}
+
+
+def test_weather_tables_cover_backtest_window():
+    from pubhedge_svc import engines
+    wx = engines.weather("N4")
+    assert "2021-01-01" in wx and "2026-10-31" in wx and wx["2026-08-29"]["pm_rain_mm"] == "6.1"

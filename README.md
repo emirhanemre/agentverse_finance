@@ -40,7 +40,7 @@ scripts/dev.sh               # API on :8000, app on http://localhost:3000
 | `scripts/demo-reset.sh` | Resets proposals, paper fills and limits for the demo. The audit log is kept |
 
 In the app, **Historical scenario** replays a real wet weekend: the August bank holiday, 29–30 Aug 2026, with
-6.9 mm on the Saturday afternoon. It uses the forecast that was available at the time.
+6.1 mm of rain on the Saturday afternoon (2.6 mm had been forecast). It uses the forecast that was available at the time.
 
 - **Live** uses this coming weekend's Met Office forecast.
 - **Replay** streams a recorded live run, for when venue wifi fails.
