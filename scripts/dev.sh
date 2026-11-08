@@ -4,6 +4,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 [ -d "$ROOT/app/node_modules" ] || (cd "$ROOT/app" && npm install)
+set -m  # own process group, so the trap stops uvicorn and its reloader too
 (cd "$ROOT/services/agents" && uv run uvicorn pubhedge_svc.app:app --port 8000 --reload) & API=$!
-trap 'kill $API 2>/dev/null || true' EXIT
+trap 'kill -- -$API 2>/dev/null || true' EXIT
 cd "$ROOT/app" && npm run dev

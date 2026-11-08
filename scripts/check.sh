@@ -8,7 +8,8 @@ KIT="$ROOT/agentverse/finance/bench.py"
 API_PORT=8000 WEB_PORT=3000
 TMP="$(mktemp -d)"
 PIDS=()
-cleanup() { for p in "${PIDS[@]:-}"; do kill "$p" 2>/dev/null || true; done; }
+# Each background job runs in its own process group (set -m below), so killing -PID also stops uvicorn and next-server.
+cleanup() { for p in "${PIDS[@]:-}"; do [ -n "$p" ] && kill -- "-$p" 2>/dev/null || true; done; }
 trap cleanup EXIT
 step() { printf '\n== %s\n' "$*"; }
 need_free() { if lsof -iTCP:"$1" -sTCP:LISTEN >/dev/null 2>&1; then echo "port $1 is busy; stop the dev server first" >&2; exit 2; fi; }
@@ -45,6 +46,7 @@ step "3/6 front end: tsc, lint, build"
 step "4/6 boot services and health"
 need_free $API_PORT; need_free $WEB_PORT
 export PUBHEDGE_OFFLINE=1 PUBHEDGE_DB="$TMP/check.db"
+set -m
 (cd services/agents && uv run uvicorn pubhedge_svc.app:app --port $API_PORT >"$TMP/api.log" 2>&1) & PIDS+=($!)
 (cd app && npx next start -p $WEB_PORT >"$TMP/web.log" 2>&1) & PIDS+=($!)
 for i in $(seq 1 60); do curl -sf "localhost:$API_PORT/api/health" >/dev/null && curl -sf "localhost:$WEB_PORT" >/dev/null && break; sleep 1; done

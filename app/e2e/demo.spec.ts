@@ -2,7 +2,8 @@ import path from "node:path";
 import { expect, test, type Page } from "playwright/test";
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-const SHOTS = path.resolve(__dirname, "../../docs/screenshots");
+// Refresh the committed docs screenshots only on request (UPDATE_SHOTS=1); the gate must not dirty the tree.
+const SHOTS = path.resolve(__dirname, process.env.UPDATE_SHOTS ? "../../docs/screenshots" : "../test-results/shots");
 
 type Proposal = { id: string; status: string; created: number };
 

@@ -13,8 +13,10 @@ not The Faltering Fullback's actual figures.**
 The Finance Kit adapter is standard library only and runs on Python 3.9+ from any working directory:
 
 ```bash
-python3 agentverse/finance/bench.py challenge --pack mixed --cases 60 --project . --output /tmp/ph-challenge --adapter python3 adapter.py
+python3 agentverse/finance/bench.py challenge --pack mixed --cases 60 --project . --output /tmp/ph-challenge-$(date +%s) --adapter python3 adapter.py
 ```
+
+The kit refuses an existing output folder, so each run needs a new `--output`.
 
 `adapter.py` calls `pubhedge_core/`, the same engines the app uses. `pubhedge_core.cashflow` is the engine that
 tells the owner whether payroll clears. Our own self-serve challenge results are in
@@ -30,7 +32,11 @@ Needs `uv` (Python 3.12 is pinned for the service), Node 20+ and npm.
 ```bash
 cp .env.example .env.local   # then add your own keys; never commit this file
 scripts/dev.sh               # API on :8000, app on http://localhost:3000
+PUBHEDGE_OFFLINE=1 scripts/dev.sh   # no keys needed: cached data, template narration, no live calls
 ```
+
+`scripts/check.sh` needs ports 3000 and 8000 free. The first time it runs, Playwright downloads Chromium.
+`UPDATE_SHOTS=1 scripts/check.sh` also refreshes `docs/screenshots/`.
 
 | Script | Purpose |
 |---|---|
