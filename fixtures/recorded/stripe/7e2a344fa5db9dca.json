@@ -1,0 +1,970 @@
+{
+ "data": [
+  {
+   "amount": 298287,
+   "business_date": "2026-10-31",
+   "currency": "gbp",
+   "id": "ch_3UZJmbAb6kl2PNK51JU7Oyle",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 322047,
+   "business_date": "2026-10-30",
+   "currency": "gbp",
+   "id": "ch_3UZJmaAb6kl2PNK51ipHKrPf",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 249929,
+   "business_date": "2026-10-29",
+   "currency": "gbp",
+   "id": "ch_3UZJmZAb6kl2PNK5204U3XJy",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 181203,
+   "business_date": "2026-10-28",
+   "currency": "gbp",
+   "id": "ch_3UZJmYAb6kl2PNK50MCIJE9V",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 170590,
+   "business_date": "2026-10-27",
+   "currency": "gbp",
+   "id": "ch_3UZJmYAb6kl2PNK52GdBuGlp",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 133904,
+   "business_date": "2026-10-26",
+   "currency": "gbp",
+   "id": "ch_3UZJmXAb6kl2PNK52Tjq8kDG",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 217884,
+   "business_date": "2026-10-25",
+   "currency": "gbp",
+   "id": "ch_3UZJmWAb6kl2PNK52VwbiObZ",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 243310,
+   "business_date": "2026-10-24",
+   "currency": "gbp",
+   "id": "ch_3UZJmVAb6kl2PNK50yTRx6v7",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 237168,
+   "business_date": "2026-10-23",
+   "currency": "gbp",
+   "id": "ch_3UZJmUAb6kl2PNK53HMtv718",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 201769,
+   "business_date": "2026-10-22",
+   "currency": "gbp",
+   "id": "ch_3UZJmTAb6kl2PNK521rFn0Nc",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 172575,
+   "business_date": "2026-10-21",
+   "currency": "gbp",
+   "id": "ch_3UZJmSAb6kl2PNK52ovj78jn",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 109506,
+   "business_date": "2026-10-20",
+   "currency": "gbp",
+   "id": "ch_3UZJmSAb6kl2PNK501bdXxyR",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 137293,
+   "business_date": "2026-10-19",
+   "currency": "gbp",
+   "id": "ch_3UZJmRAb6kl2PNK52kWBEJ0q",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 227577,
+   "business_date": "2026-10-18",
+   "currency": "gbp",
+   "id": "ch_3UZJmQAb6kl2PNK53z7k2qNu",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 369372,
+   "business_date": "2026-10-17",
+   "currency": "gbp",
+   "id": "ch_3UZJmPAb6kl2PNK52Wbf86WQ",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 277975,
+   "business_date": "2026-10-16",
+   "currency": "gbp",
+   "id": "ch_3UZJmOAb6kl2PNK50PJvlyXe",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 266931,
+   "business_date": "2026-10-15",
+   "currency": "gbp",
+   "id": "ch_3UZJmNAb6kl2PNK529z1bX4N",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 212646,
+   "business_date": "2026-10-14",
+   "currency": "gbp",
+   "id": "ch_3UZJmMAb6kl2PNK51HaXl9Hv",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 182300,
+   "business_date": "2026-10-13",
+   "currency": "gbp",
+   "id": "ch_3UZJmLAb6kl2PNK52GjbOdpj",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 150891,
+   "business_date": "2026-10-12",
+   "currency": "gbp",
+   "id": "ch_3UZJmLAb6kl2PNK50b7u4gCp",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 278202,
+   "business_date": "2026-10-11",
+   "currency": "gbp",
+   "id": "ch_3UZJmKAb6kl2PNK50V8PJhRc",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 355986,
+   "business_date": "2026-10-10",
+   "currency": "gbp",
+   "id": "ch_3UZJmJAb6kl2PNK53nCsTH96",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 332306,
+   "business_date": "2026-10-09",
+   "currency": "gbp",
+   "id": "ch_3UZJmIAb6kl2PNK538tUDkWO",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 245401,
+   "business_date": "2026-10-08",
+   "currency": "gbp",
+   "id": "ch_3UZJmHAb6kl2PNK52OiGxU86",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 188054,
+   "business_date": "2026-10-07",
+   "currency": "gbp",
+   "id": "ch_3UZJmGAb6kl2PNK51Q19WTHW",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 195297,
+   "business_date": "2026-10-06",
+   "currency": "gbp",
+   "id": "ch_3UZJmFAb6kl2PNK51i0GZLv0",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 176135,
+   "business_date": "2026-10-05",
+   "currency": "gbp",
+   "id": "ch_3UZJmEAb6kl2PNK52DFt7PcT",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 276617,
+   "business_date": "2026-10-04",
+   "currency": "gbp",
+   "id": "ch_3UZJmDAb6kl2PNK53AP8UcSP",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 456371,
+   "business_date": "2026-10-03",
+   "currency": "gbp",
+   "id": "ch_3UZJmCAb6kl2PNK50IR33SZS",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 358275,
+   "business_date": "2026-10-02",
+   "currency": "gbp",
+   "id": "ch_3UZJmCAb6kl2PNK509zzV4tX",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 267636,
+   "business_date": "2026-10-01",
+   "currency": "gbp",
+   "id": "ch_3UZJmBAb6kl2PNK51FI1rNrW",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 252414,
+   "business_date": "2026-09-30",
+   "currency": "gbp",
+   "id": "ch_3UZJmAAb6kl2PNK52Vnaf9lT",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 214838,
+   "business_date": "2026-09-29",
+   "currency": "gbp",
+   "id": "ch_3UZJm9Ab6kl2PNK52Wc1eyOJ",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 156652,
+   "business_date": "2026-09-28",
+   "currency": "gbp",
+   "id": "ch_3UZJm8Ab6kl2PNK52f1EYc8t",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 296661,
+   "business_date": "2026-09-27",
+   "currency": "gbp",
+   "id": "ch_3UZJm7Ab6kl2PNK52BhGKz1d",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 420914,
+   "business_date": "2026-09-26",
+   "currency": "gbp",
+   "id": "ch_3UZJm6Ab6kl2PNK50hYW8VEv",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 378148,
+   "business_date": "2026-09-25",
+   "currency": "gbp",
+   "id": "ch_3UZJm6Ab6kl2PNK53q1U9zN0",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 268002,
+   "business_date": "2026-09-24",
+   "currency": "gbp",
+   "id": "ch_3UZJm5Ab6kl2PNK52g6B9aPN",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 239253,
+   "business_date": "2026-09-23",
+   "currency": "gbp",
+   "id": "ch_3UZJm4Ab6kl2PNK53AWeoH0l",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 223350,
+   "business_date": "2026-09-22",
+   "currency": "gbp",
+   "id": "ch_3UZJm3Ab6kl2PNK50DYp7E1C",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 188897,
+   "business_date": "2026-09-21",
+   "currency": "gbp",
+   "id": "ch_3UZJm2Ab6kl2PNK52zQHHHX8",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 307365,
+   "business_date": "2026-09-20",
+   "currency": "gbp",
+   "id": "ch_3UZJm1Ab6kl2PNK50bX3hYl5",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 463984,
+   "business_date": "2026-09-19",
+   "currency": "gbp",
+   "id": "ch_3UZJm0Ab6kl2PNK53rJBRQYJ",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 368761,
+   "business_date": "2026-09-18",
+   "currency": "gbp",
+   "id": "ch_3UZJlzAb6kl2PNK51uysFPNO",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 266668,
+   "business_date": "2026-09-17",
+   "currency": "gbp",
+   "id": "ch_3UZJlzAb6kl2PNK52nLmcYNq",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 246466,
+   "business_date": "2026-09-16",
+   "currency": "gbp",
+   "id": "ch_3UZJlyAb6kl2PNK508eP5I7L",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 206141,
+   "business_date": "2026-09-15",
+   "currency": "gbp",
+   "id": "ch_3UZJlxAb6kl2PNK537fPTgA4",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 228810,
+   "business_date": "2026-09-14",
+   "currency": "gbp",
+   "id": "ch_3UZJlwAb6kl2PNK52OW5dW5D",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 312733,
+   "business_date": "2026-09-13",
+   "currency": "gbp",
+   "id": "ch_3UZJlvAb6kl2PNK50lHHUct3",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 452910,
+   "business_date": "2026-09-12",
+   "currency": "gbp",
+   "id": "ch_3UZJluAb6kl2PNK53cRdwNer",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 402554,
+   "business_date": "2026-09-11",
+   "currency": "gbp",
+   "id": "ch_3UZJltAb6kl2PNK51Hg5m913",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 292902,
+   "business_date": "2026-09-10",
+   "currency": "gbp",
+   "id": "ch_3UZJlsAb6kl2PNK52tXGkBUO",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 233030,
+   "business_date": "2026-09-09",
+   "currency": "gbp",
+   "id": "ch_3UZJlrAb6kl2PNK51Fsanli1",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 148550,
+   "business_date": "2026-09-08",
+   "currency": "gbp",
+   "id": "ch_3UZJlqAb6kl2PNK50rX6jNu9",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 223694,
+   "business_date": "2026-09-07",
+   "currency": "gbp",
+   "id": "ch_3UZJlpAb6kl2PNK53PZQy6mh",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 422311,
+   "business_date": "2026-09-06",
+   "currency": "gbp",
+   "id": "ch_3UZJloAb6kl2PNK52A8XlGbQ",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 497905,
+   "business_date": "2026-09-05",
+   "currency": "gbp",
+   "id": "ch_3UZJlnAb6kl2PNK51ttg5M9t",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 419457,
+   "business_date": "2026-09-04",
+   "currency": "gbp",
+   "id": "ch_3UZJlnAb6kl2PNK50QW2uQMa",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 369391,
+   "business_date": "2026-09-03",
+   "currency": "gbp",
+   "id": "ch_3UZJlmAb6kl2PNK52Nh1pzFh",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 222792,
+   "business_date": "2026-09-02",
+   "currency": "gbp",
+   "id": "ch_3UZJllAb6kl2PNK50a6ijzoY",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 195776,
+   "business_date": "2026-09-01",
+   "currency": "gbp",
+   "id": "ch_3UZJlkAb6kl2PNK51vhBsDxj",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 184234,
+   "business_date": "2026-08-31",
+   "currency": "gbp",
+   "id": "ch_3UZJljAb6kl2PNK52ViGIiDa",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 352699,
+   "business_date": "2026-08-30",
+   "currency": "gbp",
+   "id": "ch_3UZJliAb6kl2PNK51J09Va66",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 331279,
+   "business_date": "2026-08-29",
+   "currency": "gbp",
+   "id": "ch_3UZJlhAb6kl2PNK50yPOBgYJ",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 411726,
+   "business_date": "2026-08-28",
+   "currency": "gbp",
+   "id": "ch_3UZJlgAb6kl2PNK53rydWW5T",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 259506,
+   "business_date": "2026-08-27",
+   "currency": "gbp",
+   "id": "ch_3UZJlgAb6kl2PNK50l8BZkSz",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 261632,
+   "business_date": "2026-08-26",
+   "currency": "gbp",
+   "id": "ch_3UZJlfAb6kl2PNK51fOClweF",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 239935,
+   "business_date": "2026-08-25",
+   "currency": "gbp",
+   "id": "ch_3UZJleAb6kl2PNK50q1zoFwd",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 195647,
+   "business_date": "2026-08-24",
+   "currency": "gbp",
+   "id": "ch_3UZJldAb6kl2PNK51E5BQpcW",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 290195,
+   "business_date": "2026-08-23",
+   "currency": "gbp",
+   "id": "ch_3UZJlcAb6kl2PNK52PXYj0Mg",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 462360,
+   "business_date": "2026-08-22",
+   "currency": "gbp",
+   "id": "ch_3UZJlbAb6kl2PNK50oNDeexw",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 341445,
+   "business_date": "2026-08-21",
+   "currency": "gbp",
+   "id": "ch_3UZJlaAb6kl2PNK53xy5Ko4d",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 290390,
+   "business_date": "2026-08-20",
+   "currency": "gbp",
+   "id": "ch_3UZJlZAb6kl2PNK53qZkKkW4",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 306540,
+   "business_date": "2026-08-19",
+   "currency": "gbp",
+   "id": "ch_3UZJlZAb6kl2PNK5100ZheNI",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 228718,
+   "business_date": "2026-08-18",
+   "currency": "gbp",
+   "id": "ch_3UZJlYAb6kl2PNK52wM7OKH0",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 200746,
+   "business_date": "2026-08-17",
+   "currency": "gbp",
+   "id": "ch_3UZJlXAb6kl2PNK50u3GIPvn",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 362222,
+   "business_date": "2026-08-16",
+   "currency": "gbp",
+   "id": "ch_3UZJlWAb6kl2PNK51VqhuEtm",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 518387,
+   "business_date": "2026-08-15",
+   "currency": "gbp",
+   "id": "ch_3UZJlVAb6kl2PNK501EYd1o1",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 525145,
+   "business_date": "2026-08-14",
+   "currency": "gbp",
+   "id": "ch_3UZJlUAb6kl2PNK53Q9hAXbm",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 347812,
+   "business_date": "2026-08-13",
+   "currency": "gbp",
+   "id": "ch_3UZJlTAb6kl2PNK53gzCQuAh",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 301687,
+   "business_date": "2026-08-12",
+   "currency": "gbp",
+   "id": "ch_3UZJlSAb6kl2PNK52xR9J4KV",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 249558,
+   "business_date": "2026-08-11",
+   "currency": "gbp",
+   "id": "ch_3UZJlRAb6kl2PNK50UDl6SGr",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 232887,
+   "business_date": "2026-08-10",
+   "currency": "gbp",
+   "id": "ch_3UZJlQAb6kl2PNK52Z2VwQq0",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 319109,
+   "business_date": "2026-08-09",
+   "currency": "gbp",
+   "id": "ch_3UZJlPAb6kl2PNK52AJS5Jjs",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 501057,
+   "business_date": "2026-08-08",
+   "currency": "gbp",
+   "id": "ch_3UZJlOAb6kl2PNK53W9Ixr6G",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 486743,
+   "business_date": "2026-08-07",
+   "currency": "gbp",
+   "id": "ch_3UZJlOAb6kl2PNK51IUBPkAz",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 312452,
+   "business_date": "2026-08-06",
+   "currency": "gbp",
+   "id": "ch_3UZJlNAb6kl2PNK50JL0mlKl",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 317038,
+   "business_date": "2026-08-05",
+   "currency": "gbp",
+   "id": "ch_3UZJlMAb6kl2PNK53dxNZYTT",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 218751,
+   "business_date": "2026-08-04",
+   "currency": "gbp",
+   "id": "ch_3UZJlLAb6kl2PNK53K2oxphy",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 229347,
+   "business_date": "2026-08-03",
+   "currency": "gbp",
+   "id": "ch_3UZJlKAb6kl2PNK52qPXIvIg",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 357284,
+   "business_date": "2026-08-02",
+   "currency": "gbp",
+   "id": "ch_3UZJlJAb6kl2PNK52AC0ibKs",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 593747,
+   "business_date": "2026-08-01",
+   "currency": "gbp",
+   "id": "ch_3UZJlIAb6kl2PNK50BkFZ66J",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 441573,
+   "business_date": "2026-07-31",
+   "currency": "gbp",
+   "id": "ch_3UZJlHAb6kl2PNK53PbaVwM8",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 319782,
+   "business_date": "2026-07-30",
+   "currency": "gbp",
+   "id": "ch_3UZJlGAb6kl2PNK524dc5ko3",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 307624,
+   "business_date": "2026-07-29",
+   "currency": "gbp",
+   "id": "ch_3UZJlFAb6kl2PNK53cEBv5zl",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 254038,
+   "business_date": "2026-07-28",
+   "currency": "gbp",
+   "id": "ch_3UZJlFAb6kl2PNK531xpiiai",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 215224,
+   "business_date": "2026-07-27",
+   "currency": "gbp",
+   "id": "ch_3UZJlEAb6kl2PNK52ANEYrAj",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 381853,
+   "business_date": "2026-07-26",
+   "currency": "gbp",
+   "id": "ch_3UZJlDAb6kl2PNK50VlhZB3g",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 616414,
+   "business_date": "2026-07-25",
+   "currency": "gbp",
+   "id": "ch_3UZJlCAb6kl2PNK53Afxxf6S",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 474387,
+   "business_date": "2026-07-24",
+   "currency": "gbp",
+   "id": "ch_3UZJlBAb6kl2PNK51OluaRmV",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 326714,
+   "business_date": "2026-07-23",
+   "currency": "gbp",
+   "id": "ch_3UZJlAAb6kl2PNK515X8kG7Q",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 293479,
+   "business_date": "2026-07-22",
+   "currency": "gbp",
+   "id": "ch_3UZJl9Ab6kl2PNK50ObhDL6U",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 242792,
+   "business_date": "2026-07-21",
+   "currency": "gbp",
+   "id": "ch_3UZJl8Ab6kl2PNK53hWROMLe",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 209311,
+   "business_date": "2026-07-20",
+   "currency": "gbp",
+   "id": "ch_3UZJl7Ab6kl2PNK52eeMvm2S",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 349187,
+   "business_date": "2026-07-19",
+   "currency": "gbp",
+   "id": "ch_3UZJl6Ab6kl2PNK52PX3eBvP",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 630829,
+   "business_date": "2026-07-18",
+   "currency": "gbp",
+   "id": "ch_3UZJl6Ab6kl2PNK50yHwfi7Y",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 578338,
+   "business_date": "2026-07-17",
+   "currency": "gbp",
+   "id": "ch_3UZJl5Ab6kl2PNK53B4oINkA",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 333197,
+   "business_date": "2026-07-16",
+   "currency": "gbp",
+   "id": "ch_3UZJl4Ab6kl2PNK51kUXx2NA",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 359037,
+   "business_date": "2026-07-15",
+   "currency": "gbp",
+   "id": "ch_3UZJl3Ab6kl2PNK51QltNPS9",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 242312,
+   "business_date": "2026-07-14",
+   "currency": "gbp",
+   "id": "ch_3UZJl2Ab6kl2PNK53xC3dxQY",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 203709,
+   "business_date": "2026-07-13",
+   "currency": "gbp",
+   "id": "ch_3UZJl1Ab6kl2PNK50UPUq39o",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 370668,
+   "business_date": "2026-07-12",
+   "currency": "gbp",
+   "id": "ch_3UZJl0Ab6kl2PNK52FKUZBNq",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 769213,
+   "business_date": "2026-07-11",
+   "currency": "gbp",
+   "id": "ch_3UZJkzAb6kl2PNK51khJiqkJ",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 479375,
+   "business_date": "2026-07-10",
+   "currency": "gbp",
+   "id": "ch_3UZJkyAb6kl2PNK532mymf7E",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 330567,
+   "business_date": "2026-07-09",
+   "currency": "gbp",
+   "id": "ch_3UZJkxAb6kl2PNK52wiEfTI3",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 300411,
+   "business_date": "2026-07-08",
+   "currency": "gbp",
+   "id": "ch_3UZJkxAb6kl2PNK52oKAUnPm",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 273793,
+   "business_date": "2026-07-07",
+   "currency": "gbp",
+   "id": "ch_3UZJkwAb6kl2PNK53rQFIoG7",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 281486,
+   "business_date": "2026-07-06",
+   "currency": "gbp",
+   "id": "ch_3UZJkvAb6kl2PNK51SeLO1gu",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 349431,
+   "business_date": "2026-07-05",
+   "currency": "gbp",
+   "id": "ch_3UZJkuAb6kl2PNK516hW8pk8",
+   "livemode": false,
+   "pub_id": "demo"
+  },
+  {
+   "amount": 520643,
+   "business_date": "2026-07-04",
+   "currency": "gbp",
+   "id": "ch_3UZJktAb6kl2PNK5280Bl8GN",
+   "livemode": false,
+   "pub_id": "demo"
+  }
+ ],
+ "fetched_at": "2026-11-08T00:19:00Z",
+ "fetched_ts": 1794097140.449994,
+ "key": "charges",
+ "licence": "Stripe test mode (our own synthetic test charges)",
+ "source": "Stripe test mode",
+ "url": "https://api.stripe.com/v1/charges"
+}
