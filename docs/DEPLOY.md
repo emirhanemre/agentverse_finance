@@ -76,9 +76,9 @@ return 401 without the key.
 Keys go into the platform that runs the code: Secret Manager for the API, Vercel's environment variables for
 the front end. They never go into the repo or the image.
 
-**GitHub Actions secrets** are only needed if a GitHub workflow uses them. The CI workflow in this repo runs
-offline and needs none. If you later want GitHub to deploy for you, add them like this (the repo owner has to
-do it, because it needs admin rights on the repo):
+**GitHub Actions secrets** are only needed if a GitHub workflow uses them; this repo has none (checks run
+locally with `scripts/check.sh`). If you later want GitHub to deploy for you, add them like this (the repo owner
+has to do it, because it needs admin rights on the repo):
 
 ```bash
 gh secret set -f .env.local --repo emirhanemre/agentverse_finance   # every line of the file becomes a secret
