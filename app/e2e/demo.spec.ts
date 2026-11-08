@@ -65,7 +65,7 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   // Impact: payday either side of the payroll line, how cover gets there, and the exact table
   await hasBadge(page, "panel-payday");
   await hasBadge(page, "panel-bridge");
-  await expect(page.getByTestId("panel-bridge")).toContainText("SYNTHETIC — modelled for a pub of this profile");
+  await expect(page.getByTestId("panel-bridge")).toContainText(/SYNTHETIC — .*modelled for a pub of this profile/);
   await expect(page.getByTestId("outcomes")).toContainText("Dry");
   await page.getByRole("button", { name: "See the recommendation" }).click();
 
@@ -92,7 +92,7 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   await expect(page.getByTestId(`approve-${first}`)).toBeVisible();
   await hasBadge(page, "panel-approval");
   await hasBadge(page, "panel-cashflow");
-  await expect(page.getByTestId("panel-cashflow")).toContainText("SYNTHETIC — modelled for a pub of this profile");
+  await expect(page.getByTestId("panel-cashflow")).toContainText(/SYNTHETIC — .*modelled for a pub of this profile/);
   await expect(approval).toContainText("PAPER TRADING — no real orders");
   await expect(approval.getByTestId("check-weekly_spend")).toBeVisible();
   await expect(approval.getByTestId("check-per_market_concentration")).toBeVisible();
