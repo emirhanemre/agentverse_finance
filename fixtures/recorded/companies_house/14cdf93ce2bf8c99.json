@@ -1,0 +1,159 @@
+{
+ "data": {
+  "items": [
+   {
+    "address": {
+     "address_line_1": "Innovation Way, Banbury Road",
+     "country": "United Kingdom",
+     "locality": "Stratford-Upon-Avon",
+     "postal_code": "CV37 7GZ",
+     "premises": "Celixir House Stratford Business & Technology Park",
+     "region": "Warwickshire"
+    },
+    "address_snippet": "Celixir House Stratford Business & Technology Park, Innovation Way, Banbury Road, Stratford-Upon-Avon, Warwickshire, United Kingdom, CV37 7GZ",
+    "company_number": "09160509",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2014-08-05",
+    "description": "09160509 - Incorporated on 5 August 2014",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/09160509"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE CHURCHILL ARMS (PAXFORD) LIMITED"
+   },
+   {
+    "address": {
+     "address_line_1": "Manor Park",
+     "address_line_2": "Up Hatherley",
+     "country": "England",
+     "locality": "Cheltenham",
+     "postal_code": "GL51 3HU",
+     "premises": "19"
+    },
+    "address_snippet": "19 Manor Park, Up Hatherley, Cheltenham, England, GL51 3HU",
+    "company_number": "14891332",
+    "company_status": "dissolved",
+    "company_type": "ltd",
+    "date_of_cessation": "2026-05-19",
+    "date_of_creation": "2023-05-24",
+    "description": "14891332 - Dissolved on 19 May 2026",
+    "description_identifier": [
+     "dissolved-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/14891332"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE CHURCHILL ARMS WEST LAVINGTON LTD"
+   },
+   {
+    "address": {
+     "address_line_1": "9 Bicester Road",
+     "locality": "Aylesbury",
+     "postal_code": "HP19 9AG",
+     "premises": "Verna House",
+     "region": "Buckinghamshire"
+    },
+    "address_snippet": "Verna House, 9 Bicester Road, Aylesbury, Buckinghamshire, HP19 9AG",
+    "company_number": "07547933",
+    "company_status": "dissolved",
+    "company_type": "ltd",
+    "date_of_cessation": "2018-07-10",
+    "date_of_creation": "2011-03-02",
+    "description": "07547933 - Dissolved on 10 July 2018",
+    "description_identifier": [
+     "dissolved-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/07547933"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE CHURCHILL ARMS LTD"
+   },
+   {
+    "address": {
+     "address_line_1": "Pine Road Chandlers Ford",
+     "country": "United Kingdom",
+     "locality": "Eastleigh",
+     "postal_code": "SO53 1JT",
+     "premises": "66",
+     "region": "Hampshire"
+    },
+    "address_snippet": "66 Pine Road Chandlers Ford, Eastleigh, Hampshire, United Kingdom, SO53 1JT",
+    "company_number": "10577243",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2017-01-23",
+    "description": "10577243 - Incorporated on 23 January 2017",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/10577243"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "A&J CHURCHILL LIMITED"
+   },
+   {
+    "address": {
+     "address_line_1": "Top Farm Court Top Street",
+     "address_line_2": "Bawtry",
+     "country": "England",
+     "locality": "Doncaster",
+     "postal_code": "DN10 6TF",
+     "premises": "4"
+    },
+    "address_snippet": "4 Top Farm Court Top Street, Bawtry, Doncaster, England, DN10 6TF",
+    "company_number": "15906872",
+    "company_status": "dissolved",
+    "company_type": "ltd",
+    "date_of_cessation": "2026-01-27",
+    "date_of_creation": "2024-08-20",
+    "description": "15906872 - Dissolved on 27 January 2026",
+    "description_identifier": [
+     "dissolved-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/15906872"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "A CHURCHILL LTD"
+   }
+  ],
+  "items_per_page": 5,
+  "kind": "search#companies",
+  "page_number": 1,
+  "start_index": 0,
+  "total_results": 7337
+ },
+ "fetched_at": "2026-11-08T11:49:06Z",
+ "fetched_ts": 1794138546.2753122,
+ "key": "/search/companies?items_per_page=5&q=Churchill Arms",
+ "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
+ "source": "Companies House",
+ "url": "https://api.company-information.service.gov.uk/search/companies"
+}

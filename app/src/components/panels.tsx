@@ -75,48 +75,116 @@ export function Empty({ children }: { children: React.ReactNode }) {
 
 // ---------- What the agent sees ----------
 
+type RegisterCheck = { check: string; ok: boolean; detail?: string };
+type Considered = { company_number: string; name: string; status?: string; kept: boolean; why: string };
+
 export function VerifyPanel({ s }: S) {
-  const ch = tool(s, "companies_house_profile");
+  const prem = tool(s, "find_premises");
+  const op = tool(s, "find_operator");
+  const ch = tool(s, "companies_house_profile", (r) => r.company_number === op?.company_number) ?? tool(s, "companies_house_profile");
   const off = tool(s, "companies_house_officer_match");
+  const reg = tool(s, "register_checks");
   const pc = tool(s, "locate_postcode");
-  const row = (label: string, value: React.ReactNode, r?: ToolResult) => ({
-    label,
-    value: r ? <Num r={r}>{value}</Num> : value,
-  });
+  const found = !!prem?.found;
+  const matched = !!op?.matched && !!ch && !ch.error;
+  const status = !prem && !ch ? null : found && matched && ch?.company_status === "active" ? "Verified" : found ? "Premises verified" : "Not found";
+  const row = (label: string, value: React.ReactNode, r?: ToolResult) => ({ label, value: r ? <Num r={r}>{value}</Num> : value });
+  const rating = String(prem?.rating ?? "");
   return (
     <div data-testid="panel-verify">
       <ProvPanel
-        title={String(ch?.company_name ?? s.pub.trading_name)}
-        prov={{ badge: s.pub.identity_badge, meta: { source: "Companies House and postcodes.io, matched on company number and postcode" } }}
+        title={String(prem?.business_name ?? ch?.company_name ?? s.pub.trading_name)}
+        prov={{ badge: s.pub.identity_badge, meta: { source: "Food Standards Agency hygiene register, Companies House and postcodes.io" } }}
         actions={
-          ch && (
-            <Badge tone={ch.company_status === "active" ? "positive" : "warning"} dot>
-              {ch.company_status === "active" ? "Verified" : String(ch.company_status)}
+          status && (
+            <Badge tone={status === "Verified" ? "positive" : "warning"} dot>
+              {status}
             </Badge>
           )
         }
       >
-        {!ch ? (
+        {!prem && !ch ? (
           <Empty>Run the agent to check the public registers.</Empty>
         ) : (
-          <div className="grid grid-cols-2 gap-x-10">
-            <KeyValue
-              rows={[
-                row("Trading as", s.pub.trading_name),
-                row("Company number", s.pub.company_number, ch),
-                row("Incorporated", day(String(ch.incorporated), true), ch),
-                row("SIC code", (ch.sic_codes as string[] | undefined)?.join(", ") ?? "—", ch),
-                row("Directors", off ? String(off.summary) : "—", off),
-              ]}
-            />
-            <KeyValue
-              rows={[
-                row("Premises", s.pub.address),
-                row("District", pc ? String(pc.district) : "—", pc),
-                row("Location", pc ? `${Number(pc.lat).toFixed(4)}, ${Number(pc.lon).toFixed(4)}` : "—", pc),
-                row("Owner", s.pub.owner),
-              ]}
-            />
+          <div className="space-y-6">
+            <div className="grid gap-x-10 md:grid-cols-2">
+              <div>
+                <h3 className="text-xs font-medium uppercase tracking-wide text-fg-3">Premises · food hygiene register</h3>
+                {found ? (
+                  <KeyValue
+                    rows={[
+                      row(
+                        "Hygiene rating",
+                        <span className="font-display text-lg font-medium" data-testid="hygiene-rating">
+                          {/^\d$/.test(rating) ? `${rating} / 5` : rating}
+                          {prem?.rating_date ? <span className="ml-2 font-sans text-xs font-normal text-fg-3">inspected {day(String(prem.rating_date), true)}</span> : null}
+                        </span>,
+                        prem
+                      ),
+                      row("Premises", String(prem?.address)),
+                      row("Type", String(prem?.business_type)),
+                      row("Council", String(prem?.local_authority)),
+                      row("Location", pc ? `${Number(pc.lat).toFixed(4)}, ${Number(pc.lon).toFixed(4)}` : "—", pc),
+                    ]}
+                  />
+                ) : (
+                  <p className="py-3 text-sm text-fg-2">{prem ? String(prem.summary) : "Not checked"}</p>
+                )}
+              </div>
+              <div>
+                <h3 className="text-xs font-medium uppercase tracking-wide text-fg-3">Operator · Companies House</h3>
+                {matched ? (
+                  <KeyValue
+                    rows={[
+                      row("Company", `${String(ch?.company_name)} · ${String(ch?.company_status)}`),
+                      row("Company number", String(op?.company_number), op),
+                      row("Incorporated", day(String(ch?.incorporated), true), ch),
+                      row("SIC code", (ch?.sic_codes as string[] | undefined)?.join(", ") ?? "—", ch),
+                      row("Directors", off ? String(off.summary) : "—"),
+                      row("Control", reg ? (reg.parent_company ? `Controlled by ${String(reg.parent_company)}` : `${Number(reg.individual_controllers)} ${Number(reg.individual_controllers) === 1 ? "person" : "people"} with significant control`) : "—"),
+                    ]}
+                  />
+                ) : (
+                  <div className="py-3 text-sm text-fg-2" data-testid="operator-unmatched">
+                    <p className="first-letter:uppercase">{op ? String(op.summary) : "Not checked"}</p>
+                    {((op?.considered as Considered[] | undefined) ?? []).length > 0 && (
+                      <ul className="mt-3 space-y-1 text-xs text-fg-3">
+                        {(op?.considered as Considered[]).map((c) => (
+                          <li key={c.company_number} className="flex justify-between gap-3">
+                            <span className="truncate">{c.name}</span>
+                            <span className="shrink-0">{c.why}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <p className="mt-3 text-xs">Know the operator? Add its company number on the first step.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            {reg && (
+              <div data-testid="register-checks">
+                <h3 className="text-xs font-medium uppercase tracking-wide text-fg-3">Register checks</h3>
+                <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+                  {(reg.checks as RegisterCheck[]).map((c) => (
+                    <li key={c.check} className="flex items-start gap-2 text-sm">
+                      <Icon name={c.ok ? "check" : "alert"} size={14} className={cx("mt-1 shrink-0", c.ok ? "text-positive" : "text-warning")} />
+                      <span>
+                        <Num r={reg}>{c.check}</Num>
+                        {c.detail && <span className="block text-xs text-fg-3">{c.detail}</span>}
+                      </span>
+                    </li>
+                  ))}
+                  <li className="flex items-start gap-2 text-sm">
+                    <Icon name="lock" size={14} className="mt-1 shrink-0 text-fg-3" />
+                    <Num r={reg}>
+                      {Number(reg.charges_outstanding)} outstanding charge{Number(reg.charges_outstanding) === 1 ? "" : "s"} (secured debt)
+                    </Num>
+                  </li>
+                </ul>
+              </div>
+            )}
+            <p className="text-xs text-fg-3">Owner: {s.pub.owner}. Identity is from public registers; the figures on the next screens are our demo books, not this pub’s.</p>
           </div>
         )}
       </ProvPanel>
@@ -125,10 +193,10 @@ export function VerifyPanel({ s }: S) {
 }
 
 const SOURCE_ROWS: { tool: string; name: string; kind: string; icon: Parameters<typeof Icon>[0]["name"] }[] = [
-  { tool: "load_takings_history", name: "Till takings", kind: "Daily takings, generated for a pub of this profile", icon: "receipt" },
-  { tool: "load_stripe_test_charges", name: "Card payments", kind: "Takings seeded as Stripe test-mode charges", icon: "receipt" },
-  { tool: "load_bank_feed", name: "Bank feed", kind: "Open Banking format transactions", icon: "bank" },
-  { tool: "load_weather_history", name: "Weather history", kind: "Open-Meteo archive for N4", icon: "rain" },
+  { tool: "load_takings_history", name: "Till takings", kind: "Demo books · daily takings generated for a pub of this profile", icon: "receipt" },
+  { tool: "load_stripe_test_charges", name: "Card payments", kind: "Demo books · takings seeded as Stripe test-mode charges", icon: "receipt" },
+  { tool: "load_bank_feed", name: "Bank feed", kind: "Demo books · Open Banking-format transactions", icon: "bank" },
+  { tool: "load_weather_history", name: "Weather history", kind: "Open-Meteo archive at the demo books\u2019 site (N4)", icon: "rain" },
   { tool: "weekend_forecast", name: "Weekend forecast", kind: "What was forecast at the time", icon: "rain" },
   { tool: "load_match_and_duty_dates", name: "Match and duty dates", kind: "Fixtures and HMRC duty changes", icon: "calendar" },
   { tool: "check_real_weather_markets", name: "Polymarket", kind: "Read-only price check", icon: "layers" },
@@ -137,7 +205,7 @@ const SOURCE_ROWS: { tool: string; name: string; kind: string; icon: Parameters<
 export function SourcesPanel({ s }: S) {
   return (
     <div data-testid="panel-sources">
-      <Panel title="Data sources" actions={<span>Read-only access</span>} bodyClassName="p-0">
+      <Panel title="Data sources" actions={<span>Read-only access · books are demo data from test integrations</span>} bodyClassName="p-0">
         <ul className="divide-y divide-line">
           {SOURCE_ROWS.map((row) => {
             const r = tool(s, row.tool);

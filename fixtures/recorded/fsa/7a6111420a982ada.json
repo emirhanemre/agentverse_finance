@@ -1,0 +1,62 @@
+{
+ "data": {
+  "establishments": [
+   {
+    "AddressLine1": "Ye Olde Cheshire Cheese Public House",
+    "AddressLine2": "145 Fleet Street",
+    "AddressLine3": "London",
+    "AddressLine4": "",
+    "BusinessName": "Ye Olde Cheshire Cheese",
+    "BusinessType": "Pub/bar/nightclub",
+    "BusinessTypeID": 7843,
+    "ChangesByServerID": 0,
+    "Distance": null,
+    "FHRSID": 293911,
+    "LocalAuthorityBusinessID": "PI/000005961",
+    "LocalAuthorityCode": "508",
+    "LocalAuthorityEmailAddress": "publicprotection@cityoflondon.gov.uk",
+    "LocalAuthorityName": "City of London Corporation",
+    "LocalAuthorityWebSite": "http://www.cityoflondon.gov.uk/Corporation/homepage.htm",
+    "NewRatingPending": false,
+    "Phone": "",
+    "PostCode": "EC4A 2BU",
+    "RatingDate": "2025-01-22T00:00:00",
+    "RatingKey": "fhrs_5_en-gb",
+    "RatingValue": "5",
+    "RightToReply": "",
+    "SchemeType": "FHRS",
+    "geocode": {
+     "latitude": "51.514392",
+     "longitude": "-0.107388"
+    },
+    "scores": {
+     "ConfidenceInManagement": 0,
+     "Hygiene": 0,
+     "Structural": 5
+    }
+   }
+  ],
+  "links": [
+   {
+    "href": "https://api.ratings.food.gov.uk/establishments?pagesize=10&address=ec4a+2bu&businesstypeid=7843",
+    "rel": "self"
+   }
+  ],
+  "meta": {
+   "dataSource": "ElasticSearch",
+   "extractDate": "2026-11-08T11:49:06.5244782+00:00",
+   "itemCount": 1,
+   "pageNumber": 1,
+   "pageSize": 10,
+   "returncode": "OK",
+   "totalCount": 1,
+   "totalPages": 1
+  }
+ },
+ "fetched_at": "2026-11-08T11:49:06Z",
+ "fetched_ts": 1794138546.4845,
+ "key": "address=EC4A 2BU&businessTypeId=7843&pageSize=10",
+ "licence": "Open Government Licence v3.0 \u00b7 Food Standards Agency",
+ "source": "Food Standards Agency food hygiene ratings",
+ "url": "https://api.ratings.food.gov.uk/Establishments?address=EC4A 2BU&businessTypeId=7843&pageSize=10"
+}

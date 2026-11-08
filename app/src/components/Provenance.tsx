@@ -117,6 +117,7 @@ const CACHED = "REAL · CACHED";
 const KIND: Record<string, { label: string; glyph: GlyphName }> = {
   REAL: { label: "Live", glyph: "solid" },
   [CACHED]: { label: "Cached", glyph: "hollow" },
+  "ON FILE": { label: "On file", glyph: "hollow" },
   SYNTHETIC: { label: "Modelled", glyph: "dashed" },
   "TEST MODE": { label: "Test mode", glyph: "square" },
   PAPER: { label: "Paper", glyph: "square-dashed" },

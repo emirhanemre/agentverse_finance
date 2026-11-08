@@ -1,0 +1,98 @@
+{
+ "data": {
+  "etag": "52bc902852ff96def631a66079bad601541ffbe5",
+  "items": [
+   {
+    "charge_code": "057709530002",
+    "charge_number": 2,
+    "classification": {
+     "description": "A registered charge",
+     "type": "charge-description"
+    },
+    "created_on": "2024-09-12",
+    "delivered_on": "2024-09-13",
+    "etag": "65f996301bacd1fe8e27713239771b97104efd79",
+    "links": {
+     "self": "/company/05770953/charges/jL8O1eLr9FDxadwRibz0LmyBeDQ"
+    },
+    "particulars": {
+     "chargor_acting_as_bare_trustee": true,
+     "contains_negative_pledge": true,
+     "description": "The faltering fullback, public house, perth road, N4 3HB registered at hm land registry under title number MX445843.",
+     "type": "brief-description"
+    },
+    "persons_entitled": [
+     {
+      "name": "Michael Fitzsimons"
+     },
+     {
+      "name": "Catherine Teresa Fitzsimons"
+     }
+    ],
+    "status": "outstanding",
+    "transactions": [
+     {
+      "delivered_on": "2024-09-13",
+      "filing_type": "create-charge-with-deed",
+      "links": {
+       "filing": "/company/05770953/filing-history/MzQzNTU5OTk3NWFkaXF6a2N4"
+      }
+     }
+    ]
+   },
+   {
+    "charge_code": "057709530001",
+    "charge_number": 1,
+    "classification": {
+     "description": "A registered charge",
+     "type": "charge-description"
+    },
+    "created_on": "2021-04-29",
+    "delivered_on": "2021-05-19",
+    "etag": "0c044c7f818e35e80534c295d8ea863a5e3e3129",
+    "links": {
+     "self": "/company/05770953/charges/wPOHb8al8qQ8JmR68rg90jWbCEg"
+    },
+    "particulars": {
+     "contains_fixed_charge": true,
+     "contains_floating_charge": true,
+     "contains_negative_pledge": true,
+     "floating_charge_covers_all": true
+    },
+    "persons_entitled": [
+     {
+      "name": "Barclays Security Trustee Limited"
+     }
+    ],
+    "satisfied_on": "2024-01-23",
+    "status": "fully-satisfied",
+    "transactions": [
+     {
+      "delivered_on": "2021-05-19",
+      "filing_type": "create-charge-with-deed",
+      "links": {
+       "filing": "/company/05770953/filing-history/MzMwMTUwNTM3MGFkaXF6a2N4"
+      }
+     },
+     {
+      "delivered_on": "2024-01-23",
+      "filing_type": "charge-satisfaction",
+      "links": {
+       "filing": "/company/05770953/filing-history/MzQwODU0NTIwNGFkaXF6a2N4"
+      }
+     }
+    ]
+   }
+  ],
+  "part_satisfied_count": 0,
+  "satisfied_count": 1,
+  "total_count": 2,
+  "unfiltered_count": 2
+ },
+ "fetched_at": "2026-11-08T11:49:05Z",
+ "fetched_ts": 1794138545.7293718,
+ "key": "/company/05770953/charges",
+ "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
+ "source": "Companies House",
+ "url": "https://api.company-information.service.gov.uk/company/05770953/charges"
+}

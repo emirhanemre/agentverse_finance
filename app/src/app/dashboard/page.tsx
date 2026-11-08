@@ -6,7 +6,7 @@ import { NAV, Sidebar, TopBar, ViewSwitch, type NavId, type View } from "../../c
 import { SimpleView } from "../../components/dashboard/Simple";
 import { TodayView } from "../../components/dashboard/Overview";
 import { ActivityPage, BacktestPage, ProtectionsPage, RisksPage, SettingsPage, SourcesPage } from "../../components/dashboard/Pages";
-import { ModelChip } from "../../components/AgentRun";
+import { DemoBooksChip, ModelChip } from "../../components/AgentRun";
 import { Logo, Spinner } from "../../components/ui";
 
 const VIEW_KEY = "pubhedge.view";
@@ -58,6 +58,7 @@ export default function DashboardPage() {
               <Logo />
               <span className="h-4 w-px bg-line-strong" aria-hidden />
               <span className="font-sans text-sm font-normal text-fg-2">{s.pub.trading_name}</span>
+              <DemoBooksChip />
             </span>
           }
           right={<ViewSwitch view={view} onChange={setView} />}

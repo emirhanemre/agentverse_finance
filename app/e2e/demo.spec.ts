@@ -51,7 +51,7 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   await expect(page.getByTestId("audit-switch")).toHaveAttribute("aria-checked", "true");
   await page.getByTestId("panel-verify").getByTestId("badge").nth(1).click();
   await expect(page.getByTestId("receipt-drawer")).toContainText("hash");
-  await expect(page.getByTestId("receipt-drawer")).toContainText("companies_house");
+  await expect(page.getByTestId("receipt-drawer")).toContainText("find_premises");
   await page.keyboard.press("Escape");
   await expect(page.getByTestId("receipt-drawer")).toBeHidden();
   await page.keyboard.press("s");
