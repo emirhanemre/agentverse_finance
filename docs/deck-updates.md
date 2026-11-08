@@ -45,7 +45,8 @@ an Open Banking feed (demo: Stripe test mode plus a synthetic Open Banking feed)
 
 **6. How it works**
 
-- "in 60 seconds": measured live runs took **35–44 s** end to end (the recorded demo run: 42 s, 8 Nov 2026).
+- "in 60 seconds": measured live runs took **35–44 s** end to end (the recorded demo run: 42 s, 8 Nov 2026). One run in
+  about 8 hit the 60 s Argon timeout, so it took longer and fell back to template narration.
   Use: "in under a minute (about 40 s measured)."
 - Replace "Every 1°C below 20°C: −£340/day · R² = 0.74" with: "Each mm of weekend afternoon rain: −£116
   (95% CI −£128 to −£104) · R² 0.92 on held-out months, on synthetic takings."
@@ -107,7 +108,7 @@ shop pays 43% of their rent…" is unsourced: cut it or source it.
 |---|---|---|
 | Polymarket "live for UK users", "UK-legal", "Polymarket order" (3, 4, 8) | Polymarket geoblocks the UK (`/api/geoblock` returned `blocked: true, GB`). We only read public prices. | "Prices from public markets; execution on UK-licensed venues (not connected in the demo). Demo fills are paper." |
 | Toast / Square / Lightspeed (4, 6, 10) | No POS integration exists. The demo uses Stripe test charges and synthetic data. | "Reads a till export or card processor (demo: Stripe test mode)." |
-| "in 60 seconds" (6) | Measured live: 35–44 s over four runs. Argon latency varies (4–40 s per call). | "Under a minute (about 40 s measured live)." Replay mode is available if wifi fails. |
+| "in 60 seconds" (6) | Measured live: 35–44 s over five timed runs. Argon latency varies (4–40 s per call); one run in about 8 hit the 60 s Argon timeout and finished with template narration. | "Under a minute (about 40 s measured live)." Replay mode is available if wifi fails. |
 | "50 UK pubs · 2022–2024 · Polymarket historical prices" (11) | 12 synthetic pubs; test window Nov 2024–Oct 2026; no London rain market exists, so prices are synthetic. | "12 synthetic pubs, real weather, synthetic contract prices with real fees." |
 | +£1,840 a pub-year, "saved" (11) | Ours is break-even (+£42, CI −£30 to +£146); hedging every weekend loses £1,514. | Use the real block above. |
 | "£11,000 lost to rain", "The Oak Tree" (2, 7) | Fictional. | Real pub, public identity only; modelled numbers labelled synthetic. |
