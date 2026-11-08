@@ -31,3 +31,34 @@ def profile(number: str) -> dict:
 
 def officers(number: str) -> dict:
     return _fetch(f"/company/{number}/officers")
+
+
+def psc(number: str) -> dict:
+    """Who controls the company. Only the kind is kept, and the name only for a corporate controller: an individual's
+    details never reach the cache or the recorded fixtures."""
+    path = f"/company/{number}/persons-with-significant-control"
+
+    def get():
+        items = _get(path).get("items", [])
+        return {"items": [{"kind": x.get("kind"), "ceased_on": x.get("ceased_on"),
+                           **({"name": x.get("name")} if "corporate" in (x.get("kind") or "") else {})} for x in items]}
+    return cache.fetch("companies_house", "psc:" + number, get, source="Companies House", url=BASE + path,
+                       licence=LICENCE, max_age_s=7 * 86400)
+
+
+def charges(number: str) -> dict:
+    return _fetch(f"/company/{number}/charges")
+
+
+def pubs_at(postcode: str) -> dict:
+    """Pubs and bars (SIC 56302, 56301) whose registered office is at this postcode. 404 means none."""
+    def get():
+        try:
+            return _get("/advanced-search/companies", {"sic_codes": "56302,56301", "location": postcode,
+                                                       "company_status": "active", "size": 20})
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code == 404:
+                return {"items": []}
+            raise
+    return cache.fetch("companies_house", "pubs_at:" + postcode, get, source="Companies House advanced search",
+                       url=BASE + "/advanced-search/companies", licence=LICENCE, max_age_s=7 * 86400)

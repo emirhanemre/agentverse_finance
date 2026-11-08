@@ -2,6 +2,8 @@
 the audit log and results. Paper trading only: no real order is ever placed."""
 import asyncio
 import json
+import os
+import re
 import threading
 import time
 import uuid
@@ -18,11 +20,13 @@ from . import audit, config
 from . import engines as E
 from .chain import run_chain
 from .config import DATA, RUNS
-from .tools import OFFER, PUB, SCENARIO, SYN, binding, current_ledger, pick_offer, quote_offer, settle
+from .tools import OFFER, SCENARIO, binding, current_ledger, identity, pick_offer, quote_offer, settle, syn
 
 config.load_env()
 app = FastAPI(title="Pub Hedge agents")
-app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+# PUBHEDGE_APP_ORIGIN: the app's origin when it runs on another port than 3000
+app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000", "http://127.0.0.1:3000",
+                                                  *filter(None, [os.environ.get("PUBHEDGE_APP_ORIGIN")])],
                    allow_methods=["*"], allow_headers=["*"])
 DEMO_FIXTURE = RUNS / "demo-run.json"
 # One decision at a time: approve, reject, expiry and limit re-checks read the ledger and then write, so two
@@ -91,10 +95,23 @@ def _sse(obj) -> str:
     return f"data: {json.dumps(obj, default=str)}\n\n"
 
 
+POSTCODE = re.compile(r"^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$", re.I)
+COMPANY_NO = re.compile(r"^(\d{1,8}|[A-Z]{2}\d{6})$", re.I)
+
+
 @app.get("/api/runs/stream")
-async def stream(mode: str = "scenario", speed: float = 4.0):
+async def stream(mode: str = "scenario", speed: float = 4.0, pub_name: str = "", postcode: str = "",
+                 company_number: str = "", owner: str = ""):
     if mode not in ("live", "scenario", "replay"):
         raise HTTPException(400, "mode must be live, scenario or replay")
+    pub_name, postcode, company_number, owner = (x.strip()[:80] for x in (pub_name, postcode, company_number, owner))
+    if postcode and not POSTCODE.match(postcode):
+        raise HTTPException(400, "postcode must be a full UK postcode")
+    if company_number and not COMPANY_NO.match(company_number):
+        raise HTTPException(400, "company number must be 8 characters, like 05770953 or SC123456")
+    if company_number.isdigit():
+        company_number = company_number.zfill(8)
+    pub = identity(pub_name, postcode, company_number, owner)
     q: asyncio.Queue = asyncio.Queue()
 
     async def produce():
@@ -107,7 +124,7 @@ async def stream(mode: str = "scenario", speed: float = 4.0):
                 def emit(e):
                     events.append(e)
                     q.put_nowait(e)
-                await run_chain(mode, emit, get_limits())
+                await run_chain(mode, emit, get_limits(), pub=pub)
                 record_fixture(events)
         except Exception as exc:  # surface, never hang the stream
             q.put_nowait({"type": "error", "message": f"{type(exc).__name__}: {exc}"[:300]})
@@ -204,6 +221,7 @@ def state():
     with _decide:
         _expire_due()
     run = latest_run()
+    pub = (json.loads(run["summary"] or "{}").get("pub") if run else None) or identity()
     bt = json.loads((DATA / "results" / "backtest.json").read_text())
     ch_path = DATA / "results" / "challenge-summary.json"
     props = [dict(r) for r in audit.db().execute("SELECT * FROM proposals ORDER BY created DESC LIMIT 20").fetchall()]
@@ -214,7 +232,7 @@ def state():
             p["market"]["verdict"] = {"market_id": p["market"]["market_id"],
                                       **E.check_limits(p["cost_pence"], p["market"]["market_id"], lim, led)}
     return {
-        "pub": {**PUB, "identity_badge": "REAL", "financials_label": SYN, "owner": "Owner (demo)"},
+        "pub": {**pub, "identity_badge": "REAL", "financials_label": syn(pub["trading_name"])},
         "scenario": SCENARIO,
         "run": ({**run, "summary": json.loads(run["summary"] or "{}")} if run else None),
         "tools": results_for(run) if run else {},

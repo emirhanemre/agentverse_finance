@@ -39,7 +39,12 @@ type Step = {
 type Rationale = { model: string; text: string; badge: string; grounding_ok: boolean; receipt_id: string };
 type Phase = "idle" | "running" | "done" | "error";
 
-export default function AgentRun({ title, onDone }: { title: string; onDone?: (runId: string) => void }) {
+export type RunPub = { pubName: string; postcode: string; companyNumber?: string; owner?: string };
+
+// Steps that run on the demo books, whatever pub was verified.
+const DEMO_BOOKS = new Set(["ingest", "risk", "pricer", "monitor"]);
+
+export default function AgentRun({ title, onDone, pub }: { title: string; onDone?: (runId: string) => void; pub?: RunPub }) {
   const [mode, setMode] = useState<RunMode>("scenario");
   const [phase, setPhase] = useState<Phase>("idle");
   const [runId, setRunId] = useState("");
@@ -69,7 +74,14 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
     setError("");
     setRunId("");
     setElapsed(0);
-    const src = new EventSource(`${API}/api/runs/stream?mode=${mode}&speed=4`);
+    const q = new URLSearchParams({ mode, speed: "4" });
+    if (pub) {
+      q.set("pub_name", pub.pubName.trim());
+      q.set("postcode", pub.postcode.trim());
+      if (pub.companyNumber?.trim()) q.set("company_number", pub.companyNumber.trim());
+      if (pub.owner?.trim()) q.set("owner", pub.owner.trim());
+    }
+    const src = new EventSource(`${API}/api/runs/stream?${q}`);
     es.current = src;
     let finished = false;
     const patch = (step: string, f: (s: Step) => Step) =>
@@ -202,6 +214,7 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
                   {s.state === "active" && <span className="text-fg-3">…</span>}
                 </span>
                 {s.model && <ModelChip model={s.model} />}
+                {DEMO_BOOKS.has(s.step) && s.state !== "pending" && <DemoBooksChip />}
                 {s.state === "done" && (
                   <span className="ml-auto flex items-center gap-2 text-xs text-fg-3">
                     {s.tools.length} calls · {((s.ms ?? 0) / 1000).toFixed(1)}s
@@ -230,6 +243,12 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
                   ))}
                 </ul>
               )}
+              {s.step === "ingest" && s.state !== "pending" && (
+                <p className="ml-6 mt-2 text-xs text-fg-3" data-testid="demo-books-note">
+                  Takings, card payments and the bank feed are demo books from our test integrations (Stripe test mode, an Open
+                  Banking-format feed), not this pub’s accounts. From here on, every figure is worked out from them. Weather and match dates are real.
+                </p>
+              )}
               {s.narration && (
                 <div className="ml-6 mt-2 flex items-start gap-3 text-sm text-fg">
                   <p className="flex-1">{s.narration}</p>
@@ -255,6 +274,19 @@ export default function AgentRun({ title, onDone }: { title: string; onDone?: (r
 
       {phase === "error" && <p className="border-t border-line px-6 py-3 text-sm text-negative">{error}</p>}
     </div>
+  );
+}
+
+/** Marks a step whose figures come from the demo books, not the verified pub. */
+export function DemoBooksChip() {
+  return (
+    <span
+      data-testid="demo-books-chip"
+      title="Demo books from our test integrations: modelled for a pub of this profile, not this pub's actual figures"
+      className="rounded-full border border-warning-edge bg-warning-wash px-2 py-px text-[11px] font-medium text-warning"
+    >
+      Demo books
+    </span>
   );
 }
 

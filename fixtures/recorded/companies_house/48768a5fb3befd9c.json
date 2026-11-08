@@ -1,0 +1,155 @@
+{
+ "data": {
+  "items": [
+   {
+    "address": {
+     "address_line_1": "Suffolk Parade",
+     "country": "United Kingdom",
+     "locality": "Cheltenham",
+     "postal_code": "GL50 2AB",
+     "premises": "10-11"
+    },
+    "address_snippet": "10-11 Suffolk Parade, Cheltenham, United Kingdom, GL50 2AB",
+    "company_number": "02242887",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "1988-04-11",
+    "description": "02242887 - Incorporated on 11 April 1988",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/02242887"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE LAMB LIMITED"
+   },
+   {
+    "address": {
+     "address_line_1": "5 Eastern Way",
+     "country": "England",
+     "locality": "Bury St. Edmunds",
+     "postal_code": "IP32 7AB",
+     "premises": "Stephen M Rout & Company Menta Business Centre"
+    },
+    "address_snippet": "Stephen M Rout & Company Menta Business Centre, 5 Eastern Way, Bury St. Edmunds, England, IP32 7AB",
+    "company_number": "16133289",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2024-12-12",
+    "description": "16133289 - Incorporated on 12 December 2024",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/16133289"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE LAMB AND FLAG COUNTRY PUB LTD"
+   },
+   {
+    "address": {
+     "address_line_1": "High Street",
+     "country": "England",
+     "locality": "Dudley",
+     "postal_code": "DY1 1QT",
+     "premises": "Kings Chambers Queens Cross",
+     "region": "West Midlands"
+    },
+    "address_snippet": "Kings Chambers Queens Cross, High Street, Dudley, West Midlands, England, DY1 1QT",
+    "company_number": "10575190",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2017-01-20",
+    "description": "10575190 - Incorporated on 20 January 2017",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/10575190"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE LAMB & FLAG (TCB) LIMITED"
+   },
+   {
+    "address": {
+     "address_line_1": "High Street",
+     "country": "England",
+     "locality": "Dudley",
+     "postal_code": "DY1 1QT",
+     "premises": "Kings Chambers Queens Cross",
+     "region": "West Midlands"
+    },
+    "address_snippet": "Kings Chambers Queens Cross, High Street, Dudley, West Midlands, England, DY1 1QT",
+    "company_number": "10575136",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2017-01-20",
+    "description": "10575136 - Incorporated on 20 January 2017",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/10575136"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE LAMB & FLAG (WORCESTER) LIMITED"
+   },
+   {
+    "address": {
+     "address_line_1": "Sawley Road",
+     "address_line_2": "Miles Platting",
+     "country": "United Kingdom",
+     "locality": "Manchester",
+     "postal_code": "M40 8BB",
+     "premises": "Unit 22"
+    },
+    "address_snippet": "Unit 22 Sawley Road, Miles Platting, Manchester, United Kingdom, M40 8BB",
+    "company_number": "10689185",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2017-03-24",
+    "description": "10689185 - Incorporated on 24 March 2017",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/10689185"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE LAMB BASINGSTOKE LTD"
+   }
+  ],
+  "items_per_page": 5,
+  "kind": "search#companies",
+  "page_number": 1,
+  "start_index": 0,
+  "total_results": 10000
+ },
+ "fetched_at": "2026-11-08T11:49:07Z",
+ "fetched_ts": 1794138547.262816,
+ "key": "/search/companies?items_per_page=5&q=The Lamb",
+ "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
+ "source": "Companies House",
+ "url": "https://api.company-information.service.gov.uk/search/companies"
+}

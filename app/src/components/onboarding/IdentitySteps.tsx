@@ -13,6 +13,7 @@ import { StepFooter, type Form } from "./Onboarding";
 type Nav = { onNext: () => void; onBack: () => void };
 
 const POSTCODE = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i;
+const COMPANY_NO = /^(\d{1,8}|[A-Z]{2}\d{6})$/i;
 
 export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; setForm: (f: Form) => void; s: AppState }) {
   const [touched, setTouched] = useState(false);
@@ -20,6 +21,7 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
     pubName: form.pubName.trim().length < 2 ? "Enter the name on your sign or licence." : "",
     postcode: !POSTCODE.test(form.postcode.trim()) ? "Enter a full UK postcode, like N4 3HB." : "",
     owner: form.owner.trim().length < 2 ? "Enter your name." : "",
+    companyNumber: form.companyNumber.trim() && !COMPANY_NO.test(form.companyNumber.trim()) ? "8 characters, like 05770953." : "",
   };
   const valid = Object.values(errors).every((e) => !e);
   const submit = () => {
@@ -27,7 +29,6 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
     if (valid) onNext();
   };
   const set = (k: keyof Form) => (v: string) => setForm({ ...form, [k]: v });
-  const differs = form.pubName.trim() !== s.pub.trading_name || form.postcode.trim().toUpperCase() !== s.pub.postcode;
 
   return (
     <div className="grid items-center gap-10 lg:min-h-[calc(100vh-15rem)] lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
@@ -50,15 +51,24 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
               <Field fog label="Postcode" value={form.postcode} onChange={(v) => set("postcode")(v.toUpperCase())} error={touched ? errors.postcode : ""} />
               <Field fog label="Your name" value={form.owner} onChange={set("owner")} error={touched ? errors.owner : ""} />
             </div>
+            <Field
+              fog
+              label="Company number (optional, for pubs run by a pub company)"
+              value={form.companyNumber}
+              onChange={(v) => set("companyNumber")(v.toUpperCase())}
+              error={touched ? errors.companyNumber : ""}
+            />
           </div>
         </ProvScope>
-        {differs && <p className="mt-3 text-sm text-[var(--color-day-ink)]">This demo is set up for {s.pub.trading_name}, {s.pub.postcode}. The agent will check that pub.</p>}
+        <p className="mt-3 text-sm text-[var(--color-day-ink)]">
+          Any UK pub. The agent checks it on the public registers; the books it then works from are our demo books.
+        </p>
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <Button variant="primary" type="submit">
             Look up my pub
             <Icon name="chevron-right" size={14} />
           </Button>
-          <span className="muted text-sm">Companies House and postcodes.io fill in the rest.</span>
+          <span className="muted text-sm">The food hygiene register and Companies House fill in the rest.</span>
         </div>
       </form>
 
@@ -161,10 +171,10 @@ function Field({
   );
 }
 
-export function RunStep({ ran, onRan, onNext, onBack }: Nav & { ran: boolean; onRan: () => void }) {
+export function RunStep({ form, ran, onRan, onNext, onBack }: Nav & { form: Form; ran: boolean; onRan: () => void }) {
   return (
     <div>
-      <AgentRun title="Pub Hedge agent" onDone={onRan} />
+      <AgentRun title="Pub Hedge agent" onDone={onRan} pub={form} />
       <StepFooter onBack={onBack} onNext={onNext} nextLabel="See what it found" disabled={!ran} hint={!ran ? "Run the agent to continue" : undefined} />
     </div>
   );

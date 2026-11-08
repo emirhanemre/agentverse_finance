@@ -1,0 +1,154 @@
+{
+ "data": {
+  "items": [
+   {
+    "address": {
+     "address_line_1": "Longnor",
+     "country": "United Kingdom",
+     "locality": "Buxton",
+     "postal_code": "SK17 0NS",
+     "premises": "Ye Olde Cheshire Cheese High Street"
+    },
+    "address_snippet": "Ye Olde Cheshire Cheese High Street, Longnor, Buxton, United Kingdom, SK17 0NS",
+    "company_number": "15081272",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2023-08-18",
+    "description": "15081272 - Incorporated on 18 August 2023",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/15081272"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "YE OLDE CHESHIRE CHEESE LIMITED"
+   },
+   {
+    "address": {
+     "address_line_1": "Church Meadow",
+     "address_line_2": "Long Ditton",
+     "locality": "Surrey",
+     "postal_code": "KT6 5EP",
+     "premises": "39"
+    },
+    "address_snippet": "39 Church Meadow, Long Ditton, Surrey, KT6 5EP",
+    "company_number": "00095432",
+    "company_status": "dissolved",
+    "company_type": "private-unlimited",
+    "date_of_cessation": "2016-12-20",
+    "date_of_creation": "1907-10-28",
+    "description": "00095432 - Dissolved on 20 December 2016",
+    "description_identifier": [
+     "dissolved-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/00095432"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "YE OLDE CHESHIRE CHEESE"
+   },
+   {
+    "address": {
+     "address_line_1": "Northenden Road",
+     "locality": "Sale",
+     "postal_code": "M33 2DH",
+     "premises": "Stamford House",
+     "region": "Cheshire"
+    },
+    "address_snippet": "Stamford House, Northenden Road, Sale, Cheshire, M33 2DH",
+    "company_number": "07176180",
+    "company_status": "dissolved",
+    "company_type": "ltd",
+    "date_of_cessation": "2026-03-19",
+    "date_of_creation": "2010-03-03",
+    "description": "07176180 - Dissolved on 19 March 2026",
+    "description_identifier": [
+     "dissolved-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/07176180"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "YE OLDE CHESHIRE CHEESE (CASTLETON) LTD"
+   },
+   {
+    "address": {
+     "address_line_1": "Nantwich Road",
+     "address_line_2": "Crewe",
+     "locality": "Cheshire",
+     "postal_code": "CW2 6BA",
+     "premises": "121"
+    },
+    "address_snippet": "121 Nantwich Road, Crewe, Cheshire, CW2 6BA",
+    "company_number": "04930321",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2003-10-13",
+    "description": "04930321 - Incorporated on 13 October 2003",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/04930321"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE CHESHIRE CAT CHEESE COMPANY LIMITED"
+   },
+   {
+    "address": {
+     "address_line_1": "Hope",
+     "country": "England",
+     "locality": "Hope Valley",
+     "postal_code": "S33 6ZF",
+     "premises": "The Cheshire Cheese Inn Edale Road"
+    },
+    "address_snippet": "The Cheshire Cheese Inn Edale Road, Hope, Hope Valley, England, S33 6ZF",
+    "company_number": "07432623",
+    "company_status": "active",
+    "company_type": "ltd",
+    "date_of_creation": "2010-11-08",
+    "description": "07432623 - Incorporated on 8 November 2010",
+    "description_identifier": [
+     "incorporated-on"
+    ],
+    "kind": "searchresults#company",
+    "links": {
+     "self": "/company/07432623"
+    },
+    "matches": {
+     "snippet": []
+    },
+    "snippet": "",
+    "title": "THE CHESHIRE CHEESE LIMITED"
+   }
+  ],
+  "items_per_page": 5,
+  "kind": "search#companies",
+  "page_number": 1,
+  "start_index": 0,
+  "total_results": 10000
+ },
+ "fetched_at": "2026-11-08T11:49:06Z",
+ "fetched_ts": 1794138546.78201,
+ "key": "/search/companies?items_per_page=5&q=Ye Olde Cheshire Cheese",
+ "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
+ "source": "Companies House",
+ "url": "https://api.company-information.service.gov.uk/search/companies"
+}

@@ -1,10 +1,12 @@
 """Agent tools. Each call is memoised per run, written to the audit log and streamed to
 the UI. Tools do all the maths; the model only chooses calls and narrates."""
+import difflib
 import functools
 import hashlib
 import importlib.util
 import json
 import math
+import re
 import time
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -14,6 +16,7 @@ import httpx
 from . import audit, cache
 from . import engines as E
 from .clients import companies_house as ch
+from .clients import fsa
 from .clients import metoffice as mo
 from .clients import openmeteo as om
 from .clients import polymarket as pm
@@ -24,7 +27,50 @@ PUB = {"trading_name": "The Faltering Fullback", "company_number": "05770953", "
 SCENARIO = {"name": "August bank holiday 2026", "decision_date": "2026-08-27", "weekend": ["2026-08-29", "2026-08-30"],
             # illustrative: extra cash the owner keeps in the current account that week
             "extra_buffer_gbp": 11360.0}
-SYN = "SYNTHETIC: modelled for a pub of this profile, not The Faltering Fullback's actual figures"
+
+
+def syn(name: str = PUB["trading_name"]) -> str:
+    return (f"SYNTHETIC: demo books from our test integrations (Stripe test mode, an Open Banking-format bank feed), "
+            f"modelled for a pub of this profile, not {name}'s actual figures")
+
+
+SYN = syn()
+
+
+def _pc(postcode) -> str:
+    """'n43hb' -> 'N4 3HB'."""
+    t = re.sub(r"\s+", "", str(postcode or "")).upper()
+    return f"{t[:-3]} {t[-3:]}" if len(t) > 3 else t
+
+
+def _norm(name) -> str:
+    t = re.sub(r"[^a-z0-9 ]", " ", str(name or "").lower().replace("&", " and "))
+    t = re.sub(r"\b(the|ye|limited|ltd|plc|llp)\b", " ", t)
+    return " ".join(t.split())
+
+
+def _sim(a, b) -> float:
+    """Name likeness 0..1: 1 when one name contains the other ("Churchill Arms" in "The Churchill Arms")."""
+    a, b = _norm(a), _norm(b)
+    if not a or not b:
+        return 0.0
+    if a in b or b in a:
+        return 1.0
+    return difflib.SequenceMatcher(None, a, b).ratio()
+
+
+def identity(pub_name=None, postcode=None, company_number=None, owner=None) -> dict:
+    """The pub this run verifies. Only the verifier and ingest steps read it; everything after them runs on the demo
+    books (PUB), whatever pub is entered."""
+    name = (pub_name or "").strip() or PUB["trading_name"]
+    pc = _pc(postcode) if postcode else PUB["postcode"]
+    demo = _norm(name) == _norm(PUB["trading_name"]) and pc == PUB["postcode"]
+    base = ({k: PUB[k] for k in ("trading_name", "postcode", "address", "lat", "lon")} if demo
+            else {"trading_name": name, "postcode": pc, "address": pc, "lat": None, "lon": None})
+    num = (company_number or "").strip().upper() or (PUB["company_number"] if demo else None)
+    return {**base, "entered_name": name, "entered_postcode": pc, "company_number": num, "number_given": bool(company_number or demo),
+            "owner": (owner or "").strip() or "Owner (demo)", "is_demo": demo}
+
 # A match-day promotion the owner can run at a fixed cost: the hedge pays exactly when the offer does.
 OFFER = {"event_slug": "unl-eng-hrv-2026-11-12", "market_question": "Will Croatia win on 2026-11-12?",
          "fixture": "England v Croatia", "competition": "UEFA Nations League", "venue": "Wembley",
@@ -173,8 +219,9 @@ def backtest_module():
 
 
 class Run:
-    def __init__(self, run_id: str, mode: str, emit, limits: dict):
+    def __init__(self, run_id: str, mode: str, emit, limits: dict, pub: dict = None):
         self.run_id, self.mode, self.emit, self.limits = run_id, mode, emit, limits
+        self.pub = pub or identity()  # who is verified; the books stay the demo pub's
         self.step = "setup"
         self.memo: dict = {}
         self.outputs: list = []  # every tool result, for the grounding check
@@ -221,6 +268,9 @@ def _short(args) -> str:
 def make_tools(run: Run) -> dict:
     """Returns {step: [tool functions]}. Function names and docstrings are what the model sees."""
 
+    def books() -> str:  # read late: the verifier may rename the pub from the hygiene register
+        return syn(run.pub["trading_name"])
+
     def tool(fn):
         @functools.wraps(fn)
         def wrapped(**kwargs):
@@ -229,13 +279,107 @@ def make_tools(run: Run) -> dict:
 
     # ---------- 1. verifier ----------
     @tool
+    def find_premises(pub_name: str, postcode: str) -> dict:
+        """Find the pub on the Food Standards Agency hygiene register: premises name, address, type and rating."""
+        pc = _pc(postcode)
+        env = fsa.establishments(address=pc, businessTypeId=fsa.PUB_TYPE)
+        cands = [e for e in env["data"].get("establishments", []) if _pc(e.get("PostCode")) == pc]
+        best = max(cands, key=lambda e: _sim(pub_name, e["BusinessName"]), default=None)
+        if not best or _sim(pub_name, best["BusinessName"]) < 0.6:
+            # not listed as a pub at that postcode: any business of that name in the postcode district
+            env = fsa.establishments(name=pub_name, address=pc.split(" ")[0])
+            cands = env["data"].get("establishments", [])
+            best = max(cands, key=lambda e: _sim(pub_name, e["BusinessName"]), default=None)
+            best = best if best and _sim(pub_name, best["BusinessName"]) >= 0.6 else None
+        src = {"badge": env["badge"], "source": env["source"], "licence": env["licence"], "fetched_at": env.get("fetched_at")}
+        if not best:
+            return {**src, "found": False, "summary": f"no premises called {pub_name} near {pc} on the hygiene register"}
+        skip = {"public house", _norm(best["BusinessName"])}  # line 1 is often just "PUBLIC HOUSE" or the pub's name
+        addr = ", ".join(x for x in (best.get(f"AddressLine{i}") for i in range(1, 5)) if x and _norm(x) not in skip)
+        geo = best.get("geocode") or {}
+        lat, lon = (float(geo["latitude"]), float(geo["longitude"])) if geo.get("latitude") else (None, None)
+        rating = str(best.get("RatingValue") or "")
+        rated = f"hygiene rating {rating}/5" if rating.isdigit() else f"hygiene: {rating or 'not rated'}"
+        when = (best.get("RatingDate") or "")[:10] or None
+        run.pub.update(trading_name=best["BusinessName"], address=f"{addr}, {_pc(best.get('PostCode'))}",
+                       postcode=_pc(best.get("PostCode")) or pc, **({"lat": lat, "lon": lon} if lat else {}))
+        return {**src, "found": True, "business_name": best["BusinessName"], "business_type": best.get("BusinessType"),
+                "address": addr, "postcode": _pc(best.get("PostCode")), "local_authority": best.get("LocalAuthorityName"),
+                "rating": rating, "rating_date": when, "scheme": best.get("SchemeType"), "lat": lat, "lon": lon,
+                "fhrs_id": best.get("FHRSID"),
+                "url": f"https://ratings.food.gov.uk/business/{best.get('FHRSID')}",
+                "summary": f"{best['BusinessName']} · {best.get('BusinessType')} · {rated}" + (f" ({when})" if when else "")}
+
+    @tool
+    def find_operator(pub_name: str, postcode: str) -> dict:
+        """Find the company that runs the pub on Companies House: a company number on file, a pub or bar company
+        registered at the premises postcode, or a company of the pub's name registered there."""
+        pc = _pc(postcode)
+        prem = find_premises(pub_name=pub_name, postcode=postcode)
+        names = {pub_name, prem.get("business_name") or pub_name}
+        if run.pub.get("number_given") and run.pub.get("company_number"):
+            how = "the demo pub's company number" if run.pub["is_demo"] else "the company number the owner gave"
+            return {"badge": "ON FILE", "source": "Companies House", "matched": True, "company_number": run.pub["company_number"],
+                    "method": how, "considered": [], "summary": f"company {run.pub['company_number']} · {how}"}
+        considered, pick, env = [], None, None
+        env = ch.pubs_at(pc)
+        here = []  # pub or bar companies whose registered office is the premises' postcode
+        for c in env["data"].get("items", []):
+            office = _pc((c.get("registered_office_address") or {}).get("postal_code"))
+            if office == pc:
+                here.append((c, max(_sim(n, c.get("company_name")) for n in names)))
+            else:
+                considered.append({"company_number": c["company_number"], "name": c.get("company_name"), "postcode": office,
+                                   "status": c.get("company_status"), "kept": False, "why": "registered at another postcode"})
+        named = [x for x in here if x[1] >= 0.6]
+        if len(here) == 1 or len(named) == 1:  # several unnamed companies at one address: don't guess
+            c, sc = here[0] if len(here) == 1 else named[0]
+            pick = (c, sc, "the only pub or bar company registered at the premises" if len(here) == 1
+                    else "the pub or bar company at the premises that carries the pub's name")
+        for c, _ in here:
+            kept = pick is not None and c is pick[0]
+            considered.insert(0, {"company_number": c["company_number"], "name": c.get("company_name"), "postcode": pc,
+                                  "status": c.get("company_status"), "kept": kept,
+                                  "why": "chosen" if kept else f"one of {len(here)} pub companies at this postcode"})
+        if not pick:
+            for n in names:
+                env = ch.search(n)
+                for c in env["data"].get("items", []):
+                    snip = (c.get("address_snippet") or "").upper()
+                    s_ = _sim(n, c.get("title"))
+                    at = pc in snip
+                    near = bool(re.search(rf"\b{pc.split(' ')[0]} \d", snip))
+                    active = c.get("company_status") == "active"
+                    keep = active and s_ >= 0.6 and (at or near)
+                    why = ("dissolved" if not active else "name doesn't match" if s_ < 0.6
+                           else "registered elsewhere" if not (at or near) else "name and address match")
+                    if c["company_number"] not in {x["company_number"] for x in considered}:
+                        considered.append({"company_number": c["company_number"], "name": c.get("title"),
+                                           "status": c.get("company_status"), "address": c.get("address_snippet"),
+                                           "kept": keep, "why": why})
+                    if keep and (pick is None or s_ + at > pick[1]):
+                        pick = ({"company_number": c["company_number"], "company_name": c.get("title")}, s_ + at,
+                                f"a company of the pub's name registered {'at the premises' if at else 'nearby'}")
+        src = {"badge": env["badge"], "source": env["source"], "licence": env["licence"], "fetched_at": env.get("fetched_at")}
+        if not pick:
+            why = (f"{len(here)} pub companies are registered at {pc} and none carries the pub's name, so it doesn't guess"
+                   if len(here) > 1 else f"no company at {pc} runs it on the register ({len(considered)} considered): likely "
+                   "a managed or tied house, or registered elsewhere")
+            return {**src, "matched": False, "company_number": None, "considered": considered[:6], "summary": why}
+        c, _, how = pick
+        run.pub["company_number"] = c["company_number"]
+        return {**src, "matched": True, "company_number": c["company_number"], "company_name": c.get("company_name"),
+                "method": how, "considered": considered[:6],
+                "summary": f"{c.get('company_name')} ({c['company_number']}) · {how}"}
+
+    @tool
     def companies_house_profile(company_number: str) -> dict:
         """Fetch the public Companies House profile for a company number."""
         env = ch.profile(company_number)
         d = env["data"]
         ok = d.get("company_status") == "active" and "56302" in (d.get("sic_codes") or [])
         return {"badge": env["badge"], "source": env["source"], "url": env["url"], "licence": env["licence"],
-                "fetched_at": env.get("fetched_at"), "company_name": d.get("company_name"),
+                "fetched_at": env.get("fetched_at"), "company_number": company_number, "company_name": d.get("company_name"),
                 "company_status": d.get("company_status"), "sic_codes": d.get("sic_codes"),
                 "incorporated": d.get("date_of_creation"),
                 "summary": f"{d.get('company_name')} · {d.get('company_status')} · SIC {','.join(d.get('sic_codes') or [])}",
@@ -253,6 +397,44 @@ def make_tools(run: Run) -> dict:
                 if active else "no active director · no match"}
 
     @tool
+    def register_checks(company_number: str) -> dict:
+        """The register's red flags for a company: filings on time, insolvency history, secured debt (charges) and who
+        controls it (a parent company means a managed or tied house)."""
+        prof = ch.profile(company_number)
+        d = prof["data"]
+
+        def optional(fn):  # Companies House answers 404 when a company has no PSCs or no charges
+            try:
+                return fn(company_number)["data"]
+            except httpx.HTTPStatusError as exc:
+                if exc.response.status_code == 404:
+                    return {"items": []}
+                raise
+        pscs = [x for x in optional(ch.psc).get("items", []) if not x.get("ceased_on")]
+        charges = optional(ch.charges).get("items", [])
+        parents = [x.get("name") for x in pscs if "corporate" in (x.get("kind") or "")]
+        people = sum(1 for x in pscs if "individual" in (x.get("kind") or ""))
+        outstanding = sum(1 for c in charges if c.get("status") in ("outstanding", "part-satisfied"))
+        acc = d.get("accounts") or {}
+        checks = [
+            {"check": "Accounts filed on time", "ok": not acc.get("overdue", False),
+             "detail": f"last made up to {(acc.get('last_accounts') or {}).get('made_up_to', '—')}"},
+            {"check": "Confirmation statement on time", "ok": not (d.get("confirmation_statement") or {}).get("overdue", False),
+             "detail": f"next due {(d.get('confirmation_statement') or {}).get('next_due', '—')}"},
+            {"check": "No insolvency history", "ok": not d.get("has_insolvency_history")},
+            {"check": "Registered office not in dispute", "ok": not d.get("registered_office_is_in_dispute")},
+        ]
+        controlled = (f"controlled by {parents[0]}" if parents
+                      else f"{people} individual{'s' if people != 1 else ''} with significant control" if people
+                      else "no controller listed")
+        return {"badge": prof["badge"], "source": prof["source"], "licence": prof["licence"], "fetched_at": prof.get("fetched_at"),
+                "checks": checks, "clear": sum(c["ok"] for c in checks), "of": len(checks),
+                "charges_total": len(charges), "charges_outstanding": outstanding,
+                "parent_company": parents[0] if parents else None, "individual_controllers": people,
+                "summary": f"{sum(c['ok'] for c in checks)}/{len(checks)} register checks clear · {outstanding} outstanding "
+                           f"charge{'s' if outstanding != 1 else ''} · {controlled}"}
+
+    @tool
     def locate_postcode(postcode: str) -> dict:
         """Look up a UK postcode on postcodes.io (ONS Postcode Directory, OGL)."""
         pc = postcode.replace(" ", "").upper()
@@ -261,6 +443,8 @@ def make_tools(run: Run) -> dict:
                           url=f"https://api.postcodes.io/postcodes/{pc}", licence="Open Government Licence v3.0 (ONS)",
                           max_age_s=30 * 86400)
         r = env["data"]["result"]
+        if run.pub.get("lat") is None:
+            run.pub.update(lat=r["latitude"], lon=r["longitude"])
         return {"badge": env["badge"], "source": env["source"], "licence": env["licence"],
                 "fetched_at": env.get("fetched_at"), "lat": r["latitude"], "lon": r["longitude"],
                 "district": r.get("admin_district"), "summary": f"{r.get('admin_district')} · {r['latitude']:.4f}, "
@@ -273,7 +457,7 @@ def make_tools(run: Run) -> dict:
         rows = E.panel()["demo"]
         tot = sum(float(r["takings_gbp"]) for r in rows)
         man = E.manifest()
-        return {"badge": "SYNTHETIC", "label": SYN, "generator": man["generator"], "seed": man["seed"],
+        return {"badge": "SYNTHETIC", "label": books(), "generator": man["generator"], "seed": man["seed"],
                 "days": len(rows), "first": rows[0]["date"], "last": rows[-1]["date"],
                 "total_gbp": round(tot, 2), "avg_day_gbp": round(tot / len(rows), 2),
                 "summary": f"{len(rows):,} trading days · avg £{tot / len(rows):,.0f}/day"}
@@ -296,7 +480,7 @@ def make_tools(run: Run) -> dict:
         for t in tx:
             by.setdefault(t["ProprietaryBankTransactionCode"], []).append(t["amount_pence"])
         pay = by.get("PAYROLL", [0])[-4:]
-        return {"badge": "SYNTHETIC", "label": SYN, "transactions": len(tx),
+        return {"badge": "SYNTHETIC", "label": books(), "transactions": len(tx),
                 "weekly_payroll_gbp": round(-sum(pay) / len(pay) / 100, 2),
                 "monthly_fixed_gbp": round(-(by["RENT"][-1] + by["UTILITIES"][-1] + by["OTHER"][-1]) / 100, 2),
                 "summary": f"{len(tx):,} transactions · payroll £{-sum(pay) / len(pay) / 100:,.0f}/wk"}
@@ -321,7 +505,7 @@ def make_tools(run: Run) -> dict:
         large = {}
         for i in res["large_transfer_ids"]:
             large[kinds[i]] = large.get(kinds[i], 0) + 1
-        return {"badge": "SYNTHETIC", "label": SYN, "engine": "pubhedge_core.transactions (the kit-scored engine)",
+        return {"badge": "SYNTHETIC", "label": books(), "engine": "pubhedge_core.transactions (the kit-scored engine)",
                 "window": [start, last], "transactions": len(rows), "payment_loops": len(res["loops"]),
                 "large_transfers": len(res["large_transfer_ids"]), "large_by_kind": large,
                 "summary": f"{len(res['loops'])} payment loops · {len(res['large_transfer_ids'])} transfers ≥£5,000"}
@@ -464,7 +648,7 @@ def make_tools(run: Run) -> dict:
                       if e["date"] <= fri.isoformat()]
             chk = E.payroll_check(int(opening * 100), events)
         bad = chk["first_failed_payroll"]
-        return {"badge": "SYNTHETIC", "label": SYN, "engine": "pubhedge_core.cashflow (the kit-scored engine)",
+        return {"badge": "SYNTHETIC", "label": books(), "engine": "pubhedge_core.cashflow (the kit-scored engine)",
                 "scenario": scenario, "opening_balance_gbp": opening, "opening_date": known,
                 "payroll_date": fri.isoformat(), "payroll_clears": bad is None,
                 "first_negative_date": chk["first_negative_date"],
@@ -571,7 +755,8 @@ def make_tools(run: Run) -> dict:
         return current_ledger(run.decision_date())
 
     return {
-        "verifier": [companies_house_profile, companies_house_officer_match, locate_postcode],
+        "verifier": [find_premises, find_operator, companies_house_profile, companies_house_officer_match, register_checks,
+                     locate_postcode],
         "ingest": [load_takings_history, load_stripe_test_charges, load_bank_feed, check_bank_feed, load_weather_history,
                    load_match_and_duty_dates],
         "risk": [fit_takings_model, weekend_rain_exposure],
