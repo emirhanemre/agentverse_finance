@@ -6,7 +6,6 @@
 It reads the till and the bank feed, works out what a wet weekend costs, warns you before Friday's payroll
 won't clear, and proposes small, capped weather cover. You approve every move. Execution is paper only.
 
-[![CI](https://github.com/emirhanemre/agentverse_finance/actions/workflows/ci.yml/badge.svg)](https://github.com/emirhanemre/agentverse_finance/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-14-000000?logo=nextdotjs&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-SSE-009688?logo=fastapi&logoColor=white)
