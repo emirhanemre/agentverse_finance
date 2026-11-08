@@ -11,6 +11,8 @@ export default defineConfig({
     viewport: { width: 1600, height: 1000 },
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
+    // PW_VIDEO=1 records the demo path (docs/demo-walkthrough.webm is made this way)
+    video: process.env.PW_VIDEO ? { mode: "on", size: { width: 1600, height: 1000 } } : "off",
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"], viewport: { width: 1600, height: 1000 } } }],
   webServer: {
