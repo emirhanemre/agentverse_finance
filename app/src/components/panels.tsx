@@ -1172,7 +1172,7 @@ export function OfferCard({ s, onChange, compact }: S & { onChange?: () => void;
         <p className="mt-2 text-md">
           {q.trigger}: {q.offer}, first {q.covers_cap} covers.
         </p>
-        <div className="mt-5">
+        <div className="mt-6">
           <div className="grid grid-flow-col divide-x divide-line" style={{ gridAutoColumns: "minmax(0, 1fr)" }}>
             <div className="pr-4">
               <div className="text-xs text-fg-3">Worst case</div>

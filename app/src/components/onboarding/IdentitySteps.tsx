@@ -44,7 +44,7 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
         <p className="muted mt-4 max-w-[30ch] text-lg">An AI risk officer for independent pubs. You approve every move.</p>
 
         <ProvScope value={s.pub.identity_badge}>
-          <div className="mt-8 grid gap-3">
+          <div className="mt-6 grid gap-3">
             <Field fog label="Pub name" value={form.pubName} onChange={set("pubName")} error={touched ? errors.pubName : ""} autoFocus />
             <div className="grid grid-cols-2 gap-3">
               <Field fog label="Postcode" value={form.postcode} onChange={(v) => set("postcode")(v.toUpperCase())} error={touched ? errors.postcode : ""} />
