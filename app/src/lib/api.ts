@@ -138,6 +138,7 @@ export type Backtest = {
 };
 
 export type AppState = {
+  demo_pub?: { trading_name: string; postcode: string; company_number: string };
   demo_tools?: AppState["tools"];
   pub: {
     trading_name: string;

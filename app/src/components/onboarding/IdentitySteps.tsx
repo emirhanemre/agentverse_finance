@@ -29,6 +29,12 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
     if (valid) onNext();
   };
   const set = (k: keyof Form) => (v: string) => setForm({ ...form, [k]: v });
+  const demo = s.demo_pub;
+  const useDemo = () => {
+    if (!demo) return;
+    setTouched(false);
+    setForm({ pubName: demo.trading_name, postcode: demo.postcode, owner: "Owner (demo)", companyNumber: demo.company_number });
+  };
 
   return (
     <div className="grid items-center gap-10 lg:min-h-[calc(100vh-15rem)] lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
@@ -44,8 +50,19 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
         </h1>
         <p className="muted mt-4 max-w-[30ch] text-lg">An AI risk officer for independent pubs. You approve every move.</p>
 
+        {demo && (
+          <button
+            type="button"
+            onClick={useDemo}
+            data-testid="use-demo-pub"
+            className="hit press mt-6 inline-flex h-8 items-center gap-2 rounded-pill bg-[color-mix(in_oklab,var(--color-fog)_62%,transparent)] px-3 text-sm text-[var(--color-day-ink)] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--color-day-ink)_14%,transparent)] backdrop-blur hover:bg-[color-mix(in_oklab,var(--color-fog)_82%,transparent)]"
+          >
+            <Icon name="spark" size={13} />
+            Use the demo pub: {demo.trading_name}
+          </button>
+        )}
         <ProvScope value={s.pub.identity_badge}>
-          <div className="mt-6 grid gap-3">
+          <div className="mt-3 grid gap-3">
             <Field fog label="Pub name" value={form.pubName} onChange={set("pubName")} error={touched ? errors.pubName : ""} autoFocus />
             <div className="grid grid-cols-2 gap-3">
               <Field fog label="Postcode (optional)" value={form.postcode} onChange={(v) => set("postcode")(v.toUpperCase())} error={touched ? errors.postcode : ""} />

@@ -109,20 +109,22 @@ Every source with its licence: [docs/data-sources.md](docs/data-sources.md).
 ## Architecture
 
 ```mermaid
-flowchart LR
-  UI["app/ · Next.js<br/>onboarding, Simple and Advanced views"]
-  API["services/agents · FastAPI + Google ADK"]
-  CORE["pubhedge_core/ · stdlib engines<br/>cashflow, sizing, limits, strategy"]
-  SRC["Companies House · Met Office · Open-Meteo<br/>Polymarket (read) · Stripe (test)"]
-  LOG[("SQLite audit log<br/>hash-chained, append-only")]
-  KIT["adapter.py · Finance Kit"]
-  API -- "SSE: steps, tool calls, receipts" --> UI
-  UI -- "approve · limits · offers" --> API
+flowchart TB
+  UI["<b>Web app</b><br/>Next.js<br/>Simple and Advanced views"]
+  API["<b>Agent API</b><br/>FastAPI + Google ADK<br/>five agents, streamed"]
+  CORE["<b>Engines</b><br/>pubhedge_core<br/>cashflow, sizing, limits"]
+  SRC["<b>Data sources</b><br/>Companies House<br/>Met Office, Open-Meteo<br/>Polymarket, Stripe"]
+  LOG[("<b>Audit log</b><br/>SQLite, hash-chained")]
+  KIT["<b>Finance Kit</b><br/>adapter.py"]
+  UI <--> API
   API --> CORE
   API --> SRC
   API --> LOG
   KIT --> CORE
 ```
+
+The app streams each agent step, tool call and receipt from the API over SSE, and sends approvals, limit
+changes and offers back.
 
 Five agents run in turn: **verifier → ingest → risk → pricer → monitor** (Gemini 3.8 Flash), then one hedge
 rationale (Gemini 4 Argon).
