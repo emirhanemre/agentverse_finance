@@ -19,7 +19,7 @@ const STEPS = [
   { title: "Review and approve", description: "Nothing is placed until you approve it. This demo trades on paper only." },
 ];
 
-export type Form = { pubName: string; postcode: string; owner: string };
+export type Form = { pubName: string; postcode: string; owner: string; companyNumber: string };
 
 export default function Onboarding() {
   const { state, error, refresh } = useAppState();
@@ -34,7 +34,7 @@ export default function Onboarding() {
   }, [step]);
 
   useEffect(() => {
-    if (state && !form) setForm({ pubName: state.pub.trading_name, postcode: state.pub.postcode, owner: state.pub.owner });
+    if (state && !form) setForm({ pubName: state.pub.entered_name ?? state.pub.trading_name, postcode: state.pub.entered_postcode ?? state.pub.postcode, owner: state.pub.owner, companyNumber: "" });
   }, [state, form]);
 
   const go = (i: number) => {
@@ -53,7 +53,7 @@ export default function Onboarding() {
     ) : (
       [
         <BusinessStep key="0" form={form} setForm={setForm} s={state} {...nav} />,
-        <RunStep key="1" ran={ran} onRan={() => { setRan(true); refresh(); }} {...nav} />,
+        <RunStep key="1" form={form} ran={ran} onRan={() => { setRan(true); refresh(); }} {...nav} />,
         <VerifyStep key="2" s={state} onEdit={() => go(0)} {...nav} />,
         <AnalysisStep key="3" s={state} {...nav} />,
         <ImpactStep key="4" s={state} {...nav} />,

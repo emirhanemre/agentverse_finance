@@ -14,16 +14,19 @@ import uuid
 
 from . import audit, grounding
 from .config import MODEL_FAST, MODEL_REASONING, REPO, SPEND_CAP_USD, offline
-from .tools import PUB, Run, make_tools
+from .tools import Run, identity, make_tools
 
 STEPS = [
     ("verifier", "Verifying the business", MODEL_FAST,
-     f"You verify a pub against public registers. Call companies_house_profile and companies_house_officer_match "
-     f"with company_number '{PUB['company_number']}', and locate_postcode with '{PUB['postcode']}'. Then write one "
-     "sentence on whether the business checks out. Quote only numbers that appear in tool results."),
-    ("ingest", "Reading takings, bank feed and history", MODEL_FAST,
-     "You load the pub's data. Call every tool once. Then write one sentence on what was loaded, saying which data "
-     "is synthetic. Quote only numbers that appear in tool results."),
+     "You verify a pub against public registers. Call find_premises and find_operator with pub_name '{pub_name}' and "
+     "postcode '{postcode}'. If find_operator returns a company_number, call companies_house_profile, "
+     "companies_house_officer_match and register_checks with it. Call locate_postcode with '{postcode}'. Then write two "
+     "sentences: what the hygiene register and Companies House say about this pub, and any red flags. If no company "
+     "was matched, say so plainly. Quote only numbers that appear in tool results."),
+    ("ingest", "Loading demo books from our integrations", MODEL_FAST,
+     "You load the demo books. Call every tool once. Then write one sentence on what was loaded. Say plainly that the "
+     "takings, card payments and bank feed are demo books from our test integrations, not this pub's own figures, "
+     "and that the weather and match dates are real. Quote only numbers that appear in tool results."),
     ("risk", "Finding what weather costs", MODEL_FAST,
      "You are the risk analyst. Call fit_takings_model and weekend_rain_exposure. Then write two sentences on the "
      "rain risk and how well the model fits held-out months. Quote only numbers from tool results; never compute."),
@@ -114,18 +117,19 @@ async def _argon_rationale(run: Run, facts: dict) -> tuple:
     return (resp.text or "").strip(), (u.prompt_token_count or 0), (u.candidates_token_count or 0) + (u.thoughts_token_count or 0)
 
 
-async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_models: bool = True) -> dict:
+async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_models: bool = True,
+                    pub: dict = None) -> dict:
     run_id = run_id or "run_" + uuid.uuid4().hex[:10]
-    run = Run(run_id, mode, emit, limits)
+    run = Run(run_id, mode, emit, limits, pub or identity())
     tools = make_tools(run)
     t0 = time.time()
     live = use_models and live_models_allowed()
     audit.db().execute("INSERT INTO runs (run_id, mode, started, status) VALUES (?,?,?,?)",
                        (run_id, mode, t0, "running"))
     audit.db().commit()
-    emit({"type": "run", "run_id": run_id, "mode": mode, "live_models": live})
+    emit({"type": "run", "run_id": run_id, "mode": mode, "live_models": live, "pub": run.pub})
     narr = {}
-    prev = f"Pub: {PUB['trading_name']}, {PUB['address']}. Mode: {mode}."
+    prev = f"Pub: {run.pub['entered_name']}, {run.pub['entered_postcode']}. Mode: {mode}."
     for step, label, model, instruction in STEPS:
         run.step, run.model = step, (model if live else "template")
         st = time.time()
@@ -135,7 +139,8 @@ async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_model
         if live:
             try:
                 text, tin, tout = await asyncio.wait_for(
-                    _run_agent(run, step, model, instruction, tools[step], prev), timeout=45)
+                    _run_agent(run, step, model, instruction.format(pub_name=run.pub['entered_name'],
+                                                                 postcode=run.pub['entered_postcode']), tools[step], prev), timeout=45)
                 add_spend(model, tin, tout)
             except Exception as exc:
                 text, badge = "", f"TEMPLATE · {type(exc).__name__}"
@@ -145,9 +150,13 @@ async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_model
             params = inspect.signature(fn).parameters
             kw = {}
             if "company_number" in params:
-                kw["company_number"] = PUB["company_number"]
+                if not run.pub.get("company_number"):
+                    continue  # no company matched: nothing to look up
+                kw["company_number"] = run.pub["company_number"]
+            if "pub_name" in params:
+                kw["pub_name"] = run.pub["entered_name"]
             if "postcode" in params:
-                kw["postcode"] = PUB["postcode"]
+                kw["postcode"] = run.pub["entered_postcode"]
             if "scenario" in params:
                 for sc in ("dry", "wet"):
                     fn(scenario=sc)
@@ -196,7 +205,7 @@ async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_model
     emit({"type": "rationale", "model": run.model, "text": g["text"], "badge": badge, "grounding_ok": g["ok"],
           "receipt_id": row["receipt_id"], "ms": int((time.time() - st) * 1000)})
     wall = int((time.time() - t0) * 1000)
-    summary = {"run_id": run_id, "mode": mode, "wall_ms": wall, "narration": narr, "live_models": live}
+    summary = {"run_id": run_id, "mode": mode, "wall_ms": wall, "narration": narr, "live_models": live, "pub": run.pub}
     audit.db().execute("UPDATE runs SET finished=?, wall_ms=?, status=?, summary=? WHERE run_id=?",
                        (time.time(), wall, "done", json.dumps(summary), run_id))
     audit.db().commit()

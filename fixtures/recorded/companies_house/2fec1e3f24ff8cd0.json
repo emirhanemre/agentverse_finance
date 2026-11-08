@@ -1,0 +1,16 @@
+{
+ "data": {
+  "items": [
+   {
+    "ceased_on": null,
+    "kind": "individual-person-with-significant-control"
+   }
+  ]
+ },
+ "fetched_at": "2026-11-08T11:51:54Z",
+ "fetched_ts": 1794138714.459295,
+ "key": "psc:05770953",
+ "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
+ "source": "Companies House",
+ "url": "https://api.company-information.service.gov.uk/company/05770953/persons-with-significant-control"
+}
