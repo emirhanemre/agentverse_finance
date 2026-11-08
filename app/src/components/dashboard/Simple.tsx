@@ -31,7 +31,7 @@ function Headline({ s, p, o, wetShort, rid }: { s: AppState; p?: Proposal; o?: O
   const spare = o?.wet_with_hedge_headroom_gbp;
   let title = "Nothing needs you this week.";
   let line: React.ReactNode = "Payroll clears whatever the weather. I’ll keep watching the forecast.";
-  if (p?.status === "filled" && spare !== undefined && spare >= 0) {
+  if ((p?.status === "filled" || p?.status === "settled") && spare !== undefined && spare >= 0) {
     title = "You’re covered for the weekend.";
     line = (
       <>
@@ -114,6 +114,17 @@ function Decision({ s, p, onChange }: { s: AppState; p?: Proposal; onChange: () 
           <p className="mt-6 flex items-center gap-2 text-md text-positive">
             <Icon name="check" size={16} />
             Done. Cover is in place on paper: no real money moved.
+          </p>
+        ) : p.status === "settled" && p.market.settlement ? (
+          <p className="mt-6 text-md text-fg-2" data-testid="simple-settled">
+            {p.market.settlement.event_happened
+              ? `It rained: the cover paid ${gbp(p.market.settlement.payout_gbp, { pence: true })}.`
+              : `It stayed dry: the ${gbp(p.market.settlement.cost_gbp, { pence: true })} cover didn’t pay.`}{" "}
+            {p.market.settlement.evidence}.
+          </p>
+        ) : p.status === "expired" ? (
+          <p className="mt-6 text-md text-fg-2" data-testid="simple-expired">
+            This expired: {p.reason}. Run the agent again for a fresh price.
           </p>
         ) : p.status === "rejected" ? (
           <p className="mt-6 text-md text-fg-2">You said not now. Nothing was placed.</p>
