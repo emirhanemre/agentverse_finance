@@ -10,7 +10,7 @@ in this demo every trade is simulated.**
 
 ![Python](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-14-000000?logo=nextdotjs&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-SSE-009688?logo=fastapi&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-streaming-009688?logo=fastapi&logoColor=white)
 ![Google ADK](https://img.shields.io/badge/Google%20ADK-Gemini-4285F4?logo=google&logoColor=white)
 ![Paper trading](https://img.shields.io/badge/trades-simulated%20only-8B93F8)
 ![Agentverse 2026](https://img.shields.io/badge/Agentverse%202026-Finance%20track-F2B880)
@@ -44,25 +44,28 @@ number came from.
 
 ## The idea in 30 seconds
 
-Rain empties a pub's beer garden. For our demo pub, a wet Saturday afternoon costs about **£2,433** in takings.
-On the August 2026 bank holiday that would have left **Friday's payroll £808 short**.
+Rain empties a pub's beer garden. For our demo pub, each wet afternoon costs about **£2,433** in takings. If the
+August 2026 bank holiday weekend is wet on both afternoons, **Friday's payroll comes up £808 short**.
 
 Pub Hedge spots that on the Thursday and proposes **cover**: a contract that pays **£1 per share if at least 3 mm
 of rain falls on Saturday afternoon**. Contracts like this trade on *prediction markets*, where a share's price is
-roughly the chance of it happening. The forecast put rain at about 20%; with the market's margin and fees a share
-cost 24.65p, so 2,400 shares cost £591.60.
+roughly the chance of it happening. No London rain market exists, so we model the contract: the forecast put
+Saturday's chance of rain at about 20%, and with a 3% margin and trading fees a share cost 24.65p, so 2,400 shares
+cost £591.60. Sunday was forecast dry, so its contract wasn't worth buying.
 
 | | No cover | With £591.60 of cover (2,400 shares) |
 |---|---|---|
-| **It rains** (it did: 6.1 mm) | Payroll **£808 short** | Cover pays £2,400 → payroll clears with **£1,000 to spare** |
-| **It stays dry** | Payroll clears with £3,490 to spare | The £591.60 is lost → payroll still clears with **£2,899 to spare** |
+| **Wet weekend** (6 mm both afternoons) | Payroll **£808 short** | Cover pays £2,400 → payroll clears with **£1,000 to spare** |
+| **Dry weekend** | Payroll clears with £3,490 to spare | The £591.60 is lost → payroll still clears with **£2,899 to spare** |
+
+On the day, Saturday afternoon got 6.1 mm of rain, so the cover would have paid out.
 
 So the pub pays a known, small amount to make sure payroll clears either way. The agent finds the risk, sizes
 the cover inside the owner's limits, and explains it; **the owner says yes or no.**
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/screenshots/readme-impact.jpg" alt="Impact step: You could have made payroll, £1,000 to spare, with payday bars either side of the payroll line"><br><sub><b>The warning.</b> £808 short without cover; £1,000 to spare with it.</sub></td>
+    <td width="50%"><img src="docs/screenshots/readme-impact.jpg" alt="Impact step: You could have made payroll, £1,000 to spare, with payday bars either side of the payroll line"><br><sub><b>The warning.</b> A wet weekend: £808 short without cover, £1,000 to spare with it.</sub></td>
     <td width="50%"><img src="docs/screenshots/readme-simple.jpg" alt="Simple dashboard: payroll is at risk this weekend, payday bars and one decision"><br><sub><b>The decision.</b> The owner's view: one sentence, the payday picture, approve or not.</sub></td>
   </tr>
   <tr>
@@ -80,9 +83,9 @@ happens.
 | # | Agent | What it does | Tools it can call |
 |---|---|---|---|
 | 1 | **Verifier** | Confirms the pub is real and finds who runs it | Google Maps (via Gemini) to find the postcode, the food hygiene register, Companies House (company, directors, register checks), postcodes.io |
-| 2 | **Ingest** | Loads the pub's books and history | Takings, card payments (Stripe test mode), bank feed with a loop check, five years of local weather, match days and duty dates |
+| 2 | **Ingest** | Loads the pub's books and history | Takings, card payments (Stripe test mode), the bank feed and a check for money going round in circles, five years of local weather, match days and duty dates |
 | 3 | **Risk** | Works out what rain costs this pub | Fits takings against rain, heat, match days and duty (a regression with confidence intervals) |
-| 4 | **Pricer** | Prices protection for the weekend | Met Office forecast, real Polymarket weather markets, the rain contract's price, payroll projected dry and wet, the cover sized to the limits |
+| 4 | **Pricer** | Prices protection for the weekend | The weekend forecast (Met Office live, or the archived forecast in the historical scenario), real Polymarket weather markets, the rain contract's price, payroll projected dry and wet, the cover sized to the limits |
 | 5 | **Monitor** | Checks the owner's limits and queues the decision | Limit check, approval queue, re-check schedule, and a match-day offer for the next big game |
 
 Then a final **rationale** explains the recommendation. Two models race to write it: **Gemini 4 Argon** (slower,
@@ -125,7 +128,7 @@ flowchart TB
 | Real (live or cached public data) | Made up (always labelled) |
 |---|---|
 | The pub's identity: Google Maps (postcode), the FSA food hygiene register, Companies House (company and directors), postcodes.io | The pub's takings, bank feed and fixed costs (a seeded generator) |
-| Weather: Met Office forecast, Open-Meteo history and archived forecasts | The rain contract and its price: no London rain market exists, so it is priced from calibrated forecasts |
+| Weather: Met Office forecast (live mode), Open-Meteo history and archived forecasts | The rain contract and its price: no London rain market exists, so it is priced from calibrated forecasts |
 | Polymarket's real match and temperature markets, read only | Every trade: simulated on our own paper exchange (PAPER); Stripe payments are TEST MODE |
 | England and Ireland match days, beer duty dates | The 12 pubs in the backtest |
 
@@ -149,7 +152,7 @@ cover softens the weather-driven part.
 | Check | Result |
 |---|---|
 | Hackathon Finance Kit, cashflow and transaction tasks ([docs/challenge/](docs/challenge/README.md)) | 40/40 exact checks, payment-loop detection 100% (F1), 0 errors |
-| Finance Kit trading task: our moving-average trend rule against buy-and-hold | No edge: 23 wins, 37 losses (p = 0.09) |
+| Finance Kit trading task: our moving-average trend rule against buy-and-hold | No edge: 23 wins, 37 losses (p = 0.09, not statistically significant) |
 | Backtest ([docs/backtest-results.md](docs/backtest-results.md)) | As above |
 
 ## Run it locally
