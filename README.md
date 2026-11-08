@@ -61,7 +61,7 @@ In the app, **Historical scenario** replays a real wet weekend: the August bank 
 | England and Ireland match days; beer duty change dates | The 12-pub backtest panel |
 
 Full list with licences: [docs/data-sources.md](docs/data-sources.md). Backtest on held-out months:
-[docs/backtest-results.md](docs/backtest-results.md). Our policy is about break-even (+£42 a pub-year, 95% CI −£30 to +£146), against −£1,514 for
+[docs/backtest-results.md](docs/backtest-results.md). Our policy is about break-even (+£26 a pub-year, 95% CI −£132 to +£222), against −£1,514 for
 hedging every weekend, but it does not cut payroll-shortfall weeks at these caps. We say so.
 
 ## Architecture
@@ -78,7 +78,7 @@ adapter.py -> pubhedge_core/  (the Finance Kit adapter: cashflow, transactions, 
 - **The model never computes numbers.** Tools do the maths: OLS regression with CIs, the LP sizing, the limit
   guard, the cashflow engine and the paper exchange. A grounding check removes any number in the narration that
   doesn't appear in that run's tool outputs.
-- **Limits are enforced in code** (`pubhedge_core/limits.py`): £120 a week, £400 a month, £60 a market. Anything
+- **Limits are enforced in code** (`pubhedge_core/limits.py`): £800 a week, £2,000 a month, £600 a market. Anything
   over £50 needs a second confirmation. Lowering a cap re-checks pending hedges at once and logs the block.
 - **If Gemini fails,** the deterministic pipeline still completes and the narration is badged TEMPLATE.
 - **Paper trading only.** Polymarket is read-only (UK users can't trade there). Real execution would go to a

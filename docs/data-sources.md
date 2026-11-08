@@ -46,6 +46,7 @@ single independent.
 | [Open-Meteo archive (ERA5)](https://open-meteo.com/en/docs/historical-weather-api) | Daily observed rain, 12:00–18:00 rain, max temperature, sunshine, 2021-01-01 to 2026-10-31, 4 London points | REAL | CC BY 4.0. "Weather data by Open-Meteo.com". Free non-commercial use | `clients/openmeteo.py` to `data/weather/*.csv` (`scripts/build_weather.py`) |
 | [Open-Meteo historical forecast API](https://open-meteo.com/en/docs/historical-forecast-api) | What was forecast at the time, for backtest decisions and the August 2026 scenario | REAL | CC BY 4.0 | Same as above. Max temperature only exists from 2022-03 |
 | [Polymarket Gamma and CLOB](https://docs.polymarket.com/) (public read API only) | Search; daily London highest-temperature ladders; price history; fee schedule | REAL | Public market data, read-only. Polymarket blocks UK users from trading, so we never call order endpoints | `clients/polymarket.py`, cached 5 min, fixtures committed |
+| [Polymarket England v Croatia match markets](https://polymarket.com/event/unl-eng-hrv-2026-11-12) (public read API only) | Real "Will Croatia win on 2026-11-12?" price (best ask) for the match-day offer card; kick-off from the event | REAL / REAL · CACHED | Public market data, read-only; no order endpoint is called | `tools.quote_offer`, fixture committed |
 | [Polymarket fees](https://docs.polymarket.com/trading/fees) | Taker fee `C × rate × p × (1−p)`, rate 0.05 for weather and sports | REAL (checked 7 Nov 2026) | n/a | `engines.FEE_RATE` |
 | [Stripe test mode](https://docs.stripe.com/testing) | 120 daily takings charges (`metadata.business_date`) | TEST MODE (synthetic amounts) | Our own test data | `scripts/seed_stripe.py`, `clients/stripe_client.py`. Refuses any non-`sk_test_` key |
 | [openfootball](https://github.com/openfootball) | England men's football match days, 2021–2026 | REAL | CC0 1.0 | `scripts/fetch_reference.py` to `data/reference/sport_days.csv` |
@@ -76,7 +77,7 @@ Drivers are real: the weather, match days and duty dates above. Scales:
 
 | Parameter | Value | Basis |
 |---|---|---|
-| Turnover | about £850k a year for the demo pub | Assumption. BBPA publishes no London independent average |
+| Turnover | about £850k a year for a panel pub at scale 1; the demo pub is a large garden pub at scale 3.5 (about £3.2M a year), an illustrative profile chosen for the demo | Assumption. BBPA publishes no London independent average |
 | Rain loss | 4.5% of day takings per mm of afternoon rain, capped at 32% | Assumption, sense-checked against CGA/NIQ: pub and bar sales were down 13% on the wet 24 May 2025 bank holiday Saturday |
 | Heat uplift | Garden pubs gain on warm days | Assumption, sense-checked against Tenzo: London venues with outdoor seating were +3.4% in heatwaves |
 | VAT | One-sixth of a VAT-inclusive till | Rule. UHY's £10-pint breakdown puts staff at about 17% of a VAT-inclusive pint |
@@ -84,7 +85,7 @@ Drivers are real: the weather, match days and duty dates above. Scales:
 | Fixed costs | Rent £9,500, utilities £2,600, other £2,300 a month | Assumption |
 | Card fee | 1.5% | Assumption |
 
-The regression recovers the generator's rain effect: about −£116 per mm on Friday to Sunday afternoons, R² 0.92 on
+The regression recovers the generator's rain effect: about −£406 per mm on Friday to Sunday afternoons for the demo pub, R² 0.92 on
 held-out months. **That is expected on synthetic data and is not evidence about real pubs.** The duty effect is not
 significant (its 95% CI includes zero), and we say so.
 
@@ -105,6 +106,15 @@ only daily London temperature ladders do, and the app reads those as the real pr
 forecasts against observed rain, plus a 3% venue margin and a 1% half-spread. Fills add 1% slippage and
 Polymarket's weather taker fee. Real execution would go to a UK-licensed venue (Smarkets, Betfair), shown in the
 app as "not connected in demo".
+
+**Demo scenario** (August bank holiday 2026): an illustrative scenario. Real weather and the real archived
+forecast; SYNTHETIC takings for a large garden pub (scale 3.5); the owner is assumed to keep an extra £11,360 in
+the current account that week (`tools.SCENARIO["extra_buffer_gbp"]`), chosen so that payroll clears if dry and
+is short if wet. The engine computes every figure from those inputs. The backtest does not use this buffer.
+
+**Match-day offer** (England v Croatia, Thu 12 Nov 2026, 19:45, Wembley): the offer ("if England lose, mains half
+price, first 80 covers") and the £15 average main are SYNTHETIC demo assumptions; the market price is REAL.
+The hedge buys cover up to the worst case (£600) inside the caps, so the offer's cost is fixed. Paper only.
 
 **Practice data for the kit** lives in `.bench/` (gitignored) and is labelled practice wherever it appears. Only
 the challenge runs in `docs/challenge/` are quoted as results.

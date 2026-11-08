@@ -16,7 +16,7 @@ Numbers come from `docs/backtest-results.md`, `docs/challenge/` and the recorded
 
 - "The Oak Tree … lost £11,000 to the rain last July" is fictional. Replace it with a real pattern and a
   modelled number:
-  - Headline: "£695". Under it: "what one 6 mm wet afternoon takes out of a busy London garden pub's
+  - Headline: "£2,433". Under it: "what one 6 mm wet afternoon takes out of a large London garden pub's
     weekend (modelled)."
   - Footnote: "SYNTHETIC: modelled for a pub of this profile; real London weather."
 - "1 in 8 UK pubs closed in the last 12 months" can't be sourced. Use BBPA: "about 2 pubs closed a day in Q1
@@ -45,11 +45,11 @@ an Open Banking feed (demo: Stripe test mode plus a synthetic Open Banking feed)
 
 **6. How it works**
 
-- "in 60 seconds": measured live runs took **35–44 s** end to end (the recorded demo run: 42 s, 8 Nov 2026). One run in
+- "in 60 seconds": measured live runs took **35–44 s** end to end (the recorded demo run: 38 s, 8 Nov 2026, with the match-day offer step). One run in
   about 8 hit the 60 s Argon timeout, so it took longer and fell back to template narration.
   Use: "in under a minute (about 40 s measured)."
-- Replace "Every 1°C below 20°C: −£340/day · R² = 0.74" with: "Each mm of weekend afternoon rain: −£116
-  (95% CI −£128 to −£104) · R² 0.92 on held-out months, on synthetic takings."
+- Replace "Every 1°C below 20°C: −£340/day · R² = 0.74" with: "Each mm of weekend afternoon rain: −£406
+  (95% CI −£447 to −£364) · R² 0.92 on held-out months, on synthetic takings."
 - Change the source chips to: Companies House · Met Office · Open-Meteo · Polymarket (read-only) · Stripe
   (test) · HMRC duty dates.
 
@@ -85,7 +85,7 @@ block":
 
 | Placeholder | Replace with |
 |---|---|
-| +£1,840 /pub/yr | **+£42 /pub/yr** net (95% CI −£30 to +£146, i.e. break-even), against −£1,514 for hedging every weekend |
+| +£1,840 /pub/yr | **+£26 /pub/yr** net (95% CI −£132 to +£222, i.e. break-even), against −£1,514 for hedging every weekend |
 | Median £1,220 | Payroll-shortfall weeks: **10.4 a year, with or without our hedge** |
 | 95% CI lower £640 | Weeks hedged: **51 of 1,260** pub-weeks |
 | Worst month −£340 | Worst week: −£13.7k across the panel; the hedge doesn't move it |
@@ -93,7 +93,7 @@ block":
 
 - Header: "12 synthetic pubs · held-out Nov 2024–Oct 2026 · real London weather".
 - Caption: "Synthetic takings driven by real weather; synthetic rain-contract prices with real Polymarket fees.
-  Our policy is cheap because it only hedges weeks when payroll is at risk, but at £60-a-market caps it doesn't
+  Our policy is cheap because it only hedges weeks when payroll is at risk, but at £600-a-market caps it doesn't
   cut shortfall weeks. The warning is the product."
 - Add the kit result: "Finance Kit self-serve challenge: cashflow and transactions 40/40 exact, F1 100%; our
   market-timing rule shows no edge (23 wins, 37 losses vs buy-and-hold on real-market windows)." Label it "our own check,
@@ -110,9 +110,9 @@ shop pays 43% of their rent…" is unsourced: cut it or source it.
 | Toast / Square / Lightspeed (4, 6, 10) | No POS integration exists. The demo uses Stripe test charges and synthetic data. | "Reads a till export or card processor (demo: Stripe test mode)." |
 | "in 60 seconds" (6) | Measured live: 35–44 s over five timed runs. Argon latency varies (4–40 s per call); one run in about 8 hit the 60 s Argon timeout and finished with template narration. | "Under a minute (about 40 s measured live)." Replay mode is available if wifi fails. |
 | "50 UK pubs · 2022–2024 · Polymarket historical prices" (11) | 12 synthetic pubs; test window Nov 2024–Oct 2026; no London rain market exists, so prices are synthetic. | "12 synthetic pubs, real weather, synthetic contract prices with real fees." |
-| +£1,840 a pub-year, "saved" (11) | Ours is break-even (+£42, CI −£30 to +£146); hedging every weekend loses £1,514. | Use the real block above. |
+| +£1,840 a pub-year, "saved" (11) | Ours is break-even (+£26, CI −£132 to +£222); hedging every weekend loses £1,514. | Use the real block above. |
 | "£11,000 lost to rain", "The Oak Tree" (2, 7) | Fictional. | Real pub, public identity only; modelled numbers labelled synthetic. |
-| "Sells you a £20 hedge" (1, 4, 12) | The recorded run proposes one £59.16 position (240 shares at 0.24) on the bank holiday Saturday. That needs a second confirmation (over £50). | "Small, capped hedges (£120 a week cap)". Or show the real proposal. |
+| "Sells you a £20 hedge" (1, 4, 12) | The recorded run proposes one £591.60 position (2,400 shares at 0.2465 all-in) on the bank holiday Saturday, in an illustrative scenario. That needs a second confirmation (over £50). | "Capped hedges (£800 a week cap)". Or show the real proposal, labelled illustrative. |
 | "Runs 24/7, not on a prompt" (5) | The monitor schedules re-checks; no daemon runs in the demo. | "Re-checks before the weekend; notifies only when exposure × price crosses the line" (as designed). |
 | "Six Nations / sport hedges", "tariffs, rates" (1, 2, 5) | Built and tested: weather only. Sport and duty are in the regression (sport raises takings; the duty effect isn't significant) but are not hedged. | "Weather today; sport and duty measured, hedges next." |
 | "Multi-venue routing … 30% of contracts" (9) | Not built; the figure is unsourced. | Cut it, or "Next: route to the best UK venue." |
