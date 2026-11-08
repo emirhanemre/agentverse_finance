@@ -393,7 +393,7 @@ def make_tools(run: Run) -> dict:
         active = [o for o in items if o.get("officer_role") == "director" and not o.get("resigned_on")]
         return {"badge": env["badge"], "source": env["source"], "licence": env["licence"],
                 "fetched_at": env.get("fetched_at"), "active_directors": len(active),
-                "match": bool(active), "summary": f"{len(active)} active director on register · match"
+                "match": bool(active), "summary": f"{len(active)} active director{'s' if len(active) != 1 else ''} on register · match"
                 if active else "no active director · no match"}
 
     @tool
