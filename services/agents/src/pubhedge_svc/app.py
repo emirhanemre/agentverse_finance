@@ -174,8 +174,12 @@ def state():
     bt = json.loads((DATA / "results" / "backtest.json").read_text())
     ch_path = DATA / "results" / "challenge-summary.json"
     props = [dict(r) for r in audit.db().execute("SELECT * FROM proposals ORDER BY created DESC LIMIT 20").fetchall()]
+    led, lim = current_ledger(None), get_limits()
     for p in props:
         p["market"] = json.loads(p["market"])
+        if p["status"] in ("pending", "blocked"):  # limit checks are re-run on every read, not cached
+            p["market"]["verdict"] = {"market_id": p["market"]["market_id"],
+                                      **E.check_limits(p["cost_pence"], p["market"]["market_id"], lim, led)}
     return {
         "pub": {**PUB, "identity_badge": "REAL", "financials_label": SYN, "owner": "Owner (demo)"},
         "scenario": SCENARIO,

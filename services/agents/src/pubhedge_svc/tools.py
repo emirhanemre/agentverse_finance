@@ -58,6 +58,7 @@ class Run:
         self.outputs.append(res)
         self.emit({"type": "tool", "step": self.step, "call": f"{name}({_short(args)})", "args_summary": _short(args),
                    "result_summary": res.get("summary", ""), "source_badge": badge, "receipt_id": row["receipt_id"],
+                   "source": {k: res.get(k) for k in ("source", "licence", "fetched_at", "generator", "seed") if res.get(k)},
                    "model": self.model, "ms": ms})
         return res
 
