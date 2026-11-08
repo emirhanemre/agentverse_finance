@@ -10,7 +10,7 @@ import { day, gbp } from "../../lib/format";
 function Kpi({ prov, ...props }: React.ComponentProps<typeof Metric> & { prov?: React.ComponentProps<typeof ProvBadge> }) {
   return (
     <ProvScope value={prov?.badge}>
-      <div className="relative px-6 py-4">
+      <div className="relative px-4 pb-4 pt-10 md:px-6 md:pt-4">
         {prov && <ProvBadge {...prov} variant="label" className="absolute right-4 top-3" />}
         <Metric {...props} />
       </div>
@@ -28,7 +28,7 @@ export function TodayView({ s, refresh, tick }: { s: AppState; refresh: () => vo
 
   return (
     <div className="flex flex-col gap-4">
-      <section className="glass grid grid-cols-4 divide-x divide-line" data-testid="kpis">
+      <section className="glass grid grid-cols-2 divide-line md:grid-cols-4 md:divide-x" data-testid="kpis">
         <Kpi
           label="Cover awaiting you"
           value={p ? <Num r={sized}>{gbp(p.cost_pence / 100, { pence: true })}</Num> : "—"}
@@ -57,7 +57,7 @@ export function TodayView({ s, refresh, tick }: { s: AppState; refresh: () => vo
         />
       </section>
 
-      <div className="grid grid-cols-[1.45fr_1fr] items-start gap-4">
+      <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
         <div className="flex min-w-0 flex-col gap-4">
           <CashflowPanel s={s} compact />
           <Panel title="Agent activity" actions={<span>From the audit log</span>} bodyClassName="max-h-[320px] overflow-y-auto px-6 py-2">

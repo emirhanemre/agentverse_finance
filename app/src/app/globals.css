@@ -139,6 +139,9 @@ body {
     text-underline-offset: 0.25em;
     transition: text-decoration-color var(--dur-micro) var(--ease-out);
   }
+  .num-link--audit {
+    text-decoration-color: var(--fg-3);
+  }
   .num-link:hover,
   .num-link:focus-visible {
     text-decoration-color: var(--fg-3);
@@ -148,15 +151,12 @@ body {
   .prov {
     position: relative;
   }
-  .prov-card {
-    position: absolute;
-    top: calc(100% + var(--space-2xs));
+  /* The card itself lives in a portal (fixed), so panels never clip it. */
+  .prov-pop {
+    position: fixed;
     z-index: var(--z-tooltip);
-    /* collapsed at rest, so a hidden card never widens the scroll area */
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
+    display: block;
+    padding: var(--space-sm);
     border-radius: var(--radius-inner);
     background: var(--popover);
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
@@ -166,27 +166,7 @@ body {
     text-align: left;
     white-space: normal;
     pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--dur-micro) var(--ease-in), visibility 0s linear var(--dur-micro);
-  }
-  .prov:hover > .prov-card {
-    width: 18rem;
-    height: auto;
-    padding: var(--space-sm);
-    overflow: visible;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity var(--dur-short) var(--ease-out) 800ms, visibility 0s linear 800ms;
-  }
-  .prov:focus-within > .prov-card {
-    width: 18rem;
-    height: auto;
-    padding: var(--space-sm);
-    overflow: visible;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity var(--dur-short) var(--ease-out) 0s, visibility 0s linear 0s;
+    animation: prov-in var(--dur-short) var(--ease-out);
   }
 
   /* Audit view reveal: opacity only. */
@@ -337,7 +317,12 @@ body {
 }
 /* Chrome over the photograph: slate glass, so its light text keeps its contrast. */
 .chrome-glass {
-  background: color-mix(in oklab, var(--color-paper) 58%, transparent);
+  background: color-mix(in oklab, var(--bg) 62%, transparent); /* the theme's own paper, so its text keeps contrast in both modes */
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
   backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
+}
+
+/* While the sources key is up, scroll areas end above it. */
+[data-audit="on"] main {
+  padding-bottom: calc(var(--space-2xl) + var(--space-xl));
 }

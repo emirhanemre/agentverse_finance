@@ -151,12 +151,12 @@ export function Panel({
   return (
     <section className={cx("glass", className)}>
       {(title || actions) && (
-        <header className="flex min-h-12 items-center justify-between gap-4 border-b border-line px-6 py-2">
-          <h2 className="max-w-none font-display text-md font-medium text-fg">{title}</h2>
-          {actions && <div className="flex items-center gap-4 text-xs text-fg-3">{actions}</div>}
+        <header className="flex min-h-12 flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-line px-4 py-2 sm:px-6">
+          <h2 className="min-w-[10rem] max-w-none flex-1 font-display text-md font-medium text-fg">{title}</h2>
+          {actions && <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-fg-3">{actions}</div>}
         </header>
       )}
-      <div className={bodyClassName ?? "px-6 py-4"}>{children}</div>
+      <div className={bodyClassName ?? "px-4 py-4 sm:px-6"}>{children}</div>
     </section>
   );
 }
