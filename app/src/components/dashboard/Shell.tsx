@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon, Logo, ThemeToggle, cx } from "../ui";
-import { AuditSwitch } from "../Provenance";
+import { AuditKey, AuditSwitch } from "../Provenance";
 
 export type NavId = "overview" | "protections" | "risks" | "backtest" | "activity" | "sources" | "settings";
 
@@ -106,7 +106,7 @@ export function ViewSwitch({ view, onChange }: { view: View; onChange: (v: View)
         aria-hidden
         className={cx("relative h-4 w-6 shrink-0 rounded-pill transition-colors", on ? "bg-accent-fill" : "bg-surface-3 shadow-[inset_0_0_0_1px_var(--field-edge)]")}
       >
-        <span className={cx("absolute top-0.5 h-3 w-3 rounded-full transition-transform", on ? "translate-x-[10px] bg-accent-ink" : "translate-x-0.5 bg-fg-3")} />
+        <span className={cx("absolute left-0 top-0.5 h-3 w-3 rounded-full transition-transform", on ? "translate-x-[10px] bg-accent-ink" : "translate-x-0.5 bg-fg-3")} />
       </span>
       <span className="hidden sm:inline">Advanced</span>
     </button>
@@ -115,6 +115,7 @@ export function ViewSwitch({ view, onChange }: { view: View; onChange: (v: View)
 
 export function TopBar({ title, right }: { title: React.ReactNode; right?: React.ReactNode }) {
   return (
+    <>
     <header className="flex min-h-14 shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-line bg-bg px-4 py-2 sm:px-6">
       <h1 className="min-w-0 font-display text-lg font-medium">{title}</h1>
       <div className="flex items-center gap-1 sm:gap-3">
@@ -123,6 +124,8 @@ export function TopBar({ title, right }: { title: React.ReactNode; right?: React
         <ThemeToggle />
       </div>
     </header>
+    <AuditKey />
+    </>
   );
 }
 
