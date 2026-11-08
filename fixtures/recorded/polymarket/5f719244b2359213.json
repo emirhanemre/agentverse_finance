@@ -995,16 +995,16 @@
      "icon": "https://polymarket-upload.s3.us-east-2.amazonaws.com/highest-temperature-in-london-on-jan-22-eouu0bkjph8i.jpg",
      "id": "10006",
      "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/highest-temperature-in-london-on-jan-22-eouu0bkjph8i.jpg",
-     "liquidity": 71290.75404,
+     "liquidity": 42754.21996,
      "recurrence": "daily",
      "restricted": true,
      "seriesType": "single",
      "slug": "london-daily-weather",
      "ticker": "london-daily-weather",
      "title": "London Daily Weather",
-     "updatedAt": "2026-11-08T08:19:51.869459Z",
-     "volume": 26900.686632,
-     "volume24hr": 43508.392574
+     "updatedAt": "2026-11-08T08:33:51.297Z",
+     "volume": 32328.172006999997,
+     "volume24hr": 48485.390113999994
     }
    ],
    "seriesSlug": "london-daily-weather",
@@ -1072,8 +1072,8 @@
    "volume": 152378.43592599998
   }
  ],
- "fetched_at": "2026-11-08T08:20:08Z",
- "fetched_ts": 1794126008.7290082,
+ "fetched_at": "2026-11-08T08:34:09Z",
+ "fetched_ts": 1794126849.539766,
  "key": "/events?slug=highest-temperature-in-london-on-august-29-2026",
  "licence": "Polymarket public market data (read-only API), docs.polymarket.com; not redistributed for trading",
  "source": "Polymarket Gamma",
