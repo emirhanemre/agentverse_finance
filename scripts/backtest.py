@@ -178,19 +178,23 @@ def decide(policy, thu, sat, sun, bal, feed, fit, beta_rain, loc, wx, sweep, mon
 
 def metrics(weeks):
     nets = np.array([w["net"] for w in weeks])
-    months = defaultdict(float)
+    # "months" are rolling 4-week windows within each pub (same definition for the point estimate
+    # and the bootstrap blocks); losing periods/year = share of losing windows x 13
+    by_pub = defaultdict(list)
     for w in weeks:
-        months[(w["pub"], w["start"][:7])] += w["net"]
+        by_pub[w["pub"]].append(w["net"])
+    months = {(p, i): sum(v[i:i + 4]) for p, v in by_pub.items() for i in range(len(v) - 3)}
     mv = np.array(list(months.values()))
     k = max(1, int(round(len(nets) * 0.05)))
     years = len(weeks) / 52.18  # pub-years
+    # worst month is computed over calendar months with at least 4 weeks in the sample
     return {"hedge_net_gbp_per_year": float(sum(w["payout"] - w["premium"] for w in weeks) / years),
             "premium_gbp_per_year": float(sum(w["premium"] for w in weeks) / years),
             "payouts_gbp_per_year": float(sum(w["payout"] for w in weeks) / years),
             "shortfall_weeks_per_year": float(sum(w["shortfall"] for w in weeks) / years),
             "shortfall_depth_gbp_per_year": float(sum(w.get("depth", 0.0) for w in weeks) / years),
             "worst_week_gbp": float(nets.min()), "worst_month_gbp": float(mv.min()),
-            "losing_months_per_year": float((mv < 0).sum() / years),
+            "losing_months_per_year": float((mv < 0).mean() * 13),
             "weekly_cash_sd_gbp": float(nets.std(ddof=1)),
             "cvar5_weekly_gbp": float(np.sort(nets)[:k].mean())}
 
@@ -201,12 +205,11 @@ def bootstrap(per_pub, rng):
     stats = []
     for _ in range(BOOT):
         sample = []
-        for p in rng.choices(pubs, k=len(pubs)):
+        for i, p in enumerate(rng.choices(pubs, k=len(pubs))):
             w = per_pub[p]
-            nb = len(w) // 8
-            for _b in range(nb):
-                s = rng.randrange(0, len(w) - 8)
-                sample += w[s:s + 8]
+            for b in range(len(w) // 8):
+                s = rng.randrange(len(w) - 7)  # contiguous 8-week blocks (no wrap); each block its own key
+                sample += [{**w[s + j], "pub": f"{p}#{i}#{b}"} for j in range(8)]
         stats.append(metrics(sample))
     return {k: [float(np.percentile([s[k] for s in stats], 2.5)), float(np.percentile([s[k] for s in stats], 97.5))]
             for k in stats[0]}

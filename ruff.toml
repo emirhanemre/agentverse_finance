@@ -7,3 +7,4 @@ select = ["E", "F", "W", "B"]
 
 [lint.per-file-ignores]
 "scripts/fetch_reference.py" = ["E501"]
+"scripts/backtest_report.py" = ["E501"]  # markdown template

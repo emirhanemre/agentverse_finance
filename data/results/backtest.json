@@ -8,8 +8,8 @@
     "shortfall_weeks_per_year": 10.3945873015873,
     "shortfall_depth_gbp_per_year": 36458.43228365079,
     "worst_week_gbp": -13665.280000000002,
-    "worst_month_gbp": -12662.83,
-    "losing_months_per_year": 1.4908571428571427,
+    "worst_month_gbp": 1625.6100000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6107.982045214359,
     "cvar5_weekly_gbp": -11424.212539682538
    },
@@ -27,32 +27,32 @@
      0.0
     ],
     "shortfall_weeks_per_year": [
-     9.072964743589743,
-     11.790673076923078
+     8.98934294871795,
+     11.707051282051284
     ],
     "shortfall_depth_gbp_per_year": [
-     28505.72317900241,
-     46585.74569908654
+     28534.84011028045,
+     45916.58615964744
     ],
     "worst_week_gbp": [
      -13665.280000000002,
      -11475.330000000002
     ],
     "worst_month_gbp": [
-     -51103.21199999996,
-     -15008.87325
+     1625.6100000000001,
+     2177.6000000000017
     ],
     "losing_months_per_year": [
-     0.7944070512820514,
-     1.630625
+     0.0,
+     0.0
     ],
     "weekly_cash_sd_gbp": [
-     5492.549168261774,
-     6855.465424982075
+     5376.154665734156,
+     6771.969996655884
     ],
     "cvar5_weekly_gbp": [
-     -12378.99977822581,
-     -10078.284258064512
+     -12275.444322580646,
+     -9887.641701612902
     ]
    },
    "demo_weeks_hedged": 0,
@@ -67,51 +67,51 @@
     "shortfall_weeks_per_year": 10.560238095238095,
     "shortfall_depth_gbp_per_year": 37324.53952888888,
     "worst_week_gbp": -13705.210000000003,
-    "worst_month_gbp": -12662.83,
-    "losing_months_per_year": 1.4908571428571427,
+    "worst_month_gbp": 1465.9999999999995,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6106.215964670239,
     "cvar5_weekly_gbp": -11453.293968253967
    },
    "ci95": {
     "hedge_net_gbp_per_year": [
-     -1746.6303174919874,
-     -1360.9046671514425
+     -1736.9774042427887,
+     -1311.9448379447117
     ],
     "premium_gbp_per_year": [
-     2073.4544584134615,
-     2081.995463108975
+     2068.9138367628207,
+     2081.424786169872
     ],
     "payouts_gbp_per_year": [
-     334.4871794871795,
-     717.4603661858974
+     339.7940276442308,
+     764.559296875
     ],
     "shortfall_weeks_per_year": [
-     9.15658653846154,
-     11.999727564102566
+     8.98934294871795,
+     11.91610576923077
     ],
     "shortfall_depth_gbp_per_year": [
-     29165.10810412259,
-     47046.882623389414
+     29069.811368737977,
+     46341.236950641025
     ],
     "worst_week_gbp": [
      -13705.210000000003,
      -11514.810000000001
     ],
     "worst_month_gbp": [
-     -50982.922499999964,
-     -15693.295500000006
+     1465.9999999999995,
+     2018.4800000000032
     ],
     "losing_months_per_year": [
-     0.7944070512820514,
-     1.6724358974358975
+     0.0,
+     0.0
     ],
     "weekly_cash_sd_gbp": [
-     5389.6945524351095,
-     6775.5592059342825
+     5390.903538033276,
+     6779.961021686387
     ],
     "cvar5_weekly_gbp": [
-     -12374.089915322576,
-     -10084.444629032256
+     -12346.197443548386,
+     -9929.560241935482
     ]
    },
    "demo_weeks_hedged": 103,
@@ -126,51 +126,51 @@
     "shortfall_weeks_per_year": 10.3945873015873,
     "shortfall_depth_gbp_per_year": 36684.83716238093,
     "worst_week_gbp": -13725.180000000004,
-    "worst_month_gbp": -12662.83,
-    "losing_months_per_year": 1.4908571428571427,
+    "worst_month_gbp": 1625.6100000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6109.696228226421,
     "cvar5_weekly_gbp": -11426.405238095236
    },
    "ci95": {
     "hedge_net_gbp_per_year": [
-     -124.99753493990394,
-     107.3370717828526
+     -124.31174214743594,
+     101.745177832532
     ],
     "premium_gbp_per_year": [
-     115.31127749999995,
-     284.46748584134576
+     113.46744828124999,
+     283.4320180608974
     ],
     "payouts_gbp_per_year": [
-     70.88201442307692,
-     313.83364142628204
+     72.2837247596154,
+     310.89747115384614
     ],
     "shortfall_weeks_per_year": [
-     9.072964743589743,
-     11.832483974358976
+     8.98934294871795,
+     11.623429487179488
     ],
     "shortfall_depth_gbp_per_year": [
-     29244.707032139442,
-     46360.92226329724
+     28346.70060470353,
+     46347.84912456331
     ],
     "worst_week_gbp": [
      -13725.180000000004,
      -11534.700000000004
     ],
     "worst_month_gbp": [
-     -52807.95475,
-     -15042.6625
+     1625.6100000000001,
+     2177.6000000000017
     ],
     "losing_months_per_year": [
-     0.7944070512820514,
-     1.630625
+     0.0,
+     0.0
     ],
     "weekly_cash_sd_gbp": [
-     5412.134035728801,
-     6825.391301069214
+     5376.079040276839,
+     6823.368462456733
     ],
     "cvar5_weekly_gbp": [
-     -12358.051677419357,
-     -10070.613661290325
+     -12328.401415322582,
+     -10010.671326612908
     ]
    },
    "demo_weeks_hedged": 13,
@@ -185,51 +185,51 @@
     "shortfall_weeks_per_year": 10.3945873015873,
     "shortfall_depth_gbp_per_year": 36907.86566380948,
     "worst_week_gbp": -13776.95,
-    "worst_month_gbp": -12662.83,
-    "losing_months_per_year": 1.4908571428571427,
+    "worst_month_gbp": 1625.6100000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6113.121283175224,
     "cvar5_weekly_gbp": -11435.25603174603
    },
    "ci95": {
     "hedge_net_gbp_per_year": [
-     -214.15845840945514,
-     111.07386847756409
+     -214.67472891826918,
+     131.47023816105767
     ],
     "premium_gbp_per_year": [
-     208.01530868189096,
-     528.6374719431091
+     202.5441750560898,
+     516.7173627804486
     ],
     "payouts_gbp_per_year": [
-     142.42673157051283,
-     503.66556850961535
+     117.29629166666668,
+     502.986141426282
     ],
     "shortfall_weeks_per_year": [
-     8.98934294871795,
-     11.74886217948718
+     8.863910256410257,
+     11.832483974358976
     ],
     "shortfall_depth_gbp_per_year": [
-     28763.114533922293,
-     47020.052863181125
+     28646.728078742024,
+     46777.799122772434
     ],
     "worst_week_gbp": [
      -13776.95,
      -11638.950000000004
     ],
     "worst_month_gbp": [
-     -50655.22875,
-     -15087.747749999995
+     1625.6100000000001,
+     2034.869999999999
     ],
     "losing_months_per_year": [
-     0.793361778846154,
-     1.6724358974358975
+     0.0,
+     0.0
     ],
     "weekly_cash_sd_gbp": [
-     5389.323767326728,
-     6820.5281659704
+     5432.126803986905,
+     6826.027034117036
     ],
     "cvar5_weekly_gbp": [
-     -12385.424701612903,
-     -10087.199383064511
+     -12364.403475806448,
+     -10008.250532258064
     ]
    },
    "demo_weeks_hedged": 13,
@@ -246,8 +246,8 @@
     "shortfall_weeks_per_year": 10.932952380952381,
     "shortfall_depth_gbp_per_year": 40326.04080190475,
     "worst_week_gbp": -10211.21,
-    "worst_month_gbp": -9353.890000000001,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2145.5099999999993,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6336.041188842138,
     "cvar5_weekly_gbp": -10085.466
    },
@@ -258,8 +258,8 @@
     "shortfall_weeks_per_year": 11.429904761904762,
     "shortfall_depth_gbp_per_year": 41333.050198095225,
     "worst_week_gbp": -10251.130000000001,
-    "worst_month_gbp": -9353.890000000001,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2018.4800000000032,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6335.564364391102,
     "cvar5_weekly_gbp": -10109.168000000001
    },
@@ -270,8 +270,8 @@
     "shortfall_weeks_per_year": 10.932952380952381,
     "shortfall_depth_gbp_per_year": 40638.34555619047,
     "worst_week_gbp": -10211.21,
-    "worst_month_gbp": -9353.890000000001,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2025.5499999999993,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6339.586697627957,
     "cvar5_weekly_gbp": -10121.38
    },
@@ -282,8 +282,8 @@
     "shortfall_weeks_per_year": 10.932952380952381,
     "shortfall_depth_gbp_per_year": 40878.527611428566,
     "worst_week_gbp": -10211.21,
-    "worst_month_gbp": -9353.890000000001,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1999.0699999999988,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6345.4612831471495,
     "cvar5_weekly_gbp": -10153.9
    }
@@ -296,8 +296,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 33528.92988571428,
     "worst_week_gbp": -8834.77,
-    "worst_month_gbp": -8569.38,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1662.6599999999999,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 5406.449177815406,
     "cvar5_weekly_gbp": -8630.03
    },
@@ -308,8 +308,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 34496.43156761903,
     "worst_week_gbp": -8874.67,
-    "worst_month_gbp": -8569.38,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1675.7000000000007,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 5404.363660100569,
     "cvar5_weekly_gbp": -8661.962
    },
@@ -320,8 +320,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 33768.6547447619,
     "worst_week_gbp": -8834.77,
-    "worst_month_gbp": -8569.38,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1662.6599999999999,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 5406.900537526795,
     "cvar5_weekly_gbp": -8642.003999999999
    },
@@ -332,8 +332,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 34159.55748761904,
     "worst_week_gbp": -8834.77,
-    "worst_month_gbp": -8569.38,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1662.6599999999999,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 5409.247343007937,
     "cvar5_weekly_gbp": -8647.42
    }
@@ -346,8 +346,8 @@
     "shortfall_weeks_per_year": 11.429904761904762,
     "shortfall_depth_gbp_per_year": 48826.45103428572,
     "worst_week_gbp": -12843.690000000002,
-    "worst_month_gbp": -11471.229999999996,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2860.3399999999983,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 7557.7280762215,
     "cvar5_weekly_gbp": -12432.754
    },
@@ -358,8 +358,8 @@
     "shortfall_weeks_per_year": 11.429904761904762,
     "shortfall_depth_gbp_per_year": 49866.120140952364,
     "worst_week_gbp": -12883.59,
-    "worst_month_gbp": -11471.229999999996,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2961.8500000000004,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 7556.389991469789,
     "cvar5_weekly_gbp": -12472.640000000001
    },
@@ -370,8 +370,8 @@
     "shortfall_weeks_per_year": 11.429904761904762,
     "shortfall_depth_gbp_per_year": 48928.95243238095,
     "worst_week_gbp": -12843.690000000002,
-    "worst_month_gbp": -11471.229999999996,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2860.3399999999983,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 7557.927059994287,
     "cvar5_weekly_gbp": -12456.628
    },
@@ -382,8 +382,8 @@
     "shortfall_weeks_per_year": 11.429904761904762,
     "shortfall_depth_gbp_per_year": 49294.78392761906,
     "worst_week_gbp": -12843.690000000002,
-    "worst_month_gbp": -11471.229999999996,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2860.3399999999983,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 7560.422827959127,
     "cvar5_weekly_gbp": -12496.37
    }
@@ -396,8 +396,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 24322.941693333327,
     "worst_week_gbp": -7364.7,
-    "worst_month_gbp": -6711.449999999999,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1625.6100000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4404.218493846884,
     "cvar5_weekly_gbp": -7102.842
    },
@@ -408,8 +408,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 25162.622253333328,
     "worst_week_gbp": -7404.61,
-    "worst_month_gbp": -6711.449999999999,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1465.9999999999995,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4405.6854940033745,
     "cvar5_weekly_gbp": -7142.751999999999
    },
@@ -420,8 +420,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 24455.697552380945,
     "worst_week_gbp": -7364.7,
-    "worst_month_gbp": -6711.449999999999,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1625.6100000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4406.434333701792,
     "cvar5_weekly_gbp": -7102.842
    },
@@ -432,8 +432,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 24521.851853333326,
     "worst_week_gbp": -7364.7,
-    "worst_month_gbp": -6711.449999999999,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1625.6100000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4409.442333224089,
     "cvar5_weekly_gbp": -7102.842
    }
@@ -446,8 +446,8 @@
     "shortfall_weeks_per_year": 9.442095238095238,
     "shortfall_depth_gbp_per_year": 41779.44264380954,
     "worst_week_gbp": -11475.330000000002,
-    "worst_month_gbp": -10758.12,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3397.750000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6810.023309694053,
     "cvar5_weekly_gbp": -11033.91
    },
@@ -458,8 +458,8 @@
     "shortfall_weeks_per_year": 8.945142857142857,
     "shortfall_depth_gbp_per_year": 42154.13976952381,
     "worst_week_gbp": -11514.810000000001,
-    "worst_month_gbp": -10758.12,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3238.080000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6811.185018000648,
     "cvar5_weekly_gbp": -11073.734
    },
@@ -470,8 +470,8 @@
     "shortfall_weeks_per_year": 9.442095238095238,
     "shortfall_depth_gbp_per_year": 41912.19850285716,
     "worst_week_gbp": -11534.700000000004,
-    "worst_month_gbp": -10758.12,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3397.750000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6812.254218509086,
     "cvar5_weekly_gbp": -11045.784000000001
    },
@@ -482,8 +482,8 @@
     "shortfall_weeks_per_year": 9.442095238095238,
     "shortfall_depth_gbp_per_year": 42022.6859257143,
     "worst_week_gbp": -11638.950000000004,
-    "worst_month_gbp": -10758.12,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3397.750000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6816.446707044197,
     "cvar5_weekly_gbp": -11066.634000000002
    }
@@ -496,8 +496,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 36514.301740952375,
     "worst_week_gbp": -9883.61,
-    "worst_month_gbp": -9265.869999999999,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2286.8299999999977,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6046.23675051552,
     "cvar5_weekly_gbp": -9746.772
    },
@@ -508,8 +508,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 37468.91247809523,
     "worst_week_gbp": -9923.57,
-    "worst_month_gbp": -9265.869999999999,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2126.9899999999984,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6039.540451650799,
     "cvar5_weekly_gbp": -9786.601999999999
    },
@@ -520,8 +520,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 36798.9560647619,
     "worst_week_gbp": -9883.61,
-    "worst_month_gbp": -9265.869999999999,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2286.8299999999977,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6048.034891782098,
     "cvar5_weekly_gbp": -9758.670000000002
    },
@@ -532,8 +532,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 37122.611211428564,
     "worst_week_gbp": -9883.61,
-    "worst_month_gbp": -9265.869999999999,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2286.8299999999977,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6050.543595971527,
     "cvar5_weekly_gbp": -9784.539999999999
    }
@@ -546,8 +546,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 22039.097636190483,
     "worst_week_gbp": -6213.08,
-    "worst_month_gbp": -5763.83,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1755.27,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 3690.3424389048378,
     "cvar5_weekly_gbp": -6061.004000000001
    },
@@ -558,8 +558,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 22936.469398095236,
     "worst_week_gbp": -6253.04,
-    "worst_month_gbp": -5763.83,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1596.090000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 3683.812261182524,
     "cvar5_weekly_gbp": -6100.821999999998
    },
@@ -570,8 +570,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 22226.00639619048,
     "worst_week_gbp": -6213.08,
-    "worst_month_gbp": -5763.83,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1695.780000000002,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 3691.6413081817727,
     "cvar5_weekly_gbp": -6072.901999999999
    },
@@ -582,8 +582,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 22248.344405714288,
     "worst_week_gbp": -6213.08,
-    "worst_month_gbp": -5763.83,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1686.7900000000004,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 3691.810594288212,
     "cvar5_weekly_gbp": -6074.7
    }
@@ -596,8 +596,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 47211.907413333334,
     "worst_week_gbp": -13665.280000000002,
-    "worst_month_gbp": -12662.83,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3278.959999999999,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 8103.121218361254,
     "cvar5_weekly_gbp": -13120.792000000001
    },
@@ -608,8 +608,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 48099.658177142854,
     "worst_week_gbp": -13705.210000000003,
-    "worst_month_gbp": -12662.83,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3159.1500000000005,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 8102.510966671632,
     "cvar5_weekly_gbp": -13152.726
    },
@@ -620,8 +620,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 47615.20414857144,
     "worst_week_gbp": -13725.180000000004,
-    "worst_month_gbp": -12662.83,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3278.959999999999,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 8105.72456481025,
     "cvar5_weekly_gbp": -13144.768
    },
@@ -632,8 +632,8 @@
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 47929.72034095237,
     "worst_week_gbp": -13776.95,
-    "worst_month_gbp": -12662.83,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3278.959999999999,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 8111.339165347426,
     "cvar5_weekly_gbp": -13160.866
    }
@@ -646,8 +646,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 28336.41360380952,
     "worst_week_gbp": -7929.960000000003,
-    "worst_month_gbp": -7422.6,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2318.34,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4699.187304901361,
     "cvar5_weekly_gbp": -7738.296
    },
@@ -658,8 +658,8 @@
     "shortfall_weeks_per_year": 11.429904761904762,
     "shortfall_depth_gbp_per_year": 29338.60256190476,
     "worst_week_gbp": -7969.880000000001,
-    "worst_month_gbp": -7422.6,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2158.699999999999,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4698.682419781221,
     "cvar5_weekly_gbp": -7778.208000000001
    },
@@ -670,8 +670,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 28581.80372,
     "worst_week_gbp": -7977.710000000003,
-    "worst_month_gbp": -7422.6,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2268.630000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4700.002261671915,
     "cvar5_weekly_gbp": -7757.7880000000005
    },
@@ -682,8 +682,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 28709.57017714285,
     "worst_week_gbp": -7977.710000000003,
-    "worst_month_gbp": -7422.6,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2268.630000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4700.931525757459,
     "cvar5_weekly_gbp": -7757.7880000000005
    }
@@ -696,8 +696,8 @@
     "shortfall_weeks_per_year": 10.932952380952381,
     "shortfall_depth_gbp_per_year": 40099.266521904756,
     "worst_week_gbp": -10906.690000000002,
-    "worst_month_gbp": -9584.85,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2194.93,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6411.074180278465,
     "cvar5_weekly_gbp": -10404.686
    },
@@ -708,8 +708,8 @@
     "shortfall_weeks_per_year": 10.932952380952381,
     "shortfall_depth_gbp_per_year": 40545.96210857142,
     "worst_week_gbp": -10946.61,
-    "worst_month_gbp": -9584.85,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2035.9000000000015,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6411.414808087843,
     "cvar5_weekly_gbp": -10444.596
    },
@@ -720,8 +720,8 @@
     "shortfall_weeks_per_year": 10.932952380952381,
     "shortfall_depth_gbp_per_year": 40232.02238095238,
     "worst_week_gbp": -10906.690000000002,
-    "worst_month_gbp": -9584.85,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2194.93,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6413.233087418444,
     "cvar5_weekly_gbp": -10404.686
    },
@@ -732,8 +732,8 @@
     "shortfall_weeks_per_year": 10.932952380952381,
     "shortfall_depth_gbp_per_year": 40446.849925714276,
     "worst_week_gbp": -10906.690000000002,
-    "worst_month_gbp": -9584.85,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2194.93,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 6419.995400115671,
     "cvar5_weekly_gbp": -10404.686
    }
@@ -746,8 +746,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 43127.7639047619,
     "worst_week_gbp": -12320.25,
-    "worst_month_gbp": -11340.91,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3072.2599999999966,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 7225.209327948501,
     "cvar5_weekly_gbp": -11694.6
    },
@@ -758,8 +758,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 44111.58550285714,
     "worst_week_gbp": -12360.149999999998,
-    "worst_month_gbp": -11340.91,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2913.0499999999984,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 7218.5601300609615,
     "cvar5_weekly_gbp": -11734.427999999996
    },
@@ -770,8 +770,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 43422.67532571428,
     "worst_week_gbp": -12320.25,
-    "worst_month_gbp": -11340.91,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 3072.2599999999966,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 7227.183324928998,
     "cvar5_weekly_gbp": -11706.497999999998
    },
@@ -782,8 +782,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 43869.38085142858,
     "worst_week_gbp": -12320.25,
-    "worst_month_gbp": -11340.91,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 2922.010000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 7230.498698973113,
     "cvar5_weekly_gbp": -11740.668
    }
@@ -796,8 +796,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 31388.630523809534,
     "worst_week_gbp": -8609.76,
-    "worst_month_gbp": -7344.5599999999995,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1900.4799999999996,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4937.859266573534,
     "cvar5_weekly_gbp": -8082.136
    },
@@ -808,8 +808,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 32380.92019047619,
     "worst_week_gbp": -8649.689999999999,
-    "worst_month_gbp": -7344.5599999999995,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1740.880000000001,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4937.471695566329,
     "cvar5_weekly_gbp": -8122.058
    },
@@ -820,8 +820,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 31637.529123809534,
     "worst_week_gbp": -8669.66,
-    "worst_month_gbp": -7344.5599999999995,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1840.58,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4939.871587203959,
     "cvar5_weekly_gbp": -8094.116
    },
@@ -832,8 +832,8 @@
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 31690.504247619057,
     "worst_week_gbp": -8673.6,
-    "worst_month_gbp": -7344.5599999999995,
-    "losing_months_per_year": 1.4908571428571429,
+    "worst_month_gbp": 1836.6399999999994,
+    "losing_months_per_year": 0.0,
     "weekly_cash_sd_gbp": 4942.3101607499475,
     "cvar5_weekly_gbp": -8094.904
    }
