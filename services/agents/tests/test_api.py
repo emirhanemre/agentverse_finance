@@ -67,6 +67,7 @@ def test_match_offer_is_an_ordinary_capped_proposal(monkeypatch):
     q = c.post("/api/offers/queue").json()
     o = q["quote"]
     assert o["kind"] == "offer" and o["badge"].startswith("REAL")  # real market price (cached offline)
+    assert o["pricing"] == "order book"  # walked the recorded CLOB book, not best ask for every share
     assert 0 < o["payout_if_event_gbp"] <= o["worst_case_gbp"]  # never more cover than the offer can cost
     assert abs(o["hedge_cost_gbp"] - o["shares"] * o["cost_per_share"]) <= o["shares"] * 0.00005 + 0.01  # per-share cost shown to 4dp
     a = c.post(f"/api/proposals/{q['id']}/approve", json={"confirm_second": True}).json()

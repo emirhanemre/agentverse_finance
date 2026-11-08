@@ -1,0 +1,126 @@
+{
+ "data": {
+  "asks": [
+   {
+    "price": "0.99",
+    "size": "1104.94"
+   },
+   {
+    "price": "0.98",
+    "size": "1512.58"
+   },
+   {
+    "price": "0.97",
+    "size": "300"
+   },
+   {
+    "price": "0.96",
+    "size": "11.73"
+   },
+   {
+    "price": "0.86",
+    "size": "71.42"
+   },
+   {
+    "price": "0.85",
+    "size": "8.13"
+   },
+   {
+    "price": "0.55",
+    "size": "666"
+   },
+   {
+    "price": "0.33",
+    "size": "1500"
+   },
+   {
+    "price": "0.32",
+    "size": "2013"
+   },
+   {
+    "price": "0.25",
+    "size": "1000"
+   },
+   {
+    "price": "0.2",
+    "size": "100"
+   },
+   {
+    "price": "0.19",
+    "size": "2033.69"
+   },
+   {
+    "price": "0.18",
+    "size": "125"
+   },
+   {
+    "price": "0.17",
+    "size": "13.25"
+   },
+   {
+    "price": "0.13",
+    "size": "80"
+   },
+   {
+    "price": "0.12",
+    "size": "343"
+   },
+   {
+    "price": "0.11",
+    "size": "1104.03"
+   },
+   {
+    "price": "0.1",
+    "size": "1626.44"
+   },
+   {
+    "price": "0.09",
+    "size": "1838.07"
+   }
+  ],
+  "asset_id": "98560182035622310367525354836369213125853832782855768247352296520955370813739",
+  "bids": [
+   {
+    "price": "0.01",
+    "size": "3773.07"
+   },
+   {
+    "price": "0.02",
+    "size": "2525.88"
+   },
+   {
+    "price": "0.03",
+    "size": "1300"
+   },
+   {
+    "price": "0.04",
+    "size": "507.54"
+   },
+   {
+    "price": "0.05",
+    "size": "350"
+   },
+   {
+    "price": "0.06",
+    "size": "105.07"
+   },
+   {
+    "price": "0.07",
+    "size": "819.71"
+   }
+  ],
+  "hash": "d6d8a6688c1d80ab6cc83c3832e2d9292743d214",
+  "last_trade_price": "0.070",
+  "market": "0xdd461acd003ee84642fa383ce62d7136b084d2bdd157c3d20ab8765aa53b3cf4",
+  "min_order_size": "5",
+  "neg_risk": true,
+  "tick_size": "0.01",
+  "timestamp": "1794134740390"
+ },
+ "fetched_at": "2026-11-08T10:46:07Z",
+ "fetched_ts": 1794134767.866938,
+ "key": "/book?token_id=98560182035622310367525354836369213125853832782855768247352296520955370813739",
+ "licence": "Polymarket public market data (read-only API), docs.polymarket.com; not redistributed for trading",
+ "source": "Polymarket CLOB",
+ "url": "https://clob.polymarket.com/book"
+}

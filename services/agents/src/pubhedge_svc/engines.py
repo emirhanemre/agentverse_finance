@@ -3,6 +3,7 @@ everything a narration may quote comes out of these functions."""
 import csv
 import json
 import math
+import re
 from datetime import date, timedelta
 from functools import lru_cache
 
@@ -150,6 +151,24 @@ def cost_per_share(ask: float, fee_rate: float = FEE_RATE) -> float:
     return fill + fee_rate * fill * (1 - fill)
 
 
+def implied_high(markets: list) -> dict:
+    """Market-implied daily high from a temperature ladder: Yes prices normalised to 1, each bracket at its stated
+    degree ("16°C or below" counts as 16). Uses Gamma's Yes price, not bid/ask mids, so a wide spread on a dead
+    tail bracket can't drag it. Context only: the model doesn't use it."""
+    pts = sorted((int(t.group(1)), m["yes_price"]) for m in markets
+                 if m["yes_price"] and (t := re.search(r"(-?\d+)°C", m["question"] or "")))
+    tot = sum(p for _, p in pts)
+    if not tot:
+        return {}
+    out, cum = {"expected_high_c": round(sum(t * p for t, p in pts) / tot, 1)}, 0.0
+    for t, p in pts:
+        cum += p / tot
+        for k in (10, 50, 90):
+            if cum >= k / 100 - 1e-9:
+                out.setdefault(f"p{k}_c", t)
+    return out
+
+
 # ---------- sizing ----------
 def size_hedges(markets: list, weekly_cap_gbp: float, month_room_gbp: float, per_market_cap_gbp: float) -> dict:
     """Maximise expected value to the owner, sum x_i (w_i - k_i), where k_i is the all-in cost per
@@ -175,6 +194,21 @@ def size_hedges(markets: list, weekly_cap_gbp: float, month_room_gbp: float, per
             "solver": "pubhedge_core.sizing (exact, whole shares)",
             "total_cost_gbp": round(sum(p["cost_gbp"] for p in pos), 2), "no_value_at_price": no_value,
             "expected_value_pence": res["expected_value_pence"]}
+
+
+def walk_book(asks: list, max_shares: int, budget_gbp: float, fee_rate: float = FEE_RATE) -> dict:
+    """Buy whole shares from the cheapest ask up, each level with its taker fee, until the cover or the budget runs
+    out. What the book really offers, rather than the best ask for every share."""
+    shares, cost = 0, 0.0
+    for a in sorted(asks, key=lambda a: float(a["price"])):
+        p = float(a["price"])
+        per = p + fee_rate * p * (1 - p)
+        n = min(int(float(a["size"])), max_shares - shares, int((budget_gbp - cost) // per))
+        if n > 0:
+            shares, cost = shares + n, cost + n * per
+        if shares >= max_shares or budget_gbp - cost < per:
+            break
+    return {"shares": shares, "cost_gbp": round(cost, 2), "cost_per_share": round(cost / shares, 4) if shares else 0.0}
 
 
 # ---------- paper exchange ----------

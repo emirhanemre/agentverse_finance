@@ -37,6 +37,11 @@ def price_history(token_id: str, interval: str = "1w", fidelity: int = 60) -> di
     return _fetch("/prices-history", {"market": token_id, "interval": interval, "fidelity": fidelity}, base=CLOB)
 
 
+def book(token_id: str) -> dict:
+    """Live order book for one outcome token (CLOB, read-only)."""
+    return _fetch("/book", {"token_id": token_id}, base=CLOB, max_age_s=60)
+
+
 def parse_market(m: dict) -> dict:
     """Flatten the fields we use; outcome arrays arrive as JSON strings."""
     tokens = json.loads(m.get("clobTokenIds") or "[]")

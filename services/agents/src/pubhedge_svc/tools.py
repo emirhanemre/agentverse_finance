@@ -50,10 +50,14 @@ def quote_offer(limits: dict, ledger: dict) -> dict:
     m = next(pm.parse_market(x) for x in ev["markets"] if x.get("question") == OFFER["market_question"])
     ask = float(m["best_ask"] or m["yes_price"])
     worst = round(OFFER["covers_cap"] * OFFER["avg_main_gbp"] * OFFER["discount_share"], 2)
-    cps = E.cost_per_share(ask, m["fee_rate"])
-    room = min(limits["per_market_cap_pence"], limits["weekly_spend_cap_pence"] - ledger["spent_this_week_pence"]) / 100
-    shares = int(min(worst, max(0, room) // cps))  # full cover up to the worst case, inside the caps
-    cost = round(shares * cps, 2)
+    room = max(0, min(limits["per_market_cap_pence"], limits["weekly_spend_cap_pence"] - ledger["spent_this_week_pence"]) / 100)
+    try:  # full cover up to the worst case, inside the caps, priced off the real book
+        w = E.walk_book(pm.book(m["yes_token"])["data"]["asks"], int(worst), room, m["fee_rate"])
+        shares, cost, cps, pricing = w["shares"], w["cost_gbp"], w["cost_per_share"], "order book"
+    except Exception:  # no book (offline, nothing recorded): the old estimate, said as such
+        cps = E.cost_per_share(ask, m["fee_rate"])
+        shares = int(min(worst, room // cps))
+        cost, pricing = round(shares * cps, 2), "best ask + 1% slippage (no order book)"
     market_id = f"pm-{OFFER['event_slug']}-croatia"
     return {"badge": env["badge"], "source": env["source"], "licence": env["licence"], "fetched_at": env.get("fetched_at"),
             "url": f"https://polymarket.com/event/{OFFER['event_slug']}", "kind": "offer", "market_id": market_id,
@@ -61,6 +65,7 @@ def quote_offer(limits: dict, ledger: dict) -> dict:
             "kickoff": ev.get("endDate"), "market": m["question"], "trigger": OFFER["trigger"], "offer": OFFER["offer"],
             "covers_cap": OFFER["covers_cap"], "avg_main_gbp": OFFER["avg_main_gbp"], "menu_badge": "SYNTHETIC",
             "ask": ask, "market_prob": m["yes_price"], "fee_rate": m["fee_rate"], "cost_per_share": round(cps, 4),
+            "pricing": pricing,
             "worst_case_gbp": worst, "shares": shares, "payout_if_event_gbp": float(shares), "hedge_cost_gbp": cost,
             "uncovered_gbp": round(worst - shares, 2), "fixed_cost_gbp": round(cost + worst - shares, 2),
             "verdict": E.check_limits(int(round(cost * 100)), market_id, limits, ledger),
@@ -316,7 +321,8 @@ def make_tools(run: Run) -> dict:
                 if evs:
                     ms = [pm.parse_market(m) for m in evs[0]["markets"]]
                     found.append({"date": d.isoformat(), "event": evs[0]["slug"], "buckets": len(ms), "badge": env["badge"],
-                                  "top_bucket": max(ms, key=lambda m: m["yes_price"] or 0)["question"]})
+                                  "top_bucket": max(ms, key=lambda m: m["yes_price"] or 0)["question"],
+                                  "settled": all(m["closed"] for m in ms), **E.implied_high(ms)})
             except Exception as exc:
                 notes.append(f"{d}: {type(exc).__name__}")
         try:
@@ -326,7 +332,8 @@ def make_tools(run: Run) -> dict:
             rain_hits = []
         return {"badge": "REAL" if found else "REAL · CACHED", "source": "Polymarket Gamma API (read-only)",
                 "temperature_events": found, "rain_markets": rain_hits, "uk_trading": "blocked for UK users; read-only",
-                "summary": f"{len(found)} temperature ladders · {len(rain_hits)} rain markets"}
+                "summary": f"{len(found)} temperature ladders · {len(rain_hits)} rain markets"
+                           + "".join(f" · {f['date'][5:]} high ~{f['expected_high_c']:g}°C" for f in found if "expected_high_c" in f)}
 
     @tool
     def price_rain_contracts() -> dict:

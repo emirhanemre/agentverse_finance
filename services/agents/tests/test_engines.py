@@ -61,3 +61,17 @@ def test_exact_sizer_matches_lp_bound():
         got = sizing.size(ms, budget, cap)["expected_value_pence"]
         floor_val = sum(math.floor(x) * ei for x, ei in zip(lp.x, e) if ei > 0)
         assert floor_val - 1e-6 <= got <= -lp.fun + 1e-6
+
+
+def test_walk_book_fills_cheapest_first_and_respects_cover_and_budget():
+    asks = [{"price": "0.10", "size": "50"}, {"price": "0.09", "size": "100"}]
+    w = E.walk_book(asks, max_shares=120, budget_gbp=1000, fee_rate=0.0)
+    assert w["shares"] == 120 and w["cost_gbp"] == 100 * 0.09 + 20 * 0.10
+    assert E.walk_book(asks, max_shares=1000, budget_gbp=5.0, fee_rate=0.0)["shares"] == 55  # 9.00 > 5: stops at budget
+    assert E.walk_book([], 10, 10)["shares"] == 0
+
+
+def test_implied_high_from_ladder():
+    ms = [{"question": f"Will it be {t}°C?", "yes_price": p} for t, p in [(9, 0.2), (10, 0.5), (11, 0.3)]]
+    assert E.implied_high(ms) == {"expected_high_c": 10.1, "p10_c": 9, "p50_c": 10, "p90_c": 11}
+    assert E.implied_high([{"question": "5°C", "yes_price": 0}]) == {}  # no prices, no number (not 0°C)
