@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { API, useAppState } from "../../lib/api";
-import { NAV, Sidebar, TopBar, ViewSwitch, type NavId, type View } from "../../components/dashboard/Shell";
+import { MobileNav, NAV, Sidebar, TopBar, ViewSwitch, type NavId, type View } from "../../components/dashboard/Shell";
 import { SimpleView } from "../../components/dashboard/Simple";
 import { TodayView } from "../../components/dashboard/Overview";
 import { ActivityPage, BacktestPage, ProtectionsPage, RisksPage, SettingsPage, SourcesPage } from "../../components/dashboard/Pages";
@@ -56,8 +56,8 @@ export default function DashboardPage() {
           title={
             <span className="flex items-center gap-3 whitespace-nowrap">
               <Logo />
-              <span className="h-4 w-px bg-line-strong" aria-hidden />
-              <span className="font-sans text-sm font-normal text-fg-2">{s.pub.trading_name}</span>
+              <span className="hidden h-4 w-px bg-line-strong sm:block" aria-hidden />
+              <span className="hidden font-sans text-sm font-normal text-fg-2 sm:inline">{s.pub.trading_name}</span>
             </span>
           }
           right={<ViewSwitch view={view} onChange={setView} />}
@@ -76,7 +76,7 @@ export default function DashboardPage() {
           right={
             <>
               {s.run && (
-                <span className="flex items-center gap-3 whitespace-nowrap text-xs text-fg-3">
+                <span className="hidden items-center gap-3 whitespace-nowrap text-xs text-fg-3 xl:flex">
                   <span>{s.scenario.name}</span>
                   <span className="h-3 w-px bg-line-strong" aria-hidden />
                   <span>{s.run.mode}</span>
@@ -89,7 +89,8 @@ export default function DashboardPage() {
             </>
           }
         />
-        <main className="min-h-0 flex-1 overflow-y-auto p-6">
+        <MobileNav nav={nav} onNav={setNav} />
+        <main className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
           {nav === "overview" && <TodayView s={s} refresh={refresh} tick={tick} />}
           {nav === "protections" && <ProtectionsPage s={s} refresh={refresh} />}
           {nav === "risks" && <RisksPage s={s} />}

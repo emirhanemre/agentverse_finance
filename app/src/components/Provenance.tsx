@@ -91,6 +91,7 @@ export function AuditSwitch() {
       role="switch"
       aria-checked={audit}
       aria-keyshortcuts="S"
+      aria-label="Show sources"
       onClick={() => setAudit(!audit)}
       data-testid="audit-switch"
       className="hit press flex h-8 items-center gap-2 whitespace-nowrap rounded-pill px-3 text-xs text-fg-2 hover:bg-surface-3 hover:text-fg"
@@ -109,7 +110,7 @@ export function AuditSwitch() {
           )}
         />
       </span>
-      Show sources
+      <span className="hidden sm:inline">Show sources</span>
     </button>
   );
 }

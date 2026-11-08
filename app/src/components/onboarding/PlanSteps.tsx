@@ -126,7 +126,7 @@ export function ReviewStep({ s, refresh, onBack }: P & { refresh: () => void }) 
   const p = rainProposals(s)[0];
   return (
     <div>
-      <div className="grid grid-cols-2 items-start gap-4">
+      <div className="grid items-start gap-4 lg:grid-cols-2">
         <ApprovalCard s={s} p={p} onChange={refresh} />
         <LimitsPanel s={s} onChange={refresh} />
       </div>

@@ -42,7 +42,7 @@ export function Sidebar({
     .slice(0, 2)
     .toUpperCase();
   return (
-    <aside className="flex w-60 shrink-0 flex-col border-r border-line bg-[var(--surface-solid)]">
+    <aside className="hidden w-60 shrink-0 flex-col border-r border-line bg-[var(--surface-solid)] md:flex">
       <div className="flex h-14 items-center border-b border-line px-4">
         <Logo />
       </div>
@@ -97,6 +97,7 @@ export function ViewSwitch({ view, onChange }: { view: View; onChange: (v: View)
       type="button"
       role="switch"
       aria-checked={on}
+      aria-label="Advanced view"
       onClick={() => onChange(on ? "simple" : "advanced")}
       data-testid="view-switch"
       className="hit press flex h-8 items-center gap-2 whitespace-nowrap rounded-pill px-3 text-xs text-fg-2 hover:bg-surface-3 hover:text-fg"
@@ -107,16 +108,16 @@ export function ViewSwitch({ view, onChange }: { view: View; onChange: (v: View)
       >
         <span className={cx("absolute top-0.5 h-3 w-3 rounded-full transition-transform", on ? "translate-x-[10px] bg-accent-ink" : "translate-x-0.5 bg-fg-3")} />
       </span>
-      Advanced
+      <span className="hidden sm:inline">Advanced</span>
     </button>
   );
 }
 
 export function TopBar({ title, right }: { title: React.ReactNode; right?: React.ReactNode }) {
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between border-b border-line bg-bg px-6">
-      <h1 className="font-display text-lg font-medium">{title}</h1>
-      <div className="flex items-center gap-3">
+    <header className="flex min-h-14 shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-line bg-bg px-4 py-2 sm:px-6">
+      <h1 className="min-w-0 font-display text-lg font-medium">{title}</h1>
+      <div className="flex items-center gap-1 sm:gap-3">
         {right}
         <AuditSwitch />
         <ThemeToggle />
@@ -136,5 +137,23 @@ export function Th({ children, right }: { children: React.ReactNode; right?: boo
 export function Td({ children, right, mono, className }: { children: React.ReactNode; right?: boolean; mono?: boolean; className?: string }) {
   return (
     <td className={cx("h-10 px-6 text-sm", right && "text-right", mono && "font-mono text-xs", className)}>{children}</td>
+  );
+}
+
+/** Under md the sidebar folds into this scrollable row of the same destinations. */
+export function MobileNav({ nav, onNav }: { nav: NavId; onNav: (n: NavId) => void }) {
+  return (
+    <nav aria-label="Sections" className="flex shrink-0 gap-1 overflow-x-auto border-b border-line px-2 py-2 md:hidden">
+      {NAV.map((n) => (
+        <button
+          key={n.id}
+          onClick={() => onNav(n.id)}
+          aria-current={nav === n.id ? "page" : undefined}
+          className={cx("press h-9 shrink-0 rounded-pill px-3 text-sm", nav === n.id ? "bg-surface-3 font-medium text-fg" : "text-fg-2 hover:bg-surface-2")}
+        >
+          {n.label}
+        </button>
+      ))}
+    </nav>
   );
 }

@@ -99,7 +99,7 @@ export function VerifyPanel({ s }: S) {
         {!ch ? (
           <Empty>Run the agent to check the public registers.</Empty>
         ) : (
-          <div className="grid grid-cols-2 gap-x-10">
+          <div className="grid gap-x-10 sm:grid-cols-2">
             <KeyValue
               rows={[
                 row("Trading as", s.pub.trading_name),
@@ -372,14 +372,14 @@ export function CashflowPanel({ s, compact }: S & { compact?: boolean }) {
           <Empty>Run the agent to project payroll.</Empty>
         ) : (
           <>
-            <div className="grid grid-cols-4 divide-x divide-line">
+            <div className="grid grid-cols-2 gap-y-3 divide-line sm:grid-cols-4 sm:gap-y-0 sm:divide-x">
               {[
                 { l: "First day overdrawn", v: day(wet.first_negative_date), rid: wet.receipt_id, c: wet.first_negative_date ? "text-warning" : undefined },
                 { l: "Payroll due", v: day(wet.payroll_date), rid: wet.receipt_id },
                 { l: "Short on payroll day, wet", v: gbp(-wet.shortfall_gbp, { pence: true }), rid: wet.receipt_id, c: wet.shortfall_gbp > 0 ? "text-warning" : undefined },
                 { l: "Short on payroll day, dry", v: dry ? gbp(-dry.shortfall_gbp, { pence: true }) : "—", rid: dry?.receipt_id, c: dry && dry.shortfall_gbp > 0 ? "text-warning" : undefined },
               ].map((m) => (
-                <div key={m.l} className="px-4 first:pl-0 last:pr-0">
+                <div key={m.l} className="pr-4 sm:px-4 sm:first:pl-0 sm:last:pr-0">
                   <div className="text-xs text-fg-3">{m.l}</div>
                   <Num rid={m.rid} className={cx("font-display text-lg font-medium", m.c)}>
                     {m.v}
@@ -443,8 +443,8 @@ export function PaydayPanel({ s }: S) {
   return (
     <div data-testid="panel-payday">
       <ProvPanel title={`Payday, ${day(o.payroll_date)}`} prov={provOf(sized)} actions={<span>Lowest balance before payroll</span>}>
-        <div className="grid grid-cols-[12rem_minmax(0,1fr)] gap-x-4" role="img" aria-label="Payday balance after payroll: dry weekend, wet weekend without cover, wet weekend with cover">
-          <div className="flex flex-col gap-3">
+        <div className="grid gap-x-4 sm:grid-cols-[12rem_minmax(0,1fr)]" role="img" aria-label="Payday balance after payroll: dry weekend, wet weekend without cover, wet weekend with cover">
+          <div className="hidden flex-col gap-3 sm:flex">
             {rows.map((r, i) => (
               <span key={r.l} className={cx("flex h-14 items-center text-sm", i === 2 ? "font-medium text-fg" : "text-fg-2")}>
                 {r.l}
@@ -453,7 +453,15 @@ export function PaydayPanel({ s }: S) {
           </div>
           <div className="relative flex flex-col gap-3 pb-6">
             {rows.map((r, i) => (
-              <div key={r.l} className="relative h-14">
+              <div key={r.l}>
+                <div className="mb-1 flex items-baseline justify-between gap-3 sm:hidden">
+                  <span className={cx("text-sm", i === 2 ? "font-medium text-fg" : "text-fg-2")}>{r.l}</span>
+                  <Num rid={rid} className={cx("font-display text-md font-medium", r.ink)}>
+                    {endNote(r.v)}
+                  </Num>
+                </div>
+              <div className="relative h-8 sm:h-14">
+                <div aria-hidden className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-fg-2 sm:hidden" />
                 <div
                   className={cx("pd-bar absolute inset-y-0 rounded", r.bar)}
                   style={{
@@ -465,7 +473,7 @@ export function PaydayPanel({ s }: S) {
                 {/* A long bar carries its figure inside its end; a short one beside it. */}
                 <div
                   className={cx(
-                    "absolute inset-y-0 flex items-center whitespace-nowrap px-4 font-display text-xl font-medium",
+                    "absolute inset-y-0 hidden items-center whitespace-nowrap px-4 font-display text-xl font-medium sm:flex",
                     w(r.v) > 25 ? (r.bar.startsWith("bg-surface") ? "text-fg" : "text-accent-ink") : r.ink
                   )}
                   style={
@@ -481,8 +489,9 @@ export function PaydayPanel({ s }: S) {
                   <Num rid={rid}>{endNote(r.v)}</Num>
                 </div>
               </div>
+              </div>
             ))}
-            <div aria-hidden className="absolute bottom-6 left-1/2 top-0 w-0.5 -translate-x-1/2 bg-fg-2" />
+            <div aria-hidden className="absolute bottom-6 left-1/2 top-0 hidden w-0.5 -translate-x-1/2 bg-fg-2 sm:block" />
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs text-fg-2">Payroll line</span>
           </div>
         </div>
@@ -597,7 +606,8 @@ export function OutcomesTable({ o, rid }: { o: Outcomes; rid?: string }) {
   return (
     <div className="mt-6" data-testid="outcomes">
       <h3 className="font-sans text-sm font-medium tracking-normal text-fg">What the hedge does to payroll on {day(o.payroll_date)}</h3>
-      <table className="mt-2 w-full">
+      <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+      <table className="mt-2 w-full min-w-[34rem]">
         <thead>
           <tr className="border-b border-line text-xs text-fg-3">
             <th className={cx(TH, "pr-4 text-left")}>Weekend</th>
@@ -625,6 +635,7 @@ export function OutcomesTable({ o, rid }: { o: Outcomes; rid?: string }) {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
