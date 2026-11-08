@@ -58,6 +58,32 @@ class SalesImport(StrictModel):
     csv: str = Field(min_length=1, max_length=2_000_000)
 
 
+class OperatingCostsInput(StrictModel):
+    fixed_daily_cost_gbp: float = Field(default=1000, ge=0, le=100000, multiple_of=.01)
+    variable_cost_pct: float = Field(default=30, ge=0, le=100, multiple_of=.01)
+
+
+class OperatingProfitScenario(StrictModel):
+    revenue_gbp: float
+    variable_cost_gbp: float
+    fixed_cost_gbp: float
+    total_cost_gbp: float
+    operating_profit_gbp: float
+    operating_margin_pct: float | None
+    prediction_interval_80_low_gbp: float | None
+    prediction_interval_80_high_gbp: float | None
+
+
+class OperatingProfitResponse(StrictModel):
+    target_date: str
+    origin: Literal['demo_cost_assumptions']
+    assumptions: OperatingCostsInput
+    selected: OperatingProfitScenario
+    reference: OperatingProfitScenario
+    profit_difference_gbp: float
+    note: str
+
+
 class AnalysisInput(StrictModel):
     target_date: dt.date
     weather_mode: Literal["manual", "forecast"] = "manual"
@@ -142,3 +168,5 @@ class StateResponse(StrictModel):
     monitoring: dict[str, Any] | None = None
     notifications: list[dict[str, Any]] = []
     company: dict[str, Any] | None = None
+    operating_costs: OperatingCostsInput = Field(default_factory=OperatingCostsInput)
+    operating_profit: OperatingProfitResponse | None = None

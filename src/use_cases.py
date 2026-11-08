@@ -1,20 +1,15 @@
-"""Training, real-market approval revalidation and official paper settlement."""
+"""Training, reviewed-quote paper approvals and official paper settlement."""
 from __future__ import annotations
-import datetime as dt
 from decimal import Decimal, ROUND_HALF_UP
-import hashlib
 import json
 import sqlite3
 import uuid
 
 from src.application_store import Conflict
 from src import business_model
-from src.contracts import parse_contract, payoff_direction, rules_hash
-from src.financial_calc import evaluate_candidate_hedge
 from src.inference import compare_weather_scenarios_for_date, get_reference_weather_for_date
 from src.paper_execution import utc_now_iso
 from src.polymarket_client import PolymarketConnector
-from src.schemas import MarketCandidate
 
 
 class ExtendedUseCases:
@@ -83,35 +78,11 @@ class ExtendedUseCases:
                 self.store.notify(c,'model',message,job_id)
 
     def approve(self, proposal_id, approval):
-        from src.application import live_enabled
-        p=self.store.get_proposal(proposal_id)
-        if not p or p.data_origin!='live_polymarket_api': return self.store.decide(proposal_id,approval)
-        if not live_enabled(): raise Conflict('Live approval requires current rule and quote revalidation. Enable network access and retry.')
-        with self.store._connect() as c:
-            ctx=c.execute('SELECT * FROM proposal_context WHERE proposal_id=?',(proposal_id,)).fetchone()
-        if not ctx: raise Conflict('Application proposal not found.')
-        original=MarketCandidate.model_validate_json(ctx['market_payload'])
-        try:
-            connector=PolymarketConnector(allow_live_network=True)
-            market=connector.refresh_market(p.market_id)
-            if market.status!='active' or rules_hash(market)!=rules_hash(original):
-                raise Conflict('Market status or resolution rules changed. Renew the assessment and approve a new proposal.')
-            profile=self.store.state('profile');settings=self.store.state('settings')
-            spec=parse_contract(market,profile,settings.get('max_station_distance_km',30))
-            if spec.date!=p.target_date: raise Conflict('Contract observation date changed. Renew assessment.')
-            book=connector.get_order_book(p.market_id,p.outcome_selected)
-            if not book.get('live_refresh_succeeded'): raise Conflict('Could not refresh the live executable book. No paper position was recorded.')
-            calc=evaluate_candidate_hedge(market,p.outcome_selected,p.target_date,p.budget_gbp,
-                p.calculation.adverse_weather_pub_revenue_gbp,p.calculation.reference_weather_pub_revenue_gbp,
-                settings['fx_usd_per_gbp'],'Configured paper FX assumption; not a live FX quote',settings['fee_bps'])
-            if calc.executable_contracts!=p.paper_quantity or calc.total_entry_cost_pence!=round(p.max_total_cost_gbp*100) or abs(calc.average_ask_price_usd-p.calculation.average_ask_price_usd)>.00001:
-                raise Conflict('Order-book price or executable quantity changed. Renew assessment and approve the changed quote.')
-            validation={'proposal_hash':p.proposal_hash,'rules_hash':rules_hash(original),'checked_at':utc_now_iso()}
-            return self.store.decide(proposal_id,approval,live_validation=validation)
-        except Conflict:
-            raise
-        except Exception as exc:
-            raise Conflict('Live market revalidation failed. No position was recorded; refresh the analysis and retry.') from exc
+        # This records a simulated fill at the immutable quote the operator saw.
+        # Discovery checks live rules/depth when creating that proposal; approval
+        # checks its binding, expiry and current portfolio limits atomically.
+        # No live repricing, exchange request or replacement quote is needed.
+        return self.store.decide(proposal_id,approval)
 
     def refresh_settlements(self):
         from src.application import live_enabled

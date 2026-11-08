@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "checked_at": "2026-11-08T10:12:33.000Z",
+  "origin": "Synthetic sales and explicit illustrative costs; isolated test records.",
+  "onboarding_card": true,
+  "editable_costs": true,
+  "losses_preserved": true,
+  "invalid_costs_rejected": true,
+  "reload_persistence": true,
+  "dashboard_and_settings": true,
+  "existing_analysis_and_proposal_preserved": true,
+  "page_errors": [],
+  "dark_theme_viewports": [
+    1440,
+    1024
+  ]
+}

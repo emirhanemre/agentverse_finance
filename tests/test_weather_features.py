@@ -116,19 +116,29 @@ def test_real_rule_matching_approval_and_recorded_resolution(client):
         assert client.post('/api/positions/refresh').json()['newly_resolved']==0
 
 
-@pytest.mark.parametrize('mutation',['price','rules','status','depth'])
-def test_live_approval_requires_unchanged_executable_quote_and_rules(client,mutation):
+@pytest.mark.parametrize('mutation',['price','rules','status','depth','offline'])
+def test_paper_approval_records_reviewed_quote_without_repricing(client,mutation,monkeypatch):
     transport=Transport()
-    with patch('src.polymarket_client.requests.get',side_effect=transport):
+    with patch('src.polymarket_client.requests.get',side_effect=transport) as network:
         assessment(client);p=proposal(client)
         assert p['status']=='recommend_paper_hedge'
         if mutation=='price': transport.price='.5'
         elif mutation=='rules': transport.record['description']+=' Official rule clarification.'
         elif mutation=='status': transport.record['closed']=True
-        else: transport.size='1'
+        elif mutation=='depth': transport.size='1'
+        else: monkeypatch.setenv('POLYMARKET_OFFLINE_ONLY','true')
+        calls=network.call_count
+        network.side_effect=AssertionError('Paper approval must not call the exchange')
         result=client.post(f'/api/proposals/{p["proposal_id"]}/approve',json=approval(p))
-        assert result.status_code==409,result.text
-        assert client.get('/api/positions').json()==[]
+        assert result.status_code==200,result.text
+        assert network.call_count==calls
+        position=client.get('/api/positions').json()[0]
+        assert position['paper_quantity']==p['paper_quantity']
+        assert position['total_entry_cost_gbp']==p['max_total_cost_gbp']
+        assert position['average_fill_price_usd']==p['calculation']['average_ask_price_usd']
+        assert 'reviewed assessment quote' in position['settlement_note']
+        assert client.post(f'/api/proposals/{p["proposal_id"]}/approve',json=approval(p)).status_code==409
+        assert len(client.get('/api/positions').json())==1
 
 
 @pytest.mark.parametrize('status,review',[('proposed',False),('disputed',False),('resolved',True)])

@@ -13,7 +13,8 @@ import uuid
 from zoneinfo import ZoneInfo
 
 from src.agent import infer_exposure_driver
-from src.api_schemas import AnalysisInput
+from src.api_schemas import AnalysisInput, OperatingCostsInput
+from src.operating_profit import estimate_operating_profit
 from src.application_store import ApplicationStore, Conflict
 from src.business_data import load_pub_dataset
 from src.financial_calc import evaluate_candidate_hedge
@@ -336,8 +337,11 @@ class WeatherApplication(ExtendedUseCases, MonitoringUseCases):
             notifications=[dict(r) for r in c.execute('SELECT * FROM notifications ORDER BY id DESC LIMIT 50')]
             demo_sources=self.store.state('demo_sources',{},c)
             monitoring=self.store.state('monitoring',None,c)
+            operating_costs=self.store.state('operating_costs',None,c) or OperatingCostsInput().model_dump(mode='json')
         aid = state['active_analysis'] or state['latest_analysis']
         latest = self.store.analysis(aid) if aid else None
+        comparison=latest['payload'].get('comparison') if latest else None
+        operating_profit=estimate_operating_profit(comparison, operating_costs) if comparison else None
         pending = [p for p in proposals if p['approval_state'] == 'pending_human_approval' and not p['expired']]
         model=self.store.model()
         model_note=model['note'] if model and model['accepted'] else MODEL_NOTE
@@ -345,6 +349,7 @@ class WeatherApplication(ExtendedUseCases, MonitoringUseCases):
             model_note='Imported sales are ready for training and chronological evaluation. Business-specific predictions require an evaluated model; the synthetic demonstration is a separate explicit choice. Revenue is not profit or cashflow.'
         resolutions=[p['resolution'] for p in positions if p['resolution']]
         return {**state, 'analysis': latest, 'proposals': proposals, 'positions': positions, 'activity': audits,
+            'operating_costs':operating_costs,'operating_profit':operating_profit,
             'business_model':model,'training_job':self.store.training_job(),'monitoring':monitoring,'notifications':notifications,
             'sources': [{'id': n.lower().replace(' ','_'), 'name': n, 'status': 'demo_connected' if n.lower().replace(' ','_') in demo_sources else 'demo_available', 'note': 'Visual connection demo only. No account access or records imported.'} for n in ('Toast','Monzo','Xero','Companies House')]+[{'id':'licensing','name':'Licensing','status':'unavailable','note':'External verification is not performed.'}],
             'summary': {**risk, 'open_positions': len([p for p in positions if p['actual_resolved_outcome'] not in ('Yes','No','INVALID')]),

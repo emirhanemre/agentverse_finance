@@ -27,6 +27,29 @@ export type Settings = {
   monitor_horizon_days: number;
   monitor_budget_gbp: number;
 };
+export type OperatingCosts = {
+  fixed_daily_cost_gbp: number;
+  variable_cost_pct: number;
+};
+export type OperatingProfitScenario = {
+  revenue_gbp: number;
+  variable_cost_gbp: number;
+  fixed_cost_gbp: number;
+  total_cost_gbp: number;
+  operating_profit_gbp: number;
+  operating_margin_pct: number | null;
+  prediction_interval_80_low_gbp: number | null;
+  prediction_interval_80_high_gbp: number | null;
+};
+export type OperatingProfit = {
+  target_date: string;
+  origin: "demo_cost_assumptions";
+  assumptions: OperatingCosts;
+  selected: OperatingProfitScenario;
+  reference: OperatingProfitScenario;
+  profit_difference_gbp: number;
+  note: string;
+};
 export type BusinessModel = {
   id: string;
   accepted: boolean;
@@ -258,6 +281,8 @@ export type AppState = {
   profile: Profile | null;
   dataset: Dataset | null;
   settings: Settings;
+  operating_costs: OperatingCosts;
+  operating_profit: OperatingProfit | null;
   revision: number;
   setup_complete: boolean;
   forecast: Forecast | null;

@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 from src.api_schemas import (AnalysisInput, ApprovalInput, ProfileInput, RejectInput, SalesImport,
-    SettingsInput, StateResponse, ProfileResponse, AnalysisResponse, AnalysisStartedResponse)
+    SettingsInput, StateResponse, ProfileResponse, AnalysisResponse, AnalysisStartedResponse, OperatingCostsInput)
 from src.application import WeatherApplication, import_sales, sample_dataset
 from src.application_store import ApplicationStore, Conflict
 
@@ -204,6 +204,14 @@ def create_app(db_path=None):
     @app.get('/api/settings', response_model=SettingsInput)
     def settings():
         return store.state('settings')
+
+    @app.get('/api/operating-costs', response_model=OperatingCostsInput)
+    def operating_costs():
+        return store.state('operating_costs') or OperatingCostsInput().model_dump(mode='json')
+
+    @app.put('/api/operating-costs', response_model=OperatingCostsInput)
+    def save_operating_costs(costs: OperatingCostsInput):
+        return store.set_operating_costs(costs.model_dump(mode='json'))
 
     @app.put('/api/settings', response_model=SettingsInput)
     def save_settings(settings: SettingsInput):

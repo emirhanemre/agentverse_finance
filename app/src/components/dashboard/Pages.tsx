@@ -16,6 +16,7 @@ import { ErrorNotice } from "../onboarding/Onboarding";
 import { PositionsTable, activityText } from "./Overview";
 import Notifications from "../Notifications";
 import MonitoringPanel from "../MonitoringPanel";
+import OperatingProfitPanel from "../OperatingProfitPanel";
 
 export function ProtectionsPage({
   state,
@@ -288,6 +289,7 @@ export function SettingsPage({
           ]}
         />
       </Panel>
+      <OperatingProfitPanel state={state} refresh={refresh} expanded />
       <Panel
         title="Risk limits and paper assumptions"
         actions={saved ? <Badge tone="positive">Saved</Badge> : undefined}

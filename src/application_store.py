@@ -100,6 +100,7 @@ class ApplicationStore(PaperTradingStore):
                     self.put(c, 'forecast', None)
                 if old and any(old.get(k) != profile.get(k) for k in ('pubName', 'postcode')):
                     self.put(c, 'dataset', None)
+                    self.put(c, 'operating_costs', None)
                     self.put(c, 'forecast', None)
                 self.put(c, 'profile', profile)
                 self.audit(c, 'profile_saved', {'name': profile['pubName'], 'verification': 'self_reported'})
@@ -123,6 +124,14 @@ class ApplicationStore(PaperTradingStore):
                 self.put(c, 'settings', settings)
                 self.audit(c, 'settings_saved', settings)
         return settings
+
+    def set_operating_costs(self, costs):
+        with self.transaction() as c:
+            if not self.state('profile', None, c):
+                raise Conflict('Save business details before editing operating costs.')
+            self.put(c, 'operating_costs', costs)
+            self.audit(c, 'operating_cost_assumptions_saved', {'origin':'demo_cost_assumptions', **costs})
+        return costs
 
     def event(self, analysis_id, label, detail):
         with self._connect() as c:
@@ -201,7 +210,7 @@ class ApplicationStore(PaperTradingStore):
             if proposal.status == 'recommend_paper_hedge':
                 self.notify(c, 'approval', f'Weather paper proposal for {proposal.target_date} needs your approval (£{proposal.max_total_cost_gbp:.2f}).', proposal.proposal_id)
 
-    def decide(self, proposal_id, approval=None, note='Rejected by human operator', live_validation=None):
+    def decide(self, proposal_id, approval=None, note='Rejected by human operator'):
         with self.transaction() as c:
             row = c.execute('SELECT * FROM proposals WHERE proposal_id=?', (proposal_id,)).fetchone()
             ctx = c.execute('SELECT * FROM proposal_context WHERE proposal_id=?', (proposal_id,)).fetchone()
@@ -230,14 +239,6 @@ class ApplicationStore(PaperTradingStore):
                 raise Conflict('Stale or invalid quote. Refresh analysis and approve again.')
             if p.data_origin not in ('live_polymarket_api', 'synthetic_test_fixture'):
                 raise Conflict('Cached and historical markets cannot create current paper positions.')
-            if p.data_origin == 'live_polymarket_api':
-                from src.contracts import rules_hash
-                from src.schemas import MarketCandidate
-                if not live_validation or live_validation.get('proposal_hash') != p.proposal_hash or live_validation.get('rules_hash') != rules_hash(MarketCandidate.model_validate_json(ctx['market_payload'])):
-                    raise Conflict('Live paper approval requires rule and executable-book revalidation.')
-                checked=dt.datetime.fromisoformat(live_validation['checked_at'])
-                if not 0 <= (now-checked).total_seconds() <= 30:
-                    raise Conflict('Live revalidation expired. Retry approval with a fresh market check.')
             calc = p.calculation
             if not calc or not p.risk_check or not p.risk_check.passed or calc.executable_contracts != p.paper_quantity or abs(calc.total_entry_cost_gbp - p.max_total_cost_gbp) > .001 or calc.total_entry_cost_gbp > p.budget_gbp:
                 raise Conflict('Calculation or risk binding failed. Run a new assessment.')
@@ -257,9 +258,9 @@ class ApplicationStore(PaperTradingStore):
                 p.target_date, p.market_id, p.market_question, p.outcome_selected, p.paper_quantity,
                 calc.average_ask_price_usd, calc.total_entry_cost_usd, cost, calc.fx_rate_usd_per_gbp,
                 calc.payout_if_win_gbp, calc.net_profit_if_win_gbp, calc.net_loss_if_lose_gbp,
-                'UNRESOLVED', 'Paper simulation only. Hypothetical payout; no supported settlement yet.', p.data_origin))
+                'UNRESOLVED', 'Simulated fill at the reviewed assessment quote; no live execution or repricing. Hypothetical payout until official settlement.', p.data_origin))
             c.execute("UPDATE proposals SET approval_state='approved' WHERE proposal_id=?", (proposal_id,))
-            self.audit(c, 'paper_position_recorded', {'position_id': position_id, 'cost_gbp': cost, 'data_origin': p.data_origin}, proposal_id)
+            self.audit(c, 'paper_position_recorded', {'position_id': position_id, 'cost_gbp': cost, 'data_origin': p.data_origin, 'fill_basis':'reviewed_assessment_quote', 'quote_timestamp':p.quote_timestamp}, proposal_id)
             return {'ok': True, 'position_id': position_id, 'approval_state': 'approved'}
 
     def notify(self, c, category, message, dedup_key):

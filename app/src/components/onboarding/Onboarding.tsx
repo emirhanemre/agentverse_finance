@@ -160,7 +160,7 @@ export default function Onboarding() {
         />,
         <SourcesStep key="2" state={state} refresh={refresh} {...nav} />,
         <AnalysisStep key="3" state={state} refresh={refresh} {...nav} />,
-        <ImpactStep key="4" state={state} {...nav} />,
+        <ImpactStep key="4" state={state} refresh={refresh} {...nav} />,
         <RecommendationsStep
           key="5"
           state={state}

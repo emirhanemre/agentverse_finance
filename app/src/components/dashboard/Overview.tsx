@@ -21,6 +21,7 @@ import {
   RevenueChart,
 } from "../onboarding/PlanSteps";
 import { ErrorNotice } from "../onboarding/Onboarding";
+import OperatingProfitPanel from "../OperatingProfitPanel";
 
 function KpiStrip({ children }: { children: React.ReactNode }) {
   return (
@@ -146,6 +147,10 @@ export function ApprovalCard({
       <p className="mt-2 font-mono text-[11px] text-fg-3">
         {p.paper_quantity} {p.outcome_selected || "Yes"} shares · quote{" "}
         {stamp(p.quote_timestamp)} · expires {stamp(p.expires_at)}
+      </p>
+      <p className="mt-2 text-[12px] text-fg-3">
+        Simulated fill at the quote shown above. Live price changes do not
+        change this paper approval.
       </p>
       <label className="mt-3 flex items-start gap-2 text-[12px] leading-5 text-fg-2">
         <input
@@ -321,8 +326,8 @@ export function TodayView({
           >
             <RevenueChart dataset={state.dataset} />
             <p className="mt-2 text-[11.5px] text-fg-3">
-              Revenue only. Profit margin, cashflow and annual hedge savings are
-              unavailable.
+              Recorded sales revenue. The operating-profit card applies editable
+              demo costs to the selected weather scenario.
             </p>
           </Panel>
           <Panel title="Paper positions" bodyClassName="p-0">
@@ -364,6 +369,7 @@ export function TodayView({
               </>
             )}
           </Panel>
+          <OperatingProfitPanel state={state} refresh={refresh} />
           <Panel
             title="Recent activity"
             actions={
@@ -393,6 +399,7 @@ export function ScenarioView({
   return (
     <div className="mx-auto max-w-[1100px] space-y-4">
       <AnalysisControls state={state} refresh={refresh} />
+      <OperatingProfitPanel state={state} refresh={refresh} />
       {p && <ProposalDetail proposal={p} />}
     </div>
   );
@@ -454,6 +461,7 @@ export function activityText(event: AppState["activity"][number]) {
     proposal_rejected_by_human: "Proposal rejected by human operator.",
     forecast_retrieved: `Forecast retrieval: ${d.origin || "unavailable"} · ${d.source || ""}.`,
     settings_saved: "Risk limits and simulation assumptions saved.",
+    operating_cost_assumptions_saved: `Demo operating costs saved: ${money(Number(d.fixed_daily_cost_gbp || 0))} fixed per day + ${d.variable_cost_pct || 0}% of revenue.`,
     setup_completed: "Setup completed. A hedge is optional.",
     settlement_refresh_checked: String(d.result || "Settlement checked."),
     provider_demo_connected: `${d.provider || "Provider"} connection animation completed (visual placeholder; no records imported).`,

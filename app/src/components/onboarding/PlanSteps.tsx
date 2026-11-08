@@ -12,6 +12,7 @@ import {
   YAxis,
 } from "recharts";
 import AgentRun from "../AgentRun";
+import OperatingProfitPanel from "../OperatingProfitPanel";
 import {
   Badge,
   Button,
@@ -454,9 +455,10 @@ export function RevenueChart({ dataset }: { dataset: Dataset | null }) {
 }
 export function ImpactStep({
   state,
+  refresh,
   onNext,
   onBack,
-}: Nav & { state: AppState }) {
+}: Nav & { state: AppState; refresh: () => Promise<unknown> }) {
   const c = state.analysis?.payload.comparison;
   return (
     <div>
@@ -512,13 +514,7 @@ export function ImpactStep({
               sub="Same business inputs and calendar date"
             />
           </Panel>
-          <Panel>
-            <Metric
-              label="Profit / cashflow"
-              value="Unavailable"
-              sub="Costs, margins and payment timing are not modelled"
-            />
-          </Panel>
+          <OperatingProfitPanel state={state} refresh={refresh} />
         </div>
       </div>
       <Panel className="mt-4" title="Assumptions and limits">
@@ -860,6 +856,10 @@ export function ReviewStep({
               ]}
             />
             <div className="mt-5">
+              <p className="mb-3 text-[12px] text-fg-3">
+                Simulated fill at the reviewed quote. Live price changes do not
+                change this paper approval.
+              </p>
               <Checkbox
                 checked={ack}
                 onChange={setAck}
