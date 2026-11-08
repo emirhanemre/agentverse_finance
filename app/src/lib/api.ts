@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { day } from "./format";
+import { day, gbp } from "./format";
 
 export const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -264,4 +264,4 @@ export type OfferQuote = ToolResult & {
 };
 export const queueOffer = () => api<{ status: string; id: string; receipt_id: string; quote: OfferQuote }>("/api/offers/queue", { method: "POST" });
 
-export const pence = (p: number) => `£${(p / 100).toFixed(2)}`;
+export const pence = (p: number) => gbp(p / 100, { pence: true }); // £2,000.00, grouped like every other figure

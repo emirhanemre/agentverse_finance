@@ -15,7 +15,7 @@ export function ProtectionsPage({ s, refresh }: { s: AppState; refresh: () => vo
   const [selected, setSelected] = useState(all[0]?.id);
   const p = all.find((x) => x.id === selected) ?? all[0];
   return (
-    <div className="grid grid-cols-[1.3fr_1fr] items-start gap-4">
+    <div className="grid items-start gap-4 lg:grid-cols-[1.3fr_1fr]">
       <div className="flex min-w-0 flex-col gap-4">
         <ProvPanel title="Proposals" prov={{ badge: "PAPER", meta: { source: "Paper trading. No real orders." } }} bodyClassName="p-0">
           <table className="w-full">
@@ -101,7 +101,7 @@ export function SourcesPage({ s }: { s: AppState }) {
 
 export function SettingsPage({ s, refresh }: { s: AppState; refresh: () => void }) {
   return (
-    <div className="grid grid-cols-2 items-start gap-4">
+    <div className="grid items-start gap-4 lg:grid-cols-2">
       <LimitsPanel s={s} onChange={refresh} />
     </div>
   );
