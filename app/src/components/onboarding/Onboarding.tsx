@@ -56,7 +56,7 @@ export default function Onboarding() {
         <VerifyStep key="2" s={state} onEdit={() => go(0)} {...nav} />,
         <AnalysisStep key="3" s={state} {...nav} />,
         <ImpactStep key="4" s={state} {...nav} />,
-        <RecommendationsStep key="5" s={state} {...nav} />,
+        <RecommendationsStep key="5" s={state} refresh={refresh} {...nav} />,
         <ReviewStep key="6" s={state} refresh={refresh} {...nav} />,
       ][step]
     );

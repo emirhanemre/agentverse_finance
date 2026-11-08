@@ -2,8 +2,8 @@
 
 import { Metric, Panel } from "../ui";
 import { Num, ProvBadge, ProvScope } from "../Provenance";
-import { ActivityFeed, ApprovalCard, CashflowPanel, ForecastPanel, LimitsPanel, provOf } from "../panels";
-import { payroll, proposals, tool, type AppState } from "../../lib/api";
+import { ActivityFeed, ApprovalCard, CashflowPanel, ForecastPanel, LimitsPanel, OfferCard, provOf } from "../panels";
+import { payroll, rainProposals, tool, type AppState } from "../../lib/api";
 import { day, gbp } from "../../lib/format";
 
 /** One figure of the ruled tally, carrying its own quiet provenance label. */
@@ -19,7 +19,7 @@ function Kpi({ prov, ...props }: React.ComponentProps<typeof Metric> & { prov?: 
 }
 
 export function TodayView({ s, refresh, tick }: { s: AppState; refresh: () => void; tick: number }) {
-  const p = proposals(s)[0];
+  const p = rainProposals(s)[0];
   const wet = payroll(s, "wet");
   const dry = payroll(s, "dry");
   const f = tool(s, "weekend_forecast");
@@ -66,6 +66,7 @@ export function TodayView({ s, refresh, tick }: { s: AppState; refresh: () => vo
         </div>
         <div className="flex min-w-0 flex-col gap-4">
           <ApprovalCard key={p?.id} s={s} p={p} onChange={refresh} />
+          <OfferCard s={s} onChange={refresh} compact />
           <LimitsPanel s={s} onChange={refresh} />
           <ForecastPanel s={s} />
         </div>

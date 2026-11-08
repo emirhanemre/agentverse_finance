@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ApprovalCard, CashflowPanel, ForecastPanel, LimitsPanel, PaydayPanel, PayrollBridge, ProposalPanel, RisksPanel, hasBridge } from "../panels";
+import { ApprovalCard, CashflowPanel, ForecastPanel, LimitsPanel, OfferCard, PaydayPanel, PayrollBridge, ProposalPanel, RisksPanel, hasBridge } from "../panels";
 import { Num } from "../Provenance";
-import { proposals, tool, type AppState, type Outcomes } from "../../lib/api";
+import { rainProposals, tool, type AppState, type Outcomes } from "../../lib/api";
 import { day, gbp } from "../../lib/format";
 import { StepFooter } from "./Onboarding";
 
@@ -108,11 +108,14 @@ export function ImpactStep({ s, onNext, onBack }: P) {
   );
 }
 
-export function RecommendationsStep({ s, onNext, onBack }: P) {
-  const p = proposals(s).find((x) => x.run_id === s.run?.run_id) ?? proposals(s)[0];
+export function RecommendationsStep({ s, refresh, onNext, onBack }: P & { refresh: () => void }) {
+  const p = rainProposals(s).find((x) => x.run_id === s.run?.run_id) ?? rainProposals(s)[0];
   return (
     <div>
-      <ProposalPanel s={s} p={p} />
+      <div className="space-y-4">
+        <ProposalPanel s={s} p={p} />
+        <OfferCard s={s} onChange={refresh} />
+      </div>
       <StepFooter onBack={onBack} onNext={onNext} nextLabel="Review" />
     </div>
   );
@@ -120,7 +123,7 @@ export function RecommendationsStep({ s, onNext, onBack }: P) {
 
 export function ReviewStep({ s, refresh, onBack }: P & { refresh: () => void }) {
   const router = useRouter();
-  const p = proposals(s)[0];
+  const p = rainProposals(s)[0];
   return (
     <div>
       <div className="grid grid-cols-2 items-start gap-4">

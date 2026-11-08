@@ -152,8 +152,11 @@ body {
     position: absolute;
     top: calc(100% + var(--space-2xs));
     z-index: var(--z-tooltip);
-    width: 18rem;
-    padding: var(--space-sm);
+    /* collapsed at rest, so a hidden card never widens the scroll area */
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
     border-radius: var(--radius-inner);
     background: var(--popover);
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
@@ -168,11 +171,19 @@ body {
     transition: opacity var(--dur-micro) var(--ease-in), visibility 0s linear var(--dur-micro);
   }
   .prov:hover > .prov-card {
+    width: 18rem;
+    height: auto;
+    padding: var(--space-sm);
+    overflow: visible;
     opacity: 1;
     visibility: visible;
     transition: opacity var(--dur-short) var(--ease-out) 800ms, visibility 0s linear 800ms;
   }
   .prov:focus-within > .prov-card {
+    width: 18rem;
+    height: auto;
+    padding: var(--space-sm);
+    overflow: visible;
     opacity: 1;
     visibility: visible;
     transition: opacity var(--dur-short) var(--ease-out) 0s, visibility 0s linear 0s;

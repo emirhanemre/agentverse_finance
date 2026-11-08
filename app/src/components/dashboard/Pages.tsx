@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Badge, Panel, cx } from "../ui";
 import { Num, ProvPanel } from "../Provenance";
-import { ActivityFeed, ApprovalCard, BacktestPanel, LimitsPanel, ProposalPanel, RisksPanel, SourcesPanel, VerifyPanel, WeeklyBacktestChart, ForecastPanel } from "../panels";
+import { ActivityFeed, ApprovalCard, BacktestPanel, LimitsPanel, OfferCard, ProposalPanel, RisksPanel, SourcesPanel, VerifyPanel, WeeklyBacktestChart, ForecastPanel } from "../panels";
 import { Td, Th } from "./Shell";
-import { proposals, type AppState } from "../../lib/api";
-import { day, gbp } from "../../lib/format";
+import { proposalTitle, proposals, type AppState } from "../../lib/api";
+import { gbp } from "../../lib/format";
 
 const TONE = { pending: "warning", blocked: "negative", filled: "positive", rejected: "neutral" } as const;
 
@@ -31,7 +31,7 @@ export function ProtectionsPage({ s, refresh }: { s: AppState; refresh: () => vo
             <tbody className="divide-y divide-line">
               {all.map((x) => (
                 <tr key={x.id} onClick={() => setSelected(x.id)} className={cx("cursor-pointer transition-colors", x.id === p?.id ? "bg-surface-3" : "hover:bg-surface-2")}>
-                  <Td className="whitespace-nowrap text-fg">Rain cover, {day(x.market.date)}</Td>
+                  <Td className="whitespace-nowrap text-fg">{proposalTitle(x)}</Td>
                   <Td mono className="text-fg-3">
                     {x.run_id}
                   </Td>
@@ -48,9 +48,11 @@ export function ProtectionsPage({ s, refresh }: { s: AppState; refresh: () => vo
           </table>
           {all.length === 0 && <p className="px-6 py-4 text-sm text-fg-2">No proposals. Run the agent before the next risky weekend.</p>}
         </ProvPanel>
-        <ProposalPanel s={s} p={p} />
+        {p?.market.kind === "offer" ? <OfferCard s={s} onChange={refresh} /> : <ProposalPanel s={s} p={p} />}
       </div>
-      <ApprovalCard key={p?.id} s={s} p={p} onChange={refresh} />
+      <div className="min-w-0">
+        <ApprovalCard key={p?.id} s={s} p={p} onChange={refresh} />
+      </div>
     </div>
   );
 }

@@ -7,9 +7,12 @@ import {
   approve,
   payroll,
   pence,
+  proposalTitle,
   putLimits,
+  queueOffer,
   reject,
   tool,
+  type OfferQuote,
   type AppState,
   type Check,
   type Estimate,
@@ -935,9 +938,9 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
         <PaperBanner />
         <div className="mt-4 flex items-start justify-between gap-4">
           <div>
-            <div className="text-sm font-medium">Rain cover, {day(p.market.date)}</div>
+            <div className="text-sm font-medium">{proposalTitle(p)}</div>
             <div className="mt-0.5 text-xs text-fg-3">
-              <span className="font-mono">{p.market.market_id}</span> · {p.shares} shares at {p.market.cost_per_share.toFixed(4)}
+              <span className="break-all font-mono">{p.market.market_id}</span> · {p.shares} shares at {p.market.cost_per_share.toFixed(4)}
             </div>
           </div>
           <div className="text-right">
@@ -1013,7 +1016,7 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
                 >
                   Decline
                 </Button>
-                <span className="text-xs text-fg-3">If it stays dry you lose {gbp(cost, { pence: true })}.</span>
+                <span className="text-xs text-fg-3">{p.market.kind === "offer" ? "If England don’t lose" : "If it stays dry"} you lose {gbp(cost, { pence: true })}.</span>
               </>
             )}
           </div>
@@ -1130,5 +1133,92 @@ export function ActivityFeed({ limit = 40, refreshKey }: { limit?: number; refre
         </li>
       ))}
     </ul>
+  );
+}
+
+const kickoff = (iso: string) =>
+  new Date(iso).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/London" });
+
+/** Next on the calendar: a match-day offer whose cost is fixed by a hedge on the real match market. */
+export function OfferCard({ s, onChange, compact }: S & { onChange?: () => void; compact?: boolean }) {
+  const q = tool<OfferQuote>(s, "price_match_offer");
+  const queued = s.proposals.find((p) => p.market.kind === "offer" && p.market.market_id === q?.market_id && p.status !== "rejected");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  if (!q || q.error) return null;
+  const menu = { source: "Demo menu assumptions", label: `Average main £${q.avg_main_gbp}, first ${q.covers_cap} covers` };
+  async function onQueue() {
+    setBusy(true);
+    setErr(null);
+    try {
+      await queueOffer();
+      onChange?.();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div data-testid="panel-offer">
+      <ProvPanel title="Next on the calendar" prov={provOf(q)}>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <div className="font-display text-lg font-medium">{q.fixture}</div>
+          <div className="text-sm text-fg-2">
+            <span>{kickoff(q.kickoff)}</span>
+            <span className="ml-3 text-fg-3">{q.venue}</span>
+          </div>
+        </div>
+        <p className="mt-2 text-md">
+          {q.trigger}: {q.offer}, first {q.covers_cap} covers.
+        </p>
+        <div className="mt-5">
+          <div className="grid grid-flow-col divide-x divide-line" style={{ gridAutoColumns: "minmax(0, 1fr)" }}>
+            <div className="pr-4">
+              <div className="text-xs text-fg-3">Worst case</div>
+              <Num rid={q.receipt_id} badge="SYNTHETIC" className="font-display text-lg font-medium text-warning">
+                {gbp(q.worst_case_gbp)}
+              </Num>
+            </div>
+            <div className="px-4">
+              <div className="text-xs text-fg-3">Chance England lose</div>
+              <Num r={q} className="font-display text-lg font-medium">
+                {pct(q.market_prob)}
+              </Num>
+            </div>
+            {!compact && (
+              <div className="px-4">
+                <div className="text-xs text-fg-3">Cover</div>
+                <Num r={q} className="font-display text-lg font-medium">
+                  {`${q.shares} shares`}
+                </Num>
+              </div>
+            )}
+            <div className="pl-4">
+              <div className="text-xs text-fg-3">Fixed cost</div>
+              <Num r={q} className="font-display text-lg font-medium text-positive">
+                {gbp(q.fixed_cost_gbp, { pence: true })}
+              </Num>
+            </div>
+          </div>
+        </div>
+        <p className="mt-4 text-sm text-fg-2">
+          The cover pays <Num r={q}>{gbp(q.payout_if_event_gbp)}</Num> if England lose, so the offer costs you{" "}
+          <Num r={q}>{gbp(q.fixed_cost_gbp, { pence: true })}</Num> whatever happens. Real match price; menu figures are modelled.
+        </p>
+        <div className="mt-4 flex items-center justify-between gap-4">
+          <span className="text-xs text-fg-3" title={menu.label}>
+            {queued ? `Queued for approval: ${queued.status}` : q.verdict.allowed ? "Inside your limits" : q.verdict.reason}
+          </span>
+          {!queued && (
+            <Button onClick={onQueue} disabled={busy || !q.verdict.allowed} data-testid="queue-offer">
+              {busy ? <Spinner /> : null}
+              Queue this offer
+            </Button>
+          )}
+        </div>
+        {err && <p className="mt-2 text-xs text-negative">{err}</p>}
+      </ProvPanel>
+    </div>
   );
 }

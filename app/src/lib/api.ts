@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { day } from "./format";
 
 export const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -68,6 +69,13 @@ export type Market = {
   rule: string;
   payout_if_event_gbp: number;
   verdict: Verdict;
+  /** "offer": a match-day promotion hedge (fields below); absent for rain cover. */
+  kind?: "offer";
+  fixture?: string;
+  trigger?: string;
+  offer?: string;
+  worst_case_gbp?: number;
+  kickoff?: string;
 };
 export type Proposal = {
   id: string;
@@ -218,5 +226,32 @@ export const payroll = (s: AppState | null, scenario: "wet" | "dry") => tool<Pay
 
 /** Proposals from the latest run first, then older ones. */
 export const proposals = (s: AppState | null) => [...(s?.proposals ?? [])].sort((a, b) => b.created - a.created);
+/** The weather proposals the onboarding flow walks through (offers have their own card). */
+export const rainProposals = (s: AppState | null) => proposals(s).filter((p) => p.market.kind !== "offer");
+export const proposalTitle = (p: Proposal) => (p.market.kind === "offer" ? `Offer cover, ${p.market.fixture}` : `Rain cover, ${day(p.market.date)}`);
+
+export type OfferQuote = ToolResult & {
+  kind: "offer";
+  market_id: string;
+  fixture: string;
+  competition: string;
+  venue: string;
+  kickoff: string;
+  market: string;
+  trigger: string;
+  offer: string;
+  covers_cap: number;
+  avg_main_gbp: number;
+  ask: number;
+  market_prob: number;
+  worst_case_gbp: number;
+  shares: number;
+  payout_if_event_gbp: number;
+  hedge_cost_gbp: number;
+  fixed_cost_gbp: number;
+  uncovered_gbp: number;
+  verdict: Verdict;
+};
+export const queueOffer = () => api<{ status: string; id: string; receipt_id: string; quote: OfferQuote }>("/api/offers/queue", { method: "POST" });
 
 export const pence = (p: number) => `£${(p / 100).toFixed(2)}`;
