@@ -212,7 +212,13 @@ def walk_book(asks: list, max_shares: int, budget_gbp: float, fee_rate: float = 
 
 
 # ---------- paper exchange ----------
-def paper_fill(market: dict, shares: int) -> dict:
+def paper_fill(market: dict, shares: int, approved_cost_gbp: float = None) -> dict:
+    if market.get("pricing") == "order book" and approved_cost_gbp is not None:
+        # priced by walking the real book, fees included: fill at exactly what the owner approved
+        return {"venue": "PAPER", "market_id": market["market_id"], "shares": shares,
+                "fill_price": market["cost_per_share"], "fee_gbp": None, "cost_gbp": approved_cost_gbp,
+                "price_source": market["price_badge"],
+                "note": "PAPER TRADING: no real order was placed (order-book price, fee included)"}
     ask = market["ask"]
     fill = round(ask * (1 + SLIPPAGE), 4)
     fee = round(shares * market.get("fee_rate", FEE_RATE) * fill * (1 - fill), 2)

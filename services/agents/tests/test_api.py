@@ -72,6 +72,7 @@ def test_match_offer_is_an_ordinary_capped_proposal(monkeypatch):
     assert abs(o["hedge_cost_gbp"] - o["shares"] * o["cost_per_share"]) <= o["shares"] * 0.00005 + 0.01  # per-share cost shown to 4dp
     a = c.post(f"/api/proposals/{q['id']}/approve", json={"confirm_second": True}).json()
     assert a["status"] == "filled" and a["fill"]["venue"] == "PAPER"
+    assert a["fill"]["cost_gbp"] == o["hedge_cost_gbp"]  # fills at the price the owner approved
 
 
 def queue_offer(monkeypatch, now=BEFORE_KICKOFF):

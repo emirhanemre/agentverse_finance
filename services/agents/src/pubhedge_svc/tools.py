@@ -121,7 +121,7 @@ def quote_offer(limits: dict, ledger: dict, offer: dict = None) -> dict:
             "worst_case_gbp": worst, "shares": shares, "payout_if_event_gbp": float(shares), "hedge_cost_gbp": cost,
             "uncovered_gbp": round(worst - shares, 2), "fixed_cost_gbp": round(cost + worst - shares, 2),
             "verdict": E.check_limits(int(round(cost * 100)), market_id, limits, ledger),
-            "summary": f"{o['fixture']}: {o['trigger'].lower()}, {o['offer']} (worst case £{worst:,.0f}) "
+            "summary": f"{o['fixture']}: {o['trigger'][0].lower() + o['trigger'][1:]}, {o['offer']} (worst case £{worst:,.0f}) "
                        f"· cover £{cost:,.2f} at {ask:.2f}"}
 
 
@@ -417,7 +417,8 @@ def make_tools(run: Run) -> dict:
             rain_hits = [e["slug"] for e in rain["data"].get("events", []) if "rain" in e["slug"]]
         except Exception:
             rain_hits = []
-        return {"badge": "REAL" if found else "REAL · CACHED", "source": "Polymarket Gamma API (read-only)",
+        live = any(f["badge"] == "REAL" for f in found)  # "Live" only if a ladder really came from the network
+        return {"badge": "REAL" if live else "REAL · CACHED", "source": "Polymarket Gamma API (read-only)",
                 "temperature_events": found, "rain_markets": rain_hits, "uk_trading": "blocked for UK users; read-only",
                 "summary": f"{len(found)} temperature ladders · {len(rain_hits)} rain markets"
                            + "".join(f" · {f['date'][5:]} high ~{f['expected_high_c']:g}°C" for f in found if "expected_high_c" in f)}

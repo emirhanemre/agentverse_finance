@@ -293,7 +293,7 @@ def _approve(pid: str, body: Approve):
         return {"status": "blocked", "reason": verdict["reason"], "verdict": verdict, "receipt_id": row["receipt_id"]}
     if verdict["needs_second_approval"] and not body.confirm_second:
         return {"status": "needs_second_approval", "verdict": verdict}
-    fill = E.paper_fill(p["market"], p["shares"])
+    fill = E.paper_fill(p["market"], p["shares"], p["cost_pence"] / 100)
     row = audit.append(p["run_id"], "approval", "paper_execute", {"proposal_id": pid, "approved_by": "Owner (demo)"},
                        {"fill": fill, "verdict": verdict}, "PAPER", None, 0)
     audit.db().execute("INSERT INTO executions (id, proposal_id, ts, fill, receipt_id) VALUES (?,?,?,?,?)",
@@ -359,7 +359,7 @@ def queue_offer():
     pid = f"p_offer_{uuid.uuid4().hex[:6]}"
     market = {k: q[k] for k in ("market_id", "event_slug", "kind", "fixture", "competition", "venue", "kickoff", "market",
                                 "trigger", "team", "offer", "covers_cap", "worst_case_gbp", "ask", "market_prob", "fee_rate",
-                                "cost_per_share",
+                                "cost_per_share", "pricing",
                                 "payout_if_event_gbp", "fixed_cost_gbp")}
     market["price_badge"] = q["badge"]
     cost_pence = int(round(q["hedge_cost_gbp"] * 100))
