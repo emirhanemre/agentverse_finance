@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import AgentRun from "../AgentRun";
-import { ProvPanel } from "../Provenance";
+import { Num, ProvPanel, ProvScope } from "../Provenance";
 import { SourcesPanel, VerifyPanel } from "../panels";
-import { Icon, cx } from "../ui";
-import type { AppState } from "../../lib/api";
+import { Button, Icon, cx } from "../ui";
+import { payroll, tool, type AppState, type OfferQuote, type Outcomes } from "../../lib/api";
+import { day, gbp } from "../../lib/format";
 import { StepFooter, type Form } from "./Onboarding";
 
 type Nav = { onNext: () => void; onBack: () => void };
@@ -29,30 +30,98 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
   const differs = form.pubName.trim() !== s.pub.trading_name || form.postcode.trim().toUpperCase() !== s.pub.postcode;
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        submit();
-      }}
-    >
-      <ProvPanel prov={{ badge: s.pub.identity_badge, meta: { source: "Companies House and postcodes.io" } }} title="Pub">
-        <div className="grid gap-x-6 gap-y-4 sm:grid-cols-3">
-          <Field label="Pub name" value={form.pubName} onChange={set("pubName")} error={touched ? errors.pubName : ""} autoFocus />
-          <Field label="Postcode" value={form.postcode} onChange={(v) => set("postcode")(v.toUpperCase())} error={touched ? errors.postcode : ""} mono />
-          <Field label="Your name" value={form.owner} onChange={set("owner")} error={touched ? errors.owner : ""} />
+    <div className="grid items-center gap-10 lg:min-h-[calc(100vh-15rem)] lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+      <form
+        className="on-hour max-w-[26rem]"
+        onSubmit={(e) => {
+          e.preventDefault();
+          submit();
+        }}
+      >
+        <h1 className="max-w-[12ch] font-display text-4xl font-medium leading-[1.04]" style={{ overflowWrap: "break-word" }}>
+          Make payroll, whatever the weather.
+        </h1>
+        <p className="muted mt-4 max-w-[30ch] text-lg">An AI risk officer for independent pubs. You approve every move.</p>
+
+        <ProvScope value={s.pub.identity_badge}>
+          <div className="mt-8 grid gap-3">
+            <Field fog label="Pub name" value={form.pubName} onChange={set("pubName")} error={touched ? errors.pubName : ""} autoFocus />
+            <div className="grid grid-cols-2 gap-3">
+              <Field fog label="Postcode" value={form.postcode} onChange={(v) => set("postcode")(v.toUpperCase())} error={touched ? errors.postcode : ""} />
+              <Field fog label="Your name" value={form.owner} onChange={set("owner")} error={touched ? errors.owner : ""} />
+            </div>
+          </div>
+        </ProvScope>
+        {differs && <p className="mt-3 text-sm text-[var(--color-day-ink)]">This demo is set up for {s.pub.trading_name}, {s.pub.postcode}. The agent will check that pub.</p>}
+        <div className="mt-6 flex flex-wrap items-center gap-4">
+          <Button variant="primary" type="submit">
+            Look up my pub
+            <Icon name="chevron-right" size={14} />
+          </Button>
+          <span className="muted text-sm">Companies House and postcodes.io fill in the rest.</span>
         </div>
-      </ProvPanel>
-      <div className="mt-4 flex items-start gap-3 text-sm text-fg-2">
-        <Icon name="search" size={14} className="mt-1 shrink-0 text-fg-3" />
-        We’ll look up your company on Companies House and your premises on postcodes.io. You won’t need to type them.
-      </div>
-      {differs && (
-        <p className="mt-2 text-sm text-warning">
-          This demo is set up for {s.pub.trading_name}, {s.pub.postcode}. The agent will check that pub.
-        </p>
+      </form>
+
+      <WeekendPreview s={s} />
+    </div>
+  );
+}
+
+/** The product in glass: a real weekend from the recorded run, every figure a receipt. */
+function WeekendPreview({ s: live }: { s: AppState }) {
+  // The recorded demo weekend, not whatever ran last. Its receipts belong to the recording,
+  // so figures here carry their provenance on hover without opening a receipt.
+  const s = { ...live, tools: live.demo_tools ?? live.tools };
+  const days = Object.entries((tool(s, "weekend_forecast")?.days ?? {}) as Record<string, { mm: number }>);
+  const wet = payroll(s, "wet");
+  const sized = tool(s, "size_hedges");
+  const o = sized?.outcomes as Outcomes | undefined;
+  const offer = tool<OfferQuote>(s, "price_match_offer");
+  const rows = [
+    days[0] && { i: "rain", t: "Weekend forecast", d: `${day(days[0][0])} afternoon`, st: "Read", tone: "", v: `${days[0][1].mm.toFixed(1)} mm` },
+    wet && { i: "alert", t: "Payroll if it rains", d: `Due ${day(wet.payroll_date)}`, st: "At risk", tone: "text-warning", v: `${gbp(wet.shortfall_gbp)} short` },
+    o && { i: "shield", t: "Rain cover", d: `Pays ${gbp(o.hedge_payout_if_wet_gbp)} if wet`, st: "Proposed", tone: "", v: gbp(o.hedge_cost_gbp, { pence: true }) },
+    o?.wet_with_hedge_headroom_gbp !== undefined && o.wet_with_hedge_headroom_gbp >= 0 && { i: "check", t: "Payroll with cover", d: "Wet weekend", st: "Covered", tone: "text-positive", v: `${gbp(o.wet_with_hedge_headroom_gbp)} to spare` },
+  ].filter(Boolean) as { i: "rain" | "alert" | "shield" | "check"; t: string; d: string; st: string; tone: string; v: string }[];
+
+  return (
+    <ProvPanel
+      title="A weekend it would have caught"
+      prov={{ badge: "SYNTHETIC", meta: { source: "The recorded demo run", label: "Illustrative scenario: modelled for a pub of this profile, not The Faltering Fullback's actual figures." } }}
+      className="hidden lg:block"
+    >
+      <p className="-mt-1 text-xs text-fg-3">{s.scenario.name}</p>
+      {rows.length === 0 ? (
+        <p className="mt-4 text-sm text-fg-2">Run the agent and a weekend like this appears here.</p>
+      ) : (
+        <ul className="mt-3 divide-y divide-line">
+          {rows.map((r) => (
+            <li key={r.t} className="flex items-center gap-3 py-3">
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-surface-2 text-fg-2">
+                <Icon name={r.i} size={14} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm text-fg">{r.t}</span>
+                <span className="block text-xs text-fg-3">{r.d}</span>
+              </span>
+              <span className={cx("hidden text-xs sm:block", r.tone || "text-fg-3")}>{r.st}</span>
+              <Num badge="SYNTHETIC" className={cx("w-[9.5rem] text-right font-display text-md font-medium", r.tone)}>
+                {r.v}
+              </Num>
+            </li>
+          ))}
+        </ul>
       )}
-      <StepFooter onNext={submit} nextLabel="Look up my pub" />
-    </form>
+      {offer && !offer.error && (
+        <div className="mt-3 flex items-center justify-between gap-4 rounded-inner bg-[color-mix(in_oklab,var(--color-accent-2)_12%,transparent)] px-4 py-3 text-sm">
+          <span className="text-fg-2">
+            Next: {offer.fixture}, a match-day offer at a fixed <Num badge={offer.badge} className="text-warning">{gbp(offer.fixed_cost_gbp, { pence: true })}</Num>
+          </span>
+          <span className="shrink-0 text-xs text-fg-3">{day(String(offer.kickoff).slice(0, 10))}</span>
+        </div>
+      )}
+      <p className="mt-4 text-xs text-fg-3">Photo: an illustrative image made for this demo, not The Faltering Fullback.</p>
+    </ProvPanel>
   );
 }
 
@@ -62,6 +131,7 @@ function Field({
   onChange,
   error,
   mono,
+  fog,
   autoFocus,
 }: {
   label: string;
@@ -69,11 +139,12 @@ function Field({
   onChange: (v: string) => void;
   error?: string;
   mono?: boolean;
+  fog?: boolean;
   autoFocus?: boolean;
 }) {
   return (
     <label className="block">
-      <span className="text-xs text-fg-2">{label}</span>
+      <span className={cx("text-xs", fog ? "muted" : "text-fg-2")}>{label}</span>
       <input
         value={value}
         autoFocus={autoFocus}
@@ -81,7 +152,8 @@ function Field({
         aria-invalid={!!error}
         className={cx(
           "field mt-2 h-10 w-full px-3 text-sm placeholder:text-fg-3",
-          mono && "font-mono"
+          mono && "font-mono",
+          fog && "field--fog"
         )}
       />
       {error && <span className="mt-1 block text-xs text-negative">{error}</span>}
