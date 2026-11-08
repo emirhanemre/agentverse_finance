@@ -1,0 +1,48 @@
+{
+ "label": "self-serve challenge: our own check, not official judging",
+ "mixed_60": {
+  "passed": 40,
+  "failed": 0,
+  "errors": 0,
+  "strategy_runs_completed": 20,
+  "not_run": 0,
+  "cycle_record_metrics": {
+   "cycle_precision": 1.0,
+   "cycle_recall": 1.0,
+   "cycle_f1": 1.0,
+   "true_positive_records": 62,
+   "false_positive_records": 0,
+   "missed_records": 0
+  },
+  "market_summary": {
+   "paths": 20,
+   "wins_vs_buy_and_hold": 10,
+   "losses_vs_buy_and_hold": 10,
+   "ties": 0,
+   "beat_cash": 8,
+   "median_excess_vs_buy_and_hold_bps_of_capital": -314,
+   "mean_max_drawdown_bps": 410,
+   "sign_test_p_value": 1.0,
+   "verdict": "Not distinguishable from buy-and-hold on these paths; more paths or a better edge is needed."
+  }
+ },
+ "real_markets_60": {
+  "strategy_runs_completed": 60,
+  "errors": 0,
+  "market_summary": {
+   "paths": 60,
+   "wins_vs_buy_and_hold": 30,
+   "losses_vs_buy_and_hold": 30,
+   "ties": 0,
+   "beat_cash": 20,
+   "median_excess_vs_buy_and_hold_bps_of_capital": 1,
+   "mean_max_drawdown_bps": 655,
+   "sign_test_p_value": 1.0,
+   "verdict": "Not distinguishable from buy-and-hold on these paths; more paths or a better edge is needed."
+  }
+ },
+ "commitments": {
+  "mixed_60": "427c8668c9bebd33021a1e44f8d11bd715df75822466eb7fe0b12a9a200358bf",
+  "real_markets_60": "ee74742a05597eb6c3240ace657e9912227d00b36a799eb200f3cfc7620f18df"
+ }
+}
