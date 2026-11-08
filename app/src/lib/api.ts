@@ -109,7 +109,7 @@ export type Limits = {
 };
 
 export type Grounding = { numbers: { text: string; grounded: boolean }[]; ungrounded: string[]; dropped_sentences?: string[]; ok: boolean };
-export type Narration = { text: string; badge: BadgeText; grounding?: Grounding; receipt_id: string; model?: string };
+export type Narration = { text: string; badge: BadgeText; grounding?: Grounding; receipt_id: string; model?: string; note?: string | null };
 
 export type PolicyPoint = {
   hedge_net_gbp_per_year: number;

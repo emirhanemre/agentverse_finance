@@ -36,7 +36,7 @@ type Step = {
   receipt_id?: string;
   ms?: number;
 };
-type Rationale = { model: string; text: string; badge: string; grounding_ok: boolean; receipt_id: string };
+type Rationale = { model: string; text: string; badge: string; grounding_ok: boolean; receipt_id: string; note?: string | null };
 type Phase = "idle" | "running" | "done" | "error";
 
 export type RunPub = { pubName: string; postcode: string; companyNumber?: string; owner?: string };
@@ -267,6 +267,7 @@ export default function AgentRun({ title, onDone, pub }: { title: string; onDone
             Why the agent recommends this
             <ModelChip model={rationale.model} />
             <ProvBadge badge={rationale.badge} receiptId={rationale.receipt_id} />
+            {rationale.note && <ModelNote note={rationale.note} />}
           </div>
           <Bullets text={rationale.text} />
         </div>
@@ -328,6 +329,16 @@ function StepMarker({ state }: { state: Step["state"] }) {
   return (
     <span className="flex h-4 w-4 items-center justify-center">
       <span className="h-2 w-2 rounded-full shadow-[inset_0_0_0_1px_var(--line-strong)]" />
+    </span>
+  );
+}
+
+/** Said plainly when the fast model wrote the rationale because the reasoning model was still thinking. */
+export function ModelNote({ note }: { note: string }) {
+  return (
+    <span data-testid="model-note" className="inline-flex items-center gap-1 text-xs text-warning">
+      <Icon name="clock" size={12} />
+      {note}
     </span>
   );
 }

@@ -21,6 +21,7 @@ export function Logo({ compact }: { compact?: boolean }) {
 
 type IconName =
   | "check"
+  | "clock"
   | "chevron-right"
   | "chevron-left"
   | "chevron-down"
@@ -47,6 +48,7 @@ type IconName =
 
 const PATHS: Record<IconName, string> = {
   check: "M3.5 8.5l3 3 6-7",
+  clock: "M8 14.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13zM8 4.5V8l2.5 1.5",
   "chevron-right": "M6 3.5L10.5 8 6 12.5",
   "chevron-left": "M10 3.5L5.5 8 10 12.5",
   "chevron-down": "M3.5 6L8 10.5 12.5 6",
