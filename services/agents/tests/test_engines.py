@@ -35,3 +35,29 @@ def test_paper_fill_is_paper_and_charges_fee():
     f = E.paper_fill({"market_id": "a", "ask": 0.2, "fee_rate": 0.05, "price_badge": "SYNTHETIC"}, 100)
     assert f["venue"] == "PAPER" and f["fee_gbp"] > 0
     assert f["cost_gbp"] == pytest.approx(100 * f["fill_price"] + f["fee_gbp"], abs=0.01)
+
+
+def test_exact_sizer_matches_lp_bound():
+    """Cross-check against scipy's LP: the integer optimum is never above the LP relaxation and
+    never below the LP's answer rounded down."""
+    import math
+    import random
+
+    import numpy as np
+    from scipy.optimize import linprog
+
+    from pubhedge_core import sizing
+
+    rng = random.Random(3)
+    for _ in range(200):
+        ms = [{"id": f"m{i}", "cost_per_share_pence": rng.randint(3, 90), "value_per_share_pence": rng.randint(0, 110),
+               "max_shares": rng.randint(0, 200)} for i in range(rng.randint(1, 3))]
+        budget, cap = rng.randint(0, 4000), rng.randint(100, 3000)
+        k = np.array([m["cost_per_share_pence"] for m in ms], float)
+        e = np.array([m["value_per_share_pence"] for m in ms], float) - k
+        A = [k] + [np.eye(len(ms))[i] * k[i] for i in range(len(ms))]
+        lp = linprog(-e, A_ub=np.array(A), b_ub=[budget] + [cap] * len(ms),
+                     bounds=[(0, m["max_shares"]) for m in ms], method="highs")
+        got = sizing.size(ms, budget, cap)["expected_value_pence"]
+        floor_val = sum(math.floor(x) * ei for x, ei in zip(lp.x, e) if ei > 0)
+        assert floor_val - 1e-6 <= got <= -lp.fun + 1e-6

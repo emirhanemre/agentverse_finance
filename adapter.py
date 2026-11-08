@@ -11,7 +11,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from pubhedge_core import cashflow, strategy, transactions  # noqa: E402
+from pubhedge_core import cashflow, sizing, strategy, transactions  # noqa: E402
 from pubhedge_core.validate import InvalidInput  # noqa: E402
 
 
@@ -28,6 +28,8 @@ def handle(task, inp):
         return out
     if task == "market_step":
         return strategy.decide(inp)
+    if task == "pub_hedge_sizing":  # our custom kit task (practice, synthetic)
+        return sizing.size(inp.get("markets"), inp.get("budget_pence"), inp.get("per_market_cap_pence"))
     raise InvalidInput("unknown task")
 
 

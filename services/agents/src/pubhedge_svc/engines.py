@@ -7,10 +7,10 @@ from datetime import date, timedelta
 from functools import lru_cache
 
 import numpy as np
-from scipy.optimize import linprog
 
 from pubhedge_core import cashflow as core_cashflow
 from pubhedge_core import limits as core_limits
+from pubhedge_core import sizing as core_sizing
 
 from .config import DATA
 
@@ -152,31 +152,29 @@ def cost_per_share(ask: float, fee_rate: float = FEE_RATE) -> float:
 
 # ---------- sizing ----------
 def size_hedges(markets: list, weekly_cap_gbp: float, month_room_gbp: float, per_market_cap_gbp: float) -> dict:
-    """LP: maximise expected value to the owner, sum x_i (w_i - k_i), where k_i is all-in cost
-    per £1 share and w_i = q_i x (1 + penalty if the event would cause a payroll shortfall).
-    Subject to: payout <= loss in the event (no speculation), spend <= weekly cap,
-    spend <= remaining monthly loss budget, spend per market <= concentration cap."""
+    """Maximise expected value to the owner, sum x_i (w_i - k_i), where k_i is the all-in cost per
+    £1 share and w_i = q_i x (1 + penalty if the event would cause a payroll shortfall). Subject to:
+    payout <= loss in the event (no speculation), spend <= weekly cap and remaining monthly loss
+    budget, spend per market <= concentration cap. Solved exactly in whole shares by
+    pubhedge_core.sizing (the same code the kit's pub_hedge_sizing task scores); costs round up
+    to the penny, values round down, so the solver never overstates value."""
     if not markets:
         return {"status": "no_markets", "positions": [], "total_cost_gbp": 0.0}
-    k = np.array([m["cost_per_share"] for m in markets])
-    w = np.array([m["model_prob"] * (1 + (SHORTFALL_PENALTY if m["causes_shortfall"] else 0)) for m in markets])
-    c = -(w - k)
-    A = [k, k] + [np.eye(len(markets))[i] * k[i] for i in range(len(markets))]
-    b = [weekly_cap_gbp, max(0.0, month_room_gbp)] + [per_market_cap_gbp] * len(markets)
-    bounds = [(0, max(0.0, m["loss_if_event_gbp"])) for m in markets]
-    res = linprog(c, A_ub=np.array(A), b_ub=np.array(b), bounds=bounds, method="highs")
-    if not res.success:
-        return {"status": "infeasible", "positions": [], "total_cost_gbp": 0.0}
-    pos = []
-    for m, x, wi, ki in zip(markets, res.x, w, k):
-        shares = math.floor(x)
-        if shares <= 0:
-            continue
-        pos.append({"market_id": m["market_id"], "shares": shares, "cost_gbp": round(shares * ki, 2),
-                    "payout_if_event_gbp": float(shares), "edge_per_share": round(float(wi - ki), 4)})
-    no_value = [m["market_id"] for m, wi, ki in zip(markets, w, k) if wi <= ki]
+    by = {m["market_id"]: m for m in markets}
+    core_in = []
+    for m in markets:
+        w = m["model_prob"] * (1 + (SHORTFALL_PENALTY if m["causes_shortfall"] else 0))
+        core_in.append({"id": m["market_id"], "cost_per_share_pence": max(1, math.ceil(m["cost_per_share"] * 100)),
+                        "value_per_share_pence": math.floor(w * 100), "max_shares": max(0, math.floor(m["loss_if_event_gbp"]))})
+    budget = max(0, math.floor(min(weekly_cap_gbp, month_room_gbp) * 100))
+    res = core_sizing.size(core_in, budget, max(0, math.floor(per_market_cap_gbp * 100)))
+    pos = [{"market_id": p["id"], "shares": p["shares"], "cost_gbp": round(p["shares"] * by[p["id"]]["cost_per_share"], 2),
+            "payout_if_event_gbp": float(p["shares"])} for p in res["positions"]]
+    no_value = [c["id"] for c in core_in if c["value_per_share_pence"] <= c["cost_per_share_pence"]]
     return {"status": "ok" if pos else "nothing_worth_buying", "positions": pos,
-            "total_cost_gbp": round(sum(p["cost_gbp"] for p in pos), 2), "no_value_at_price": no_value}
+            "solver": "pubhedge_core.sizing (exact, whole shares)",
+            "total_cost_gbp": round(sum(p["cost_gbp"] for p in pos), 2), "no_value_at_price": no_value,
+            "expected_value_pence": res["expected_value_pence"]}
 
 
 # ---------- paper exchange ----------
