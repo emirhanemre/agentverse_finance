@@ -148,9 +148,9 @@ export function SourcesPanel({ s }: S) {
                   <div className="text-sm font-medium">{row.name}</div>
                   <div className="truncate text-xs text-fg-3">{r?.source ? `${row.kind} · ${r.source}` : row.kind}</div>
                 </div>
-                <div className="w-[300px] text-right text-sm text-fg-2">
+                <div className="w-[300px] min-w-0 text-right text-sm text-fg-2">
                   {r ? (
-                    <Num rid={r.receipt_id} mark={false}>
+                    <Num rid={r.receipt_id} mark={false} className="!whitespace-normal text-right">
                       {r.summary || "no result"}
                     </Num>
                   ) : (
