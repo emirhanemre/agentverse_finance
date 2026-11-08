@@ -39,6 +39,7 @@ PYEOF
 done
 
 step "3/6 front end: tsc, lint, build"
+[ -d app/node_modules ] || (cd app && npm ci --silent)
 (cd app && npx tsc --noEmit && npm run lint --silent && npm run build --silent >/dev/null)
 
 step "4/6 boot services and health"
@@ -59,6 +60,6 @@ echo "replay streamed $(grep -c '"type": "tool"' "$TMP/replay.txt") tool events"
 curl -sf -XPOST "localhost:$API_PORT/api/demo/reset" >/dev/null
 
 step "6/6 Playwright end to end"
-(cd app && PW_REUSE=1 npx playwright test)
+(cd app && npx playwright install chromium >/dev/null && PW_REUSE=1 npx playwright test)
 echo
 echo "CHECK PASSED"
