@@ -139,6 +139,9 @@ body {
     text-underline-offset: 0.25em;
     transition: text-decoration-color var(--dur-micro) var(--ease-out);
   }
+  .num-link--audit {
+    text-decoration-color: var(--fg-3);
+  }
   .num-link:hover,
   .num-link:focus-visible {
     text-decoration-color: var(--fg-3);

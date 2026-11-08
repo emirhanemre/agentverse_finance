@@ -70,6 +70,7 @@ export function ProvenanceProvider({ children }: { children: React.ReactNode }) 
       <MotionConfig reducedMotion="user">
       <Ctx.Provider value={setOpen}>
         {children}
+        {audit && <AuditLegend />}
         <AnimatePresence>{open && <ReceiptDrawer key={open} id={open} onClose={() => setOpen(null)} />}</AnimatePresence>
       </Ctx.Provider>
       </MotionConfig>
@@ -128,6 +129,28 @@ const KIND: Record<string, { label: string; glyph: GlyphName }> = {
 // A badge the API left out says so rather than passing for a known one.
 const kind = (badge: string | null | undefined) =>
   badge ? (KIND[badge] ?? { label: badge.charAt(0) + badge.slice(1).toLowerCase(), glyph: "hollow" as GlyphName }) : { label: "No badge", glyph: "cross" as GlyphName };
+
+/** The key to the shapes, shown while the audit view is on. */
+function AuditLegend() {
+  const items = ["REAL", CACHED, "SYNTHETIC", "TEST MODE", "PAPER", "REPLAY", "TEMPLATE", "MODEL"];
+  return (
+    <div
+      role="note"
+      aria-label="What the source shapes mean"
+      data-testid="audit-legend"
+      className="prov-reveal fixed bottom-6 left-1/2 z-[var(--z-toast)] flex max-w-[calc(100vw-2rem)] -translate-x-1/2 flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-pill bg-[var(--popover)] px-4 py-2 text-xs text-fg-2 shadow-[var(--panel-hi),var(--panel-shadow)]"
+    >
+      <span className="text-fg">Sources</span>
+      {items.map((b) => (
+        <span key={b} className="inline-flex items-center gap-1 whitespace-nowrap">
+          <Glyph badge={b} />
+          {b}
+        </span>
+      ))}
+      <span className="text-fg-3">Click any figure for its receipt</span>
+    </div>
+  );
+}
 
 const LONDON = "Europe/London";
 function londonTime(iso: unknown, full = false) {
@@ -267,7 +290,7 @@ export function ProvBadge({
   if (mode === "inline" && !audit && badge === scope) return null;
   return (
     <span className={cx("prov inline-flex", className)} onMouseEnter={arm} onFocus={arm}>
-      <Mark badge={badge} mode={audit ? "chip" : mode} fetchedAt={info?.fetched_at} receiptId={receiptId} />
+      <Mark badge={badge} mode={audit && mode !== "inline" ? "chip" : mode} fetchedAt={info?.fetched_at} receiptId={receiptId} />
       <ProvCard armed={armed} badge={badge} info={info} receiptId={receiptId} align={mode === "label" ? "right" : "left"} />
     </span>
   );
@@ -323,11 +346,11 @@ export function Num({
           e.stopPropagation();
           openReceipt(id);
         }}
-        className={cx("num-link cursor-pointer whitespace-nowrap", className)}
+        className={cx("num-link cursor-pointer whitespace-nowrap", audit && "num-link--audit", className)}
       >
         {children}
       </button>
-      {mark && own && (audit || own !== scope) && <Mark badge={own} mode={audit ? "chip" : "inline"} fetchedAt={info?.fetched_at} receiptId={id} />}
+      {mark && own && (audit || own !== scope) && <Mark badge={own} mode="inline" fetchedAt={info?.fetched_at} receiptId={id} />}
       <ProvCard armed={armed} badge={own} info={info} receiptId={id} />
     </span>
   );
