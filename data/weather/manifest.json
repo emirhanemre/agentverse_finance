@@ -1,0 +1,36 @@
+{
+  "source": "Open-Meteo archive (ERA5) and historical forecast API",
+  "licence": "CC BY 4.0 \u00b7 Weather data by Open-Meteo.com (https://open-meteo.com/en/license)",
+  "start": "2021-01-01",
+  "end": "2026-10-31",
+  "locations": {
+    "N4": {
+      "lat": 51.5687,
+      "lon": -0.1086,
+      "grid_lat": 51.564144,
+      "grid_lon": -0.1633606,
+      "fetched_at": "2026-11-07T23:58:09Z"
+    },
+    "SE22": {
+      "lat": 51.4563,
+      "lon": -0.0759,
+      "grid_lat": 51.42355,
+      "grid_lon": 0.0,
+      "fetched_at": "2026-11-07T23:59:52Z"
+    },
+    "E2": {
+      "lat": 51.5313,
+      "lon": -0.0556,
+      "grid_lat": 51.564144,
+      "grid_lon": 0.0,
+      "fetched_at": "2026-11-07T23:59:53Z"
+    },
+    "W12": {
+      "lat": 51.5072,
+      "lon": -0.2248,
+      "grid_lat": 51.493847,
+      "grid_lon": -0.1630249,
+      "fetched_at": "2026-11-07T23:59:56Z"
+    }
+  }
+}
