@@ -41,6 +41,8 @@ single independent.
 | Source | What we use | Real or synthetic | Licence and attribution | Client and cache |
 |---|---|---|---|---|
 | [Companies House API](https://developer.company-information.service.gov.uk/) | Profile and officers for 05770953 | REAL | Open Government Licence v3.0 | `clients/companies_house.py`, cached 7 days, recorded fixture committed |
+| [FSA food hygiene ratings API](https://api.ratings.food.gov.uk/) | Finds the pub as a registered food business (pub/bar type) by name and postcode; no key | REAL | Open Government Licence v3.0 (Food Standards Agency) | `clients/fsa.py`, used by the verifier |
+| Google Maps, via Gemini with Google Maps grounding | A pub's postcode from its name, when the owner gives only a name; treated as a lead and checked against the hygiene register and postcodes.io | REAL | Google Maps Platform terms, through the Gemini API | `clients/maps.py`, used by the verifier |
 | [postcodes.io](https://postcodes.io/) | Postcode to lat/lon and district | REAL | OGL v3.0 (ONS Postcode Directory) | `tools.locate_postcode`, cached 30 days |
 | [Met Office Weather DataHub, Site Specific](https://datahub.metoffice.gov.uk/) | Live forecast for this coming weekend (three-hourly, 12:00–18:00 rain) | REAL | Met Office DataHub terms. "Powered by Met Office data" | `clients/metoffice.py`. Cached per location for 1 h; never committed; free tier about 360 calls a day |
 | [Open-Meteo archive (ERA5)](https://open-meteo.com/en/docs/historical-weather-api) | Daily observed rain, 12:00–18:00 rain, max temperature, sunshine, 2021-01-01 to 2026-10-31, 4 London points | REAL | CC BY 4.0. "Weather data by Open-Meteo.com". Free non-commercial use | `clients/openmeteo.py` to `data/weather/*.csv` (`scripts/build_weather.py`) |
