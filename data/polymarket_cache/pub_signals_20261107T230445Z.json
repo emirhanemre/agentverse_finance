@@ -1,0 +1,1426 @@
+{
+ "profile": {
+  "stated": {
+   "name": "Synthetic Test Pub B",
+   "postcode": "M1 1AE",
+   "town_or_city": "Manchester"
+  },
+  "evidence_checks": [
+   {
+    "field": "name",
+    "quote": "Synthetic Test Pub B",
+    "found_in_details": true
+   },
+   {
+    "field": "town_or_city",
+    "quote": "Manchester",
+    "found_in_details": true
+   },
+   {
+    "field": "postcode",
+    "quote": "M1 1AE",
+    "found_in_details": true
+   }
+  ],
+  "capacity_note": null,
+  "dropped": [],
+  "place": {
+   "postcode": "M1 1AE",
+   "latitude": 53.483487,
+   "longitude": -2.231182,
+   "district": "Manchester",
+   "region": "North West",
+   "country": "England",
+   "precision": "postcode",
+   "source": "postcodes.io (ONS Postcode Directory)"
+  },
+  "weather_market": {
+   "city": null,
+   "usable": false,
+   "reason": "Gemini found no Polymarket weather city for this pub."
+  },
+  "teams": [
+   {
+    "name": "Manchester City",
+    "relation": "home_ground_nearby",
+    "sport": "soccer",
+    "competition": "Premier League",
+    "why": "Etihad Stadium is located about 2.5 km from Manchester city centre.",
+    "basis": "inferred by Gemini from general knowledge"
+   },
+   {
+    "name": "Manchester United",
+    "relation": "home_ground_nearby",
+    "sport": "soccer",
+    "competition": "Premier League",
+    "why": "Old Trafford is located about 4 km from Manchester city centre.",
+    "basis": "inferred by Gemini from general knowledge"
+   },
+   {
+    "name": "England",
+    "relation": "pub_shows_matches",
+    "sport": "soccer",
+    "competition": "FIFA World Cup",
+    "why": "The pub shows football matches.",
+    "basis": "inferred by Gemini from general knowledge"
+   }
+  ],
+  "search_queries": [
+   "Manchester City",
+   "Manchester United",
+   "Premier League",
+   "England football",
+   "Manchester temperature",
+   "precipitation Manchester"
+  ],
+  "weather_exposure": "While pleasant weather will boost trade on the small terrace, poor weather shifts patrons indoors where televised football maintains steady footfall.",
+  "instructions_found": [],
+  "warnings": [],
+  "gemini": {
+   "model": "gemini-3.8-flash",
+   "prompt": "pub_profile v3",
+   "prompt_sha": "d4ac4742f125",
+   "seconds": 11.4,
+   "raw_reply": {
+    "name": "Synthetic Test Pub B",
+    "address": "",
+    "postcode": "M1 1AE",
+    "town_or_city": "Manchester",
+    "total_capacity": 0,
+    "indoor_capacity": 0,
+    "outdoor_capacity": 0,
+    "opening_hours_per_day": 0,
+    "teams": [
+     {
+      "name": "Manchester City",
+      "relation": "home_ground_nearby",
+      "sport": "soccer",
+      "competition": "Premier League",
+      "why": "Etihad Stadium is located about 2.5 km from Manchester city centre."
+     },
+     {
+      "name": "Manchester United",
+      "relation": "home_ground_nearby",
+      "sport": "soccer",
+      "competition": "Premier League",
+      "why": "Old Trafford is located about 4 km from Manchester city centre."
+     },
+     {
+      "name": "England",
+      "relation": "pub_shows_matches",
+      "sport": "soccer",
+      "competition": "FIFA World Cup",
+      "why": "The pub shows football matches."
+     }
+    ],
+    "polymarket_weather_city": "none",
+    "search_queries": [
+     "Manchester City",
+     "Manchester United",
+     "Premier League",
+     "England football",
+     "Manchester temperature",
+     "precipitation Manchester"
+    ],
+    "weather_exposure": "While pleasant weather will boost trade on the small terrace, poor weather shifts patrons indoors where televised football maintains steady footfall.",
+    "evidence": [
+     {
+      "field": "name",
+      "quote": "Synthetic Test Pub B"
+     },
+     {
+      "field": "town_or_city",
+      "quote": "Manchester"
+     },
+     {
+      "field": "postcode",
+      "quote": "M1 1AE"
+     }
+    ],
+    "instructions_found": []
+   }
+  }
+ },
+ "related_markets": {
+  "model_inputs": [
+   {
+    "id": "c10",
+    "slug": "epl-mun-ast-2026-11-08",
+    "title": "Manchester United FC vs. Aston Villa FC",
+    "date": "2026-11-08",
+    "ends": "2026-11-08",
+    "tags": [
+     "EPL",
+     "games",
+     "premier-league",
+     "soccer"
+    ],
+    "markets": 3,
+    "volume_usd": 35011.81,
+    "found_by": "Manchester United",
+    "source_url": "https://polymarket.com/event/epl-mun-ast-2026-11-08",
+    "untrusted_content_flags": [],
+    "relevance": "model_input",
+    "feeds": "local_event_indicator",
+    "reason": "Manchester United play at home on 8 November, driving major matchday trade to the pub.",
+    "accepted": true,
+    "python_check": "ok"
+   }
+  ],
+  "context": [
+   {
+    "id": "c1",
+    "slug": "manchester-city-punishment-announced-by",
+    "title": "Manchester City punishment announced by...?",
+    "date": null,
+    "ends": "2026-12-19",
+    "tags": [
+     "EPL",
+     "man-city",
+     "man-city-115-charges",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 6,
+    "volume_usd": 75550.37,
+    "found_by": "Manchester City",
+    "source_url": "https://polymarket.com/event/manchester-city-punishment-announced-by",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Relates to potential long-term penalties facing local club Manchester City.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c2",
+    "slug": "will-manchester-city-be-relegated-from-the-premier-league-in-2026-27",
+    "title": "Will Man City be relegated from the EPL in 2026-27?",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "man-city",
+     "man-city-115-charges",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 1,
+    "volume_usd": 62940.18,
+    "found_by": "Manchester City",
+    "source_url": "https://polymarket.com/event/will-manchester-city-be-relegated-from-the-premier-league-in-2026-27",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Long-term relegation market for nearby club Manchester City.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c3",
+    "slug": "how-many-premier-league-points-will-manchester-city-be-deducted",
+    "title": "How many EPL points will Man City be deducted?",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "man-city",
+     "man-city-115-charges",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 7,
+    "volume_usd": 32911.39,
+    "found_by": "Manchester City",
+    "source_url": "https://polymarket.com/event/how-many-premier-league-points-will-manchester-city-be-deducted",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Long-term regulatory outcome for nearby club Manchester City.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c4",
+    "slug": "will-manchester-city-be-stripped-of-a-premier-league-title-by-june-30-2027",
+    "title": "Man City to be stripped of EPL title by June 30, 2027?",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "man-city",
+     "man-city-115-charges",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 1,
+    "volume_usd": 4933.07,
+    "found_by": "Manchester City",
+    "source_url": "https://polymarket.com/event/will-manchester-city-be-stripped-of-a-premier-league-title-by-june-30-2027",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Long-term league title sanction market involving Manchester City.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c5",
+    "slug": "will-a-transfer-restriction-on-manchester-city-be-applied-by-the-2027-summer-transfer-window",
+    "title": "Man City to face transfer restriction by 2027 summer transfer window?",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "man-city",
+     "man-city-115-charges",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 1,
+    "volume_usd": 4581.15,
+    "found_by": "Manchester City",
+    "source_url": "https://polymarket.com/event/will-a-transfer-restriction-on-manchester-city-be-applied-by-the-2027-summer-transfer-window",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Future transfer restrictions market concerning Manchester City.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c6",
+    "slug": "will-manchester-city-be-deducted-premier-league-points-by-june-30-2027",
+    "title": "Man City to face EPL points deduction by June 30, 2027?",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "man-city",
+     "man-city-115-charges",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 1,
+    "volume_usd": 4330.71,
+    "found_by": "Manchester City",
+    "source_url": "https://polymarket.com/event/will-manchester-city-be-deducted-premier-league-points-by-june-30-2027",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Long-term points deduction market concerning Manchester City.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c7",
+    "slug": "uefa-sanctions-man-city-by-may-30-2027",
+    "title": "UEFA sanctions Man City by May 30, 2027?",
+    "date": null,
+    "ends": "2027-05-31",
+    "tags": [
+     "EPL",
+     "man-city",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 1,
+    "volume_usd": 0.0,
+    "found_by": "Manchester City",
+    "source_url": "https://polymarket.com/event/uefa-sanctions-man-city-by-may-30-2027",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "European regulatory sanction market regarding Manchester City.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c8",
+    "slug": "uefa-opens-man-city-investigation-by-may-30-2027",
+    "title": "UEFA opens Man City investigation by May 30, 2027?",
+    "date": null,
+    "ends": "2027-05-31",
+    "tags": [
+     "EPL",
+     "man-city",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 1,
+    "volume_usd": 0.0,
+    "found_by": "Manchester City",
+    "source_url": "https://polymarket.com/event/uefa-opens-man-city-investigation-by-may-30-2027",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Investigation market involving nearby club Manchester City.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c12",
+    "slug": "michael-carrick-out-as-manchester-united-manager-by",
+    "title": "Michael Carrick out as Manchester United manager by...?",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "soccer"
+    ],
+    "markets": 5,
+    "volume_usd": 38203.94,
+    "found_by": "Manchester United",
+    "source_url": "https://polymarket.com/event/michael-carrick-out-as-manchester-united-manager-by",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Managerial tenure speculation for nearby club Manchester United.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c13",
+    "slug": "ucl-spo-mnu-2026-11-25",
+    "title": "Sporting CP vs. Manchester United FC",
+    "date": "2026-11-25",
+    "ends": "2026-11-25",
+    "tags": [
+     "games",
+     "soccer",
+     "ucl"
+    ],
+    "markets": 3,
+    "volume_usd": 32.17,
+    "found_by": "Manchester United",
+    "source_url": "https://polymarket.com/event/ucl-spo-mnu-2026-11-25",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Manchester United fixture occurring later in the month outside the forecast dates.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c14",
+    "slug": "uefa-champions-league-2027-champion-20260701202025549",
+    "title": "UEFA Champions League: 2027 Champion",
+    "date": null,
+    "ends": "2027-06-20",
+    "tags": [
+     "champions-league",
+     "soccer",
+     "ucl",
+     "ucl-matchday"
+    ],
+    "markets": 42,
+    "volume_usd": 70372187.22,
+    "found_by": "Manchester United",
+    "source_url": "https://polymarket.com/event/uefa-champions-league-2027-champion-20260701202025549",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long European tournament futures concerning local clubs.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c15",
+    "slug": "epl-2027-champion-20260701200428749",
+    "title": "EPL: 2027 Champion",
+    "date": null,
+    "ends": "2027-06-15",
+    "tags": [
+     "EPL",
+     "soccer"
+    ],
+    "markets": 24,
+    "volume_usd": 25627520.61,
+    "found_by": "Manchester United",
+    "source_url": "https://polymarket.com/event/epl-2027-champion-20260701200428749",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League title race involving Manchester City and Manchester United.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c16",
+    "slug": "uefa-champions-league-team-to-advance-to-2027-quarters",
+    "title": "UEFA Champions League: Team to advance to 2027 quarters",
+    "date": null,
+    "ends": "2027-03-20",
+    "tags": [
+     "champions-league",
+     "soccer",
+     "ucl"
+    ],
+    "markets": 36,
+    "volume_usd": 82159.99,
+    "found_by": "Manchester United",
+    "source_url": "https://polymarket.com/event/uefa-champions-league-team-to-advance-to-2027-quarters",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "European tournament advancement market for competitions involving local clubs.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c17",
+    "slug": "epl-team-to-qualify-for-the-2027-28-uefa-champions-league",
+    "title": "EPL: Team to qualify for the 2027-28 UEFA Champions League",
+    "date": null,
+    "ends": "2027-06-01",
+    "tags": [
+     "EPL",
+     "premier-league",
+     "qualification",
+     "soccer",
+     "uefa-champions-league"
+    ],
+    "markets": 20,
+    "volume_usd": 71932.17,
+    "found_by": "Premier League",
+    "source_url": "https://polymarket.com/event/epl-team-to-qualify-for-the-2027-28-uefa-champions-league",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Premier League European qualification market relevant to local clubs.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c18",
+    "slug": "epl-team-to-qualify-for-the-2027-28-uefa-conference-league",
+    "title": "EPL: Team to qualify for the 2027-28 UEFA Conference League",
+    "date": null,
+    "ends": "2027-06-01",
+    "tags": [
+     "EPL",
+     "premier-league",
+     "qualification",
+     "soccer",
+     "uefa-conference-league"
+    ],
+    "markets": 20,
+    "volume_usd": 8058.22,
+    "found_by": "Premier League",
+    "source_url": "https://polymarket.com/event/epl-team-to-qualify-for-the-2027-28-uefa-conference-league",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Premier League European qualification market relevant to local clubs.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c19",
+    "slug": "epl-team-to-qualify-for-the-2027-28-uefa-europa-league",
+    "title": "EPL: Team to qualify for the 2027-28 UEFA Europa League",
+    "date": null,
+    "ends": "2027-06-08",
+    "tags": [
+     "EPL",
+     "premier-league",
+     "qualification",
+     "soccer",
+     "uefa-europa-league"
+    ],
+    "markets": 20,
+    "volume_usd": 22972.05,
+    "found_by": "Premier League",
+    "source_url": "https://polymarket.com/event/epl-team-to-qualify-for-the-2027-28-uefa-europa-league",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Premier League European qualification market relevant to local clubs.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c20",
+    "slug": "premier-league-teams-relegated-2026-27",
+    "title": "Premier League: Teams relegated (2026-27)",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "games",
+     "premier-league",
+     "props",
+     "soccer"
+    ],
+    "markets": 20,
+    "volume_usd": 330782.8,
+    "found_by": "Premier League",
+    "source_url": "https://polymarket.com/event/premier-league-teams-relegated-2026-27",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League relegation outcome.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c21",
+    "slug": "premier-league-team-most-clean-sheets-2026-27",
+    "title": "Premier League: Team with Most Clean Sheets 2026-27",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "games",
+     "premier-league",
+     "props",
+     "soccer"
+    ],
+    "markets": 21,
+    "volume_usd": 122.79,
+    "found_by": "Premier League",
+    "source_url": "https://polymarket.com/event/premier-league-team-most-clean-sheets-2026-27",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League defensive statistics market.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c22",
+    "slug": "premier-league-3rd-place-finish-2026-27",
+    "title": "Premier League: 3rd Place Finish 2026-27",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "games",
+     "premier-league",
+     "props",
+     "soccer"
+    ],
+    "markets": 21,
+    "volume_usd": 0.0,
+    "found_by": "Premier League",
+    "source_url": "https://polymarket.com/event/premier-league-3rd-place-finish-2026-27",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League table position market.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c23",
+    "slug": "premier-league-17th-place-relegation-survivor-2026-27",
+    "title": "Premier League: 17th Place (Relegation Survivor) 2026-27",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "games",
+     "premier-league",
+     "props",
+     "soccer"
+    ],
+    "markets": 17,
+    "volume_usd": 22.02,
+    "found_by": "Premier League",
+    "source_url": "https://polymarket.com/event/premier-league-17th-place-relegation-survivor-2026-27",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League survival market.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c33",
+    "slug": "ucl-mnc-nap-2026-11-24",
+    "title": "Manchester City FC vs. SSC Napoli",
+    "date": "2026-11-24",
+    "ends": "2026-11-24",
+    "tags": [
+     "games",
+     "soccer",
+     "ucl"
+    ],
+    "markets": 3,
+    "volume_usd": 228.73,
+    "found_by": "Manchester temperature",
+    "source_url": "https://polymarket.com/event/ucl-mnc-nap-2026-11-24",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Manchester City Champions League match scheduled for later in November.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c36",
+    "slug": "will-manchester-citys-115-charges-verdict-be-overturned-by-june-30-2027",
+    "title": "Man City's 115 charges overturned by June 30, 2027?",
+    "date": null,
+    "ends": "2027-07-01",
+    "tags": [
+     "EPL",
+     "man-city",
+     "man-city-115-charges",
+     "manchester-city",
+     "soccer"
+    ],
+    "markets": 1,
+    "volume_usd": 1753.79,
+    "found_by": "Manchester temperature",
+    "source_url": "https://polymarket.com/event/will-manchester-citys-115-charges-verdict-be-overturned-by-june-30-2027",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Legal outcome concerning Manchester City's financial charges.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c37",
+    "slug": "premier-league-top-4-finishers-2026-27",
+    "title": "English Premier League Top 4 Finishers (2026-27)",
+    "date": null,
+    "ends": "2027-06-14",
+    "tags": [
+     "EPL",
+     "soccer"
+    ],
+    "markets": 20,
+    "volume_usd": 98910.99,
+    "found_by": "Manchester temperature",
+    "source_url": "https://polymarket.com/event/premier-league-top-4-finishers-2026-27",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League top-four race involving Manchester clubs.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c38",
+    "slug": "uefa-champions-league-team-to-advance-to-2027-round-of-16",
+    "title": "UEFA Champions League: Team to advance to 2027 Round of 16",
+    "date": null,
+    "ends": "2027-02-28",
+    "tags": [
+     "champions-league",
+     "soccer",
+     "ucl"
+    ],
+    "markets": 36,
+    "volume_usd": 137169.74,
+    "found_by": "Manchester temperature",
+    "source_url": "https://polymarket.com/event/uefa-champions-league-team-to-advance-to-2027-round-of-16",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Tournament progression market for the Champions League involving local teams.",
+    "accepted": true,
+    "python_check": "ok"
+   }
+  ],
+  "rejected": [
+   {
+    "id": "c9",
+    "slug": "will-theunitedstrand-get-a-haircut-by-2026-27-season-end",
+    "title": "Will TheUnitedStrand get a haircut by 2026-27 season end?",
+    "date": null,
+    "ends": "2027-05-31",
+    "tags": [
+     "EPL",
+     "manchester",
+     "manchester-united",
+     "manu",
+     "soccer"
+    ],
+    "markets": 1,
+    "volume_usd": 2879.24,
+    "found_by": "Manchester United",
+    "source_url": "https://polymarket.com/event/will-theunitedstrand-get-a-haircut-by-2026-27-season-end",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "A novelty social media market unrelated to match fixtures or pub footfall.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c11",
+    "slug": "wsl-avl-mnu-2026-11-08",
+    "title": "Aston Villa WFC vs. Manchester United WFC",
+    "date": "2026-11-08",
+    "ends": "2026-11-08",
+    "tags": [
+     "games",
+     "soccer",
+     "wsl"
+    ],
+    "markets": 3,
+    "volume_usd": 1546.84,
+    "found_by": "Manchester United",
+    "source_url": "https://polymarket.com/event/wsl-avl-mnu-2026-11-08",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Involves the women's team playing away in Birmingham rather than the tracked men's club.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c24",
+    "slug": "epl-cry-liv-2026-11-08",
+    "title": "Crystal Palace FC vs. Liverpool FC",
+    "date": "2026-11-08",
+    "ends": "2026-11-08",
+    "tags": [
+     "EPL",
+     "games",
+     "premier-league",
+     "soccer"
+    ],
+    "markets": 3,
+    "volume_usd": 170705.48,
+    "found_by": "Premier League",
+    "source_url": "https://polymarket.com/event/epl-cry-liv-2026-11-08",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Premier League match between two clubs with no connection to Manchester or this pub.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c25",
+    "slug": "mike-vrabel-out-as-patriots-head-coach-by-dec-31-2026",
+    "title": "Mike Vrabel out as Patriots Head Coach by Dec 31, 2026?",
+    "date": null,
+    "ends": "2027-01-01",
+    "tags": [
+     "football",
+     "new-england-patriots",
+     "nfl",
+     "nfl-next-team"
+    ],
+    "markets": 1,
+    "volume_usd": 24567.76,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/mike-vrabel-out-as-patriots-head-coach-by-dec-31-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "American football coaching market with no relevance to an English pub.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c26",
+    "slug": "pro-football-2027-champion-20260729185915366",
+    "title": "Pro Football: 2027 Champion",
+    "date": null,
+    "ends": "2027-04-01",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-gameday",
+     "nfl-team-futures",
+     "super-bowl"
+    ],
+    "markets": 33,
+    "volume_usd": 71852176.7,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-2027-champion-20260729185915366",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "NFL American football futures market.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c27",
+    "slug": "nfl-team-to-make-postseason",
+    "title": "Pro Football: Team to Make Postseason",
+    "date": null,
+    "ends": "2027-01-25",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-team-futures"
+    ],
+    "markets": 32,
+    "volume_usd": 331813.28,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/nfl-team-to-make-postseason",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "NFL American football postseason market.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c28",
+    "slug": "pro-football-jonathan-taylor-next-team-2026",
+    "title": "Pro Football: Jonathan Taylor Next Team",
+    "date": null,
+    "ends": "2026-11-11",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-next-team"
+    ],
+    "markets": 35,
+    "volume_usd": 4300.5,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-jonathan-taylor-next-team-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "American football player transfer market.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c29",
+    "slug": "pro-football-brian-thomas-jr-next-team-2026",
+    "title": "Pro Football: Brian Thomas Jr. Next Team",
+    "date": null,
+    "ends": "2026-11-11",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-next-team"
+    ],
+    "markets": 35,
+    "volume_usd": 946.68,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-brian-thomas-jr-next-team-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "American football player transfer market.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c30",
+    "slug": "pro-football-tyreek-hill-next-team-2026",
+    "title": "Pro Football: Tyreek Hill Next Team",
+    "date": null,
+    "ends": "2027-01-01",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-free-agency",
+     "nfl-next-team",
+     "tyreek-hill"
+    ],
+    "markets": 35,
+    "volume_usd": 78861.37,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-tyreek-hill-next-team-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "American football player transfer market.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c31",
+    "slug": "pro-football-afc-team-to-advance-to-divisional-round",
+    "title": "Pro Football: AFC Team to advance to Divisional Round",
+    "date": null,
+    "ends": "2027-01-19",
+    "tags": [
+     "afc",
+     "football",
+     "nfl",
+     "nfl-playoffs"
+    ],
+    "markets": 16,
+    "volume_usd": 23551.11,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-afc-team-to-advance-to-divisional-round",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "American football postseason market.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c32",
+    "slug": "pro-football-2026-27-rushing-yards-leader-team-20260720201610946",
+    "title": "Pro Football: 2026-27 Rushing Yards Leader (Team)",
+    "date": null,
+    "ends": "2027-01-27",
+    "tags": [
+     "football",
+     "nfl",
+     "season-stats"
+    ],
+    "markets": 38,
+    "volume_usd": 29852.47,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-2026-27-rushing-yards-leader-team-20260720201610946",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "American football team rushing statistics market.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c34",
+    "slug": "uwcl-bhf-mci-2026-11-18",
+    "title": "BK Häcken FF vs. Manchester City WFC",
+    "date": "2026-11-18",
+    "ends": "2026-11-18",
+    "tags": [
+     "games",
+     "soccer",
+     "womens-champions-league"
+    ],
+    "markets": 3,
+    "volume_usd": 0.0,
+    "found_by": "Manchester temperature",
+    "source_url": "https://polymarket.com/event/uwcl-bhf-mci-2026-11-18",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Women's Champions League fixture not tracked by the pub's core customer base.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c35",
+    "slug": "uwcl-im-mci-2026-11-10",
+    "title": "FC Internazionale Milano vs. Manchester City WFC",
+    "date": "2026-11-10",
+    "ends": "2026-11-10",
+    "tags": [
+     "games",
+     "soccer",
+     "womens-champions-league"
+    ],
+    "markets": 3,
+    "volume_usd": 0.0,
+    "found_by": "Manchester temperature",
+    "source_url": "https://polymarket.com/event/uwcl-im-mci-2026-11-10",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Women's Champions League fixture not tracked by the pub's core customer base.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c39",
+    "slug": "precipitation-in-hong-kong-in-november",
+    "title": "Precipitation in Hong Kong in November?",
+    "date": null,
+    "ends": "2027-02-08",
+    "tags": [
+     "precipitation",
+     "science",
+     "weather"
+    ],
+    "markets": 7,
+    "volume_usd": 3333.77,
+    "found_by": "precipitation Manchester",
+    "source_url": "https://polymarket.com/event/precipitation-in-hong-kong-in-november",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Weather market for Hong Kong, far outside Manchester.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c40",
+    "slug": "precipitation-in-seattle-in-november",
+    "title": "Precipitation in Seattle in November?",
+    "date": null,
+    "ends": "2027-02-08",
+    "tags": [
+     "precipitation",
+     "science",
+     "weather"
+    ],
+    "markets": 7,
+    "volume_usd": 1341.7,
+    "found_by": "precipitation Manchester",
+    "source_url": "https://polymarket.com/event/precipitation-in-seattle-in-november",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Weather market for Seattle, far outside Manchester.",
+    "accepted": false,
+    "python_check": "ok"
+   }
+  ],
+  "gemini": {
+   "model": "gemini-3.8-flash",
+   "prompt": "market_relevance v1",
+   "seconds": 28.1,
+   "raw_reply": {
+    "judgements": [
+     {
+      "id": "c1",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Relates to potential long-term penalties facing local club Manchester City."
+     },
+     {
+      "id": "c2",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Long-term relegation market for nearby club Manchester City."
+     },
+     {
+      "id": "c3",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Long-term regulatory outcome for nearby club Manchester City."
+     },
+     {
+      "id": "c4",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Long-term league title sanction market involving Manchester City."
+     },
+     {
+      "id": "c5",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Future transfer restrictions market concerning Manchester City."
+     },
+     {
+      "id": "c6",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Long-term points deduction market concerning Manchester City."
+     },
+     {
+      "id": "c7",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "European regulatory sanction market regarding Manchester City."
+     },
+     {
+      "id": "c8",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Investigation market involving nearby club Manchester City."
+     },
+     {
+      "id": "c9",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "A novelty social media market unrelated to match fixtures or pub footfall."
+     },
+     {
+      "id": "c10",
+      "relevance": "model_input",
+      "feeds": "local_event_indicator",
+      "reason": "Manchester United play at home on 8 November, driving major matchday trade to the pub."
+     },
+     {
+      "id": "c11",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Involves the women's team playing away in Birmingham rather than the tracked men's club."
+     },
+     {
+      "id": "c12",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Managerial tenure speculation for nearby club Manchester United."
+     },
+     {
+      "id": "c13",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Manchester United fixture occurring later in the month outside the forecast dates."
+     },
+     {
+      "id": "c14",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long European tournament futures concerning local clubs."
+     },
+     {
+      "id": "c15",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League title race involving Manchester City and Manchester United."
+     },
+     {
+      "id": "c16",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "European tournament advancement market for competitions involving local clubs."
+     },
+     {
+      "id": "c17",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Premier League European qualification market relevant to local clubs."
+     },
+     {
+      "id": "c18",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Premier League European qualification market relevant to local clubs."
+     },
+     {
+      "id": "c19",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Premier League European qualification market relevant to local clubs."
+     },
+     {
+      "id": "c20",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League relegation outcome."
+     },
+     {
+      "id": "c21",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League defensive statistics market."
+     },
+     {
+      "id": "c22",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League table position market."
+     },
+     {
+      "id": "c23",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League survival market."
+     },
+     {
+      "id": "c24",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Premier League match between two clubs with no connection to Manchester or this pub."
+     },
+     {
+      "id": "c25",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "American football coaching market with no relevance to an English pub."
+     },
+     {
+      "id": "c26",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "NFL American football futures market."
+     },
+     {
+      "id": "c27",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "NFL American football postseason market."
+     },
+     {
+      "id": "c28",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "American football player transfer market."
+     },
+     {
+      "id": "c29",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "American football player transfer market."
+     },
+     {
+      "id": "c30",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "American football player transfer market."
+     },
+     {
+      "id": "c31",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "American football postseason market."
+     },
+     {
+      "id": "c32",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "American football team rushing statistics market."
+     },
+     {
+      "id": "c33",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Manchester City Champions League match scheduled for later in November."
+     },
+     {
+      "id": "c34",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Women's Champions League fixture not tracked by the pub's core customer base."
+     },
+     {
+      "id": "c35",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Women's Champions League fixture not tracked by the pub's core customer base."
+     },
+     {
+      "id": "c36",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Legal outcome concerning Manchester City's financial charges."
+     },
+     {
+      "id": "c37",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League top-four race involving Manchester clubs."
+     },
+     {
+      "id": "c38",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Tournament progression market for the Champions League involving local teams."
+     },
+     {
+      "id": "c39",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Weather market for Hong Kong, far outside Manchester."
+     },
+     {
+      "id": "c40",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Weather market for Seattle, far outside Manchester."
+     }
+    ]
+   }
+  }
+ },
+ "model_inputs": {
+  "start": "2026-11-08",
+  "days": 2,
+  "weather_city": null,
+  "rain_from_market": false,
+  "rows": [
+   {
+    "fields": {
+     "date": "2026-11-08",
+     "temp_max_c": 11.3,
+     "temp_min_c": 5.3,
+     "temp_mean_c": 8.1,
+     "precipitation_mm": 0.0,
+     "rain_mm": 0.0,
+     "wind_max_kmh": 21.6,
+     "sunshine_hours": 7.4,
+     "opening_hours": 10.5,
+     "indoor_capacity": 90,
+     "outdoor_capacity": 70,
+     "is_uk_bank_holiday": 0,
+     "local_event_indicator": 1,
+     "lag_7d_revenue_gbp": null,
+     "rolling_14d_mean_revenue_gbp": null
+    },
+    "sources": {
+     "date": "requested",
+     "temp_max_c": "model's seasonal reference (no open Polymarket market for this day)",
+     "temp_min_c": "model's seasonal reference (no open Polymarket market for this day)",
+     "temp_mean_c": "model's seasonal reference (no open Polymarket market for this day)",
+     "precipitation_mm": "model's seasonal dry reference (no daily rain market exists)",
+     "rain_mm": "model's seasonal dry reference (no daily rain market exists)",
+     "wind_max_kmh": "model's seasonal reference (no market exists)",
+     "sunshine_hours": "model's seasonal reference (no market exists)",
+     "opening_hours": "model's default weekday hours",
+     "indoor_capacity": "model default",
+     "outdoor_capacity": "model default",
+     "is_uk_bank_holiday": "gov.uk/bank-holidays.json",
+     "local_event_indicator": "Polymarket fixtures: Manchester United FC vs. Aston Villa FC (Manchester United at home nearby)",
+     "lag_7d_revenue_gbp": "not known: the model uses its weekday average",
+     "rolling_14d_mean_revenue_gbp": "not known: the model uses its weekday average"
+    }
+   },
+   {
+    "fields": {
+     "date": "2026-11-09",
+     "temp_max_c": 11.3,
+     "temp_min_c": 5.3,
+     "temp_mean_c": 8.1,
+     "precipitation_mm": 0.0,
+     "rain_mm": 0.0,
+     "wind_max_kmh": 21.6,
+     "sunshine_hours": 7.4,
+     "opening_hours": 10.0,
+     "indoor_capacity": 90,
+     "outdoor_capacity": 70,
+     "is_uk_bank_holiday": 0,
+     "local_event_indicator": 0,
+     "lag_7d_revenue_gbp": null,
+     "rolling_14d_mean_revenue_gbp": null
+    },
+    "sources": {
+     "date": "requested",
+     "temp_max_c": "model's seasonal reference (no open Polymarket market for this day)",
+     "temp_min_c": "model's seasonal reference (no open Polymarket market for this day)",
+     "temp_mean_c": "model's seasonal reference (no open Polymarket market for this day)",
+     "precipitation_mm": "model's seasonal dry reference (no daily rain market exists)",
+     "rain_mm": "model's seasonal dry reference (no daily rain market exists)",
+     "wind_max_kmh": "model's seasonal reference (no market exists)",
+     "sunshine_hours": "model's seasonal reference (no market exists)",
+     "opening_hours": "model's default weekday hours",
+     "indoor_capacity": "model default",
+     "outdoor_capacity": "model default",
+     "is_uk_bank_holiday": "gov.uk/bank-holidays.json",
+     "local_event_indicator": "no event for this pub on Polymarket that day",
+     "lag_7d_revenue_gbp": "not known: the model uses its weekday average",
+     "rolling_14d_mean_revenue_gbp": "not known: the model uses its weekday average"
+    }
+   }
+  ],
+  "markets": {
+   "daily_high": [],
+   "monthly_rain": [],
+   "fixtures": [
+    {
+     "date": "2026-11-08",
+     "title": "Manchester United FC vs. Aston Villa FC",
+     "slug": "epl-mun-ast-2026-11-08",
+     "source_url": "https://polymarket.com/event/epl-mun-ast-2026-11-08",
+     "kick_off_utc": "2026-11-08T16:30:00Z",
+     "competition": "premier-league-2025",
+     "volume_usd": 35011.81,
+     "teams": [
+      {
+       "team": "Manchester United",
+       "relation": "home_ground_nearby",
+       "sport": "soccer",
+       "at_home": true,
+       "market_win_probability": 0.445
+      }
+     ]
+    }
+   ],
+   "judged_events": []
+  },
+  "polymarket_calls": 9,
+  "retrieved_at": "2026-11-07T23:04:45+00:00"
+ }
+}

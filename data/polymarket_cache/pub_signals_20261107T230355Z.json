@@ -1,0 +1,1319 @@
+{
+ "profile": {
+  "stated": {
+   "name": "Synthetic Test Pub A",
+   "postcode": "SE22 8HD",
+   "outdoor_capacity": 72
+  },
+  "evidence_checks": [
+   {
+    "field": "name",
+    "quote": "\"name\": \"Synthetic Test Pub A\"",
+    "found_in_details": true
+   },
+   {
+    "field": "postcode",
+    "quote": "\"postcode\": \"SE22 8HD\"",
+    "found_in_details": true
+   },
+   {
+    "field": "outdoor_capacity",
+    "quote": "\"outdoor_seats\": 72",
+    "found_in_details": true
+   }
+  ],
+  "capacity_note": null,
+  "dropped": [],
+  "place": {
+   "postcode": "SE22 8HD",
+   "latitude": 51.455995,
+   "longitude": -0.076473,
+   "district": "Southwark",
+   "region": "London",
+   "country": "England",
+   "precision": "postcode",
+   "source": "postcodes.io (ONS Postcode Directory)"
+  },
+  "weather_market": {
+   "city": "London",
+   "station": "London City Airport (EGLC)",
+   "distance_km": 10.6,
+   "usable": true,
+   "reason": "The pub is 10.6 km from London City Airport (EGLC), where these markets settle."
+  },
+  "teams": [
+   {
+    "name": "England",
+    "relation": "pub_shows_matches",
+    "sport": "soccer",
+    "competition": "UEFA Nations League",
+    "why": "The pub shows football matches, drawing fans for national fixtures.",
+    "basis": "inferred by Gemini from general knowledge"
+   },
+   {
+    "name": "England",
+    "relation": "pub_shows_matches",
+    "sport": "rugby",
+    "competition": "Six Nations",
+    "why": "The pub shows rugby, which draws crowds during major international games.",
+    "basis": "inferred by Gemini from general knowledge"
+   },
+   {
+    "name": "Millwall",
+    "relation": "home_ground_nearby",
+    "sport": "soccer",
+    "competition": "Championship",
+    "why": "The Den is located within 5 km of East Dulwich.",
+    "basis": "inferred by Gemini from general knowledge"
+   },
+   {
+    "name": "Crystal Palace",
+    "relation": "home_ground_nearby",
+    "sport": "soccer",
+    "competition": "Premier League",
+    "why": "Selhurst Park is approximately 5.5 km from the SE22 area.",
+    "basis": "inferred by Gemini from general knowledge"
+   },
+   {
+    "name": "Dulwich Hamlet",
+    "relation": "home_ground_nearby",
+    "sport": "soccer",
+    "competition": "Isthmian League",
+    "why": "Champion Hill ground is located directly in East Dulwich (SE22).",
+    "basis": "inferred by Gemini from general knowledge"
+   }
+  ],
+  "search_queries": [
+   "highest temperature in London",
+   "precipitation in London",
+   "England football",
+   "Six Nations",
+   "Millwall",
+   "Crystal Palace"
+  ],
+  "weather_exposure": "With 72 outdoor seats, warm and dry weather significantly increases patron capacity and takings.",
+  "instructions_found": [],
+  "warnings": [],
+  "gemini": {
+   "model": "gemini-3.8-flash",
+   "prompt": "pub_profile v3",
+   "prompt_sha": "d4ac4742f125",
+   "seconds": 13.4,
+   "raw_reply": {
+    "name": "Synthetic Test Pub A",
+    "address": "",
+    "postcode": "SE22 8HD",
+    "town_or_city": "",
+    "total_capacity": 0,
+    "indoor_capacity": 0,
+    "outdoor_capacity": 72,
+    "opening_hours_per_day": 0,
+    "teams": [
+     {
+      "name": "England",
+      "relation": "pub_shows_matches",
+      "sport": "soccer",
+      "competition": "UEFA Nations League",
+      "why": "The pub shows football matches, drawing fans for national fixtures."
+     },
+     {
+      "name": "England",
+      "relation": "pub_shows_matches",
+      "sport": "rugby",
+      "competition": "Six Nations",
+      "why": "The pub shows rugby, which draws crowds during major international games."
+     },
+     {
+      "name": "Millwall",
+      "relation": "home_ground_nearby",
+      "sport": "soccer",
+      "competition": "Championship",
+      "why": "The Den is located within 5 km of East Dulwich."
+     },
+     {
+      "name": "Crystal Palace",
+      "relation": "home_ground_nearby",
+      "sport": "soccer",
+      "competition": "Premier League",
+      "why": "Selhurst Park is approximately 5.5 km from the SE22 area."
+     },
+     {
+      "name": "Dulwich Hamlet",
+      "relation": "home_ground_nearby",
+      "sport": "soccer",
+      "competition": "Isthmian League",
+      "why": "Champion Hill ground is located directly in East Dulwich (SE22)."
+     }
+    ],
+    "polymarket_weather_city": "London",
+    "search_queries": [
+     "highest temperature in London",
+     "precipitation in London",
+     "England football",
+     "Six Nations",
+     "Millwall",
+     "Crystal Palace"
+    ],
+    "weather_exposure": "With 72 outdoor seats, warm and dry weather significantly increases patron capacity and takings.",
+    "evidence": [
+     {
+      "field": "name",
+      "quote": "\"name\": \"Synthetic Test Pub A\""
+     },
+     {
+      "field": "postcode",
+      "quote": "\"postcode\": \"SE22 8HD\""
+     },
+     {
+      "field": "outdoor_capacity",
+      "quote": "\"outdoor_seats\": 72"
+     }
+    ],
+    "instructions_found": []
+   }
+  }
+ },
+ "related_markets": {
+  "model_inputs": [
+   {
+    "id": "c1",
+    "slug": "highest-temperature-in-london-on-november-8-2026",
+    "title": "Highest temperature in London on November 8?",
+    "date": "2026-11-08",
+    "ends": "2026-11-08",
+    "tags": [
+     "daily-temperature",
+     "highest-temperature",
+     "london",
+     "weather"
+    ],
+    "markets": 11,
+    "volume_usd": 11795.02,
+    "found_by": "highest temperature in London",
+    "source_url": "https://polymarket.com/event/highest-temperature-in-london-on-november-8-2026",
+    "untrusted_content_flags": [],
+    "relevance": "model_input",
+    "feeds": "temp_max_c",
+    "reason": "Forecasts the maximum daily temperature in London on November 8, affecting outdoor seating trade.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c2",
+    "slug": "highest-temperature-in-london-on-november-9-2026",
+    "title": "Highest temperature in London on November 9?",
+    "date": "2026-11-09",
+    "ends": "2026-11-09",
+    "tags": [
+     "daily-temperature",
+     "highest-temperature",
+     "london",
+     "weather"
+    ],
+    "markets": 11,
+    "volume_usd": 4660.05,
+    "found_by": "highest temperature in London",
+    "source_url": "https://polymarket.com/event/highest-temperature-in-london-on-november-9-2026",
+    "untrusted_content_flags": [],
+    "relevance": "model_input",
+    "feeds": "temp_max_c",
+    "reason": "Forecasts the maximum daily temperature in London on November 9, affecting outdoor seating trade.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c3",
+    "slug": "polyv2-highest-temperature-in-london-on-november-9-2026",
+    "title": "Highest temperature in London on November 9?",
+    "date": "2026-11-09",
+    "ends": "2026-11-09",
+    "tags": [
+     "daily-temperature",
+     "highest-temperature",
+     "london",
+     "weather"
+    ],
+    "markets": 11,
+    "volume_usd": 0.0,
+    "found_by": "highest temperature in London",
+    "source_url": "https://polymarket.com/event/polyv2-highest-temperature-in-london-on-november-9-2026",
+    "untrusted_content_flags": [],
+    "relevance": "model_input",
+    "feeds": "temp_max_c",
+    "reason": "Forecasts the maximum daily temperature in London on November 9, affecting outdoor seating trade.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c4",
+    "slug": "polyv2-highest-temperature-in-london-on-november-8-2026",
+    "title": "Highest temperature in London on November 8?",
+    "date": "2026-11-08",
+    "ends": "2026-11-08",
+    "tags": [
+     "daily-temperature",
+     "highest-temperature",
+     "london",
+     "weather"
+    ],
+    "markets": 11,
+    "volume_usd": 0.0,
+    "found_by": "highest temperature in London",
+    "source_url": "https://polymarket.com/event/polyv2-highest-temperature-in-london-on-november-8-2026",
+    "untrusted_content_flags": [],
+    "relevance": "model_input",
+    "feeds": "temp_max_c",
+    "reason": "Forecasts the maximum daily temperature in London on November 8, affecting outdoor seating trade.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c17",
+    "slug": "epl-cry-liv-2026-11-08",
+    "title": "Crystal Palace FC vs. Liverpool FC",
+    "date": "2026-11-08",
+    "ends": "2026-11-08",
+    "tags": [
+     "EPL",
+     "games",
+     "premier-league",
+     "soccer"
+    ],
+    "markets": 3,
+    "volume_usd": 170705.48,
+    "found_by": "Crystal Palace",
+    "source_url": "https://polymarket.com/event/epl-cry-liv-2026-11-08",
+    "untrusted_content_flags": [],
+    "relevance": "model_input",
+    "feeds": "local_event_indicator",
+    "reason": "Crystal Palace home match on November 8 will drive footfall from nearby fans.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c18",
+    "slug": "wsl-cry-cha-2026-11-08",
+    "title": "Crystal Palace vs. Charlton Athletic",
+    "date": "2026-11-08",
+    "ends": "2026-11-08",
+    "tags": [
+     "games",
+     "soccer",
+     "wsl"
+    ],
+    "markets": 3,
+    "volume_usd": 3.64,
+    "found_by": "Crystal Palace",
+    "source_url": "https://polymarket.com/event/wsl-cry-cha-2026-11-08",
+    "untrusted_content_flags": [],
+    "relevance": "model_input",
+    "feeds": "local_event_indicator",
+    "reason": "Crystal Palace fixture on November 8 brings local supporters into the pub.",
+    "accepted": true,
+    "python_check": "ok"
+   }
+  ],
+  "context": [
+   {
+    "id": "c5",
+    "slug": "precipitation-in-london-in-november",
+    "title": "Precipitation in London in November?",
+    "date": null,
+    "ends": "2027-02-08",
+    "tags": [
+     "precipitation",
+     "science",
+     "weather"
+    ],
+    "markets": 7,
+    "volume_usd": 1750.69,
+    "found_by": "precipitation in London",
+    "source_url": "https://polymarket.com/event/precipitation-in-london-in-november",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Covers London rainfall for the entire month rather than specific daily rainfall for the forecast dates.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c19",
+    "slug": "epl-2027-champion-20260701200428749",
+    "title": "EPL: 2027 Champion",
+    "date": null,
+    "ends": "2027-06-15",
+    "tags": [
+     "EPL",
+     "soccer"
+    ],
+    "markets": 24,
+    "volume_usd": 25627520.61,
+    "found_by": "Crystal Palace",
+    "source_url": "https://polymarket.com/event/epl-2027-champion-20260701200428749",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League championship market involving local club Crystal Palace.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c20",
+    "slug": "premier-league-top-goalscorer-2026-27",
+    "title": "English Premier League: Top Goalscorer 2026-27",
+    "date": null,
+    "ends": "2027-06-15",
+    "tags": [
+     "EPL",
+     "soccer"
+    ],
+    "markets": 67,
+    "volume_usd": 246100.53,
+    "found_by": "Crystal Palace",
+    "source_url": "https://polymarket.com/event/premier-league-top-goalscorer-2026-27",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League market providing general context for English football.",
+    "accepted": true,
+    "python_check": "ok"
+   },
+   {
+    "id": "c23",
+    "slug": "premier-league-top-4-finishers-2026-27",
+    "title": "English Premier League Top 4 Finishers (2026-27)",
+    "date": null,
+    "ends": "2027-06-14",
+    "tags": [
+     "EPL",
+     "soccer"
+    ],
+    "markets": 20,
+    "volume_usd": 98910.99,
+    "found_by": "Crystal Palace",
+    "source_url": "https://polymarket.com/event/premier-league-top-4-finishers-2026-27",
+    "untrusted_content_flags": [],
+    "relevance": "context",
+    "feeds": "none",
+    "reason": "Season-long Premier League futures relevant to the division local club Crystal Palace plays in.",
+    "accepted": true,
+    "python_check": "ok"
+   }
+  ],
+  "rejected": [
+   {
+    "id": "c6",
+    "slug": "mike-vrabel-out-as-patriots-head-coach-by-dec-31-2026",
+    "title": "Mike Vrabel out as Patriots Head Coach by Dec 31, 2026?",
+    "date": null,
+    "ends": "2027-01-01",
+    "tags": [
+     "football",
+     "new-england-patriots",
+     "nfl",
+     "nfl-next-team"
+    ],
+    "markets": 1,
+    "volume_usd": 24567.76,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/mike-vrabel-out-as-patriots-head-coach-by-dec-31-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Relates to American NFL football and has no impact on a London pub's trade.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c7",
+    "slug": "pro-football-2027-champion-20260729185915366",
+    "title": "Pro Football: 2027 Champion",
+    "date": null,
+    "ends": "2027-04-01",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-gameday",
+     "nfl-team-futures",
+     "super-bowl"
+    ],
+    "markets": 33,
+    "volume_usd": 71852176.7,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-2027-champion-20260729185915366",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Relates to American NFL football and has no connection to the pub.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c8",
+    "slug": "nfl-team-to-make-postseason",
+    "title": "Pro Football: Team to Make Postseason",
+    "date": null,
+    "ends": "2027-01-25",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-team-futures"
+    ],
+    "markets": 32,
+    "volume_usd": 331813.28,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/nfl-team-to-make-postseason",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Pertains to American NFL football postseason qualification.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c9",
+    "slug": "pro-football-jonathan-taylor-next-team-2026",
+    "title": "Pro Football: Jonathan Taylor Next Team",
+    "date": null,
+    "ends": "2026-11-11",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-next-team"
+    ],
+    "markets": 35,
+    "volume_usd": 4300.5,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-jonathan-taylor-next-team-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Relates to an American NFL player transfer.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c10",
+    "slug": "pro-football-brian-thomas-jr-next-team-2026",
+    "title": "Pro Football: Brian Thomas Jr. Next Team",
+    "date": null,
+    "ends": "2026-11-11",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-next-team"
+    ],
+    "markets": 35,
+    "volume_usd": 946.68,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-brian-thomas-jr-next-team-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Relates to an American NFL player transfer.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c11",
+    "slug": "pro-football-tyreek-hill-next-team-2026",
+    "title": "Pro Football: Tyreek Hill Next Team",
+    "date": null,
+    "ends": "2027-01-01",
+    "tags": [
+     "football",
+     "nfl",
+     "nfl-free-agency",
+     "nfl-next-team",
+     "tyreek-hill"
+    ],
+    "markets": 35,
+    "volume_usd": 78861.37,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-tyreek-hill-next-team-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Relates to an American NFL player transfer.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c12",
+    "slug": "pro-football-afc-team-to-advance-to-divisional-round",
+    "title": "Pro Football: AFC Team to advance to Divisional Round",
+    "date": null,
+    "ends": "2027-01-19",
+    "tags": [
+     "afc",
+     "football",
+     "nfl",
+     "nfl-playoffs"
+    ],
+    "markets": 16,
+    "volume_usd": 23551.11,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-afc-team-to-advance-to-divisional-round",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Pertains to American NFL football playoffs.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c13",
+    "slug": "pro-football-2026-27-rushing-yards-leader-team-20260720201610946",
+    "title": "Pro Football: 2026-27 Rushing Yards Leader (Team)",
+    "date": null,
+    "ends": "2027-01-27",
+    "tags": [
+     "football",
+     "nfl",
+     "season-stats"
+    ],
+    "markets": 38,
+    "volume_usd": 29852.47,
+    "found_by": "England football",
+    "source_url": "https://polymarket.com/event/pro-football-2026-27-rushing-yards-leader-team-20260720201610946",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Pertains to American NFL football team statistics.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c14",
+    "slug": "the-game-awards-best-mobile-game-20260804145650",
+    "title": "The Game Awards: Best Mobile Game",
+    "date": null,
+    "ends": "2027-01-01",
+    "tags": [
+     "awards",
+     "game-awards",
+     "games",
+     "pop-culture",
+     "video-games"
+    ],
+    "markets": 39,
+    "volume_usd": 38502.08,
+    "found_by": "Six Nations",
+    "source_url": "https://polymarket.com/event/the-game-awards-best-mobile-game-20260804145650",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Video game award category unrelated to the pub's trade.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c15",
+    "slug": "how-many-triple-crowns-will-anna-leigh-waters-win-in-the-2026-27-ppa-tour-season",
+    "title": "How many Triple Crowns will Anna Leigh Waters win in the 2026-27 PPA Tour Season?",
+    "date": null,
+    "ends": "2027-05-16",
+    "tags": [
+     "pickleball",
+     "ppa"
+    ],
+    "markets": 7,
+    "volume_usd": 12118.53,
+    "found_by": "Six Nations",
+    "source_url": "https://polymarket.com/event/how-many-triple-crowns-will-anna-leigh-waters-win-in-the-2026-27-ppa-tour-season",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "Pickleball tournament market unrelated to the pub.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c16",
+    "slug": "what-will-trump-say-in-november-2026",
+    "title": "What will Trump say in November?",
+    "date": null,
+    "ends": "2026-12-01",
+    "tags": [
+     "mention-markets",
+     "politics",
+     "trump"
+    ],
+    "markets": 24,
+    "volume_usd": 6672.89,
+    "found_by": "Six Nations",
+    "source_url": "https://polymarket.com/event/what-will-trump-say-in-november-2026",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "US political market unrelated to UK pub trade.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c21",
+    "slug": "uefa-europa-league-2027-champion-20260701202403681",
+    "title": "UEFA Europa League: 2027 Champion",
+    "date": null,
+    "ends": "2027-06-19",
+    "tags": [
+     "europa-league",
+     "soccer",
+     "uefa-europa-league",
+     "uel",
+     "uel-matchday"
+    ],
+    "markets": 42,
+    "volume_usd": 332710.76,
+    "found_by": "Crystal Palace",
+    "source_url": "https://polymarket.com/event/uefa-europa-league-2027-champion-20260701202403681",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "European football competition featuring none of the pub's affiliated clubs.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c22",
+    "slug": "uefa-europa-league-team-to-advance-to-2027-round-of-16",
+    "title": "UEFA Europa League: Team to advance to 2027 Round of 16",
+    "date": null,
+    "ends": "2027-02-28",
+    "tags": [
+     "europa-league",
+     "soccer",
+     "uel"
+    ],
+    "markets": 13,
+    "volume_usd": 47079.67,
+    "found_by": "Crystal Palace",
+    "source_url": "https://polymarket.com/event/uefa-europa-league-team-to-advance-to-2027-round-of-16",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "European football competition featuring none of the pub's affiliated clubs.",
+    "accepted": false,
+    "python_check": "ok"
+   },
+   {
+    "id": "c24",
+    "slug": "uefa-europa-league-team-to-finish-top-8-in-league-phase",
+    "title": "UEFA Europa League: Team to Finish Top 8 in League Phase",
+    "date": null,
+    "ends": "2027-02-28",
+    "tags": [
+     "europa-league",
+     "qualification",
+     "soccer",
+     "uel",
+     "uel-matchday"
+    ],
+    "markets": 36,
+    "volume_usd": 153049.1,
+    "found_by": "Crystal Palace",
+    "source_url": "https://polymarket.com/event/uefa-europa-league-team-to-finish-top-8-in-league-phase",
+    "untrusted_content_flags": [],
+    "relevance": "irrelevant",
+    "feeds": "none",
+    "reason": "European football competition featuring none of the pub's affiliated clubs.",
+    "accepted": false,
+    "python_check": "ok"
+   }
+  ],
+  "gemini": {
+   "model": "gemini-3.8-flash",
+   "prompt": "market_relevance v1",
+   "seconds": 21.5,
+   "raw_reply": {
+    "judgements": [
+     {
+      "id": "c1",
+      "relevance": "model_input",
+      "feeds": "temp_max_c",
+      "reason": "Forecasts the maximum daily temperature in London on November 8, affecting outdoor seating trade."
+     },
+     {
+      "id": "c2",
+      "relevance": "model_input",
+      "feeds": "temp_max_c",
+      "reason": "Forecasts the maximum daily temperature in London on November 9, affecting outdoor seating trade."
+     },
+     {
+      "id": "c3",
+      "relevance": "model_input",
+      "feeds": "temp_max_c",
+      "reason": "Forecasts the maximum daily temperature in London on November 9, affecting outdoor seating trade."
+     },
+     {
+      "id": "c4",
+      "relevance": "model_input",
+      "feeds": "temp_max_c",
+      "reason": "Forecasts the maximum daily temperature in London on November 8, affecting outdoor seating trade."
+     },
+     {
+      "id": "c5",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Covers London rainfall for the entire month rather than specific daily rainfall for the forecast dates."
+     },
+     {
+      "id": "c6",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Relates to American NFL football and has no impact on a London pub's trade."
+     },
+     {
+      "id": "c7",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Relates to American NFL football and has no connection to the pub."
+     },
+     {
+      "id": "c8",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Pertains to American NFL football postseason qualification."
+     },
+     {
+      "id": "c9",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Relates to an American NFL player transfer."
+     },
+     {
+      "id": "c10",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Relates to an American NFL player transfer."
+     },
+     {
+      "id": "c11",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Relates to an American NFL player transfer."
+     },
+     {
+      "id": "c12",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Pertains to American NFL football playoffs."
+     },
+     {
+      "id": "c13",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Pertains to American NFL football team statistics."
+     },
+     {
+      "id": "c14",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Video game award category unrelated to the pub's trade."
+     },
+     {
+      "id": "c15",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "Pickleball tournament market unrelated to the pub."
+     },
+     {
+      "id": "c16",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "US political market unrelated to UK pub trade."
+     },
+     {
+      "id": "c17",
+      "relevance": "model_input",
+      "feeds": "local_event_indicator",
+      "reason": "Crystal Palace home match on November 8 will drive footfall from nearby fans."
+     },
+     {
+      "id": "c18",
+      "relevance": "model_input",
+      "feeds": "local_event_indicator",
+      "reason": "Crystal Palace fixture on November 8 brings local supporters into the pub."
+     },
+     {
+      "id": "c19",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League championship market involving local club Crystal Palace."
+     },
+     {
+      "id": "c20",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League market providing general context for English football."
+     },
+     {
+      "id": "c21",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "European football competition featuring none of the pub's affiliated clubs."
+     },
+     {
+      "id": "c22",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "European football competition featuring none of the pub's affiliated clubs."
+     },
+     {
+      "id": "c23",
+      "relevance": "context",
+      "feeds": "none",
+      "reason": "Season-long Premier League futures relevant to the division local club Crystal Palace plays in."
+     },
+     {
+      "id": "c24",
+      "relevance": "irrelevant",
+      "feeds": "none",
+      "reason": "European football competition featuring none of the pub's affiliated clubs."
+     }
+    ]
+   }
+  }
+ },
+ "model_inputs": {
+  "start": "2026-11-08",
+  "days": 2,
+  "weather_city": "London",
+  "rain_from_market": false,
+  "rows": [
+   {
+    "fields": {
+     "date": "2026-11-08",
+     "temp_max_c": 10.1,
+     "temp_min_c": 4.1,
+     "temp_mean_c": 6.9,
+     "precipitation_mm": 0.0,
+     "rain_mm": 0.0,
+     "wind_max_kmh": 21.6,
+     "sunshine_hours": 7.4,
+     "opening_hours": 10.5,
+     "indoor_capacity": 90,
+     "outdoor_capacity": 72,
+     "is_uk_bank_holiday": 0,
+     "local_event_indicator": 1,
+     "lag_7d_revenue_gbp": null,
+     "rolling_14d_mean_revenue_gbp": null
+    },
+    "sources": {
+     "date": "requested",
+     "temp_max_c": "Polymarket highest-temperature-in-london-on-november-8-2026: expected high over 11 brackets",
+     "temp_min_c": "model's seasonal reference, shifted by the market's high",
+     "temp_mean_c": "model's seasonal reference, shifted by the market's high",
+     "precipitation_mm": "model's seasonal dry reference (no daily rain market exists)",
+     "rain_mm": "model's seasonal dry reference (no daily rain market exists)",
+     "wind_max_kmh": "model's seasonal reference (no market exists)",
+     "sunshine_hours": "model's seasonal reference (no market exists)",
+     "opening_hours": "model's default weekday hours",
+     "indoor_capacity": "model default",
+     "outdoor_capacity": "pub details (quoted)",
+     "is_uk_bank_holiday": "gov.uk/bank-holidays.json",
+     "local_event_indicator": "Polymarket fixtures: Crystal Palace FC vs. Liverpool FC (Crystal Palace at home nearby); Polymarket event judged relevant by Gemini, checked by Python: Crystal Palace vs. Charlton Athletic (Crystal Palace fixture on November 8 brings local supporters into the pub.)",
+     "lag_7d_revenue_gbp": "not known: the model uses its weekday average",
+     "rolling_14d_mean_revenue_gbp": "not known: the model uses its weekday average"
+    }
+   },
+   {
+    "fields": {
+     "date": "2026-11-09",
+     "temp_max_c": 10.17,
+     "temp_min_c": 4.17,
+     "temp_mean_c": 6.97,
+     "precipitation_mm": 0.0,
+     "rain_mm": 0.0,
+     "wind_max_kmh": 21.6,
+     "sunshine_hours": 7.4,
+     "opening_hours": 10.0,
+     "indoor_capacity": 90,
+     "outdoor_capacity": 72,
+     "is_uk_bank_holiday": 0,
+     "local_event_indicator": 0,
+     "lag_7d_revenue_gbp": null,
+     "rolling_14d_mean_revenue_gbp": null
+    },
+    "sources": {
+     "date": "requested",
+     "temp_max_c": "Polymarket highest-temperature-in-london-on-november-9-2026: expected high over 11 brackets",
+     "temp_min_c": "model's seasonal reference, shifted by the market's high",
+     "temp_mean_c": "model's seasonal reference, shifted by the market's high",
+     "precipitation_mm": "model's seasonal dry reference (no daily rain market exists)",
+     "rain_mm": "model's seasonal dry reference (no daily rain market exists)",
+     "wind_max_kmh": "model's seasonal reference (no market exists)",
+     "sunshine_hours": "model's seasonal reference (no market exists)",
+     "opening_hours": "model's default weekday hours",
+     "indoor_capacity": "model default",
+     "outdoor_capacity": "pub details (quoted)",
+     "is_uk_bank_holiday": "gov.uk/bank-holidays.json",
+     "local_event_indicator": "no event for this pub on Polymarket that day",
+     "lag_7d_revenue_gbp": "not known: the model uses its weekday average",
+     "rolling_14d_mean_revenue_gbp": "not known: the model uses its weekday average"
+    }
+   }
+  ],
+  "markets": {
+   "daily_high": [
+    {
+     "slug": "highest-temperature-in-london-on-november-8-2026",
+     "title": "Highest temperature in London on November 8?",
+     "source_url": "https://polymarket.com/event/highest-temperature-in-london-on-november-8-2026",
+     "resolution_source": "https://aviationweather.gov/api/data/metar?ids=EGLC&format=raw&date=2026-11-09T03:00:00Z&hours=30",
+     "volume_usd": 11795.02,
+     "closed": false,
+     "retrieved_at": "2026-11-07T23:03:54+00:00",
+     "expected": 10.1,
+     "p10": 9.0,
+     "p50": 10.0,
+     "p90": 11.0,
+     "price_sum_before_normalising": 1.0115,
+     "bins": [
+      {
+       "label": "6°C or below",
+       "low": null,
+       "high": 6.5,
+       "price": 0.0005,
+       "price_basis": "indicative Yes price",
+       "volume_usd": 149.96,
+       "probability": 0.0004943153732081067
+      },
+      {
+       "label": "7°C",
+       "low": 6.5,
+       "high": 7.5,
+       "price": 0.004,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 476.49,
+       "probability": 0.003954522985664854
+      },
+      {
+       "label": "8°C",
+       "low": 7.5,
+       "high": 8.5,
+       "price": 0.027999999999999997,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 1560.53,
+       "probability": 0.027681660899653973
+      },
+      {
+       "label": "9°C",
+       "low": 8.5,
+       "high": 9.5,
+       "price": 0.27,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 4153.14,
+       "probability": 0.2669303015323777
+      },
+      {
+       "label": "10°C",
+       "low": 9.5,
+       "high": 10.5,
+       "price": 0.355,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 1936.56,
+       "probability": 0.35096391497775575
+      },
+      {
+       "label": "11°C",
+       "low": 10.5,
+       "high": 11.5,
+       "price": 0.275,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 1952.11,
+       "probability": 0.2718734552644587
+      },
+      {
+       "label": "12°C",
+       "low": 11.5,
+       "high": 12.5,
+       "price": 0.07,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 656.15,
+       "probability": 0.06920415224913495
+      },
+      {
+       "label": "13°C",
+       "low": 12.5,
+       "high": 13.5,
+       "price": 0.0065,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 139.58,
+       "probability": 0.006426099851705387
+      },
+      {
+       "label": "14°C",
+       "low": 13.5,
+       "high": 14.5,
+       "price": 0.0015,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 611.52,
+       "probability": 0.0014829461196243202
+      },
+      {
+       "label": "15°C",
+       "low": 14.5,
+       "high": 15.5,
+       "price": 0.0005,
+       "price_basis": "indicative Yes price",
+       "volume_usd": 109.99,
+       "probability": 0.0004943153732081067
+      },
+      {
+       "label": "16°C or higher",
+       "low": 15.5,
+       "high": null,
+       "price": 0.0005,
+       "price_basis": "indicative Yes price",
+       "volume_usd": 49.0,
+       "probability": 0.0004943153732081067
+      }
+     ]
+    },
+    {
+     "slug": "highest-temperature-in-london-on-november-9-2026",
+     "title": "Highest temperature in London on November 9?",
+     "source_url": "https://polymarket.com/event/highest-temperature-in-london-on-november-9-2026",
+     "resolution_source": "https://aviationweather.gov/api/data/metar?ids=EGLC&format=raw&date=2026-11-10T03:00:00Z&hours=30",
+     "volume_usd": 4660.05,
+     "closed": false,
+     "retrieved_at": "2026-11-07T23:03:55+00:00",
+     "expected": 10.17,
+     "p10": 9.0,
+     "p50": 10.0,
+     "p90": 12.0,
+     "price_sum_before_normalising": 1.001,
+     "bins": [
+      {
+       "label": "6°C or below",
+       "low": null,
+       "high": 6.5,
+       "price": 0.0015,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 208.55,
+       "probability": 0.0014985014985014987
+      },
+      {
+       "label": "7°C",
+       "low": 6.5,
+       "high": 7.5,
+       "price": 0.015,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 265.57,
+       "probability": 0.014985014985014986
+      },
+      {
+       "label": "8°C",
+       "low": 7.5,
+       "high": 8.5,
+       "price": 0.05499999999999999,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 205.58,
+       "probability": 0.054945054945054944
+      },
+      {
+       "label": "9°C",
+       "low": 8.5,
+       "high": 9.5,
+       "price": 0.21000000000000002,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 710.7,
+       "probability": 0.20979020979020982
+      },
+      {
+       "label": "10°C",
+       "low": 9.5,
+       "high": 10.5,
+       "price": 0.35,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 1110.07,
+       "probability": 0.3496503496503497
+      },
+      {
+       "label": "11°C",
+       "low": 10.5,
+       "high": 11.5,
+       "price": 0.25,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 1546.73,
+       "probability": 0.2497502497502498
+      },
+      {
+       "label": "12°C",
+       "low": 11.5,
+       "high": 12.5,
+       "price": 0.08,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 131.08,
+       "probability": 0.07992007992007993
+      },
+      {
+       "label": "13°C",
+       "low": 12.5,
+       "high": 13.5,
+       "price": 0.03,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 63.26,
+       "probability": 0.029970029970029972
+      },
+      {
+       "label": "14°C",
+       "low": 13.5,
+       "high": 14.5,
+       "price": 0.0085,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 108.56,
+       "probability": 0.008491508491508494
+      },
+      {
+       "label": "15°C",
+       "low": 14.5,
+       "high": 15.5,
+       "price": 0.0005,
+       "price_basis": "indicative Yes price",
+       "volume_usd": 150.0,
+       "probability": 0.0004995004995004996
+      },
+      {
+       "label": "16°C or higher",
+       "low": 15.5,
+       "high": null,
+       "price": 0.0005,
+       "price_basis": "indicative Yes price",
+       "volume_usd": 159.95,
+       "probability": 0.0004995004995004996
+      }
+     ]
+    }
+   ],
+   "monthly_rain": [
+    {
+     "slug": "precipitation-in-london-in-november",
+     "title": "Precipitation in London in November?",
+     "source_url": "https://polymarket.com/event/precipitation-in-london-in-november",
+     "volume_usd": 1750.69,
+     "retrieved_at": "2026-11-07T23:03:54+00:00",
+     "expected": 60.56,
+     "p10": 35.0,
+     "p50": 55.0,
+     "p90": 110.0,
+     "price_sum_before_normalising": 1.32,
+     "days_in_month": 30,
+     "expected_mm_per_day_if_spread_evenly": 2.02,
+     "bins": [
+      {
+       "label": "<30mm",
+       "low": 0.0,
+       "high": 30.0,
+       "price": 0.11499999999999999,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 260.12,
+       "probability": 0.08712121212121211
+      },
+      {
+       "label": "30-40mm",
+       "low": 30.0,
+       "high": 40.0,
+       "price": 0.35,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 281.11,
+       "probability": 0.26515151515151514
+      },
+      {
+       "label": "40-50mm",
+       "low": 40.0,
+       "high": 50.0,
+       "price": 0.14,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 282.11,
+       "probability": 0.10606060606060606
+      },
+      {
+       "label": "50-60mm",
+       "low": 50.0,
+       "high": 60.0,
+       "price": 0.15000000000000002,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 219.95,
+       "probability": 0.11363636363636365
+      },
+      {
+       "label": "60-75mm",
+       "low": 60.0,
+       "high": 75.0,
+       "price": 0.16,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 225.56,
+       "probability": 0.12121212121212122
+      },
+      {
+       "label": "75-100mm",
+       "low": 75.0,
+       "high": 100.0,
+       "price": 0.175,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 178.06,
+       "probability": 0.13257575757575757
+      },
+      {
+       "label": "100mm+",
+       "low": 100.0,
+       "high": null,
+       "price": 0.22999999999999998,
+       "price_basis": "mid of best bid and ask",
+       "volume_usd": 303.79,
+       "probability": 0.17424242424242423
+      }
+     ]
+    }
+   ],
+   "fixtures": [
+    {
+     "date": "2026-11-08",
+     "title": "Crystal Palace FC vs. Liverpool FC",
+     "slug": "epl-cry-liv-2026-11-08",
+     "source_url": "https://polymarket.com/event/epl-cry-liv-2026-11-08",
+     "kick_off_utc": "2026-11-08T14:00:00Z",
+     "competition": "premier-league-2025",
+     "volume_usd": 170705.48,
+     "teams": [
+      {
+       "team": "Crystal Palace",
+       "relation": "home_ground_nearby",
+       "sport": "soccer",
+       "at_home": true,
+       "market_win_probability": 0.165
+      }
+     ]
+    }
+   ],
+   "judged_events": [
+    {
+     "id": "c18",
+     "slug": "wsl-cry-cha-2026-11-08",
+     "title": "Crystal Palace vs. Charlton Athletic",
+     "date": "2026-11-08",
+     "ends": "2026-11-08",
+     "tags": [
+      "games",
+      "soccer",
+      "wsl"
+     ],
+     "markets": 3,
+     "volume_usd": 3.64,
+     "found_by": "Crystal Palace",
+     "source_url": "https://polymarket.com/event/wsl-cry-cha-2026-11-08",
+     "untrusted_content_flags": [],
+     "relevance": "model_input",
+     "feeds": "local_event_indicator",
+     "reason": "Crystal Palace fixture on November 8 brings local supporters into the pub.",
+     "accepted": true,
+     "python_check": "ok"
+    }
+   ]
+  },
+  "polymarket_calls": 14,
+  "retrieved_at": "2026-11-07T23:03:55+00:00"
+ }
+}
