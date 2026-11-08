@@ -2,6 +2,7 @@
 
 import { Icon, Logo, ThemeToggle, cx } from "../ui";
 import { AuditSwitch } from "../Provenance";
+import { DemoBooksChip } from "../AgentRun";
 
 export type NavId = "overview" | "protections" | "risks" | "backtest" | "activity" | "sources" | "settings";
 
@@ -54,6 +55,9 @@ export function Sidebar({
           <span className="min-w-0 flex-1">
             <span className="block truncate text-sm font-medium text-fg">{pubName}</span>
             <span className="block truncate text-xs text-fg-3">{place}</span>
+            <span className="mt-1 block">
+              <DemoBooksChip />
+            </span>
           </span>
           <Icon name="chevron-down" size={14} className="text-fg-3" />
         </button>

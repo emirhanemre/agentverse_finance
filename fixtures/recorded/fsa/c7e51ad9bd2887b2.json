@@ -1,0 +1,62 @@
+{
+ "data": {
+  "establishments": [
+   {
+    "AddressLine1": "",
+    "AddressLine2": "94 Lamb's Conduit Street",
+    "AddressLine3": "",
+    "AddressLine4": "London",
+    "BusinessName": "The Lamb",
+    "BusinessType": "Pub/bar/nightclub",
+    "BusinessTypeID": 7843,
+    "ChangesByServerID": 0,
+    "Distance": null,
+    "FHRSID": 426513,
+    "LocalAuthorityBusinessID": "9009",
+    "LocalAuthorityCode": "506",
+    "LocalAuthorityEmailAddress": "foodsafety@camden.gov.uk",
+    "LocalAuthorityName": "Camden",
+    "LocalAuthorityWebSite": "http://www.camden.gov.uk",
+    "NewRatingPending": false,
+    "Phone": "",
+    "PostCode": "WC1N 3LZ",
+    "RatingDate": "2023-09-05T00:00:00",
+    "RatingKey": "fhrs_4_en-gb",
+    "RatingValue": "4",
+    "RightToReply": "",
+    "SchemeType": "FHRS",
+    "geocode": {
+     "latitude": "51.5231137",
+     "longitude": "-0.1189528"
+    },
+    "scores": {
+     "ConfidenceInManagement": 5,
+     "Hygiene": 5,
+     "Structural": 10
+    }
+   }
+  ],
+  "links": [
+   {
+    "href": "https://api.ratings.food.gov.uk/establishments?pagesize=10&address=wc1n+3lz&businesstypeid=7843",
+    "rel": "self"
+   }
+  ],
+  "meta": {
+   "dataSource": "ElasticSearch",
+   "extractDate": "2026-11-08T11:49:07.0243662+00:00",
+   "itemCount": 1,
+   "pageNumber": 1,
+   "pageSize": 10,
+   "returncode": "OK",
+   "totalCount": 1,
+   "totalPages": 1
+  }
+ },
+ "fetched_at": "2026-11-08T11:49:06Z",
+ "fetched_ts": 1794138546.9984992,
+ "key": "address=WC1N 3LZ&businessTypeId=7843&pageSize=10",
+ "licence": "Open Government Licence v3.0 \u00b7 Food Standards Agency",
+ "source": "Food Standards Agency food hygiene ratings",
+ "url": "https://api.ratings.food.gov.uk/Establishments?address=WC1N 3LZ&businessTypeId=7843&pageSize=10"
+}

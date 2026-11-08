@@ -1,0 +1,11 @@
+{
+ "data": {
+  "items": []
+ },
+ "fetched_at": "2026-11-08T11:49:07Z",
+ "fetched_ts": 1794138547.1249049,
+ "key": "pubs_at:WC1N 3LZ",
+ "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
+ "source": "Companies House advanced search",
+ "url": "https://api.company-information.service.gov.uk/advanced-search/companies"
+}

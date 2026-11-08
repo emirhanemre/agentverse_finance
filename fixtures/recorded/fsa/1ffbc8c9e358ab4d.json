@@ -1,0 +1,62 @@
+{
+ "data": {
+  "establishments": [
+   {
+    "AddressLine1": "PUBLIC HOUSE",
+    "AddressLine2": "119 Kensington Church Street",
+    "AddressLine3": "LONDON",
+    "AddressLine4": "",
+    "BusinessName": "Churchill Arms",
+    "BusinessType": "Pub/bar/nightclub",
+    "BusinessTypeID": 7843,
+    "ChangesByServerID": 0,
+    "Distance": null,
+    "FHRSID": 334562,
+    "LocalAuthorityBusinessID": "INSPF/92/528195",
+    "LocalAuthorityCode": "520",
+    "LocalAuthorityEmailAddress": "food.hygiene@rbkc.gov.uk",
+    "LocalAuthorityName": "Kensington and Chelsea",
+    "LocalAuthorityWebSite": "http://www.rbkc.gov.uk",
+    "NewRatingPending": false,
+    "Phone": "",
+    "PostCode": "W8 7LN",
+    "RatingDate": "2026-07-29T00:00:00",
+    "RatingKey": "fhrs_5_en-gb",
+    "RatingValue": "5",
+    "RightToReply": "",
+    "SchemeType": "FHRS",
+    "geocode": {
+     "latitude": "51.506561",
+     "longitude": "-0.194762"
+    },
+    "scores": {
+     "ConfidenceInManagement": 0,
+     "Hygiene": 0,
+     "Structural": 5
+    }
+   }
+  ],
+  "links": [
+   {
+    "href": "https://api.ratings.food.gov.uk/establishments?pagesize=10&address=w8+7ln&businesstypeid=7843",
+    "rel": "self"
+   }
+  ],
+  "meta": {
+   "dataSource": "ElasticSearch",
+   "extractDate": "2026-11-08T11:49:05.8720634+00:00",
+   "itemCount": 1,
+   "pageNumber": 1,
+   "pageSize": 10,
+   "returncode": "OK",
+   "totalCount": 1,
+   "totalPages": 1
+  }
+ },
+ "fetched_at": "2026-11-08T11:49:05Z",
+ "fetched_ts": 1794138545.832992,
+ "key": "address=W8 7LN&businessTypeId=7843&pageSize=10",
+ "licence": "Open Government Licence v3.0 \u00b7 Food Standards Agency",
+ "source": "Food Standards Agency food hygiene ratings",
+ "url": "https://api.ratings.food.gov.uk/Establishments?address=W8 7LN&businessTypeId=7843&pageSize=10"
+}

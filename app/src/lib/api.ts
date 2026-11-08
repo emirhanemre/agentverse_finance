@@ -145,6 +145,9 @@ export type AppState = {
     identity_badge: BadgeText;
     financials_label: string;
     owner: string;
+    entered_name?: string;
+    entered_postcode?: string;
+    is_demo?: boolean;
   };
   scenario: { name: string; decision_date: string; weekend: string[] };
   run: null | {

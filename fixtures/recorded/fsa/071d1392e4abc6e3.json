@@ -1,0 +1,62 @@
+{
+ "data": {
+  "establishments": [
+   {
+    "AddressLine1": "19 Perth Road",
+    "AddressLine2": "Hornsey",
+    "AddressLine3": "London",
+    "AddressLine4": "",
+    "BusinessName": "The Faltering Fullback",
+    "BusinessType": "Pub/bar/nightclub",
+    "BusinessTypeID": 7843,
+    "ChangesByServerID": 0,
+    "Distance": null,
+    "FHRSID": 422089,
+    "LocalAuthorityBusinessID": "PI/000053173",
+    "LocalAuthorityCode": "514",
+    "LocalAuthorityEmailAddress": "frontline@haringey.gov.uk",
+    "LocalAuthorityName": "Haringey",
+    "LocalAuthorityWebSite": "http://www.haringey.gov.uk",
+    "NewRatingPending": false,
+    "Phone": "",
+    "PostCode": "N4 3HB",
+    "RatingDate": "2026-02-07T00:00:00",
+    "RatingKey": "fhrs_5_en-gb",
+    "RatingValue": "5",
+    "RightToReply": "",
+    "SchemeType": "FHRS",
+    "geocode": {
+     "latitude": "51.568664",
+     "longitude": "-0.108613"
+    },
+    "scores": {
+     "ConfidenceInManagement": 0,
+     "Hygiene": 0,
+     "Structural": 0
+    }
+   }
+  ],
+  "links": [
+   {
+    "href": "https://api.ratings.food.gov.uk/establishments?pagesize=10&address=n4+3hb&businesstypeid=7843",
+    "rel": "self"
+   }
+  ],
+  "meta": {
+   "dataSource": "ElasticSearch",
+   "extractDate": "2026-11-08T11:49:05.5064714+00:00",
+   "itemCount": 1,
+   "pageNumber": 1,
+   "pageSize": 10,
+   "returncode": "OK",
+   "totalCount": 1,
+   "totalPages": 1
+  }
+ },
+ "fetched_at": "2026-11-08T11:49:05Z",
+ "fetched_ts": 1794138545.466736,
+ "key": "address=N4 3HB&businessTypeId=7843&pageSize=10",
+ "licence": "Open Government Licence v3.0 \u00b7 Food Standards Agency",
+ "source": "Food Standards Agency food hygiene ratings",
+ "url": "https://api.ratings.food.gov.uk/Establishments?address=N4 3HB&businessTypeId=7843&pageSize=10"
+}
