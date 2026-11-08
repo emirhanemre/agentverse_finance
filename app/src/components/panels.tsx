@@ -606,7 +606,7 @@ export function ProposalPanel({ s, p }: S & { p?: Proposal }) {
         <dl className="mt-2 rounded border border-line bg-surface-2 px-3 py-2 font-mono text-[12px] leading-6">
           <CalcRow k="Forecast" v={`${m.forecast_mm.toFixed(1)} mm`} />
           <CalcRow k="P(rain ≥ 3mm)" v={`${pct(m.model_prob)} (calibrated on archived forecasts)`} />
-          <CalcRow k="Ask" v={`${m.ask.toFixed(4)} + ${pct(m.fee_rate, 0)} fee = ${m.cost_per_share.toFixed(4)} a share`} />
+          <CalcRow k="Ask" v={`${m.ask.toFixed(4)} → ${m.cost_per_share.toFixed(4)} a share all in (1% slippage + taker fee ${m.fee_rate} × p × (1 − p))`} />
           <CalcRow k="Pricing rule" v={m.rule} />
           {noValue.length > 0 && <CalcRow k="Not proposed" v={`${noValue.join(", ")}: no value at the price`} />}
         </dl>
