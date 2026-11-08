@@ -74,7 +74,7 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   await expect(page.getByTestId("rationale")).not.toBeEmpty();
   // Match-day offer: a real market price makes the offer a fixed cost
   await hasBadge(page, "panel-offer");
-  await expect(page.getByTestId("panel-offer")).toContainText("England v Croatia");
+  await expect(page.getByTestId("panel-offer")).toContainText(/England/); // the pub's next qualifying match
   await page.waitForTimeout(500);
   await page.screenshot({ path: `${SHOTS}/02-agent-recommends.png` });
   await page.getByRole("button", { name: "Review", exact: true }).click();

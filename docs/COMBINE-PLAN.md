@@ -1,7 +1,10 @@
 # combined-dev: what we take from luke-dev and emirhan-dev
 
-Status: **Phase 0 (T1 atomic approval, T2 expiry and binding) is done; T3–T6 are not started.** Branched from
-`nick-advanced` @ 7c5da34.
+Status: **Phases 0–3 are done (T1–T6), in lean form.** Not done: P4 "bring your own pub", which is your call.
+Branched from `nick-advanced` @ 7c5da34. Differences from the plan:
+- T4 settles when the owner presses "Check result", not automatically.
+- The monthly ledger is unchanged: a bought position's premium is already its maximum loss.
+- T5 uses a checked team table for the pinned pub (Arsenal at home, England home or away), not the Gemini profiler.
 Analysed 2026-11-08 against `luke-dev` @ 96da93f and `emirhan-dev` @ 402f00b.
 
 ## 1. What the three branches are

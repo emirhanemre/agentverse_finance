@@ -105,7 +105,9 @@ def test_offer_expires_at_kickoff_and_is_logged(monkeypatch):
     a = c.post(f"/api/proposals/{pid}/approve", json={"confirm_second": True}).json()
     assert a["status"] == "expired" and a["reason"] == "kick-off was at 19:45 on 2026-11-12" and status(pid) == "expired"
     assert not audit.db().execute("SELECT 1 FROM executions WHERE proposal_id = ?", (pid,)).fetchone()
-    assert c.post("/api/offers/queue").status_code == 409  # can't queue cover for a match that has started
+    assert c.post("/api/offers/queue").json()["quote"]["fixture"] == "Spain v England"  # moves on to the next match
+    monkeypatch.setattr(A, "_now", lambda: datetime.fromisoformat("2026-11-30T12:00:00+00:00").timestamp())
+    assert c.post("/api/offers/queue").status_code == 409  # only the played default is left: nothing to cover
     assert [x["call"] for x in c.get("/api/audit").json()["rows"]].count("expire") == 1  # logged once
 
 
@@ -157,3 +159,32 @@ def test_offer_awaits_official_resolution(monkeypatch):
     assert c.post(f"/api/proposals/{pid}/approve", json={"confirm_second": True}).json()["status"] == "filled"
     s = c.post(f"/api/proposals/{pid}/settle").json()  # the recorded market is open: prices never settle it
     assert s["status"] == "awaiting" and status(pid) == "filled"
+
+
+def test_pick_offer_keeps_to_matches_that_move_this_pub(monkeypatch):
+    from pubhedge_svc import tools as T
+
+    def ev(title, slug, day, tags=("sports", "games", "soccer", "premier-league")):
+        a, b = title.split(" vs. ")
+        return {"title": title, "slug": slug, "endDate": f"{day}T15:00:00Z", "tags": [{"slug": t} for t in tags],
+                "markets": [{"question": f"Will {x.split(' FC')[0]} win on {day}?"} for x in (a, b)]}
+    events = {"Arsenal": [ev("Arsenal WFC vs. Chelsea FC Women", "w", "2026-11-09"),  # women's side
+                          ev("Newcastle United FC vs. Arsenal FC", "away", "2026-11-10"),  # club away: no crowd here
+                          ev("Arsenal FC vs. Spurs FC - More Markets", "more", "2026-11-11"),  # side event
+                          ev("Arsenal FC vs. Spurs FC", "ars-tot", "2026-11-14")],
+              "England": [ev("Spain vs. England", "esp-eng", "2026-11-20", ("games", "uefa-nations-league"))]}
+    monkeypatch.setattr(T.pm, "search", lambda q: {"data": {"events": events.get(q, [])}})
+    now = datetime.fromisoformat("2026-11-08T12:00:00+00:00").timestamp()
+    o = T.pick_offer(now)
+    assert (o["event_slug"], o["market_question"], o["venue"], o["trigger"]) == (
+        "ars-tot", "Will Spurs win on 2026-11-14?", "Emirates Stadium", "If Arsenal lose")
+    assert T.pick_offer(now + 7 * 86400)["event_slug"] == "esp-eng"  # England away still counts: the pub shows it
+    assert T.pick_offer(now + 30 * 86400) is T.OFFER  # nothing ahead: the recorded default
+    assert T._km(T.PUB["lat"], T.PUB["lon"], 51.5549, -0.1084) < T.NEAR_KM  # the Emirates is near N4 3HB
+
+
+def test_recorded_picks_follow_the_calendar():
+    from pubhedge_svc import tools as T
+    at = lambda d: T.pick_offer(datetime.fromisoformat(f"{d}T12:00:00+00:00").timestamp())  # noqa: E731
+    assert at("2026-11-08")["fixture"] == "England v Croatia"
+    assert at("2026-11-13")["fixture"] == "Spain v England"

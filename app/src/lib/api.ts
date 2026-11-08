@@ -73,6 +73,7 @@ export type Market = {
   kind?: "offer";
   fixture?: string;
   trigger?: string;
+  team?: string;
   offer?: string;
   worst_case_gbp?: number;
   kickoff?: string;
@@ -248,6 +249,7 @@ export type OfferQuote = ToolResult & {
   trigger: string;
   offer: string;
   covers_cap: number;
+  team?: string;
   avg_main_gbp: number;
   ask: number;
   market_prob: number;

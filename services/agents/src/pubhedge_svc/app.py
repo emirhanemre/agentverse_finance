@@ -18,7 +18,7 @@ from . import audit, config
 from . import engines as E
 from .chain import run_chain
 from .config import DATA, RUNS
-from .tools import PUB, SCENARIO, SYN, binding, current_ledger, quote_offer, settle
+from .tools import OFFER, PUB, SCENARIO, SYN, binding, current_ledger, pick_offer, quote_offer, settle
 
 config.load_env()
 app = FastAPI(title="Pub Hedge agents")
@@ -273,7 +273,8 @@ def _approve(pid: str, body: Approve):
         raise HTTPException(409, "proposal no longer matches what was shown; run the agent again")
     if m.get("kind") == "offer" and _now() - m.get("quoted_at", 0) > REQUOTE_AFTER_S:
         try:
-            q = quote_offer(get_limits(), current_ledger(None))
+            same = {k: m[k] for k in ("event_slug", "fixture", "competition", "venue", "trigger", "team") if k in m}
+            q = quote_offer(get_limits(), current_ledger(None), {**OFFER, **same, "market_question": m["market"]})
         except Exception as exc:  # no fresh price, no fill
             raise HTTPException(503, f"couldn't re-check the market price, nothing was placed ({type(exc).__name__})") from exc
         if q["cost_per_share"] > m["cost_per_share"]:
@@ -346,7 +347,7 @@ def settle_position(pid: str):
 @app.post("/api/offers/queue")
 def queue_offer():
     """Turn the priced match-day offer into an ordinary pending proposal: same limits, approval and paper fill."""
-    q = quote_offer(get_limits(), current_ledger(None))
+    q = quote_offer(get_limits(), current_ledger(None), pick_offer(_now()))
     if not q["shares"]:
         raise HTTPException(409, "nothing to cover inside the current caps")
     if q.get("kickoff") and _now() >= datetime.fromisoformat(q["kickoff"]).timestamp():
@@ -355,7 +356,8 @@ def queue_offer():
     run_id = run["run_id"] if run else "offer"
     pid = f"p_offer_{uuid.uuid4().hex[:6]}"
     market = {k: q[k] for k in ("market_id", "event_slug", "kind", "fixture", "competition", "venue", "kickoff", "market",
-                                "trigger", "offer", "covers_cap", "worst_case_gbp", "ask", "market_prob", "fee_rate", "cost_per_share",
+                                "trigger", "team", "offer", "covers_cap", "worst_case_gbp", "ask", "market_prob", "fee_rate",
+                                "cost_per_share",
                                 "payout_if_event_gbp", "fixed_cost_gbp")}
     market["price_badge"] = q["badge"]
     cost_pence = int(round(q["hedge_cost_gbp"] * 100))

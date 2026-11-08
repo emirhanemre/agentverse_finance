@@ -4,6 +4,7 @@ import functools
 import hashlib
 import importlib.util
 import json
+import math
 import time
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -27,8 +28,54 @@ SYN = "SYNTHETIC: modelled for a pub of this profile, not The Faltering Fullback
 # A match-day promotion the owner can run at a fixed cost: the hedge pays exactly when the offer does.
 OFFER = {"event_slug": "unl-eng-hrv-2026-11-12", "market_question": "Will Croatia win on 2026-11-12?",
          "fixture": "England v Croatia", "competition": "UEFA Nations League", "venue": "Wembley",
-         "trigger": "If England lose", "offer": "mains half price", "covers_cap": 80,
+         "trigger": "If England lose", "team": "England", "offer": "mains half price", "covers_cap": 80,
          "avg_main_gbp": 15.0, "discount_share": 0.5}  # menu price and cap: SYNTHETIC demo assumptions
+# Teams whose matches move this pub's trade. A club counts for home games, and only if its ground is near the pub
+# (checked below, not assumed). A team the pub shows counts home or away. Exact names keep out women's and youth
+# sides ("Arsenal WFC"). shortcut: competition tags are the ones seen on Polymarket so far; add more as they appear.
+TEAMS = [
+    {"team": "Arsenal", "names": ("Arsenal FC",), "ground": "Emirates Stadium", "lat": 51.5549, "lon": -0.1084,
+     "competitions": {"premier-league": "Premier League", "ucl": "Champions League"}},
+    {"team": "England", "names": ("England",), "ground": "Wembley", "shows": True,
+     "competitions": {"uefa-nations-league": "UEFA Nations League"}},
+]
+NEAR_KM, AHEAD_DAYS = 6.0, 14
+
+
+def _km(lat1, lon1, lat2, lon2) -> float:
+    p = math.pi / 180
+    a = 0.5 - math.cos((lat2 - lat1) * p) / 2 + math.cos(lat1 * p) * math.cos(lat2 * p) * (1 - math.cos((lon2 - lon1) * p)) / 2
+    return 12742 * math.asin(math.sqrt(a))
+
+
+def pick_offer(now: float) -> dict:
+    """The next match within two weeks that moves this pub's trade, as an offer: "if <team> lose" is covered by the
+    opponent's win market. Falls back to the recorded England v Croatia offer when nothing qualifies."""
+    best = None
+    for t in TEAMS:
+        if "lat" in t and _km(PUB["lat"], PUB["lon"], t["lat"], t["lon"]) > NEAR_KM:
+            continue
+        try:
+            events = pm.search(t["team"])["data"].get("events") or []
+        except Exception:  # no search (offline, nothing recorded): fall back
+            continue
+        for e in events:
+            title = e.get("title") or ""
+            sides, tags = title.split(" vs. "), {x.get("slug") for x in e.get("tags") or []}
+            comp = next((v for k, v in t["competitions"].items() if k in tags), None)
+            if len(sides) != 2 or " - " in title or "games" not in tags or not comp or not e.get("endDate"):
+                continue
+            home = sides[0] in t["names"]
+            if not (home or (t.get("shows") and sides[1] in t["names"])):
+                continue
+            wins = [m["question"] for m in e.get("markets") or []
+                    if " win " in (m.get("question") or "") and t["team"] not in m["question"]]
+            ko = datetime.fromisoformat(e["endDate"]).timestamp()
+            if len(wins) == 1 and now < ko <= now + AHEAD_DAYS * 86400 and (best is None or ko < best["ko"]):
+                best = {"ko": ko, "event_slug": e["slug"], "market_question": wins[0], "fixture": f"{sides[0]} v {sides[1]}",
+                        "competition": comp, "venue": t["ground"] if home else "away, on the pub's screens",
+                        "trigger": f"If {t['team']} lose", "team": t["team"]}
+    return {**OFFER, **{k: v for k, v in best.items() if k != "ko"}} if best else OFFER
 
 
 LONDON = ZoneInfo("Europe/London")
@@ -44,13 +91,15 @@ def window_opens(day: str) -> str:
     return datetime.fromisoformat(f"{day}T12:00").replace(tzinfo=LONDON).isoformat()
 
 
-def quote_offer(limits: dict, ledger: dict) -> dict:
-    """Price the match-day offer against the real Polymarket market. Read-only: no order is placed."""
-    env = pm.event(OFFER["event_slug"])
+def quote_offer(limits: dict, ledger: dict, offer: dict = None) -> dict:
+    """Price a match-day offer (by default the next one for this pub) against the real Polymarket market.
+    Read-only: no order is placed."""
+    o = offer or pick_offer(time.time())
+    env = pm.event(o["event_slug"])
     ev = env["data"][0]
-    m = next(pm.parse_market(x) for x in ev["markets"] if x.get("question") == OFFER["market_question"])
+    m = next(pm.parse_market(x) for x in ev["markets"] if x.get("question") == o["market_question"])
     ask = float(m["best_ask"] or m["yes_price"])
-    worst = round(OFFER["covers_cap"] * OFFER["avg_main_gbp"] * OFFER["discount_share"], 2)
+    worst = round(o["covers_cap"] * o["avg_main_gbp"] * o["discount_share"], 2)
     room = max(0, min(limits["per_market_cap_pence"], limits["weekly_spend_cap_pence"] - ledger["spent_this_week_pence"]) / 100)
     try:  # full cover up to the worst case, inside the caps, priced off the real book
         w = E.walk_book(pm.book(m["yes_token"])["data"]["asks"], int(worst), room, m["fee_rate"])
@@ -59,19 +108,20 @@ def quote_offer(limits: dict, ledger: dict) -> dict:
         cps = E.cost_per_share(ask, m["fee_rate"])
         shares = int(min(worst, room // cps))
         cost, pricing = round(shares * cps, 2), "best ask + 1% slippage (no order book)"
-    market_id = f"pm-{OFFER['event_slug']}-croatia"
+    market_id = f"pm-{o['event_slug']}-{o['market_question'].split()[1].lower()}"
     return {"badge": env["badge"], "source": env["source"], "licence": env["licence"], "fetched_at": env.get("fetched_at"),
-            "url": f"https://polymarket.com/event/{OFFER['event_slug']}", "kind": "offer", "market_id": market_id,
-            "event_slug": OFFER["event_slug"],
-            "fixture": OFFER["fixture"], "competition": OFFER["competition"], "venue": OFFER["venue"],
-            "kickoff": ev.get("endDate"), "market": m["question"], "trigger": OFFER["trigger"], "offer": OFFER["offer"],
-            "covers_cap": OFFER["covers_cap"], "avg_main_gbp": OFFER["avg_main_gbp"], "menu_badge": "SYNTHETIC",
+            "url": f"https://polymarket.com/event/{o['event_slug']}", "kind": "offer", "market_id": market_id,
+            "event_slug": o["event_slug"],
+            "fixture": o["fixture"], "competition": o["competition"], "venue": o["venue"],
+            "kickoff": ev.get("endDate"), "market": m["question"], "trigger": o["trigger"], "team": o["team"],
+            "offer": o["offer"],
+            "covers_cap": o["covers_cap"], "avg_main_gbp": o["avg_main_gbp"], "menu_badge": "SYNTHETIC",
             "ask": ask, "market_prob": m["yes_price"], "fee_rate": m["fee_rate"], "cost_per_share": round(cps, 4),
             "pricing": pricing,
             "worst_case_gbp": worst, "shares": shares, "payout_if_event_gbp": float(shares), "hedge_cost_gbp": cost,
             "uncovered_gbp": round(worst - shares, 2), "fixed_cost_gbp": round(cost + worst - shares, 2),
             "verdict": E.check_limits(int(round(cost * 100)), market_id, limits, ledger),
-            "summary": f"{OFFER['fixture']}: {OFFER['trigger'].lower()}, {OFFER['offer']} (worst case £{worst:,.0f}) "
+            "summary": f"{o['fixture']}: {o['trigger'].lower()}, {o['offer']} (worst case £{worst:,.0f}) "
                        f"· cover £{cost:,.2f} at {ask:.2f}"}
 
 
@@ -513,7 +563,7 @@ def make_tools(run: Run) -> dict:
 
     @tool
     def price_match_offer() -> dict:
-        """Price a match-day offer for the next England game, hedged on Polymarket's real match market (read-only)."""
+        """Price a match-day offer for the pub's next big match, hedged on Polymarket's real match market (read-only)."""
         return quote_offer(run.limits, ledger())
 
     def ledger() -> dict:

@@ -109,16 +109,16 @@
     "size": "819.71"
    }
   ],
-  "hash": "d6d8a6688c1d80ab6cc83c3832e2d9292743d214",
+  "hash": "1f757044b2b342b887fc7c5c7a7cfc5f5918276f",
   "last_trade_price": "0.070",
   "market": "0xdd461acd003ee84642fa383ce62d7136b084d2bdd157c3d20ab8765aa53b3cf4",
   "min_order_size": "5",
   "neg_risk": true,
   "tick_size": "0.01",
-  "timestamp": "1794134740390"
+  "timestamp": "1794135123282"
  },
- "fetched_at": "2026-11-08T10:46:07Z",
- "fetched_ts": 1794134767.866938,
+ "fetched_at": "2026-11-08T10:53:24Z",
+ "fetched_ts": 1794135204.2638679,
  "key": "/book?token_id=98560182035622310367525354836369213125853832782855768247352296520955370813739",
  "licence": "Polymarket public market data (read-only API), docs.polymarket.com; not redistributed for trading",
  "source": "Polymarket CLOB",

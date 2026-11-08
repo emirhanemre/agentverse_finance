@@ -1061,7 +1061,7 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
                   Decline
                 </Button>
                 <span className="text-xs text-fg-3">
-                  {p.market.kind === "offer" ? "If England don’t lose" : "If it stays dry"} you lose {gbp(cost, { pence: true })}.
+                  {p.market.kind === "offer" ? `If ${p.market.team ?? "England"} don’t lose` : "If it stays dry"} you lose {gbp(cost, { pence: true })}.
                   {p.market.expires_at && <span data-testid="valid-until"> Valid until {until(p.market.expires_at)}.</span>}
                 </span>
               </>
@@ -1228,7 +1228,7 @@ export function OfferCard({ s, onChange, compact }: S & { onChange?: () => void;
               </Num>
             </div>
             <div className="px-4">
-              <div className="text-xs text-fg-3">Chance England lose</div>
+              <div className="text-xs text-fg-3">Chance {q.team ?? "England"} lose</div>
               <Num r={q} className="font-display text-lg font-medium">
                 {pct(q.market_prob)}
               </Num>
@@ -1250,7 +1250,7 @@ export function OfferCard({ s, onChange, compact }: S & { onChange?: () => void;
           </div>
         </div>
         <p className="mt-4 text-sm text-fg-2">
-          The cover pays <Num r={q}>{gbp(q.payout_if_event_gbp)}</Num> if England lose, so the offer costs you{" "}
+          The cover pays <Num r={q}>{gbp(q.payout_if_event_gbp)}</Num> if {q.team ?? "England"} lose, so the offer costs you{" "}
           <Num r={q}>{gbp(q.fixed_cost_gbp, { pence: true })}</Num> whatever happens. Real match price; menu figures are modelled.
         </p>
         <div className="mt-4 flex items-center justify-between gap-4">
