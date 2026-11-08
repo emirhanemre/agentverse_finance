@@ -1,0 +1,102 @@
+{
+ "data": {
+  "active_count": 2,
+  "etag": "c2590f62bc5545c3577a70a60c0d4ad31f616502",
+  "inactive_count": 0,
+  "items": [
+   {
+    "address": {
+     "address_line_1": "The Faltering",
+     "address_line_2": "Full Back, 19 Perth Road, Finsbury Park",
+     "locality": "London",
+     "postal_code": "N4 3HB"
+    },
+    "appointed_on": "2006-04-05",
+    "etag": "c2590f62bc5545c3577a70a60c0d4ad31f616502",
+    "is_pre_1992_appointment": false,
+    "links": {
+     "officer": {
+      "appointments": "/officers/B0NTGxRU9B3o8bgwsFMbna6RjUM/appointments"
+     },
+     "self": "/company/05770953/appointments/JDs2BsjyXl74wTvc11QUaG8Tbv4"
+    },
+    "name": "FITZSIMONS, Michael John",
+    "nationality": "British",
+    "officer_role": "secretary",
+    "person_number": "111980780001"
+   },
+   {
+    "address": {
+     "address_line_1": "The Faltering",
+     "address_line_2": "Full Back, 19 Perth Road, Finsbury Park",
+     "locality": "London",
+     "postal_code": "N4 3HB"
+    },
+    "appointed_on": "2006-04-05",
+    "country_of_residence": "England",
+    "date_of_birth": {
+     "month": 10,
+     "year": 1977
+    },
+    "etag": "966d23b307c12a62a50b085c138f473b9d015429",
+    "identity_verification_details": {
+     "anti_money_laundering_supervisory_bodies": [
+      "Institute of Chartered Accountants in England and Wales (ICAEW)"
+     ],
+     "appointment_verification_end_on": "9999-12-31",
+     "appointment_verification_start_on": "2026-05-08",
+     "authorised_corporate_service_provider_name": "CLEMENCE HOAR CUMMINGS LIMITED ACSP",
+     "identity_verified_on": "2026-01-10",
+     "preferred_name": "Patrick Fitzsimons"
+    },
+    "is_pre_1992_appointment": false,
+    "links": {
+     "officer": {
+      "appointments": "/officers/Z74lpcFp_SEUdp8Gj8HSyYfbuek/appointments"
+     },
+     "self": "/company/05770953/appointments/bDINIBCGwmqVgw7xL-vmDOcxRbw"
+    },
+    "name": "FITZSIMONS, Patrick",
+    "nationality": "Irish",
+    "officer_role": "director",
+    "person_number": "111980770001"
+   },
+   {
+    "address": {
+     "address_line_1": "Regis House",
+     "address_line_2": "134 Percival Road",
+     "locality": "Enfield",
+     "postal_code": "EN1 1QU",
+     "region": "Middlesex"
+    },
+    "appointed_on": "2006-04-05",
+    "etag": "56fb3095b40c29345f3a93a54f7401b6511c4fde",
+    "is_pre_1992_appointment": false,
+    "links": {
+     "officer": {
+      "appointments": "/officers/tGOUj9ShkCEC9Q20Gxwc7BhZ24E/appointments"
+     },
+     "self": "/company/05770953/appointments/hX-OZ_cOOgDF5H5-AOfqYVF0TNM"
+    },
+    "name": "RWL REGISTRARS LIMITED",
+    "officer_role": "corporate-nominee-secretary",
+    "person_number": "900007870001",
+    "resigned_on": "2006-04-05"
+   }
+  ],
+  "items_per_page": 35,
+  "kind": "officer-list",
+  "links": {
+   "self": "/company/05770953/officers"
+  },
+  "resigned_count": 1,
+  "start_index": 0,
+  "total_results": 3
+ },
+ "fetched_at": "2026-11-07T23:58:57Z",
+ "fetched_ts": 1794095937.2613068,
+ "key": "/company/05770953/officers",
+ "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
+ "source": "Companies House",
+ "url": "https://api.company-information.service.gov.uk/company/05770953/officers"
+}

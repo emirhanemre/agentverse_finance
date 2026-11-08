@@ -1,0 +1,70 @@
+{
+ "data": {
+  "accounts": {
+   "accounting_reference_date": {
+    "day": "31",
+    "month": "03"
+   },
+   "last_accounts": {
+    "made_up_to": "2025-03-31",
+    "period_end_on": "2025-03-31",
+    "period_start_on": "2024-04-01",
+    "type": "total-exemption-full"
+   },
+   "next_accounts": {
+    "due_on": "2026-12-31",
+    "overdue": false,
+    "period_end_on": "2026-03-31",
+    "period_start_on": "2025-04-01"
+   },
+   "next_due": "2026-12-31",
+   "next_made_up_to": "2026-03-31",
+   "overdue": false
+  },
+  "can_file": true,
+  "company_name": "BACCHUS INNS LIMITED",
+  "company_number": "05770953",
+  "company_status": "active",
+  "confirmation_statement": {
+   "last_made_up_to": "2026-04-05",
+   "next_due": "2027-04-19",
+   "next_made_up_to": "2027-04-05",
+   "overdue": false
+  },
+  "date_of_creation": "2006-04-05",
+  "etag": "c86ad2a655c07c121ee7d1367ec21a4c5e2422da",
+  "has_been_liquidated": false,
+  "has_charges": false,
+  "has_insolvency_history": false,
+  "has_super_secure_pscs": false,
+  "jurisdiction": "england-wales",
+  "last_full_members_list_date": "2016-04-05",
+  "links": {
+   "charges": "/company/05770953/charges",
+   "filing_history": "/company/05770953/filing-history",
+   "officers": "/company/05770953/officers",
+   "persons_with_significant_control": "/company/05770953/persons-with-significant-control",
+   "self": "/company/05770953"
+  },
+  "registered_office_address": {
+   "address_line_1": "Blackburn House Third Floor East Suite",
+   "address_line_2": "22-26 Eastern Road",
+   "country": "England",
+   "locality": "Romford",
+   "postal_code": "RM1 3PJ",
+   "region": "Essex"
+  },
+  "registered_office_is_in_dispute": false,
+  "sic_codes": [
+   "56302"
+  ],
+  "type": "ltd",
+  "undeliverable_registered_office_address": false
+ },
+ "fetched_at": "2026-11-07T23:58:57Z",
+ "fetched_ts": 1794095937.192186,
+ "key": "/company/05770953",
+ "licence": "Open Government Licence v3.0 \u00b7 Contains public sector information (Companies House)",
+ "source": "Companies House",
+ "url": "https://api.company-information.service.gov.uk/company/05770953"
+}
