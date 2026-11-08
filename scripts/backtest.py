@@ -223,6 +223,8 @@ def main():
         for p in pubs:
             res["per_pub"][p][pol] = metrics(per_pub[p])
         demo = per_pub["demo"]
+        res.setdefault("demo_weeks", {})[pol] = [{k: w.get(k, 0) for k in ("start", "net", "shortfall", "premium", "payout",
+                                                                             "depth")} for w in demo]
         res["policies"][pol]["demo_weeks_hedged"] = sum(1 for w in demo if w["premium"] > 0)
         res["policies"][pol]["weeks_hedged_all"] = sum(1 for w in allw if w["premium"] > 0)
         res["policies"][pol]["pub_weeks"] = len(allw)

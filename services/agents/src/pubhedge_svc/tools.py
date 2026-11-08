@@ -323,6 +323,16 @@ def make_tools(run: Run) -> dict:
                             L["per_market_cap_pence"] / 100)
         res["inputs"] = markets
         res["badge"] = "SYNTHETIC"
+        dry = project_payroll(scenario="dry")
+        payout = sum(p["payout_if_event_gbp"] for p in res["positions"])
+        cost = res["total_cost_gbp"]
+        res["outcomes"] = {  # what the hedge does to payroll week, both ways
+            "payroll_date": wet["payroll_date"],
+            "wet_no_hedge_shortfall_gbp": wet["shortfall_gbp"],
+            "wet_with_hedge_shortfall_gbp": round(max(0.0, wet["shortfall_gbp"] - payout + cost), 2),
+            "dry_no_hedge_shortfall_gbp": dry["shortfall_gbp"],
+            "dry_with_hedge_shortfall_gbp": round(dry["shortfall_gbp"] + cost, 2),
+            "hedge_cost_gbp": cost, "hedge_payout_if_wet_gbp": payout}
         res["summary"] = (f"{len(res['positions'])} positions · £{res['total_cost_gbp']:.2f}" if res["positions"]
                           else "nothing worth buying at today's prices")
         return res

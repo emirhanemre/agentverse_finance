@@ -120,37 +120,37 @@
   },
   "ours": {
    "point": {
-    "hedge_net_gbp_per_year": -54.68256936507935,
-    "premium_gbp_per_year": 175.48341063492055,
-    "payouts_gbp_per_year": 120.80084126984126,
+    "hedge_net_gbp_per_year": -23.63339873015873,
+    "premium_gbp_per_year": 189.32560507936492,
+    "payouts_gbp_per_year": 165.69220634920634,
     "shortfall_weeks_per_year": 10.3945873015873,
-    "shortfall_depth_gbp_per_year": 36687.577026507905,
+    "shortfall_depth_gbp_per_year": 36684.83716238093,
     "worst_week_gbp": -13725.180000000004,
     "worst_month_gbp": -12662.83,
     "losing_months_per_year": 1.4908571428571427,
-    "weekly_cash_sd_gbp": 6111.051051352191,
-    "cvar5_weekly_gbp": -11430.262380952377
+    "weekly_cash_sd_gbp": 6109.696228226421,
+    "cvar5_weekly_gbp": -11426.405238095236
    },
    "ci95": {
     "hedge_net_gbp_per_year": [
-     -145.9269622075321,
-     60.6107284535256
+     -124.99753493990394,
+     107.3370717828526
     ],
     "premium_gbp_per_year": [
-     106.97322290064102,
-     259.34185419070485
+     115.31127749999995,
+     284.46748584134576
     ],
     "payouts_gbp_per_year": [
-     46.895102564102565,
-     240.33217427884617
+     70.88201442307692,
+     313.83364142628204
     ],
     "shortfall_weeks_per_year": [
      9.072964743589743,
      11.832483974358976
     ],
     "shortfall_depth_gbp_per_year": [
-     29248.04250693512,
-     46351.589548353324
+     29244.707032139442,
+     46360.92226329724
     ],
     "worst_week_gbp": [
      -13725.180000000004,
@@ -165,51 +165,51 @@
      1.630625
     ],
     "weekly_cash_sd_gbp": [
-     5413.676848362304,
-     6826.479045538609
+     5412.134035728801,
+     6825.391301069214
     ],
     "cvar5_weekly_gbp": [
-     -12365.960237903226,
-     -10069.546362903222
+     -12358.051677419357,
+     -10070.613661290325
     ]
    },
-   "demo_weeks_hedged": 12,
-   "weeks_hedged_all": 72,
+   "demo_weeks_hedged": 13,
+   "weeks_hedged_all": 78,
    "pub_weeks": 1260
   },
   "ours_caps_x5": {
    "point": {
-    "hedge_net_gbp_per_year": -99.94540634920635,
-    "premium_gbp_per_year": 315.2914380952381,
-    "payouts_gbp_per_year": 215.34603174603174,
+    "hedge_net_gbp_per_year": -59.236309682539684,
+    "premium_gbp_per_year": 332.9328334920635,
+    "payouts_gbp_per_year": 273.6965238095238,
     "shortfall_weeks_per_year": 10.3945873015873,
-    "shortfall_depth_gbp_per_year": 36909.66256079361,
+    "shortfall_depth_gbp_per_year": 36907.86566380948,
     "worst_week_gbp": -13776.95,
     "worst_month_gbp": -12662.83,
     "losing_months_per_year": 1.4908571428571427,
-    "weekly_cash_sd_gbp": 6114.9506324466965,
-    "cvar5_weekly_gbp": -11441.684603174599
+    "weekly_cash_sd_gbp": 6113.121283175224,
+    "cvar5_weekly_gbp": -11435.25603174603
    },
    "ci95": {
     "hedge_net_gbp_per_year": [
-     -237.73398239583335,
-     63.54561304086537
+     -214.15845840945514,
+     111.07386847756409
     ],
     "premium_gbp_per_year": [
-     197.29300856169868,
-     499.5186487219551
+     208.01530868189096,
+     528.6374719431091
     ],
     "payouts_gbp_per_year": [
-     99.51725280448719,
-     413.6937435897436
+     142.42673157051283,
+     503.66556850961535
     ],
     "shortfall_weeks_per_year": [
      8.98934294871795,
      11.74886217948718
     ],
     "shortfall_depth_gbp_per_year": [
-     28762.795015044067,
-     47020.133840436734
+     28763.114533922293,
+     47020.052863181125
     ],
     "worst_week_gbp": [
      -13776.95,
@@ -224,16 +224,16 @@
      1.6724358974358975
     ],
     "weekly_cash_sd_gbp": [
-     5390.500652856868,
-     6821.2931927739055
+     5389.323767326728,
+     6820.5281659704
     ],
     "cvar5_weekly_gbp": [
-     -12403.064653225805,
+     -12385.424701612903,
      -10087.199383064511
     ]
    },
-   "demo_weeks_hedged": 12,
-   "weeks_hedged_all": 72,
+   "demo_weeks_hedged": 13,
+   "weeks_hedged_all": 78,
    "pub_weeks": 1260
   }
  },
@@ -264,27 +264,27 @@
     "cvar5_weekly_gbp": -10109.168000000001
    },
    "ours": {
-    "hedge_net_gbp_per_year": -182.57533523809522,
-    "premium_gbp_per_year": 386.8227638095238,
+    "hedge_net_gbp_per_year": -212.38253904761905,
+    "premium_gbp_per_year": 416.62996761904765,
     "payouts_gbp_per_year": 204.24742857142857,
     "shortfall_weeks_per_year": 10.932952380952381,
-    "shortfall_depth_gbp_per_year": 40608.53835238094,
+    "shortfall_depth_gbp_per_year": 40638.34555619047,
     "worst_week_gbp": -10211.21,
     "worst_month_gbp": -9353.890000000001,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 6338.577400695406,
+    "weekly_cash_sd_gbp": 6339.586697627957,
     "cvar5_weekly_gbp": -10121.38
    },
    "ours_caps_x5": {
-    "hedge_net_gbp_per_year": -262.66915047619045,
-    "premium_gbp_per_year": 716.386674285714,
+    "hedge_net_gbp_per_year": -303.79195999999996,
+    "premium_gbp_per_year": 757.5094838095235,
     "payouts_gbp_per_year": 453.7175238095238,
     "shortfall_weeks_per_year": 10.932952380952381,
-    "shortfall_depth_gbp_per_year": 40837.404801904755,
+    "shortfall_depth_gbp_per_year": 40878.527611428566,
     "worst_week_gbp": -10211.21,
     "worst_month_gbp": -9353.890000000001,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 6344.068855873469,
+    "weekly_cash_sd_gbp": 6345.4612831471495,
     "cvar5_weekly_gbp": -10153.9
    }
   },
@@ -314,27 +314,27 @@
     "cvar5_weekly_gbp": -8661.962
    },
    "ours": {
-    "hedge_net_gbp_per_year": 105.0308857142857,
-    "premium_gbp_per_year": 178.23197142857143,
-    "payouts_gbp_per_year": 283.2628571428571,
+    "hedge_net_gbp_per_year": 242.25434666666663,
+    "premium_gbp_per_year": 207.98451047619048,
+    "payouts_gbp_per_year": 450.2388571428571,
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 33768.6547447619,
     "worst_week_gbp": -8834.77,
     "worst_month_gbp": -8569.38,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 5412.25604435487,
+    "weekly_cash_sd_gbp": 5406.900537526795,
     "cvar5_weekly_gbp": -8642.003999999999
    },
    "ours_caps_x5": {
-    "hedge_net_gbp_per_year": 84.48687428571428,
-    "premium_gbp_per_year": 321.52322095238094,
-    "payouts_gbp_per_year": 406.01009523809523,
+    "hedge_net_gbp_per_year": 288.2820761904762,
+    "premium_gbp_per_year": 365.70725714285715,
+    "payouts_gbp_per_year": 653.9893333333333,
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 34159.55748761904,
     "worst_week_gbp": -8834.77,
     "worst_month_gbp": -8569.38,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 5417.121237794273,
+    "weekly_cash_sd_gbp": 5409.247343007937,
     "cvar5_weekly_gbp": -8647.42
    }
   },
@@ -614,27 +614,27 @@
     "cvar5_weekly_gbp": -13152.726
    },
    "ours": {
-    "hedge_net_gbp_per_year": -303.37452,
-    "premium_gbp_per_year": 386.86252,
-    "payouts_gbp_per_year": 83.488,
+    "hedge_net_gbp_per_year": -212.38253904761905,
+    "premium_gbp_per_year": 416.62996761904765,
+    "payouts_gbp_per_year": 204.24742857142857,
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 47615.20414857144,
     "worst_week_gbp": -13725.180000000004,
     "worst_month_gbp": -12662.83,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 8110.344695921199,
+    "weekly_cash_sd_gbp": 8105.72456481025,
     "cvar5_weekly_gbp": -13144.768
    },
    "ours_caps_x5": {
-    "hedge_net_gbp_per_year": -464.2230971428572,
-    "premium_gbp_per_year": 730.5895733333334,
-    "payouts_gbp_per_year": 266.3664761904762,
+    "hedge_net_gbp_per_year": -312.5681390476192,
+    "premium_gbp_per_year": 780.2003295238095,
+    "payouts_gbp_per_year": 467.6321904761905,
     "shortfall_weeks_per_year": 9.939047619047619,
     "shortfall_depth_gbp_per_year": 47929.72034095237,
     "worst_week_gbp": -13776.95,
     "worst_month_gbp": -12662.83,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 8118.990468725518,
+    "weekly_cash_sd_gbp": 8111.339165347426,
     "cvar5_weekly_gbp": -13160.866
    }
   },
@@ -664,27 +664,27 @@
     "cvar5_weekly_gbp": -7778.208000000001
    },
    "ours": {
-    "hedge_net_gbp_per_year": 72.12766857142856,
-    "premium_gbp_per_year": 150.5069980952381,
-    "payouts_gbp_per_year": 222.63466666666667,
+    "hedge_net_gbp_per_year": 183.62390476190475,
+    "premium_gbp_per_year": 174.6787619047619,
+    "payouts_gbp_per_year": 358.30266666666665,
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 28581.80372,
     "worst_week_gbp": -7977.710000000003,
     "worst_month_gbp": -7422.6,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 4704.712020718715,
+    "weekly_cash_sd_gbp": 4700.002261671915,
     "cvar5_weekly_gbp": -7757.7880000000005
    },
    "ours_caps_x5": {
-    "hedge_net_gbp_per_year": 46.574377142857145,
-    "premium_gbp_per_year": 176.06028952380956,
-    "payouts_gbp_per_year": 222.63466666666667,
+    "hedge_net_gbp_per_year": 158.0706133333333,
+    "premium_gbp_per_year": 200.23205333333337,
+    "payouts_gbp_per_year": 358.30266666666665,
     "shortfall_weeks_per_year": 10.436,
     "shortfall_depth_gbp_per_year": 28709.57017714285,
     "worst_week_gbp": -7977.710000000003,
     "worst_month_gbp": -7422.6,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 4705.640130216677,
+    "weekly_cash_sd_gbp": 4700.931525757459,
     "cvar5_weekly_gbp": -7757.7880000000005
    }
   },
@@ -814,30 +814,3400 @@
     "cvar5_weekly_gbp": -8122.058
    },
    "ours": {
-    "hedge_net_gbp_per_year": -225.26354476190477,
-    "premium_gbp_per_year": 308.7515447619048,
-    "payouts_gbp_per_year": 83.488,
+    "hedge_net_gbp_per_year": -162.57797142857143,
+    "premium_gbp_per_year": 361.35892380952384,
+    "payouts_gbp_per_year": 198.78095238095239,
     "shortfall_weeks_per_year": 10.436,
-    "shortfall_depth_gbp_per_year": 31700.214697142866,
+    "shortfall_depth_gbp_per_year": 31637.529123809534,
     "worst_week_gbp": -8669.66,
     "worst_month_gbp": -7344.5599999999995,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 4943.261452644861,
+    "weekly_cash_sd_gbp": 4939.871587203959,
     "cvar5_weekly_gbp": -8094.116
    },
    "ours_caps_x5": {
-    "hedge_net_gbp_per_year": -241.17099047619044,
-    "premium_gbp_per_year": 393.7353714285714,
-    "payouts_gbp_per_year": 152.56438095238096,
+    "hedge_net_gbp_per_year": -178.48541714285707,
+    "premium_gbp_per_year": 446.3427504761904,
+    "payouts_gbp_per_year": 267.8573333333333,
     "shortfall_weeks_per_year": 10.436,
-    "shortfall_depth_gbp_per_year": 31753.18982095239,
+    "shortfall_depth_gbp_per_year": 31690.504247619057,
     "worst_week_gbp": -8673.6,
     "worst_month_gbp": -7344.5599999999995,
     "losing_months_per_year": 1.4908571428571429,
-    "weekly_cash_sd_gbp": 4945.698279988246,
+    "weekly_cash_sd_gbp": 4942.3101607499475,
     "cvar5_weekly_gbp": -8094.904
    }
   }
+ },
+ "demo_weeks": {
+  "none": [
+   {
+    "start": "2024-10-28",
+    "net": -9353.890000000001,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 4516.6
+   },
+   {
+    "start": "2024-11-04",
+    "net": 4676.449999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-11",
+    "net": 4320.96,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-18",
+    "net": 3518.49,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-25",
+    "net": -10023.61,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-02",
+    "net": 4329.67,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 2428.300000000001
+   },
+   {
+    "start": "2024-12-09",
+    "net": 4798.19,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-16",
+    "net": 5382.22,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-23",
+    "net": 4348.389999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-30",
+    "net": -9931.7,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 716.6899999999978
+   },
+   {
+    "start": "2025-01-06",
+    "net": 4771.67,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-13",
+    "net": 4703.450000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-20",
+    "net": 4356.41,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-27",
+    "net": -9561.699999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-03",
+    "net": 5271.360000000001,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 422.40999999999894
+   },
+   {
+    "start": "2025-02-10",
+    "net": 5351.04,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-17",
+    "net": 5281.72,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-24",
+    "net": -10211.21,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-03",
+    "net": 5973.69,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 212.5400000000011
+   },
+   {
+    "start": "2025-03-10",
+    "net": 5995.51,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-17",
+    "net": 5598.83,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-24",
+    "net": 3926.04,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-31",
+    "net": -7939.109999999999,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 70.72999999999683
+   },
+   {
+    "start": "2025-04-07",
+    "net": 6391.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-14",
+    "net": 5667.98,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-21",
+    "net": 5643.0,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-28",
+    "net": -5880.82,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-05",
+    "net": 6460.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-12",
+    "net": 6898.7300000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-19",
+    "net": 6802.01,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-26",
+    "net": -5529.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-02",
+    "net": 5398.23,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-09",
+    "net": 7435.889999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-16",
+    "net": 9686.650000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-23",
+    "net": 10231.55,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-30",
+    "net": -5675.370000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-07",
+    "net": 7459.719999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-14",
+    "net": 6845.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-21",
+    "net": 7217.699999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-28",
+    "net": -8403.580000000002,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 4065.730000000005
+   },
+   {
+    "start": "2025-08-04",
+    "net": 7196.360000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-11",
+    "net": 9541.75,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-18",
+    "net": 7890.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-25",
+    "net": 5234.700000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-09-01",
+    "net": -9873.150000000001,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 12501.9
+   },
+   {
+    "start": "2025-09-08",
+    "net": 3986.4199999999996,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 6243.199999999999
+   },
+   {
+    "start": "2025-09-15",
+    "net": 6621.34,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 1963.6999999999994
+   },
+   {
+    "start": "2025-09-22",
+    "net": 5620.960000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-09-29",
+    "net": -8588.74,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 2919.909999999996
+   },
+   {
+    "start": "2025-10-06",
+    "net": 3899.91,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-13",
+    "net": 4439.099999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-20",
+    "net": 4643.96,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-27",
+    "net": -10116.669999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-03",
+    "net": 5756.799999999999,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 388.35000000000036
+   },
+   {
+    "start": "2025-11-10",
+    "net": 4630.25,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-17",
+    "net": 3740.0099999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-24",
+    "net": 4472.16,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-12-01",
+    "net": -9967.45,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 9866.05
+   },
+   {
+    "start": "2025-12-08",
+    "net": 4329.92,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 5706.469999999999
+   },
+   {
+    "start": "2025-12-15",
+    "net": 4198.0,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 1658.6499999999994
+   },
+   {
+    "start": "2025-12-22",
+    "net": 4932.32,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-12-29",
+    "net": -9500.330000000002,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 6457.9400000000005
+   },
+   {
+    "start": "2026-01-05",
+    "net": 4495.91,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 1673.2800000000002
+   },
+   {
+    "start": "2026-01-12",
+    "net": 3847.38,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-01-19",
+    "net": 4381.68,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-01-26",
+    "net": -9393.960000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-02",
+    "net": 5542.469999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-09",
+    "net": 5254.77,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-16",
+    "net": 5227.9400000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-23",
+    "net": -10108.390000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-02",
+    "net": 6206.1,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-09",
+    "net": 6514.92,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-16",
+    "net": 4807.289999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-23",
+    "net": 4944.0199999999995,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-30",
+    "net": -9444.219999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 469.84999999999945
+   },
+   {
+    "start": "2026-04-06",
+    "net": 6859.16,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-13",
+    "net": 6846.01,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-20",
+    "net": 6112.9400000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-27",
+    "net": -5847.989999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 2818.42
+   },
+   {
+    "start": "2026-05-04",
+    "net": 6701.349999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-11",
+    "net": 3717.5000000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-18",
+    "net": 8598.27,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-25",
+    "net": 10526.399999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-01",
+    "net": -8443.689999999999,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 9563.399999999998
+   },
+   {
+    "start": "2026-06-08",
+    "net": 4719.17,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 5931.239999999998
+   },
+   {
+    "start": "2026-06-15",
+    "net": 10249.95,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-22",
+    "net": 14119.84,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-29",
+    "net": -3377.970000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-06",
+    "net": 10263.63,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-13",
+    "net": 8908.919999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-20",
+    "net": 7533.470000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-27",
+    "net": -6908.009999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-03",
+    "net": 6797.400000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-10",
+    "net": 8067.8,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-17",
+    "net": 5666.09,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-24",
+    "net": 4551.35,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-31",
+    "net": -7666.679999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 551.3299999999958
+   },
+   {
+    "start": "2026-09-07",
+    "net": 7359.14,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-14",
+    "net": 7052.900000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-21",
+    "net": 5596.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-28",
+    "net": -8182.799999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-05",
+    "net": 4457.64,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-12",
+    "net": 4590.88,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-19",
+    "net": 1311.8800000000006,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-26",
+    "net": 1922.88,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   }
+  ],
+  "naive": [
+   {
+    "start": "2024-10-28",
+    "net": -9353.890000000001,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 4516.6
+   },
+   {
+    "start": "2024-11-04",
+    "net": 4636.529999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-11",
+    "net": 4281.0,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-18",
+    "net": 3478.56,
+    "shortfall": false,
+    "premium": 39.93,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-25",
+    "net": -9982.51,
+    "shortfall": false,
+    "premium": 39.900000000000006,
+    "payout": 81.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-02",
+    "net": 4289.7699999999995,
+    "shortfall": true,
+    "premium": 39.900000000000006,
+    "payout": 0.0,
+    "depth": 2467.030000000001
+   },
+   {
+    "start": "2024-12-09",
+    "net": 4758.2699999999995,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-16",
+    "net": 5342.3,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-23",
+    "net": 4308.469999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-30",
+    "net": -9971.629999999997,
+    "shortfall": true,
+    "premium": 39.93,
+    "payout": 0.0,
+    "depth": 836.459999999998
+   },
+   {
+    "start": "2025-01-06",
+    "net": 4731.75,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-13",
+    "net": 4663.530000000001,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-20",
+    "net": 4316.58,
+    "shortfall": false,
+    "premium": 39.83,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-27",
+    "net": -9573.619999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 28.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-03",
+    "net": 5231.46,
+    "shortfall": true,
+    "premium": 39.900000000000006,
+    "payout": 0.0,
+    "depth": 514.0599999999954
+   },
+   {
+    "start": "2025-02-10",
+    "net": 5311.12,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-17",
+    "net": 5241.8,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-24",
+    "net": -10251.130000000001,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-03",
+    "net": 5933.7699999999995,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 332.3000000000013
+   },
+   {
+    "start": "2025-03-10",
+    "net": 5955.59,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-17",
+    "net": 5558.83,
+    "shortfall": false,
+    "premium": 40.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-24",
+    "net": 3886.12,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-31",
+    "net": -7979.029999999997,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 190.56999999999516
+   },
+   {
+    "start": "2025-04-07",
+    "net": 6351.1900000000005,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-14",
+    "net": 5628.0599999999995,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-21",
+    "net": 5603.08,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-28",
+    "net": -5920.739999999998,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-05",
+    "net": 6420.23,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-12",
+    "net": 6858.81,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-19",
+    "net": 6762.09,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-26",
+    "net": -5569.68,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-02",
+    "net": 5358.869999999999,
+    "shortfall": false,
+    "premium": 39.36,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-09",
+    "net": 7416.969999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 21.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-16",
+    "net": 9646.690000000002,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-23",
+    "net": 10191.629999999997,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-30",
+    "net": -5715.289999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-07",
+    "net": 7830.799999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 411.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-14",
+    "net": 6805.889999999999,
+    "shortfall": false,
+    "premium": 39.870000000000005,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-21",
+    "net": 7177.739999999999,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-28",
+    "net": -8443.480000000003,
+    "shortfall": true,
+    "premium": 39.900000000000006,
+    "payout": 0.0,
+    "depth": 4145.590000000004
+   },
+   {
+    "start": "2025-08-04",
+    "net": 7156.4400000000005,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-11",
+    "net": 9501.83,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-18",
+    "net": 7850.84,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-25",
+    "net": 5194.8,
+    "shortfall": false,
+    "premium": 39.900000000000006,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-09-01",
+    "net": -9913.07,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 12541.819999999998
+   },
+   {
+    "start": "2025-09-08",
+    "net": 3946.6099999999997,
+    "shortfall": true,
+    "premium": 39.81,
+    "payout": 0.0,
+    "depth": 6322.929999999998
+   },
+   {
+    "start": "2025-09-15",
+    "net": 6609.42,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 28.0,
+    "depth": 2055.349999999998
+   },
+   {
+    "start": "2025-09-22",
+    "net": 5580.960000000001,
+    "shortfall": false,
+    "premium": 40.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-09-29",
+    "net": -8628.659999999998,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 3091.4799999999977
+   },
+   {
+    "start": "2025-10-06",
+    "net": 3859.9899999999993,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-13",
+    "net": 4399.2,
+    "shortfall": false,
+    "premium": 39.900000000000006,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-20",
+    "net": 4604.0,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-27",
+    "net": -10156.57,
+    "shortfall": false,
+    "premium": 39.900000000000006,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-03",
+    "net": 5716.879999999999,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 508.129999999999
+   },
+   {
+    "start": "2025-11-10",
+    "net": 4590.33,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-17",
+    "net": 3700.6899999999996,
+    "shortfall": false,
+    "premium": 39.32,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-24",
+    "net": 4458.24,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 26.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-12-01",
+    "net": -10007.32,
+    "shortfall": true,
+    "premium": 39.870000000000005,
+    "payout": 0.0,
+    "depth": 9905.919999999998
+   },
+   {
+    "start": "2025-12-08",
+    "net": 4318.0,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 28.0,
+    "depth": 5758.259999999998
+   },
+   {
+    "start": "2025-12-15",
+    "net": 4158.07,
+    "shortfall": true,
+    "premium": 39.93,
+    "payout": 0.0,
+    "depth": 1750.3699999999985
+   },
+   {
+    "start": "2025-12-22",
+    "net": 4892.4,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-12-29",
+    "net": -9540.25,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 6629.5
+   },
+   {
+    "start": "2026-01-05",
+    "net": 4455.99,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 1884.7600000000002
+   },
+   {
+    "start": "2026-01-12",
+    "net": 3807.46,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-01-19",
+    "net": 4341.719999999999,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-01-26",
+    "net": -9433.86,
+    "shortfall": false,
+    "premium": 39.900000000000006,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-02",
+    "net": 5502.51,
+    "shortfall": true,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 29.659999999999627
+   },
+   {
+    "start": "2026-02-09",
+    "net": 5215.41,
+    "shortfall": false,
+    "premium": 39.36,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-16",
+    "net": 5209.02,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 21.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-23",
+    "net": -10148.310000000001,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-02",
+    "net": 6166.18,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-09",
+    "net": 6474.960000000001,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-16",
+    "net": 4767.369999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-23",
+    "net": 4904.0599999999995,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-30",
+    "net": -9484.139999999996,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 589.6500000000005
+   },
+   {
+    "start": "2026-04-06",
+    "net": 6819.16,
+    "shortfall": false,
+    "premium": 40.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-13",
+    "net": 6806.09,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-20",
+    "net": 6073.02,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-27",
+    "net": -5887.950000000001,
+    "shortfall": true,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 2898.2999999999975
+   },
+   {
+    "start": "2026-05-04",
+    "net": 6661.429999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-11",
+    "net": 3677.5000000000005,
+    "shortfall": false,
+    "premium": 40.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-18",
+    "net": 8558.35,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-25",
+    "net": 10486.48,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-01",
+    "net": -8483.519999999999,
+    "shortfall": true,
+    "premium": 39.83,
+    "payout": 0.0,
+    "depth": 9603.229999999998
+   },
+   {
+    "start": "2026-06-08",
+    "net": 4679.25,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 6010.989999999998
+   },
+   {
+    "start": "2026-06-15",
+    "net": 10210.029999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-22",
+    "net": 14079.92,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-29",
+    "net": -3417.8899999999994,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-06",
+    "net": 10223.71,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-13",
+    "net": 8868.999999999998,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-20",
+    "net": 7493.550000000001,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-27",
+    "net": -6947.929999999999,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-03",
+    "net": 6757.4800000000005,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-10",
+    "net": 8027.88,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-17",
+    "net": 5626.17,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-24",
+    "net": 4511.42,
+    "shortfall": false,
+    "premium": 39.93,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-31",
+    "net": -7625.599999999996,
+    "shortfall": true,
+    "premium": 39.92,
+    "payout": 81.0,
+    "depth": 590.0999999999981
+   },
+   {
+    "start": "2026-09-07",
+    "net": 7319.18,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-14",
+    "net": 7012.9800000000005,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-21",
+    "net": 5556.19,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-28",
+    "net": -8222.719999999998,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-05",
+    "net": 4417.72,
+    "shortfall": false,
+    "premium": 39.92,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-12",
+    "net": 4550.92,
+    "shortfall": false,
+    "premium": 39.96,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-19",
+    "net": 1272.5600000000004,
+    "shortfall": false,
+    "premium": 39.32,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-26",
+    "net": 1948.88,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 26.0,
+    "depth": 0
+   }
+  ],
+  "ours": [
+   {
+    "start": "2024-10-28",
+    "net": -9353.890000000001,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 4516.6
+   },
+   {
+    "start": "2024-11-04",
+    "net": 4676.449999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-11",
+    "net": 4320.96,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-18",
+    "net": 3518.49,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-25",
+    "net": -10083.59,
+    "shortfall": false,
+    "premium": 59.98,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-02",
+    "net": 4269.69,
+    "shortfall": true,
+    "premium": 59.98,
+    "payout": 0.0,
+    "depth": 2548.2600000000007
+   },
+   {
+    "start": "2024-12-09",
+    "net": 4798.19,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-16",
+    "net": 5382.22,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-23",
+    "net": 4348.389999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-30",
+    "net": -9991.599999999999,
+    "shortfall": true,
+    "premium": 59.9,
+    "payout": 0.0,
+    "depth": 776.5899999999979
+   },
+   {
+    "start": "2025-01-06",
+    "net": 4771.67,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-13",
+    "net": 4703.450000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-20",
+    "net": 4356.41,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-27",
+    "net": -9561.699999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-03",
+    "net": 5211.38,
+    "shortfall": true,
+    "premium": 59.98,
+    "payout": 0.0,
+    "depth": 482.38999999999896
+   },
+   {
+    "start": "2025-02-10",
+    "net": 5351.04,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-17",
+    "net": 5281.72,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-24",
+    "net": -10211.21,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-03",
+    "net": 5973.69,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 212.5400000000011
+   },
+   {
+    "start": "2025-03-10",
+    "net": 5995.51,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-17",
+    "net": 5598.83,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-24",
+    "net": 3926.04,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-31",
+    "net": -7939.109999999999,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 70.72999999999683
+   },
+   {
+    "start": "2025-04-07",
+    "net": 6391.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-14",
+    "net": 5667.98,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-21",
+    "net": 5643.0,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-28",
+    "net": -5880.82,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-05",
+    "net": 6460.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-12",
+    "net": 6898.7300000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-19",
+    "net": 6802.01,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-26",
+    "net": -5529.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-02",
+    "net": 5398.23,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-09",
+    "net": 7435.889999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-16",
+    "net": 9686.650000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-23",
+    "net": 10231.55,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-30",
+    "net": -5675.370000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-07",
+    "net": 7459.719999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-14",
+    "net": 6845.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-21",
+    "net": 7217.699999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-28",
+    "net": -8463.560000000001,
+    "shortfall": true,
+    "premium": 59.98,
+    "payout": 0.0,
+    "depth": 4125.710000000005
+   },
+   {
+    "start": "2025-08-04",
+    "net": 7196.360000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-11",
+    "net": 9541.75,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-18",
+    "net": 7890.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-25",
+    "net": 5174.72,
+    "shortfall": false,
+    "premium": 59.98,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-09-01",
+    "net": -9873.150000000001,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 12501.9
+   },
+   {
+    "start": "2025-09-08",
+    "net": 3866.8299999999995,
+    "shortfall": true,
+    "premium": 119.59,
+    "payout": 0.0,
+    "depth": 6362.789999999999
+   },
+   {
+    "start": "2025-09-15",
+    "net": 6705.34,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 84.0,
+    "depth": 1999.2899999999995
+   },
+   {
+    "start": "2025-09-22",
+    "net": 5620.960000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-09-29",
+    "net": -8588.74,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 2955.4999999999964
+   },
+   {
+    "start": "2025-10-06",
+    "net": 3899.91,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-13",
+    "net": 4439.099999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-20",
+    "net": 4643.96,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-27",
+    "net": -10176.650000000001,
+    "shortfall": false,
+    "premium": 59.98,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-03",
+    "net": 5756.799999999999,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 448.3299999999997
+   },
+   {
+    "start": "2025-11-10",
+    "net": 4630.25,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-17",
+    "net": 3740.0099999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-24",
+    "net": 4472.16,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-12-01",
+    "net": -10027.060000000001,
+    "shortfall": true,
+    "premium": 59.61,
+    "payout": 0.0,
+    "depth": 9925.659999999998
+   },
+   {
+    "start": "2025-12-08",
+    "net": 4413.92,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 84.0,
+    "depth": 5682.079999999998
+   },
+   {
+    "start": "2025-12-15",
+    "net": 4138.099999999999,
+    "shortfall": true,
+    "premium": 59.9,
+    "payout": 0.0,
+    "depth": 1694.159999999998
+   },
+   {
+    "start": "2025-12-22",
+    "net": 4932.32,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-12-29",
+    "net": -9500.330000000002,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 6493.449999999999
+   },
+   {
+    "start": "2026-01-05",
+    "net": 4495.91,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 1708.7899999999986
+   },
+   {
+    "start": "2026-01-12",
+    "net": 3847.38,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-01-19",
+    "net": 4381.68,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-01-26",
+    "net": -9453.94,
+    "shortfall": false,
+    "premium": 59.98,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-02",
+    "net": 5542.469999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-09",
+    "net": 5254.77,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-16",
+    "net": 5227.9400000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-23",
+    "net": -10108.390000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-02",
+    "net": 6206.1,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-09",
+    "net": 6514.92,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-16",
+    "net": 4807.289999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-23",
+    "net": 4944.0199999999995,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-30",
+    "net": -9444.219999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 469.84999999999945
+   },
+   {
+    "start": "2026-04-06",
+    "net": 6859.16,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-13",
+    "net": 6846.01,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-20",
+    "net": 6112.9400000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-27",
+    "net": -5847.989999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 2818.42
+   },
+   {
+    "start": "2026-05-04",
+    "net": 6701.349999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-11",
+    "net": 3717.5000000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-18",
+    "net": 8598.27,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-25",
+    "net": 10526.399999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-01",
+    "net": -8503.3,
+    "shortfall": true,
+    "premium": 59.61,
+    "payout": 0.0,
+    "depth": 9623.009999999998
+   },
+   {
+    "start": "2026-06-08",
+    "net": 4719.17,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 5990.8499999999985
+   },
+   {
+    "start": "2026-06-15",
+    "net": 10249.95,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-22",
+    "net": 14119.84,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-29",
+    "net": -3377.970000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-06",
+    "net": 10263.63,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-13",
+    "net": 8908.919999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-20",
+    "net": 7533.470000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-27",
+    "net": -6908.009999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-03",
+    "net": 6797.400000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-10",
+    "net": 8067.8,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-17",
+    "net": 5666.09,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-24",
+    "net": 4491.45,
+    "shortfall": false,
+    "premium": 59.9,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-31",
+    "net": -7423.679999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 243.0,
+    "depth": 368.2299999999973
+   },
+   {
+    "start": "2026-09-07",
+    "net": 7359.14,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-14",
+    "net": 7052.900000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-21",
+    "net": 5596.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-28",
+    "net": -8182.799999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-05",
+    "net": 4457.64,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-12",
+    "net": 4590.88,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-19",
+    "net": 1311.8800000000006,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-26",
+    "net": 1922.88,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   }
+  ],
+  "ours_caps_x5": [
+   {
+    "start": "2024-10-28",
+    "net": -9353.890000000001,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 4516.6
+   },
+   {
+    "start": "2024-11-04",
+    "net": 4676.449999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-11",
+    "net": 4320.96,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-18",
+    "net": 3518.49,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-11-25",
+    "net": -10099.36,
+    "shortfall": false,
+    "premium": 75.75,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-02",
+    "net": 4258.98,
+    "shortfall": true,
+    "premium": 70.69,
+    "payout": 0.0,
+    "depth": 2574.740000000001
+   },
+   {
+    "start": "2024-12-09",
+    "net": 4798.19,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-16",
+    "net": 5382.22,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-23",
+    "net": 4348.389999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2024-12-30",
+    "net": -10040.16,
+    "shortfall": true,
+    "premium": 108.46,
+    "payout": 0.0,
+    "depth": 825.1499999999978
+   },
+   {
+    "start": "2025-01-06",
+    "net": 4771.67,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-13",
+    "net": 4703.450000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-20",
+    "net": 4356.41,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-01-27",
+    "net": -9561.699999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-03",
+    "net": 5192.030000000001,
+    "shortfall": true,
+    "premium": 79.33,
+    "payout": 0.0,
+    "depth": 501.7399999999989
+   },
+   {
+    "start": "2025-02-10",
+    "net": 5351.04,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-17",
+    "net": 5281.72,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-02-24",
+    "net": -10211.21,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-03",
+    "net": 5973.69,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 212.5400000000011
+   },
+   {
+    "start": "2025-03-10",
+    "net": 5995.51,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-17",
+    "net": 5598.83,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-24",
+    "net": 3926.04,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-03-31",
+    "net": -7939.109999999999,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 70.72999999999683
+   },
+   {
+    "start": "2025-04-07",
+    "net": 6391.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-14",
+    "net": 5667.98,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-21",
+    "net": 5643.0,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-04-28",
+    "net": -5880.82,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-05",
+    "net": 6460.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-12",
+    "net": 6898.7300000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-19",
+    "net": 6802.01,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-05-26",
+    "net": -5529.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-02",
+    "net": 5398.23,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-09",
+    "net": 7435.889999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-16",
+    "net": 9686.650000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-23",
+    "net": 10231.55,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-06-30",
+    "net": -5675.370000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-07",
+    "net": 7459.719999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-14",
+    "net": 6845.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-21",
+    "net": 7217.699999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-07-28",
+    "net": -8486.330000000002,
+    "shortfall": true,
+    "premium": 82.75,
+    "payout": 0.0,
+    "depth": 4148.480000000005
+   },
+   {
+    "start": "2025-08-04",
+    "net": 7196.360000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-11",
+    "net": 9541.75,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-18",
+    "net": 7890.76,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-08-25",
+    "net": 5150.31,
+    "shortfall": false,
+    "premium": 84.39,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-09-01",
+    "net": -9873.150000000001,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 12501.9
+   },
+   {
+    "start": "2025-09-08",
+    "net": 3720.1199999999994,
+    "shortfall": true,
+    "premium": 266.3,
+    "payout": 0.0,
+    "depth": 6509.499999999999
+   },
+   {
+    "start": "2025-09-15",
+    "net": 6887.34,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 266.0,
+    "depth": 1963.9999999999995
+   },
+   {
+    "start": "2025-09-22",
+    "net": 5620.960000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-09-29",
+    "net": -8588.74,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 2920.209999999999
+   },
+   {
+    "start": "2025-10-06",
+    "net": 3899.91,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-13",
+    "net": 4439.099999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-20",
+    "net": 4643.96,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-10-27",
+    "net": -10202.84,
+    "shortfall": false,
+    "premium": 86.17,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-03",
+    "net": 5756.799999999999,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 474.5200000000002
+   },
+   {
+    "start": "2025-11-10",
+    "net": 4630.25,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-17",
+    "net": 3740.0099999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-11-24",
+    "net": 4472.16,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-12-01",
+    "net": -10147.7,
+    "shortfall": true,
+    "premium": 180.25,
+    "payout": 0.0,
+    "depth": 10046.3
+   },
+   {
+    "start": "2025-12-08",
+    "net": 4583.92,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 254.0,
+    "depth": 5632.719999999999
+   },
+   {
+    "start": "2025-12-15",
+    "net": 4083.87,
+    "shortfall": true,
+    "premium": 114.13,
+    "payout": 0.0,
+    "depth": 1699.0299999999993
+   },
+   {
+    "start": "2025-12-22",
+    "net": 4932.32,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2025-12-29",
+    "net": -9500.330000000002,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 6498.3200000000015
+   },
+   {
+    "start": "2026-01-05",
+    "net": 4495.91,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 1713.6600000000012
+   },
+   {
+    "start": "2026-01-12",
+    "net": 3847.38,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-01-19",
+    "net": 4381.68,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-01-26",
+    "net": -9468.08,
+    "shortfall": false,
+    "premium": 74.12,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-02",
+    "net": 5542.469999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-09",
+    "net": 5254.77,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-16",
+    "net": 5227.9400000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-02-23",
+    "net": -10108.390000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-02",
+    "net": 6206.1,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-09",
+    "net": 6514.92,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-16",
+    "net": 4807.289999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-23",
+    "net": 4944.0199999999995,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-03-30",
+    "net": -9444.219999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 469.84999999999945
+   },
+   {
+    "start": "2026-04-06",
+    "net": 6859.16,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-13",
+    "net": 6846.01,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-20",
+    "net": 6112.9400000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-04-27",
+    "net": -5847.989999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 2818.42
+   },
+   {
+    "start": "2026-05-04",
+    "net": 6701.349999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-11",
+    "net": 3717.5000000000005,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-18",
+    "net": 8598.27,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-05-25",
+    "net": 10526.399999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-01",
+    "net": -8648.779999999999,
+    "shortfall": true,
+    "premium": 205.09,
+    "payout": 0.0,
+    "depth": 9768.489999999998
+   },
+   {
+    "start": "2026-06-08",
+    "net": 4719.17,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 6136.329999999998
+   },
+   {
+    "start": "2026-06-15",
+    "net": 10249.95,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-22",
+    "net": 14119.84,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-06-29",
+    "net": -3377.970000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-06",
+    "net": 10263.63,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-13",
+    "net": 8908.919999999998,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-20",
+    "net": 7533.470000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-07-27",
+    "net": -6908.009999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-03",
+    "net": 6797.400000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-10",
+    "net": 8067.8,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-17",
+    "net": 5666.09,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-24",
+    "net": 4454.469999999999,
+    "shortfall": false,
+    "premium": 96.88,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-08-31",
+    "net": -7273.679999999998,
+    "shortfall": true,
+    "premium": 0.0,
+    "payout": 393.0,
+    "depth": 255.20999999999685
+   },
+   {
+    "start": "2026-09-07",
+    "net": 7359.14,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-14",
+    "net": 7052.900000000001,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-21",
+    "net": 5596.15,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-09-28",
+    "net": -8182.799999999999,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-05",
+    "net": 4457.64,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-12",
+    "net": 4590.88,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-19",
+    "net": 1311.8800000000006,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   },
+   {
+    "start": "2026-10-26",
+    "net": 1922.88,
+    "shortfall": false,
+    "premium": 0.0,
+    "payout": 0.0,
+    "depth": 0
+   }
+  ]
  },
  "setup": {
   "train": [
