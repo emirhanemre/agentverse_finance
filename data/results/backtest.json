@@ -1,0 +1,867 @@
+{
+ "policies": {
+  "none": {
+   "point": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.3945873015873,
+    "shortfall_depth_gbp_per_year": 36458.43228365079,
+    "worst_week_gbp": -13665.280000000002,
+    "worst_month_gbp": -12662.83,
+    "losing_months_per_year": 1.4908571428571427,
+    "weekly_cash_sd_gbp": 6107.982045214359,
+    "cvar5_weekly_gbp": -11424.212539682538
+   },
+   "ci95": {
+    "hedge_net_gbp_per_year": [
+     0.0,
+     0.0
+    ],
+    "premium_gbp_per_year": [
+     0.0,
+     0.0
+    ],
+    "payouts_gbp_per_year": [
+     0.0,
+     0.0
+    ],
+    "shortfall_weeks_per_year": [
+     9.072964743589743,
+     11.790673076923078
+    ],
+    "shortfall_depth_gbp_per_year": [
+     28505.72317900241,
+     46585.74569908654
+    ],
+    "worst_week_gbp": [
+     -13665.280000000002,
+     -11475.330000000002
+    ],
+    "worst_month_gbp": [
+     -51103.21199999996,
+     -15008.87325
+    ],
+    "losing_months_per_year": [
+     0.7944070512820514,
+     1.630625
+    ],
+    "weekly_cash_sd_gbp": [
+     5492.549168261774,
+     6855.465424982075
+    ],
+    "cvar5_weekly_gbp": [
+     -12378.99977822581,
+     -10078.284258064512
+    ]
+   },
+   "demo_weeks_hedged": 0,
+   "weeks_hedged_all": 0,
+   "pub_weeks": 1260
+  },
+  "naive": {
+   "point": {
+    "hedge_net_gbp_per_year": -1513.5355647619047,
+    "premium_gbp_per_year": 2041.9201838095237,
+    "payouts_gbp_per_year": 528.384619047619,
+    "shortfall_weeks_per_year": 10.560238095238095,
+    "shortfall_depth_gbp_per_year": 37324.53952888888,
+    "worst_week_gbp": -13705.210000000003,
+    "worst_month_gbp": -12662.83,
+    "losing_months_per_year": 1.4908571428571427,
+    "weekly_cash_sd_gbp": 6106.215964670239,
+    "cvar5_weekly_gbp": -11453.293968253967
+   },
+   "ci95": {
+    "hedge_net_gbp_per_year": [
+     -1746.6303174919874,
+     -1360.9046671514425
+    ],
+    "premium_gbp_per_year": [
+     2073.4544584134615,
+     2081.995463108975
+    ],
+    "payouts_gbp_per_year": [
+     334.4871794871795,
+     717.4603661858974
+    ],
+    "shortfall_weeks_per_year": [
+     9.15658653846154,
+     11.999727564102566
+    ],
+    "shortfall_depth_gbp_per_year": [
+     29165.10810412259,
+     47046.882623389414
+    ],
+    "worst_week_gbp": [
+     -13705.210000000003,
+     -11514.810000000001
+    ],
+    "worst_month_gbp": [
+     -50982.922499999964,
+     -15693.295500000006
+    ],
+    "losing_months_per_year": [
+     0.7944070512820514,
+     1.6724358974358975
+    ],
+    "weekly_cash_sd_gbp": [
+     5389.6945524351095,
+     6775.5592059342825
+    ],
+    "cvar5_weekly_gbp": [
+     -12374.089915322576,
+     -10084.444629032256
+    ]
+   },
+   "demo_weeks_hedged": 103,
+   "weeks_hedged_all": 1236,
+   "pub_weeks": 1260
+  },
+  "ours": {
+   "point": {
+    "hedge_net_gbp_per_year": -54.68256936507935,
+    "premium_gbp_per_year": 175.48341063492055,
+    "payouts_gbp_per_year": 120.80084126984126,
+    "shortfall_weeks_per_year": 10.3945873015873,
+    "shortfall_depth_gbp_per_year": 36687.577026507905,
+    "worst_week_gbp": -13725.180000000004,
+    "worst_month_gbp": -12662.83,
+    "losing_months_per_year": 1.4908571428571427,
+    "weekly_cash_sd_gbp": 6111.051051352191,
+    "cvar5_weekly_gbp": -11430.262380952377
+   },
+   "ci95": {
+    "hedge_net_gbp_per_year": [
+     -145.9269622075321,
+     60.6107284535256
+    ],
+    "premium_gbp_per_year": [
+     106.97322290064102,
+     259.34185419070485
+    ],
+    "payouts_gbp_per_year": [
+     46.895102564102565,
+     240.33217427884617
+    ],
+    "shortfall_weeks_per_year": [
+     9.072964743589743,
+     11.832483974358976
+    ],
+    "shortfall_depth_gbp_per_year": [
+     29248.04250693512,
+     46351.589548353324
+    ],
+    "worst_week_gbp": [
+     -13725.180000000004,
+     -11534.700000000004
+    ],
+    "worst_month_gbp": [
+     -52807.95475,
+     -15042.6625
+    ],
+    "losing_months_per_year": [
+     0.7944070512820514,
+     1.630625
+    ],
+    "weekly_cash_sd_gbp": [
+     5413.676848362304,
+     6826.479045538609
+    ],
+    "cvar5_weekly_gbp": [
+     -12365.960237903226,
+     -10069.546362903222
+    ]
+   },
+   "demo_weeks_hedged": 12,
+   "weeks_hedged_all": 72,
+   "pub_weeks": 1260
+  },
+  "ours_caps_x5": {
+   "point": {
+    "hedge_net_gbp_per_year": -99.94540634920635,
+    "premium_gbp_per_year": 315.2914380952381,
+    "payouts_gbp_per_year": 215.34603174603174,
+    "shortfall_weeks_per_year": 10.3945873015873,
+    "shortfall_depth_gbp_per_year": 36909.66256079361,
+    "worst_week_gbp": -13776.95,
+    "worst_month_gbp": -12662.83,
+    "losing_months_per_year": 1.4908571428571427,
+    "weekly_cash_sd_gbp": 6114.9506324466965,
+    "cvar5_weekly_gbp": -11441.684603174599
+   },
+   "ci95": {
+    "hedge_net_gbp_per_year": [
+     -237.73398239583335,
+     63.54561304086537
+    ],
+    "premium_gbp_per_year": [
+     197.29300856169868,
+     499.5186487219551
+    ],
+    "payouts_gbp_per_year": [
+     99.51725280448719,
+     413.6937435897436
+    ],
+    "shortfall_weeks_per_year": [
+     8.98934294871795,
+     11.74886217948718
+    ],
+    "shortfall_depth_gbp_per_year": [
+     28762.795015044067,
+     47020.133840436734
+    ],
+    "worst_week_gbp": [
+     -13776.95,
+     -11638.950000000004
+    ],
+    "worst_month_gbp": [
+     -50655.22875,
+     -15087.747749999995
+    ],
+    "losing_months_per_year": [
+     0.793361778846154,
+     1.6724358974358975
+    ],
+    "weekly_cash_sd_gbp": [
+     5390.500652856868,
+     6821.2931927739055
+    ],
+    "cvar5_weekly_gbp": [
+     -12403.064653225805,
+     -10087.199383064511
+    ]
+   },
+   "demo_weeks_hedged": 12,
+   "weeks_hedged_all": 72,
+   "pub_weeks": 1260
+  }
+ },
+ "per_pub": {
+  "demo": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.932952380952381,
+    "shortfall_depth_gbp_per_year": 40326.04080190475,
+    "worst_week_gbp": -10211.21,
+    "worst_month_gbp": -9353.890000000001,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6336.041188842138,
+    "cvar5_weekly_gbp": -10085.466
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1669.1487485714285,
+    "premium_gbp_per_year": 2042.3599866666668,
+    "payouts_gbp_per_year": 373.2112380952381,
+    "shortfall_weeks_per_year": 11.429904761904762,
+    "shortfall_depth_gbp_per_year": 41333.050198095225,
+    "worst_week_gbp": -10251.130000000001,
+    "worst_month_gbp": -9353.890000000001,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6335.564364391102,
+    "cvar5_weekly_gbp": -10109.168000000001
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -182.57533523809522,
+    "premium_gbp_per_year": 386.8227638095238,
+    "payouts_gbp_per_year": 204.24742857142857,
+    "shortfall_weeks_per_year": 10.932952380952381,
+    "shortfall_depth_gbp_per_year": 40608.53835238094,
+    "worst_week_gbp": -10211.21,
+    "worst_month_gbp": -9353.890000000001,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6338.577400695406,
+    "cvar5_weekly_gbp": -10121.38
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -262.66915047619045,
+    "premium_gbp_per_year": 716.386674285714,
+    "payouts_gbp_per_year": 453.7175238095238,
+    "shortfall_weeks_per_year": 10.932952380952381,
+    "shortfall_depth_gbp_per_year": 40837.404801904755,
+    "worst_week_gbp": -10211.21,
+    "worst_month_gbp": -9353.890000000001,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6344.068855873469,
+    "cvar5_weekly_gbp": -10153.9
+   }
+  },
+  "p01": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 33528.92988571428,
+    "worst_week_gbp": -8834.77,
+    "worst_month_gbp": -8569.38,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 5406.449177815406,
+    "cvar5_weekly_gbp": -8630.03
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1181.8074266666667,
+    "premium_gbp_per_year": 2042.0319980952384,
+    "payouts_gbp_per_year": 860.2245714285714,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 34496.43156761903,
+    "worst_week_gbp": -8874.67,
+    "worst_month_gbp": -8569.38,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 5404.363660100569,
+    "cvar5_weekly_gbp": -8661.962
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": 105.0308857142857,
+    "premium_gbp_per_year": 178.23197142857143,
+    "payouts_gbp_per_year": 283.2628571428571,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 33768.6547447619,
+    "worst_week_gbp": -8834.77,
+    "worst_month_gbp": -8569.38,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 5412.25604435487,
+    "cvar5_weekly_gbp": -8642.003999999999
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": 84.48687428571428,
+    "premium_gbp_per_year": 321.52322095238094,
+    "payouts_gbp_per_year": 406.01009523809523,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 34159.55748761904,
+    "worst_week_gbp": -8834.77,
+    "worst_month_gbp": -8569.38,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 5417.121237794273,
+    "cvar5_weekly_gbp": -8647.42
+   }
+  },
+  "p02": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 11.429904761904762,
+    "shortfall_depth_gbp_per_year": 48826.45103428572,
+    "worst_week_gbp": -12843.690000000002,
+    "worst_month_gbp": -11471.229999999996,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 7557.7280762215,
+    "cvar5_weekly_gbp": -12432.754
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1181.8074266666667,
+    "premium_gbp_per_year": 2042.0319980952384,
+    "payouts_gbp_per_year": 860.2245714285714,
+    "shortfall_weeks_per_year": 11.429904761904762,
+    "shortfall_depth_gbp_per_year": 49866.120140952364,
+    "worst_week_gbp": -12883.59,
+    "worst_month_gbp": -11471.229999999996,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 7556.389991469789,
+    "cvar5_weekly_gbp": -12472.640000000001
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": 242.25434666666663,
+    "premium_gbp_per_year": 207.98451047619048,
+    "payouts_gbp_per_year": 450.2388571428571,
+    "shortfall_weeks_per_year": 11.429904761904762,
+    "shortfall_depth_gbp_per_year": 48928.95243238095,
+    "worst_week_gbp": -12843.690000000002,
+    "worst_month_gbp": -11471.229999999996,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 7557.927059994287,
+    "cvar5_weekly_gbp": -12456.628
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": 316.6481180952381,
+    "premium_gbp_per_year": 401.44807238095234,
+    "payouts_gbp_per_year": 718.0961904761905,
+    "shortfall_weeks_per_year": 11.429904761904762,
+    "shortfall_depth_gbp_per_year": 49294.78392761906,
+    "worst_week_gbp": -12843.690000000002,
+    "worst_month_gbp": -11471.229999999996,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 7560.422827959127,
+    "cvar5_weekly_gbp": -12496.37
+   }
+  },
+  "p03": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 24322.941693333327,
+    "worst_week_gbp": -7364.7,
+    "worst_month_gbp": -6711.449999999999,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4404.218493846884,
+    "cvar5_weekly_gbp": -7102.842
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1402.3002285714288,
+    "premium_gbp_per_year": 2040.3870857142858,
+    "payouts_gbp_per_year": 638.0868571428572,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 25162.622253333328,
+    "worst_week_gbp": -7404.61,
+    "worst_month_gbp": -6711.449999999999,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4405.6854940033745,
+    "cvar5_weekly_gbp": -7142.751999999999
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -48.00063047619048,
+    "premium_gbp_per_year": 88.75072571428572,
+    "payouts_gbp_per_year": 40.75009523809524,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 24455.697552380945,
+    "worst_week_gbp": -7364.7,
+    "worst_month_gbp": -6711.449999999999,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4406.434333701792,
+    "cvar5_weekly_gbp": -7102.842
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -74.76151619047619,
+    "premium_gbp_per_year": 166.69770666666668,
+    "payouts_gbp_per_year": 91.93619047619048,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 24521.851853333326,
+    "worst_week_gbp": -7364.7,
+    "worst_month_gbp": -6711.449999999999,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4409.442333224089,
+    "cvar5_weekly_gbp": -7102.842
+   }
+  },
+  "p04": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 9.442095238095238,
+    "shortfall_depth_gbp_per_year": 41779.44264380954,
+    "worst_week_gbp": -11475.330000000002,
+    "worst_month_gbp": -10758.12,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6810.023309694053,
+    "cvar5_weekly_gbp": -11033.91
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1402.3002285714288,
+    "premium_gbp_per_year": 2040.3870857142858,
+    "payouts_gbp_per_year": 638.0868571428572,
+    "shortfall_weeks_per_year": 8.945142857142857,
+    "shortfall_depth_gbp_per_year": 42154.13976952381,
+    "worst_week_gbp": -11514.810000000001,
+    "worst_month_gbp": -10758.12,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6811.185018000648,
+    "cvar5_weekly_gbp": -11073.734
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -48.00063047619048,
+    "premium_gbp_per_year": 88.75072571428572,
+    "payouts_gbp_per_year": 40.75009523809524,
+    "shortfall_weeks_per_year": 9.442095238095238,
+    "shortfall_depth_gbp_per_year": 41912.19850285716,
+    "worst_week_gbp": -11534.700000000004,
+    "worst_month_gbp": -10758.12,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6812.254218509086,
+    "cvar5_weekly_gbp": -11045.784000000001
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -91.41439047619048,
+    "premium_gbp_per_year": 203.72562857142856,
+    "payouts_gbp_per_year": 112.3112380952381,
+    "shortfall_weeks_per_year": 9.442095238095238,
+    "shortfall_depth_gbp_per_year": 42022.6859257143,
+    "worst_week_gbp": -11638.950000000004,
+    "worst_month_gbp": -10758.12,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6816.446707044197,
+    "cvar5_weekly_gbp": -11066.634000000002
+   }
+  },
+  "p05": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 36514.301740952375,
+    "worst_week_gbp": -9883.61,
+    "worst_month_gbp": -9265.869999999999,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6046.23675051552,
+    "cvar5_weekly_gbp": -9746.772
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1800.8858552380952,
+    "premium_gbp_per_year": 2042.9016647619046,
+    "payouts_gbp_per_year": 242.01580952380954,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 37468.91247809523,
+    "worst_week_gbp": -9923.57,
+    "worst_month_gbp": -9265.869999999999,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6039.540451650799,
+    "cvar5_weekly_gbp": -9786.601999999999
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -83.07552952380954,
+    "premium_gbp_per_year": 83.07552952380954,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 36798.9560647619,
+    "worst_week_gbp": -9883.61,
+    "worst_month_gbp": -9265.869999999999,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6048.034891782098,
+    "cvar5_weekly_gbp": -9758.670000000002
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -148.10671809523808,
+    "premium_gbp_per_year": 148.10671809523808,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 37122.611211428564,
+    "worst_week_gbp": -9883.61,
+    "worst_month_gbp": -9265.869999999999,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6050.543595971527,
+    "cvar5_weekly_gbp": -9784.539999999999
+   }
+  },
+  "p06": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 22039.097636190483,
+    "worst_week_gbp": -6213.08,
+    "worst_month_gbp": -5763.83,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 3690.3424389048378,
+    "cvar5_weekly_gbp": -6061.004000000001
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1800.8858552380952,
+    "premium_gbp_per_year": 2042.9016647619046,
+    "payouts_gbp_per_year": 242.01580952380954,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 22936.469398095236,
+    "worst_week_gbp": -6253.04,
+    "worst_month_gbp": -5763.83,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 3683.812261182524,
+    "cvar5_weekly_gbp": -6100.821999999998
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -49.10883428571428,
+    "premium_gbp_per_year": 49.10883428571428,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 22226.00639619048,
+    "worst_week_gbp": -6213.08,
+    "worst_month_gbp": -5763.83,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 3691.6413081817727,
+    "cvar5_weekly_gbp": -6072.901999999999
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -53.576436190476194,
+    "premium_gbp_per_year": 53.576436190476194,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 22248.344405714288,
+    "worst_week_gbp": -6213.08,
+    "worst_month_gbp": -5763.83,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 3691.810594288212,
+    "cvar5_weekly_gbp": -6074.7
+   }
+  },
+  "p07": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 47211.907413333334,
+    "worst_week_gbp": -13665.280000000002,
+    "worst_month_gbp": -12662.83,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 8103.121218361254,
+    "cvar5_weekly_gbp": -13120.792000000001
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1669.1487485714285,
+    "premium_gbp_per_year": 2042.3599866666668,
+    "payouts_gbp_per_year": 373.2112380952381,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 48099.658177142854,
+    "worst_week_gbp": -13705.210000000003,
+    "worst_month_gbp": -12662.83,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 8102.510966671632,
+    "cvar5_weekly_gbp": -13152.726
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -303.37452,
+    "premium_gbp_per_year": 386.86252,
+    "payouts_gbp_per_year": 83.488,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 47615.20414857144,
+    "worst_week_gbp": -13725.180000000004,
+    "worst_month_gbp": -12662.83,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 8110.344695921199,
+    "cvar5_weekly_gbp": -13144.768
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -464.2230971428572,
+    "premium_gbp_per_year": 730.5895733333334,
+    "payouts_gbp_per_year": 266.3664761904762,
+    "shortfall_weeks_per_year": 9.939047619047619,
+    "shortfall_depth_gbp_per_year": 47929.72034095237,
+    "worst_week_gbp": -13776.95,
+    "worst_month_gbp": -12662.83,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 8118.990468725518,
+    "cvar5_weekly_gbp": -13160.866
+   }
+  },
+  "p08": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 28336.41360380952,
+    "worst_week_gbp": -7929.960000000003,
+    "worst_month_gbp": -7422.6,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4699.187304901361,
+    "cvar5_weekly_gbp": -7738.296
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1181.8074266666667,
+    "premium_gbp_per_year": 2042.0319980952384,
+    "payouts_gbp_per_year": 860.2245714285714,
+    "shortfall_weeks_per_year": 11.429904761904762,
+    "shortfall_depth_gbp_per_year": 29338.60256190476,
+    "worst_week_gbp": -7969.880000000001,
+    "worst_month_gbp": -7422.6,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4698.682419781221,
+    "cvar5_weekly_gbp": -7778.208000000001
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": 72.12766857142856,
+    "premium_gbp_per_year": 150.5069980952381,
+    "payouts_gbp_per_year": 222.63466666666667,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 28581.80372,
+    "worst_week_gbp": -7977.710000000003,
+    "worst_month_gbp": -7422.6,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4704.712020718715,
+    "cvar5_weekly_gbp": -7757.7880000000005
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": 46.574377142857145,
+    "premium_gbp_per_year": 176.06028952380956,
+    "payouts_gbp_per_year": 222.63466666666667,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 28709.57017714285,
+    "worst_week_gbp": -7977.710000000003,
+    "worst_month_gbp": -7422.6,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4705.640130216677,
+    "cvar5_weekly_gbp": -7757.7880000000005
+   }
+  },
+  "p09": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.932952380952381,
+    "shortfall_depth_gbp_per_year": 40099.266521904756,
+    "worst_week_gbp": -10906.690000000002,
+    "worst_month_gbp": -9584.85,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6411.074180278465,
+    "cvar5_weekly_gbp": -10404.686
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1402.3002285714288,
+    "premium_gbp_per_year": 2040.3870857142858,
+    "payouts_gbp_per_year": 638.0868571428572,
+    "shortfall_weeks_per_year": 10.932952380952381,
+    "shortfall_depth_gbp_per_year": 40545.96210857142,
+    "worst_week_gbp": -10946.61,
+    "worst_month_gbp": -9584.85,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6411.414808087843,
+    "cvar5_weekly_gbp": -10444.596
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -48.00063047619048,
+    "premium_gbp_per_year": 88.75072571428572,
+    "payouts_gbp_per_year": 40.75009523809524,
+    "shortfall_weeks_per_year": 10.932952380952381,
+    "shortfall_depth_gbp_per_year": 40232.02238095238,
+    "worst_week_gbp": -10906.690000000002,
+    "worst_month_gbp": -9584.85,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6413.233087418444,
+    "cvar5_weekly_gbp": -10404.686
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -130.62890285714286,
+    "premium_gbp_per_year": 291.1445219047619,
+    "payouts_gbp_per_year": 160.51561904761905,
+    "shortfall_weeks_per_year": 10.932952380952381,
+    "shortfall_depth_gbp_per_year": 40446.849925714276,
+    "worst_week_gbp": -10906.690000000002,
+    "worst_month_gbp": -9584.85,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 6419.995400115671,
+    "cvar5_weekly_gbp": -10404.686
+   }
+  },
+  "p10": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 43127.7639047619,
+    "worst_week_gbp": -12320.25,
+    "worst_month_gbp": -11340.91,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 7225.209327948501,
+    "cvar5_weekly_gbp": -11694.6
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1800.8858552380952,
+    "premium_gbp_per_year": 2042.9016647619046,
+    "payouts_gbp_per_year": 242.01580952380954,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 44111.58550285714,
+    "worst_week_gbp": -12360.149999999998,
+    "worst_month_gbp": -11340.91,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 7218.5601300609615,
+    "cvar5_weekly_gbp": -11734.427999999996
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -88.2040780952381,
+    "premium_gbp_per_year": 88.2040780952381,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 43422.67532571428,
+    "worst_week_gbp": -12320.25,
+    "worst_month_gbp": -11340.91,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 7227.183324928998,
+    "cvar5_weekly_gbp": -11706.497999999998
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -180.50304380952383,
+    "premium_gbp_per_year": 180.50304380952383,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 43869.38085142858,
+    "worst_week_gbp": -12320.25,
+    "worst_month_gbp": -11340.91,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 7230.498698973113,
+    "cvar5_weekly_gbp": -11740.668
+   }
+  },
+  "p11": {
+   "none": {
+    "hedge_net_gbp_per_year": 0.0,
+    "premium_gbp_per_year": 0.0,
+    "payouts_gbp_per_year": 0.0,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 31388.630523809534,
+    "worst_week_gbp": -8609.76,
+    "worst_month_gbp": -7344.5599999999995,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4937.859266573534,
+    "cvar5_weekly_gbp": -8082.136
+   },
+   "naive": {
+    "hedge_net_gbp_per_year": -1669.1487485714285,
+    "premium_gbp_per_year": 2042.3599866666668,
+    "payouts_gbp_per_year": 373.2112380952381,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 32380.92019047619,
+    "worst_week_gbp": -8649.689999999999,
+    "worst_month_gbp": -7344.5599999999995,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4937.471695566329,
+    "cvar5_weekly_gbp": -8122.058
+   },
+   "ours": {
+    "hedge_net_gbp_per_year": -225.26354476190477,
+    "premium_gbp_per_year": 308.7515447619048,
+    "payouts_gbp_per_year": 83.488,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 31700.214697142866,
+    "worst_week_gbp": -8669.66,
+    "worst_month_gbp": -7344.5599999999995,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4943.261452644861,
+    "cvar5_weekly_gbp": -8094.116
+   },
+   "ours_caps_x5": {
+    "hedge_net_gbp_per_year": -241.17099047619044,
+    "premium_gbp_per_year": 393.7353714285714,
+    "payouts_gbp_per_year": 152.56438095238096,
+    "shortfall_weeks_per_year": 10.436,
+    "shortfall_depth_gbp_per_year": 31753.18982095239,
+    "worst_week_gbp": -8673.6,
+    "worst_month_gbp": -7344.5599999999995,
+    "losing_months_per_year": 1.4908571428571429,
+    "weekly_cash_sd_gbp": 4945.698279988246,
+    "cvar5_weekly_gbp": -8094.904
+   }
+  }
+ },
+ "setup": {
+  "train": [
+   "2021-01-01",
+   "2024-10-31"
+  ],
+  "test": [
+   "2024-11-01",
+   "2026-10-31"
+  ],
+  "pubs": 12,
+  "contract_mm": 3.0,
+  "wet_scenario_mm": 6.0,
+  "naive_stake_gbp_per_day": 20.0,
+  "limits_gbp": {
+   "weekly": 120.0,
+   "monthly": 400.0,
+   "market": 60.0
+  },
+  "fee_rate": 0.05,
+  "slippage": 0.01,
+  "spread": 0.02,
+  "venue_margin": 0.03,
+  "bootstrap": "1000 reps, pubs then 8-week blocks",
+  "seed": 20261108
+ }
+}
