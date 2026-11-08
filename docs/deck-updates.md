@@ -95,7 +95,7 @@ block":
   Our policy is cheap because it only hedges weeks when payroll is at risk, but at £60-a-market caps it doesn't
   cut shortfall weeks. The warning is the product."
 - Add the kit result: "Finance Kit self-serve challenge: cashflow and transactions 40/40 exact, F1 100%; our
-  market-timing rule shows no edge (30/30 vs buy-and-hold on real-market windows)." Label it "our own check,
+  market-timing rule shows no edge (23 wins, 37 losses vs buy-and-hold on real-market windows)." Label it "our own check,
   not official judging".
 
 **12. The ask.** "Two legal prediction markets" is wrong. Use "UK-licensed betting exchanges". "One LA ice-cream
