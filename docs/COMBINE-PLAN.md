@@ -1,6 +1,7 @@
 # combined-dev: what we take from luke-dev and emirhan-dev
 
-Status: **plan only, nothing implemented yet.** `combined-dev` = `nick-advanced` @ 7c5da34.
+Status: **Phase 0 (T1 atomic approval, T2 expiry and binding) is done; T3–T6 are not started.** Branched from
+`nick-advanced` @ 7c5da34.
 Analysed 2026-11-08 against `luke-dev` @ 96da93f and `emirhan-dev` @ 402f00b.
 
 ## 1. What the three branches are

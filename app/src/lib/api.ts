@@ -76,6 +76,8 @@ export type Market = {
   offer?: string;
   worst_case_gbp?: number;
   kickoff?: string;
+  /** ISO time after which it can't be approved: the rain window or kick-off. Absent or null on a scenario's frozen clock. */
+  expires_at?: string | null;
 };
 export type Proposal = {
   id: string;
@@ -84,7 +86,7 @@ export type Proposal = {
   market: Market;
   shares: number;
   cost_pence: number;
-  status: "pending" | "blocked" | "filled" | "rejected";
+  status: "pending" | "blocked" | "filled" | "rejected" | "expired";
   decided: number | null;
   reason: string | null;
   receipt_id: string | null;
@@ -171,7 +173,7 @@ export type Receipt = {
 };
 
 export type ApproveResult = {
-  status: "filled" | "blocked" | "needs_second_approval";
+  status: "filled" | "blocked" | "needs_second_approval" | "expired";
   reason?: string;
   fill?: Record<string, unknown>;
   verdict: Verdict;

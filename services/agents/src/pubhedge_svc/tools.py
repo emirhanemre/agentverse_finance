@@ -1,10 +1,12 @@
 """Agent tools. Each call is memoised per run, written to the audit log and streamed to
 the UI. Tools do all the maths; the model only chooses calls and narrates."""
 import functools
+import hashlib
 import importlib.util
 import json
 import time
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
+from zoneinfo import ZoneInfo
 
 import httpx
 
@@ -26,6 +28,19 @@ OFFER = {"event_slug": "unl-eng-hrv-2026-11-12", "market_question": "Will Croati
          "fixture": "England v Croatia", "competition": "UEFA Nations League", "venue": "Wembley",
          "trigger": "If England lose", "offer": "mains half price", "covers_cap": 80,
          "avg_main_gbp": 15.0, "discount_share": 0.5}  # menu price and cap: SYNTHETIC demo assumptions
+
+
+LONDON = ZoneInfo("Europe/London")
+
+
+def binding(market_id: str, shares: int, cost_pence: int) -> str:
+    """Ties an approval to what the owner was shown: a changed size or price no longer matches."""
+    return hashlib.sha256(f"{market_id}|{shares}|{cost_pence}".encode()).hexdigest()[:16]
+
+
+def window_opens(day: str) -> str:
+    """The rain contract covers 12:00-18:00 London time, so cover can't be bought once noon has passed."""
+    return datetime.fromisoformat(f"{day}T12:00").replace(tzinfo=LONDON).isoformat()
 
 
 def quote_offer(limits: dict, ledger: dict) -> dict:
@@ -430,11 +445,15 @@ def make_tools(run: Run) -> dict:
         made = []
         for p in sized["positions"]:
             pid = f"p_{run.run_id[-6:]}_{p['market_id'][-5:]}"
+            cost_pence = int(round(p["cost_gbp"] * 100))
             market = {**px[p["market_id"]], "payout_if_event_gbp": p["payout_if_event_gbp"],
-                      "verdict": verdicts.get(p["market_id"])}
+                      "verdict": verdicts.get(p["market_id"]),
+                      # live runs use the wall clock; a scenario's clock stays at its decision date, so it never expires
+                      "expires_at": window_opens(px[p["market_id"]]["date"]) if run.mode == "live" else None,
+                      "binding": binding(p["market_id"], p["shares"], cost_pence)}
             audit.db().execute("INSERT OR REPLACE INTO proposals (id, run_id, created, market, shares, cost_pence, status)"
                                " VALUES (?,?,?,?,?,?,?)", (pid, run.run_id, time.time(), json.dumps(market), p["shares"],
-                                                           int(round(p["cost_gbp"] * 100)), "pending"))
+                                                           cost_pence, "pending"))
             made.append(pid)
         audit.db().commit()
         return {"badge": "PAPER", "proposals": made, "summary": f"{len(made)} awaiting owner approval" if made

@@ -875,7 +875,9 @@ export function PaperBanner() {
   );
 }
 
-const STATUS_TONE = { pending: "warning", blocked: "negative", filled: "positive", rejected: "neutral" } as const;
+const STATUS_TONE = { pending: "warning", blocked: "negative", filled: "positive", rejected: "neutral", expired: "neutral" } as const;
+const until = (iso: string) =>
+  new Date(iso).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/London" });
 
 export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: () => void }) {
   const [busy, setBusy] = useState(false);
@@ -985,6 +987,11 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
           </p>
         )}
         {p.status === "rejected" && <p className="mt-4 text-sm text-fg-2">You declined this. It won’t be placed.</p>}
+        {p.status === "expired" && (
+          <p className="mt-4 text-sm text-fg-2" data-testid="expired-note">
+            Expired: {p.reason}.{p.market.kind !== "offer" && " Run the agent again for a fresh price."}
+          </p>
+        )}
         {error && <p className="mt-4 text-sm text-negative">{error}</p>}
 
         {p.status === "pending" && (
@@ -1016,7 +1023,10 @@ export function ApprovalCard({ s, p, onChange }: S & { p?: Proposal; onChange: (
                 >
                   Decline
                 </Button>
-                <span className="text-xs text-fg-3">{p.market.kind === "offer" ? "If England don’t lose" : "If it stays dry"} you lose {gbp(cost, { pence: true })}.</span>
+                <span className="text-xs text-fg-3">
+                  {p.market.kind === "offer" ? "If England don’t lose" : "If it stays dry"} you lose {gbp(cost, { pence: true })}.
+                  {p.market.expires_at && <span data-testid="valid-until"> Valid until {until(p.market.expires_at)}.</span>}
+                </span>
               </>
             )}
           </div>
@@ -1142,7 +1152,7 @@ const kickoff = (iso: string) =>
 /** Next on the calendar: a match-day offer whose cost is fixed by a hedge on the real match market. */
 export function OfferCard({ s, onChange, compact }: S & { onChange?: () => void; compact?: boolean }) {
   const q = tool<OfferQuote>(s, "price_match_offer");
-  const queued = s.proposals.find((p) => p.market.kind === "offer" && p.market.market_id === q?.market_id && p.status !== "rejected");
+  const queued = s.proposals.find((p) => p.market.kind === "offer" && p.market.market_id === q?.market_id && p.status !== "rejected" && p.status !== "expired");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   if (!q || q.error) return null;

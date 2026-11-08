@@ -2,8 +2,10 @@
 the audit log and results. Paper trading only: no real order is ever placed."""
 import asyncio
 import json
+import threading
 import time
 import uuid
+from datetime import datetime
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,13 +18,42 @@ from . import audit, config
 from . import engines as E
 from .chain import run_chain
 from .config import DATA, RUNS
-from .tools import PUB, SCENARIO, SYN, current_ledger, quote_offer
+from .tools import PUB, SCENARIO, SYN, binding, current_ledger, quote_offer
 
 config.load_env()
 app = FastAPI(title="Pub Hedge agents")
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
                    allow_methods=["*"], allow_headers=["*"])
 DEMO_FIXTURE = RUNS / "demo-run.json"
+# One decision at a time: approve, reject, expiry and limit re-checks read the ledger and then write, so two
+# requests in the API's thread pool could otherwise both pass a cap or fill the same proposal twice.
+_decide = threading.Lock()
+REQUOTE_AFTER_S = 15 * 60  # a real-market quote older than this is re-checked before a fill
+
+
+def _now() -> float:
+    return time.time()
+
+
+def _expired(market: dict) -> bool:
+    e = market.get("expires_at")
+    return bool(e) and _now() >= datetime.fromisoformat(e).timestamp()
+
+
+def _expire(r, market: dict, reason: str):
+    row = audit.append(r["run_id"], "approval", "expire", {"proposal_id": r["id"]}, {"reason": reason}, "PAPER", None, 0)
+    audit.db().execute("UPDATE proposals SET status='expired', reason=?, receipt_id=? WHERE id=?",
+                       (reason, row["receipt_id"], r["id"]))
+
+
+def _expire_due():
+    """Proposals whose window has opened can no longer be approved. Logged once, when first noticed. Call under _decide."""
+    for r in audit.db().execute("SELECT * FROM proposals WHERE status IN ('pending','blocked')").fetchall():
+        m = json.loads(r["market"])
+        if _expired(m):
+            when = f"{m['expires_at'][11:16]} on {m['expires_at'][:10]}"
+            _expire(r, m, f"kick-off was at {when}" if m.get("kind") == "offer" else f"the window opened at {when}")
+    audit.db().commit()
 
 
 def get_limits() -> dict:
@@ -170,6 +201,8 @@ def results_for(run):
 
 @app.get("/api/state")
 def state():
+    with _decide:
+        _expire_due()
     run = latest_run()
     bt = json.loads((DATA / "results" / "backtest.json").read_text())
     ch_path = DATA / "results" / "challenge-summary.json"
@@ -224,9 +257,30 @@ def _proposal(pid):
 
 @app.post("/api/proposals/{pid}/approve")
 def approve(pid: str, body: Approve):
+    with _decide:
+        return _approve(pid, body)
+
+
+def _approve(pid: str, body: Approve):
+    _expire_due()
     p = _proposal(pid)
+    if p["status"] == "expired":  # an answer the card can show, not an error
+        return {"status": "expired", "reason": p["reason"], "verdict": p["market"].get("verdict")}
     if p["status"] not in ("pending", "blocked"):
         raise HTTPException(409, f"proposal is {p['status']}")
+    m = p["market"]
+    if m.get("binding") and m["binding"] != binding(m["market_id"], p["shares"], p["cost_pence"]):
+        raise HTTPException(409, "proposal no longer matches what was shown; run the agent again")
+    if m.get("kind") == "offer" and _now() - m.get("quoted_at", 0) > REQUOTE_AFTER_S:
+        try:
+            q = quote_offer(get_limits(), current_ledger(None))
+        except Exception as exc:  # no fresh price, no fill
+            raise HTTPException(503, f"couldn't re-check the market price, nothing was placed ({type(exc).__name__})") from exc
+        if q["cost_per_share"] > m["cost_per_share"]:
+            reason = f"the price rose from {m['cost_per_share']:.4f} to {q['cost_per_share']:.4f} a share; queue the offer again"
+            _expire(p, m, reason)
+            audit.db().commit()
+            return {"status": "expired", "reason": reason, "verdict": m.get("verdict")}
     verdict = E.check_limits(p["cost_pence"], p["market"]["market_id"], get_limits(), current_ledger(None))
     if not verdict["allowed"]:
         row = audit.append(p["run_id"], "approval", "limit_block", {"proposal_id": pid}, verdict, "PAPER", None, 0)
@@ -249,7 +303,15 @@ def approve(pid: str, body: Approve):
 
 @app.post("/api/proposals/{pid}/reject")
 def reject(pid: str):
-    p = _proposal(pid)
+    with _decide:
+        p = _proposal(pid)
+        if p["status"] not in ("pending", "blocked"):
+            raise HTTPException(409, f"proposal is {p['status']}")
+        return _reject(p)
+
+
+def _reject(p):
+    pid = p["id"]
     row = audit.append(p["run_id"], "approval", "reject", {"proposal_id": pid, "by": "Owner (demo)"}, {}, "PAPER", None, 0)
     audit.db().execute("UPDATE proposals SET status='rejected', decided=?, receipt_id=? WHERE id=?",
                        (time.time(), row["receipt_id"], pid))
@@ -263,6 +325,8 @@ def queue_offer():
     q = quote_offer(get_limits(), current_ledger(None))
     if not q["shares"]:
         raise HTTPException(409, "nothing to cover inside the current caps")
+    if q.get("kickoff") and _now() >= datetime.fromisoformat(q["kickoff"]).timestamp():
+        raise HTTPException(409, "kick-off has passed, so there is nothing left to cover")
     run = latest_run()
     run_id = run["run_id"] if run else "offer"
     pid = f"p_offer_{uuid.uuid4().hex[:6]}"
@@ -270,10 +334,12 @@ def queue_offer():
                                 "covers_cap", "worst_case_gbp", "ask", "market_prob", "fee_rate", "cost_per_share",
                                 "payout_if_event_gbp", "fixed_cost_gbp")}
     market["price_badge"] = q["badge"]
+    cost_pence = int(round(q["hedge_cost_gbp"] * 100))
+    market.update(verdict=q["verdict"], expires_at=q.get("kickoff"), quoted_at=_now(),
+                  binding=binding(q["market_id"], q["shares"], cost_pence))
     row = audit.append(run_id, "offer", "queue_offer", {"market_id": q["market_id"]}, q, q["badge"], None, 0)
     audit.db().execute("INSERT INTO proposals (id, run_id, created, market, shares, cost_pence, status) VALUES (?,?,?,?,?,?,?)",
-                       (pid, run_id, time.time(), json.dumps(market), q["shares"], int(round(q["hedge_cost_gbp"] * 100)),
-                        "pending"))
+                       (pid, run_id, time.time(), json.dumps(market), q["shares"], cost_pence, "pending"))
     audit.db().commit()
     return {"status": "pending", "id": pid, "receipt_id": row["receipt_id"], "quote": q}
 
@@ -285,6 +351,12 @@ def limits():
 
 @app.put("/api/limits")
 def set_limits(body: dict):
+    with _decide:
+        return _set_limits(body)
+
+
+def _set_limits(body: dict):
+    _expire_due()
     new = {**get_limits()}
     for k, v in body.items():
         if k not in DEFAULT_LIMITS or type(v) is not int or v < 0:
