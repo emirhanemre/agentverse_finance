@@ -13,11 +13,30 @@ won't clear, and proposes small, capped weather cover. You approve every move. E
 ![Paper trading](https://img.shields.io/badge/execution-paper%20only-8B93F8)
 ![Agentverse 2026](https://img.shields.io/badge/Agentverse%202026-Finance%20track-F2B880)
 
-[Run it](#run-it) · [For judges](#for-judges-run-the-adapter) · [What's real](#what-is-real-and-what-is-synthetic) · [Results](#results) · [Architecture](#architecture) · [Deploy](docs/DEPLOY.md)
+[**Live demo**](#live-demo) · [Run it](#run-it) · [For judges](#for-judges-run-the-adapter) · [What's real](#what-is-real-and-what-is-synthetic) · [Results](#results) · [Architecture](#architecture) · [Deploy](docs/DEPLOY.md)
 
 <img src="docs/screenshots/readme-hero.jpg" alt="Pub Hedge first screen: a pub at dusk, the headline 'Make payroll, whatever the weather', the pub details form, and a glass card showing a weekend it would have caught" width="100%">
 
 </div>
+
+## Live demo
+
+<div align="center">
+
+### [pubhedge.vercel.app](https://pubhedge.vercel.app)
+
+| Username | Password |
+|---|---|
+| `pubhedge` | `finance` |
+
+</div>
+
+- Click **Use the demo pub**, then **Look up my pub**, then **Run the agent**. **Historical scenario** runs the
+  agents live (about a minute); **Replay** streams a recorded run in seconds.
+- Hosted on Vercel (the app) and Google Cloud Run (the agent API, London region). The API only answers the app:
+  it needs an access key that ships behind the site password.
+- The API's state resets when Cloud Run starts a fresh instance after a quiet spell, so start with a fresh run or
+  Replay. Execution is paper only, and Gemini spend stops at a fixed cap.
 
 > [!IMPORTANT]
 > The demo pub is **The Faltering Fullback** (Bacchus Inns Ltd, 05770953, N4 3HB), used for public identity
@@ -66,7 +85,7 @@ Gemini, Companies House, the Met Office and Stripe (test mode) needs no key.
 | `scripts/check.sh` | The gate: lint, unit tests, adapter practice run (Python 3.9 and current), tsc, lint, build, health checks, a REPLAY run over SSE, and Playwright end to end. It spends no API quota or model tokens. Needs ports 3000 and 8000 free |
 | `scripts/smoke.sh` | `check.sh`, plus one live ping per API and one live agent run |
 | `scripts/demo-reset.sh` | Resets proposals, paper fills and limits for the demo. The audit log is kept |
-| `scripts/deploy.sh` | Cloud Run plus Vercel, password protected. See [docs/DEPLOY.md](docs/DEPLOY.md) |
+| `scripts/deploy.sh` | Redeploys the API to Cloud Run and the app to Vercel, password protected. See [docs/DEPLOY.md](docs/DEPLOY.md) |
 
 In the app, **Historical scenario** replays a real wet weekend: the August bank holiday, 29–30 Aug 2026, with
 6.1 mm of rain on the Saturday afternoon (2.6 mm had been forecast), using the forecast available at the time.
@@ -109,20 +128,22 @@ Every source with its licence: [docs/data-sources.md](docs/data-sources.md).
 ## Architecture
 
 ```mermaid
-flowchart LR
-  UI["app/ · Next.js<br/>onboarding, Simple and Advanced views"]
-  API["services/agents · FastAPI + Google ADK"]
-  CORE["pubhedge_core/ · stdlib engines<br/>cashflow, sizing, limits, strategy"]
-  SRC["Companies House · Met Office · Open-Meteo<br/>Polymarket (read) · Stripe (test)"]
-  LOG[("SQLite audit log<br/>hash-chained, append-only")]
-  KIT["adapter.py · Finance Kit"]
-  API -- "SSE: steps, tool calls, receipts" --> UI
-  UI -- "approve · limits · offers" --> API
+flowchart TB
+  UI["<b>Web app</b><br/>Next.js<br/>Simple and Advanced views"]
+  API["<b>Agent API</b><br/>FastAPI + Google ADK<br/>five agents, streamed"]
+  CORE["<b>Engines</b><br/>pubhedge_core<br/>cashflow, sizing, limits"]
+  SRC["<b>Data sources</b><br/>Companies House<br/>Met Office, Open-Meteo<br/>Polymarket, Stripe"]
+  LOG[("<b>Audit log</b><br/>SQLite, hash-chained")]
+  KIT["<b>Finance Kit</b><br/>adapter.py"]
+  UI <--> API
   API --> CORE
   API --> SRC
   API --> LOG
   KIT --> CORE
 ```
+
+The app streams each agent step, tool call and receipt from the API over SSE, and sends approvals, limit
+changes and offers back.
 
 Five agents run in turn: **verifier → ingest → risk → pricer → monitor** (Gemini 3.8 Flash), then one hedge
 rationale (Gemini 4 Argon).
@@ -142,7 +163,7 @@ rationale (Gemini 4 Argon).
 | Doc | What's in it |
 |---|---|
 | [docs/demo-script.md](docs/demo-script.md) | The three-minute demo, beat by beat |
-| [docs/DEPLOY.md](docs/DEPLOY.md) | Vercel plus Cloud Run, the site password and where the keys live |
+| [docs/DEPLOY.md](docs/DEPLOY.md) | How the live demo is deployed (Vercel plus Cloud Run), the site password and where the keys live |
 | [docs/data-sources.md](docs/data-sources.md) | Every data source, its licence, and every modelling assumption |
 | [docs/backtest-results.md](docs/backtest-results.md) | The backtest method and its full results |
 | [docs/challenge/](docs/challenge/README.md) | Finance Kit challenge runs |

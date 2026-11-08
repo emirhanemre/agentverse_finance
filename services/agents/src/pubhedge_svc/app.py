@@ -21,7 +21,7 @@ from . import audit, config
 from . import engines as E
 from .chain import run_chain
 from .config import DATA, RUNS
-from .tools import OFFER, SCENARIO, binding, current_ledger, identity, pick_offer, quote_offer, settle, syn
+from .tools import OFFER, PUB, SCENARIO, binding, current_ledger, identity, pick_offer, quote_offer, settle, syn
 
 config.load_env()
 app = FastAPI(title="Pub Hedge agents")
@@ -251,6 +251,7 @@ def state():
                                       **E.check_limits(p["cost_pence"], p["market"]["market_id"], lim, led)}
     return {
         "pub": {**pub, "identity_badge": "REAL", "financials_label": syn(pub["trading_name"])},
+        "demo_pub": {k: PUB[k] for k in ("trading_name", "postcode", "company_number")},  # the "Use the demo pub" button
         "scenario": SCENARIO,
         "run": ({**run, "summary": json.loads(run["summary"] or "{}")} if run else None),
         "tools": results_for(run) if run else {},

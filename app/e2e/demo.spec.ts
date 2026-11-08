@@ -28,6 +28,11 @@ test("owner runs the agent, approves cover, and a lowered cap blocks the next on
   // Onboarding: identity comes from the API
   await page.goto("/");
   await expect(page.locator("input").first()).toHaveValue("The Faltering Fullback");
+  // The demo button puts the original pub back after someone has typed another
+  await page.locator("input").first().fill("Some Other Pub");
+  await page.getByTestId("use-demo-pub").click();
+  await expect(page.locator("input").first()).toHaveValue("The Faltering Fullback");
+  await expect(page.locator("input").nth(1)).toHaveValue("N4 3HB");
   await page.getByRole("button", { name: "Look up my pub" }).click();
 
   // Agent run over SSE, historical scenario
