@@ -170,7 +170,7 @@ async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_model
     # one reasoning-model call for the hedge rationale
     run.step, run.model = "rationale", (MODEL_REASONING if live else "template")
     sized = tools["pricer"][4]()
-    facts = {"sizing": {k: v for k, v in sized.items() if k != "receipt_id"},
+    facts = {"sizing": {k: v for k, v in sized.items() if k not in ("receipt_id", "timeline", "inputs")},
              "wet": {k: v for k, v in tools["pricer"][3](scenario="wet").items() if k != "timeline"},
              "dry": {k: v for k, v in tools["pricer"][3](scenario="dry").items() if k != "timeline"},
              "exposure": tools["risk"][1](), "contracts": tools["pricer"][2]()["contracts"]}

@@ -399,6 +399,11 @@ def make_tools(run: Run) -> dict:
             "wet_with_hedge_headroom_gbp": round(wet["minimum_balance_gbp"] + payout - cost, 2),
             "dry_no_hedge_headroom_gbp": dry["minimum_balance_gbp"],
             "dry_with_hedge_headroom_gbp": round(dry["minimum_balance_gbp"] - cost, 2)}
+        # wet-weekend cash path with the cover: premium paid now, payout settled the Monday after the weekend
+        paid = (run.weekend()[1] + timedelta(days=1)).isoformat()
+        res["timeline"] = [{"date": t["date"], "id": t["id"], "wet_gbp": t["balance_gbp"],
+                            "wet_with_hedge_gbp": round(t["balance_gbp"] - cost + (payout if t["date"] >= paid else 0), 2)}
+                           for t in wet["timeline"]]
         res["summary"] = (f"{len(res['positions'])} positions · £{res['total_cost_gbp']:.2f}" if res["positions"]
                           else "nothing worth buying at today's prices")
         return res
