@@ -1194,6 +1194,11 @@ export function OfferCard({ s, onChange, compact }: S & { onChange?: () => void;
   const [err, setErr] = useState<string | null>(null);
   if (!q || q.error) return null;
   const menu = { source: "Demo menu assumptions", label: `Average main £${q.avg_main_gbp}, first ${q.covers_cap} covers` };
+  // Once queued, the proposal (re-priced off the order book at queue time) is the truth; the run's quote may be older.
+  const shares = queued ? queued.shares : q.shares;
+  const pays = queued ? queued.market.payout_if_event_gbp : q.payout_if_event_gbp;
+  const fixed = queued ? (queued.market as { fixed_cost_gbp?: number }).fixed_cost_gbp ?? queued.cost_pence / 100 : q.fixed_cost_gbp;
+  const fig = queued ? { rid: queued.receipt_id, badge: queued.market.price_badge } : { r: q };
   async function onQueue() {
     setBusy(true);
     setErr(null);
@@ -1236,22 +1241,22 @@ export function OfferCard({ s, onChange, compact }: S & { onChange?: () => void;
             {!compact && (
               <div className="px-4">
                 <div className="text-xs text-fg-3">Cover</div>
-                <Num r={q} className="font-display text-lg font-medium">
-                  {`${q.shares} shares`}
+                <Num {...fig} className="font-display text-lg font-medium">
+                  {`${shares} shares`}
                 </Num>
               </div>
             )}
             <div className="pl-4">
               <div className="text-xs text-fg-3">Fixed cost</div>
-              <Num r={q} className="font-display text-lg font-medium text-positive">
-                {gbp(q.fixed_cost_gbp, { pence: true })}
+              <Num {...fig} className="font-display text-lg font-medium text-positive">
+                {gbp(fixed, { pence: true })}
               </Num>
             </div>
           </div>
         </div>
         <p className="mt-4 text-sm text-fg-2">
-          The cover pays <Num r={q}>{gbp(q.payout_if_event_gbp)}</Num> if {q.team ?? "England"} lose, so the offer costs you{" "}
-          <Num r={q}>{gbp(q.fixed_cost_gbp, { pence: true })}</Num> whatever happens. Real match price; menu figures are modelled.
+          The cover pays <Num {...fig}>{gbp(pays)}</Num> if {q.team ?? "England"} lose, so the offer costs you{" "}
+          <Num {...fig}>{gbp(fixed, { pence: true })}</Num> whatever happens. Real match price; menu figures are modelled.
         </p>
         <div className="mt-4 flex items-center justify-between gap-4">
           <span className="text-xs text-fg-3" title={menu.label}>
