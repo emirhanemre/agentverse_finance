@@ -40,8 +40,8 @@ PARAMS = {
     "growth_per_year": 0.025,
     # Cash costs (shares of takings), from UHY's £10 pint breakdown where possible.
     "vat_share": 0.1667,  # VAT inside a VAT-inclusive till total
-    "cogs_share_of_net": 0.30,  # drinks and food cost, paid to suppliers weekly, 14-day terms
-    "staff_share_of_net": 0.25,  # payroll, smoothed: paid every Friday on a 4-week trailing average
+    "cogs_share_of_net": 0.33,  # drinks and food cost, paid to suppliers weekly, 14-day terms
+    "staff_share_of_net": 0.33,  # payroll, smoothed: paid every Friday on a 4-week trailing average
     "card_fee": 0.015,
     "rent_monthly_gbp": 9500.0,
     "utilities_monthly_gbp": 2600.0,

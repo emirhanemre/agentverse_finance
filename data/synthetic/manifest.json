@@ -25,8 +25,8 @@
     "noise_sd": 0.07,
     "growth_per_year": 0.025,
     "vat_share": 0.1667,
-    "cogs_share_of_net": 0.3,
-    "staff_share_of_net": 0.25,
+    "cogs_share_of_net": 0.33,
+    "staff_share_of_net": 0.33,
     "card_fee": 0.015,
     "rent_monthly_gbp": 9500.0,
     "utilities_monthly_gbp": 2600.0,
@@ -120,7 +120,7 @@
   },
   "method": "takings = base x weekday x season x growth x (1 + garden x heat uplift) x (1 - capped afternoon-rain loss) x match uplift x duty elasticity^rises x lognormal noise; bank feed derives card settlements (T+1), weekly payroll, 14-day supplier terms, monthly fixed costs and quarterly VAT from those takings.",
   "files": {
-    "bank_feed_demo.json": "33d9baa3f3bfd97c1e80acfc94ec81836fc599ff71f23f60b283844c293384ea",
+    "bank_feed_demo.json": "572945e38d94c897595f90266a1d79aeec04c80cad41bdbdfacac0cb07343a4d",
     "fixed_costs_demo.json": "736ddb37c96a1328946440a97dded89d8cf6352fb42acd31787cab3d5e7d803f",
     "takings_panel.csv": "a48f3fb340b45125d104b42e8cb39f4edb8defb89bc66197a5d29cfbcc5f9087"
   }
