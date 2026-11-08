@@ -1,0 +1,43 @@
+# Offline checks on every push and pull request. No secrets: the API tests run with cached fixtures only.
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    env:
+      PUBHEDGE_OFFLINE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Lint
+        run: uvx ruff check .
+      - name: Engine tests (stdlib, Python 3.9)
+        run: uv run --no-project --python 3.9 python -m unittest discover -s tests -q
+      - name: API tests
+        run: uv run --project services/agents pytest -q services/agents/tests
+      - name: Finance Kit adapter, practice run
+        run: |
+          python3 agentverse/finance/bench.py generate --pack mixed --cases 120 --seed 4242 --output /tmp/ds >/dev/null
+          (cd / && python3 "$GITHUB_WORKSPACE/agentverse/finance/bench.py" run --dataset /tmp/ds --output /tmp/run --limit 120 \
+            --max-seconds 600 --adapter python3 "$GITHUB_WORKSPACE/adapter.py" >/dev/null) || true
+          python3 -c "import json; s=json.load(open('/tmp/run/summary.json')); print(s['passed'], 'passed,', s['failed'], 'failed,', s['errors'], 'errors'); exit(1 if s['failed'] or s['errors'] else 0)"
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run lint
+      - run: npm run build
