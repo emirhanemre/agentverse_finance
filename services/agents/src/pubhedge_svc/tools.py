@@ -17,6 +17,7 @@ from . import audit, cache
 from . import engines as E
 from .clients import companies_house as ch
 from .clients import fsa
+from .clients import maps
 from .clients import metoffice as mo
 from .clients import openmeteo as om
 from .clients import polymarket as pm
@@ -63,8 +64,9 @@ def identity(pub_name=None, postcode=None, company_number=None, owner=None) -> d
     """The pub this run verifies. Only the verifier and ingest steps read it; everything after them runs on the demo
     books (PUB), whatever pub is entered."""
     name = (pub_name or "").strip() or PUB["trading_name"]
-    pc = _pc(postcode) if postcode else PUB["postcode"]
-    demo = _norm(name) == _norm(PUB["trading_name"]) and pc == PUB["postcode"]
+    demo_name = _norm(name) == _norm(PUB["trading_name"])
+    pc = _pc(postcode) if postcode else (PUB["postcode"] if demo_name else "")  # "": find_postcode looks it up
+    demo = demo_name and pc == PUB["postcode"]
     base = ({k: PUB[k] for k in ("trading_name", "postcode", "address", "lat", "lon")} if demo
             else {"trading_name": name, "postcode": pc, "address": pc, "lat": None, "lon": None})
     num = (company_number or "").strip().upper() or (PUB["company_number"] if demo else None)
@@ -279,9 +281,38 @@ def make_tools(run: Run) -> dict:
 
     # ---------- 1. verifier ----------
     @tool
+    def find_postcode(pub_name: str) -> dict:
+        """The pub's postcode: the one the owner gave, else looked up from the name (Gemini grounded on Google Maps,
+        or the only pub of that name on the hygiene register). Call this first."""
+        if run.pub.get("entered_postcode"):
+            return {"badge": "ON FILE", "postcode": run.pub["entered_postcode"],
+                    "summary": f"{run.pub['entered_postcode']} · given by the owner"}
+        pc, env = None, None
+        try:
+            env = maps.postcode_for(pub_name)
+            pc = env["data"]["postcode"]
+        except Exception:  # offline, no key or the call failed: fall back to the register
+            pass
+        how = "Gemini grounded on Google Maps"
+        if not pc:
+            env = fsa.establishments(name=pub_name, businessTypeId=fsa.PUB_TYPE)
+            hits = [e for e in env["data"].get("establishments", []) if _sim(pub_name, e["BusinessName"]) >= 0.9]
+            pc = _pc(hits[0]["PostCode"]) if len(hits) == 1 else None
+            how = "the only pub of that name on the hygiene register"
+        src = {"badge": env["badge"] if env else "ERROR", "source": env.get("source") if env else None,
+               "fetched_at": env.get("fetched_at") if env else None}
+        if not pc:
+            return {**src, "found": False, "postcode": None,
+                    "summary": f"couldn't place {pub_name} from its name alone: add a postcode"}
+        run.pub.update(entered_postcode=_pc(pc), postcode=_pc(pc), address=_pc(pc))
+        return {**src, "found": True, "postcode": _pc(pc), "method": how, "summary": f"{_pc(pc)} · from {how}"}
+
+    @tool
     def find_premises(pub_name: str, postcode: str) -> dict:
         """Find the pub on the Food Standards Agency hygiene register: premises name, address, type and rating."""
         pc = _pc(postcode)
+        if not pc:
+            return {"badge": "ERROR", "found": False, "summary": "no postcode to search the hygiene register at"}
         env = fsa.establishments(address=pc, businessTypeId=fsa.PUB_TYPE)
         cands = [e for e in env["data"].get("establishments", []) if _pc(e.get("PostCode")) == pc]
         best = max(cands, key=lambda e: _sim(pub_name, e["BusinessName"]), default=None)
@@ -755,8 +786,8 @@ def make_tools(run: Run) -> dict:
         return current_ledger(run.decision_date())
 
     return {
-        "verifier": [find_premises, find_operator, companies_house_profile, companies_house_officer_match, register_checks,
-                     locate_postcode],
+        "verifier": [find_postcode, find_premises, find_operator, companies_house_profile, companies_house_officer_match,
+                     register_checks, locate_postcode],
         "ingest": [load_takings_history, load_stripe_test_charges, load_bank_feed, check_bank_feed, load_weather_history,
                    load_match_and_duty_dates],
         "risk": [fit_takings_model, weekend_rain_exposure],
