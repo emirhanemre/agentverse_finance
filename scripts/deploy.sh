@@ -12,8 +12,8 @@ docker push "$IMAGE"
 gcloud run deploy pubhedge-agents --image "$IMAGE" --region "$REGION" --project "$GCP_PROJECT" \
   --set-secrets GEMINI_API_KEY=gemini-api-key:latest,COMPANIES_HOUSE_KEY=companies-house-key:latest,METOFFICE_DATAHUB_KEY=metoffice-key:latest,STRIPE_SECRET_KEY=stripe-test-key:latest,PUBHEDGE_ACCESS_KEY=pubhedge-access-key:latest \
   --set-env-vars PUBHEDGE_APP_ORIGIN="$APP_ORIGIN" \
-  --max-instances 1 --timeout 300 \
-  --allow-unauthenticated  # the access key, not IAM, guards the API; max one instance keeps SQLite consistent
+  --min-instances 1 --max-instances 1 --timeout 300 \
+  --allow-unauthenticated  # the access key, not IAM, guards the API; one always-on instance keeps SQLite consistent and warm
 API_URL="$(gcloud run services describe pubhedge-agents --region "$REGION" --project "$GCP_PROJECT" --format 'value(status.url)')"
 ACCESS_KEY="$(gcloud secrets versions access latest --secret pubhedge-access-key --project "$GCP_PROJECT")"
 (cd "$ROOT/app" && vercel deploy --prod --build-env NEXT_PUBLIC_API_URL="$API_URL" \
