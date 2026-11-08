@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { API } from "../lib/api";
+import { API, withKey } from "../lib/api";
 import { Num, ProvBadge } from "./Provenance";
 import { Button, Icon, Spinner, cx } from "./ui";
 
@@ -81,7 +81,7 @@ export default function AgentRun({ title, onDone, pub }: { title: string; onDone
       if (pub.companyNumber?.trim()) q.set("company_number", pub.companyNumber.trim());
       if (pub.owner?.trim()) q.set("owner", pub.owner.trim());
     }
-    const src = new EventSource(`${API}/api/runs/stream?${q}`);
+    const src = new EventSource(withKey(`${API}/api/runs/stream?${q}`));
     es.current = src;
     let finished = false;
     const patch = (step: string, f: (s: Step) => Step) =>
