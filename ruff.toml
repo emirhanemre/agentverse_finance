@@ -4,3 +4,6 @@ extend-exclude = ["agentverse", "app", ".bench"]
 
 [lint]
 select = ["E", "F", "W", "B"]
+
+[lint.per-file-ignores]
+"scripts/fetch_reference.py" = ["E501"]

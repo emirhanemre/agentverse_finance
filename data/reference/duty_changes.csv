@@ -1,0 +1,5 @@
+effective_date,change,draught_beer_rate_gbp_per_litre_alcohol,non_draught_rate,direction,citation_url
+2021-01-01,"Old beer duty frozen at £19.08 per hl per % ABV (in force since 13 Mar 2017; Budgets 2020-22 kept the freeze) until 31 Jul 2023",,,freeze,https://www.legislation.gov.uk/ukpga/1979/4/section/36
+2023-08-01,"Alcohol duty reform: duty by ABV per litre of alcohol; Draught Relief (containers >=20 L, <8.5% ABV) and Small Producer Relief introduced. Beer 3.5-8.4%",19.08,21.01,reform,https://www.legislation.gov.uk/ukpga/2023/30/schedule/8
+2025-02-01,"Non-draught up by RPI 3.6%; draught cut 1.7% (draught relief 9.2% -> 13.9%). Beer 3.5-8.4%",18.76,21.78,mixed,https://www.gov.uk/government/publications/changes-to-the-rates-of-alcohol-duty/alcohol-duty-uprating
+2026-02-01,"All rates up by RPI 3.66% (Budget 2025), draught included. Beer 3.5-8.4%",19.45,22.58,increase,https://www.gov.uk/government/publications/alcohol-duty-rates-change/alcohol-duty-uprating
