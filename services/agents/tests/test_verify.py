@@ -55,7 +55,7 @@ def _operator(monkeypatch, at_postcode: list) -> dict:
          "registered_office_address": {"postal_code": "E1 1AA"}} for n, name in at_postcode]}})
     monkeypatch.setattr(T.ch, "search", lambda q: {**env, "data": {"items": []}})
     run = T.Run("t", "scenario", lambda e: None, {}, T.identity("The Crown", "E1 1AA"))
-    return T.make_tools(run)["verifier"][1](pub_name="The Crown", postcode="E1 1AA")
+    return T.make_tools(run)["verifier"][2](pub_name="The Crown", postcode="E1 1AA")
 
 
 def test_operator_is_matched_only_when_unambiguous(monkeypatch):
@@ -64,3 +64,22 @@ def test_operator_is_matched_only_when_unambiguous(monkeypatch):
     assert not two["matched"] and "doesn't guess" in two["summary"]
     named = _operator(monkeypatch, [("00000001", "ACME PUBS LTD"), ("00000003", "THE CROWN (E1) LTD")])
     assert named["company_number"] == "00000003"
+
+
+def test_no_postcode_is_found_from_the_name_and_a_failed_lookup_says_so(monkeypatch):
+    env = {"badge": "REAL", "source": "test", "licence": "test", "fetched_at": None}
+    monkeypatch.setattr(T.maps, "postcode_for", lambda name: {**env, "data": {"postcode": "w8 7ln"}})
+    run = T.Run("t", "scenario", lambda e: None, {}, T.identity("The Churchill Arms", ""))
+    assert run.pub["entered_postcode"] == "" and not run.pub["is_demo"]
+    got = T.make_tools(run)["verifier"][0](pub_name="The Churchill Arms")
+    assert got["postcode"] == "W8 7LN" and run.pub["entered_postcode"] == "W8 7LN"
+
+    def down(name):
+        raise LookupError("offline")
+    monkeypatch.setattr(T.maps, "postcode_for", down)
+    two = [{"BusinessName": "Red Lion", "PostCode": p} for p in ("SW1A 2NH", "N1 1AA")]
+    monkeypatch.setattr(T.fsa, "establishments", lambda **kw: {**env, "data": {"establishments": two}})
+    run = T.Run("t", "scenario", lambda e: None, {}, T.identity("Red Lion", ""))
+    miss = T.make_tools(run)["verifier"][0](pub_name="Red Lion")
+    assert not miss["found"] and "add a postcode" in miss["summary"]
+    assert T.identity("The Faltering Fullback", "")["is_demo"]  # the demo pub needs no postcode

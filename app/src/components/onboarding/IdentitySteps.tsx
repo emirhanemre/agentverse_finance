@@ -19,7 +19,7 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
   const [touched, setTouched] = useState(false);
   const errors = {
     pubName: form.pubName.trim().length < 2 ? "Enter the name on your sign or licence." : "",
-    postcode: !POSTCODE.test(form.postcode.trim()) ? "Enter a full UK postcode, like N4 3HB." : "",
+    postcode: form.postcode.trim() && !POSTCODE.test(form.postcode.trim()) ? "Enter a full UK postcode, like N4 3HB, or leave it blank." : "",
     owner: form.owner.trim().length < 2 ? "Enter your name." : "",
     companyNumber: form.companyNumber.trim() && !COMPANY_NO.test(form.companyNumber.trim()) ? "8 characters, like 05770953." : "",
   };
@@ -65,7 +65,7 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
           <div className="mt-3 grid gap-3">
             <Field fog label="Pub name" value={form.pubName} onChange={set("pubName")} error={touched ? errors.pubName : ""} autoFocus />
             <div className="grid grid-cols-2 gap-3">
-              <Field fog label="Postcode" value={form.postcode} onChange={(v) => set("postcode")(v.toUpperCase())} error={touched ? errors.postcode : ""} />
+              <Field fog label="Postcode (optional)" value={form.postcode} onChange={(v) => set("postcode")(v.toUpperCase())} error={touched ? errors.postcode : ""} />
               <Field fog label="Your name" value={form.owner} onChange={set("owner")} error={touched ? errors.owner : ""} />
             </div>
             <Field
@@ -78,7 +78,7 @@ export function BusinessStep({ form, setForm, s, onNext }: Nav & { form: Form; s
           </div>
         </ProvScope>
         <p className="mt-3 text-sm text-[var(--color-day-ink)]">
-          Any UK pub. The agent checks it on the public registers; the books it then works from are our demo books.
+          Any UK pub. No postcode? The agent finds it on Google Maps, then checks the pub on the public registers; the books it then works from are our demo books.
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <Button variant="primary" type="submit">

@@ -18,9 +18,10 @@ from .tools import Run, identity, make_tools
 
 STEPS = [
     ("verifier", "Verifying the business", MODEL_FAST,
-     "You verify a pub against public registers. Call find_premises and find_operator with pub_name '{pub_name}' and "
-     "postcode '{postcode}'. If find_operator returns a company_number, call companies_house_profile, "
-     "companies_house_officer_match and register_checks with it. Call locate_postcode with '{postcode}'. Then write two "
+     "You verify a pub against public registers. First call find_postcode with pub_name '{pub_name}'; use the postcode "
+     "it returns (or '{postcode}' if that is set). Call find_premises and find_operator with that pub_name and "
+     "postcode. If find_operator returns a company_number, call companies_house_profile, "
+     "companies_house_officer_match and register_checks with it. Call locate_postcode with that postcode. Then write two "
      "sentences: what the hygiene register and Companies House say about this pub, and any red flags. If no company "
      "was matched, say so plainly. Quote only numbers that appear in tool results."),
     ("ingest", "Loading demo books from our integrations", MODEL_FAST,
