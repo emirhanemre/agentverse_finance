@@ -1,34 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button, Icon, Logo, ThemeToggle, cx } from "../ui";
-import { HEDGES, PUB } from "../../lib/data";
-import { BusinessStep, SourcesStep, VerifyStep } from "./IdentitySteps";
+import { Button, Icon, Logo, Spinner, ThemeToggle, cx } from "../ui";
+import { API, useAppState } from "../../lib/api";
+import { BusinessStep, RunStep, VerifyStep } from "./IdentitySteps";
 import { AnalysisStep, ImpactStep, RecommendationsStep, ReviewStep } from "./PlanSteps";
 
 const STEPS = [
   { title: "Your business", description: "Tell us which pub to protect. We'll find the rest from public records." },
-  { title: "Verification", description: "The agent checks your company, licence and premises against official registers." },
-  { title: "Data sources", description: "Connect your till, bank and accounts so the agent can measure what each risk costs you." },
-  { title: "Risk analysis", description: "Five years of your sales, matched against local weather, fixtures and duty changes." },
-  { title: "Impact", description: "What last year would have looked like with protection in place." },
-  { title: "Recommendations", description: "Positions sized to your exposure and your limits. Open any one to see how it was worked out." },
-  { title: "Review and approve", description: "Nothing is placed until you approve it." },
+  { title: "Agent run", description: "Five agents check the registers, read the books, cost the weather and price cover. Every call leaves a receipt." },
+  { title: "Verification", description: "What the agent checked, and where each figure came from." },
+  { title: "Risk analysis", description: "Five years of takings matched against local weather, fixtures and duty changes." },
+  { title: "Impact", description: "The payroll week that doesn't clear after a wet weekend, and what cover does about it." },
+  { title: "Recommendation", description: "Cover sized to the exposure and your limits. Open any figure to see how it was worked out." },
+  { title: "Review and approve", description: "Nothing is placed until you approve it. This demo trades on paper only." },
 ];
 
-export type Form = { pubName: string; postcode: string; owner: string; email: string };
-export type SourceStatus = Record<string, "idle" | "connected">;
+export type Form = { pubName: string; postcode: string; owner: string };
 
 export default function Onboarding() {
+  const { state, error, refresh } = useAppState();
   const [step, setStep] = useState(0);
   const [reached, setReached] = useState(0);
-  const [form, setForm] = useState<Form>({ pubName: PUB.name, postcode: PUB.postcode, owner: PUB.owner, email: PUB.email });
-  const [verified, setVerified] = useState(false);
-  const [sources, setSources] = useState<SourceStatus>({ toast: "idle", monzo: "idle", xero: "idle" });
-  const [analysed, setAnalysed] = useState(false);
-  const [selected, setSelected] = useState<string[]>(HEDGES.map((h) => h.id));
-  const [placed, setPlaced] = useState(false);
+  const [form, setForm] = useState<Form | null>(null);
+  const [ran, setRan] = useState(false);
+  const main = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    main.current?.scrollTo(0, 0); // newer Chromium returns a Promise here, which React would call as cleanup
+  }, [step]);
+
+  useEffect(() => {
+    if (state && !form) setForm({ pubName: state.pub.trading_name, postcode: state.pub.postcode, owner: state.pub.owner });
+  }, [state, form]);
 
   const go = (i: number) => {
     setStep(i);
@@ -38,15 +43,22 @@ export default function Onboarding() {
   const back = () => setStep((s) => Math.max(0, s - 1));
   const nav = { onNext: next, onBack: back };
 
-  const body = [
-    <BusinessStep key="0" form={form} setForm={setForm} {...nav} />,
-    <VerifyStep key="1" verified={verified} onVerified={() => setVerified(true)} onEdit={() => go(0)} {...nav} />,
-    <SourcesStep key="2" status={sources} setStatus={setSources} {...nav} />,
-    <AnalysisStep key="3" analysed={analysed} onAnalysed={() => setAnalysed(true)} {...nav} />,
-    <ImpactStep key="4" {...nav} />,
-    <RecommendationsStep key="5" selected={selected} setSelected={setSelected} {...nav} />,
-    <ReviewStep key="6" selected={selected} placed={placed} onPlaced={() => setPlaced(true)} form={form} {...nav} />,
-  ][step];
+  const body =
+    !state || !form ? (
+      <div className="flex items-center justify-center gap-2 text-[13px] text-fg-2">
+        {error ? <span className="text-negative">Can’t reach the Pub Hedge API at {API}. Is it running?</span> : <Spinner className="text-accent" />}
+      </div>
+    ) : (
+      [
+        <BusinessStep key="0" form={form} setForm={setForm} s={state} {...nav} />,
+        <RunStep key="1" ran={ran} onRan={() => { setRan(true); refresh(); }} {...nav} />,
+        <VerifyStep key="2" s={state} onEdit={() => go(0)} {...nav} />,
+        <AnalysisStep key="3" s={state} {...nav} />,
+        <ImpactStep key="4" s={state} {...nav} />,
+        <RecommendationsStep key="5" s={state} {...nav} />,
+        <ReviewStep key="6" s={state} refresh={refresh} {...nav} />,
+      ][step]
+    );
 
   return (
     <div className="flex h-screen flex-col">
@@ -54,20 +66,19 @@ export default function Onboarding() {
         <div className="flex items-center gap-3">
           <Logo />
           <span className="h-4 w-px bg-line-strong" />
-          <span className="text-[13px] text-fg-2">Set up {form.pubName.trim() || "your pub"}</span>
+          <span className="text-[13px] text-fg-2">Set up {form?.pubName.trim() || "your pub"}</span>
         </div>
         <div className="flex items-center gap-4 text-[12px] text-fg-3">
           <span className="flex items-center gap-1.5 text-fg-2">
             <Icon name="lock" size={13} />
-            Read-only access
+            Read-only access · paper trading
           </span>
-          <span>{form.email}</span>
           <ThemeToggle />
         </div>
       </header>
 
-      <main className="min-h-0 flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-[920px] px-10 pb-10 pt-12">
+      <main ref={main} className="min-h-0 flex-1 overflow-y-auto">
+        <div className="mx-auto max-w-[1040px] px-10 pb-10 pt-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -78,7 +89,7 @@ export default function Onboarding() {
             >
               <div className="mb-7 text-center">
                 <h1 className="text-[24px] font-medium tracking-[-0.01em]">{STEPS[step].title}</h1>
-                <p className="mx-auto mt-1.5 max-w-[600px] text-fg-2">{STEPS[step].description}</p>
+                <p className="mx-auto mt-1.5 max-w-[640px] text-fg-2">{STEPS[step].description}</p>
               </div>
               {body}
             </motion.div>
@@ -89,9 +100,9 @@ export default function Onboarding() {
       <nav aria-label="Setup progress" className="shrink-0 border-t border-line bg-surface">
         <ol className="mx-auto flex h-16 max-w-[1120px] items-center gap-2 px-8">
           {STEPS.map((s, i) => {
-            const done = i < reached || (i === 6 && placed);
+            const done = i < reached;
             const active = i === step;
-            const reachable = i <= reached && !placed;
+            const reachable = i <= reached;
             return (
               <li key={s.title} className="flex-1">
                 <button
@@ -161,18 +172,6 @@ export function StepFooter({
           <Icon name="chevron-right" size={14} />
         </Button>
       </div>
-    </div>
-  );
-}
-
-export function RunSummary({ label, detail }: { label: string; detail: string }) {
-  return (
-    <div className="flex h-10 items-center gap-2.5 rounded-md border border-line bg-surface px-4">
-      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-positive text-bg">
-        <Icon name="check" size={11} />
-      </span>
-      <span className="text-[13px]">{label}</span>
-      <span className="ml-auto font-mono text-[11.5px] text-fg-3">{detail}</span>
     </div>
   );
 }
