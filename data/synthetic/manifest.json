@@ -1,0 +1,127 @@
+{
+  "label": "SYNTHETIC: modelled for a pub of this profile, not any real pub's actual figures",
+  "generator": "scripts/gen_synthetic.py",
+  "seed": 20261108,
+  "params": {
+    "start": "2021-01-01",
+    "end": "2026-10-31",
+    "base_daily_takings_gbp": 2050.0,
+    "dow_factor": [
+      0.62,
+      0.7,
+      0.82,
+      0.95,
+      1.3,
+      1.55,
+      1.06
+    ],
+    "season_amplitude": 0.1,
+    "garden_uplift_per_c_over_14": 0.035,
+    "garden_uplift_cap": 0.45,
+    "rain_loss_per_mm_pm": 0.045,
+    "rain_loss_cap": 0.32,
+    "match_uplift": 0.28,
+    "duty_price_elasticity": -0.012,
+    "noise_sd": 0.07,
+    "growth_per_year": 0.025,
+    "vat_share": 0.1667,
+    "cogs_share_of_net": 0.3,
+    "staff_share_of_net": 0.25,
+    "card_fee": 0.015,
+    "rent_monthly_gbp": 9500.0,
+    "utilities_monthly_gbp": 2600.0,
+    "other_fixed_monthly_gbp": 2300.0,
+    "vat_quarterly": true,
+    "opening_balance_gbp": 18000.0,
+    "sweep_target_gbp": 18000.0
+  },
+  "panel": [
+    {
+      "pub_id": "demo",
+      "weather_location": "N4",
+      "scale": 1.0,
+      "garden": 1.0
+    },
+    {
+      "pub_id": "p01",
+      "weather_location": "SE22",
+      "scale": 0.85,
+      "garden": 1.0
+    },
+    {
+      "pub_id": "p02",
+      "weather_location": "SE22",
+      "scale": 1.2,
+      "garden": 0.6
+    },
+    {
+      "pub_id": "p03",
+      "weather_location": "E2",
+      "scale": 0.7,
+      "garden": 0.8
+    },
+    {
+      "pub_id": "p04",
+      "weather_location": "E2",
+      "scale": 1.1,
+      "garden": 0.3
+    },
+    {
+      "pub_id": "p05",
+      "weather_location": "W12",
+      "scale": 0.95,
+      "garden": 0.9
+    },
+    {
+      "pub_id": "p06",
+      "weather_location": "W12",
+      "scale": 0.6,
+      "garden": 0.0
+    },
+    {
+      "pub_id": "p07",
+      "weather_location": "N4",
+      "scale": 1.3,
+      "garden": 0.5
+    },
+    {
+      "pub_id": "p08",
+      "weather_location": "SE22",
+      "scale": 0.75,
+      "garden": 0.2
+    },
+    {
+      "pub_id": "p09",
+      "weather_location": "E2",
+      "scale": 1.0,
+      "garden": 1.0
+    },
+    {
+      "pub_id": "p10",
+      "weather_location": "W12",
+      "scale": 1.15,
+      "garden": 0.7
+    },
+    {
+      "pub_id": "p11",
+      "weather_location": "N4",
+      "scale": 0.8,
+      "garden": 0.4
+    }
+  ],
+  "drivers": {
+    "weather": "data/weather (Open-Meteo, CC BY 4.0, real)",
+    "match_days": "70 England/Ireland match days (data/reference/sport_days.csv, real)",
+    "duty_rises": [
+      "2023-08-01",
+      "2025-02-01",
+      "2026-02-01"
+    ]
+  },
+  "method": "takings = base x weekday x season x growth x (1 + garden x heat uplift) x (1 - capped afternoon-rain loss) x match uplift x duty elasticity^rises x lognormal noise; bank feed derives card settlements (T+1), weekly payroll, 14-day supplier terms, monthly fixed costs and quarterly VAT from those takings.",
+  "files": {
+    "bank_feed_demo.json": "33d9baa3f3bfd97c1e80acfc94ec81836fc599ff71f23f60b283844c293384ea",
+    "fixed_costs_demo.json": "736ddb37c96a1328946440a97dded89d8cf6352fb42acd31787cab3d5e7d803f",
+    "takings_panel.csv": "a48f3fb340b45125d104b42e8cb39f4edb8defb89bc66197a5d29cfbcc5f9087"
+  }
+}

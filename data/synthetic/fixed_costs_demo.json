@@ -1,0 +1,21 @@
+{
+ "Reports": [
+  {
+   "ReportName": "Fixed costs (Xero-style)",
+   "Rows": [
+    {
+     "account": "Rent",
+     "monthly_gbp": 9500.0
+    },
+    {
+     "account": "Utilities",
+     "monthly_gbp": 2600.0
+    },
+    {
+     "account": "Insurance, licences, repairs",
+     "monthly_gbp": 2300.0
+    }
+   ]
+  }
+ ]
+}
