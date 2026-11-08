@@ -102,7 +102,7 @@ def template(step: str, outs: list) -> str:
     return "; ".join(s) + "." if s else "Step complete."
 
 
-async def _argon_rationale(run: Run, facts: dict) -> tuple:
+async def _rationale_call(model: str, facts: dict) -> tuple:
     from google import genai
     from google.genai import types
 
@@ -112,10 +112,35 @@ async def _argon_rationale(run: Run, facts: dict) -> tuple:
               "including what happens if it stays dry and the hedge costs money. Every number you write must appear in "
               "the facts. UK English, no hype.\nFACTS:\n" + json.dumps(facts, default=str))
     resp = await client.aio.models.generate_content(
-        model=MODEL_REASONING, contents=prompt,
+        model=model, contents=prompt,
         config=types.GenerateContentConfig(temperature=0.2, thinking_config=types.ThinkingConfig(thinking_level="low")))
     u = resp.usage_metadata
     return (resp.text or "").strip(), (u.prompt_token_count or 0), (u.candidates_token_count or 0) + (u.thoughts_token_count or 0)
+
+
+ARGON_TIMEOUT_S, FLASH_TIMEOUT_S = 60, 45
+
+
+def _rationale_facts(tools) -> dict:
+    sized = tools["pricer"][4]()
+    return {"sizing": {k: v for k, v in sized.items() if k not in ("receipt_id", "timeline", "inputs")},
+            "wet": {k: v for k, v in tools["pricer"][3](scenario="wet").items() if k != "timeline"},
+            "dry": {k: v for k, v in tools["pricer"][3](scenario="dry").items() if k != "timeline"},
+            "exposure": tools["risk"][1](), "contracts": tools["pricer"][2]()["contracts"]}
+
+
+async def _timed(model: str, facts: dict, timeout: float) -> tuple:
+    return await asyncio.wait_for(_rationale_call(model, facts), timeout=timeout)
+
+
+def _late_argon(run_id: str, task: "asyncio.Task") -> None:
+    """Argon came back after the run had moved on: keep its answer (and its cost) on the record."""
+    if task.cancelled() or task.exception():
+        return
+    text, tin, tout = task.result()
+    add_spend(MODEL_REASONING, tin, tout)
+    audit.append(run_id, "rationale", "narration_late", {"model": MODEL_REASONING},
+                 {"text": text, "note": "arrived after the run used Flash"}, "MODEL", MODEL_REASONING, 0, tin, tout)
 
 
 async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_models: bool = True,
@@ -177,21 +202,45 @@ async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_model
               "narration_badge": badge, "grounding_ok": g["ok"], "receipt_id": row["receipt_id"],
               "ms": int((time.time() - st) * 1000), "tokens": tin + tout})
         prev = f"Previous step ({step}) found: {final}"
-    # one reasoning-model call for the hedge rationale
+        if live and step == "pricer":
+            # Everything the rationale needs exists now. Argon (slow, better) and Flash (fast) start writing it
+            # while the monitor step runs; whichever the end of the run finds ready is used.
+            facts = _rationale_facts(tools)
+            argon_task = asyncio.create_task(_timed(MODEL_REASONING, facts, ARGON_TIMEOUT_S))
+            flash_task = asyncio.create_task(_timed(MODEL_FAST, facts, FLASH_TIMEOUT_S))
+    # the hedge rationale: Argon if it is back, otherwise Flash (flagged), otherwise the template
     run.step, run.model = "rationale", (MODEL_REASONING if live else "template")
-    sized = tools["pricer"][4]()
-    facts = {"sizing": {k: v for k, v in sized.items() if k not in ("receipt_id", "timeline", "inputs")},
-             "wet": {k: v for k, v in tools["pricer"][3](scenario="wet").items() if k != "timeline"},
-             "dry": {k: v for k, v in tools["pricer"][3](scenario="dry").items() if k != "timeline"},
-             "exposure": tools["risk"][1](), "contracts": tools["pricer"][2]()["contracts"]}
+    if not live:
+        facts = _rationale_facts(tools)
     st = time.time()
-    text, badge, tin, tout = "", "MODEL", 0, 0
+    text, badge, tin, tout, note = "", "MODEL", 0, 0, None
     if live:
-        try:
-            text, tin, tout = await asyncio.wait_for(_argon_rationale(run, facts), timeout=60)
+        def ok(t):
+            return t.done() and not t.cancelled() and t.exception() is None and t.result()[0]
+        if not ok(argon_task) and not argon_task.done():
+            # Argon still thinking: take Flash as soon as it lands, unless Argon beats it there.
+            await asyncio.wait({argon_task, flash_task}, return_when=asyncio.FIRST_COMPLETED)
+            if not ok(argon_task) and not flash_task.done():
+                await asyncio.wait({flash_task})
+            if not ok(flash_task) and not argon_task.done():
+                await asyncio.wait({argon_task})  # Flash failed: Argon is the only model answer left
+        if ok(argon_task):
+            text, tin, tout = argon_task.result()
             add_spend(MODEL_REASONING, tin, tout)
-        except Exception as exc:
-            badge = f"TEMPLATE · {type(exc).__name__}"
+            flash_task.cancel()
+        elif ok(flash_task):
+            text, tin, tout = flash_task.result()
+            add_spend(MODEL_FAST, tin, tout)
+            run.model = MODEL_FAST
+            if argon_task.done():
+                note = "Flash used: Argon failed"
+            else:
+                note = "Flash used, Argon not back yet"
+                argon_task.add_done_callback(lambda t: _late_argon(run_id, t))
+        else:
+            exc = (argon_task.exception() if argon_task.done() and not argon_task.cancelled() else None)
+            badge = f"TEMPLATE · {type(exc).__name__ if exc else 'NoModelReply'}"
+            argon_task.cancel()
     if not text:
         text = rationale_template(facts)
         badge = badge if badge != "MODEL" else "TEMPLATE"
@@ -199,12 +248,12 @@ async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_model
     g = grounding.check(text, run.outputs)
     if not g["ok"]:
         badge += " · GROUNDING FLAG"
-    row = audit.append(run_id, "rationale", "narration", {"model": run.model}, {"text": g["text"], "grounding": g},
+    row = audit.append(run_id, "rationale", "narration", {"model": run.model}, {"text": g["text"], "grounding": g, "note": note},
                        badge, run.model, int((time.time() - st) * 1000), tin, tout)
     narr["rationale"] = {"text": g["text"], "badge": badge, "grounding": g, "receipt_id": row["receipt_id"],
-                         "model": run.model}
+                         "model": run.model, "note": note}
     emit({"type": "rationale", "model": run.model, "text": g["text"], "badge": badge, "grounding_ok": g["ok"],
-          "receipt_id": row["receipt_id"], "ms": int((time.time() - st) * 1000)})
+          "receipt_id": row["receipt_id"], "ms": int((time.time() - st) * 1000), "note": note})
     wall = int((time.time() - t0) * 1000)
     summary = {"run_id": run_id, "mode": mode, "wall_ms": wall, "narration": narr, "live_models": live, "pub": run.pub}
     audit.db().execute("UPDATE runs SET finished=?, wall_ms=?, status=?, summary=? WHERE run_id=?",

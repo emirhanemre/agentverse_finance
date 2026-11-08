@@ -26,7 +26,7 @@ import {
   type Verdict,
 } from "../lib/api";
 import { day, gbp, pct } from "../lib/format";
-import { Bullets, ModelChip } from "./AgentRun";
+import { Bullets, ModelChip, ModelNote } from "./AgentRun";
 import { Glyph, Num, ProvBadge, ProvPanel, getReceipt, useAudit } from "./Provenance";
 import { Badge, Button, Icon, KeyValue, Panel, Spinner, cx, tooltipStyle } from "./ui";
 
@@ -906,6 +906,7 @@ export function ProposalPanel({ s, p }: S & { p?: Proposal }) {
               Why it was suggested
               {rat.model && <ModelChip model={rat.model} />}
               <ProvBadge badge={rat.badge} receiptId={rat.receipt_id} variant="label" />
+              {rat.note && <ModelNote note={rat.note} />}
             </h3>
             <div className="mt-2" data-testid="rationale">
               <Bullets text={rat.text} />
