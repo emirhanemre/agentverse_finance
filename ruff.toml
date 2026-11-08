@@ -1,5 +1,5 @@
 target-version = "py39"
-line-length = 125
+line-length = 135
 extend-exclude = ["agentverse", "app", ".bench"]
 
 [lint]
