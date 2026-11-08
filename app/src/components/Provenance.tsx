@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { api, type Grounding, type Receipt } from "../lib/api";
 import { Icon, Panel, Spinner, cx } from "./ui";
@@ -197,24 +198,77 @@ export function Glyph({ badge }: { badge: string }) {
 }
 
 type Meta = Record<string, unknown>;
-const META_KEYS = ["source", "licence", "fetched_at", "generator", "seed", "method", "model"] as const;
+const META_KEYS = ["source", "licence", "fetched_at", "generator", "seed", "method", "engine", "label", "model"] as const;
 const metaRows = (info: Meta | null | undefined) =>
   info
     ? META_KEYS.filter((k) => info[k] !== undefined && info[k] !== null && info[k] !== "").map((k) => [
-        k === "fetched_at" ? "fetched" : k,
+        k === "fetched_at" ? "fetched" : k === "label" ? "note" : k,
         k === "fetched_at" ? londonTime(info[k], true) || String(info[k]) : String(info[k]),
       ])
     : [];
 
 const receiptMeta = (r: Receipt): Meta => ({ ...(typeof r.result === "object" && r.result ? (r.result as Meta) : {}), badge: r.badge, model: r.model });
 
-/** The glass card a label or a figure shows on hover (after a beat) and on focus (at once). */
-// The card stays empty until first hover or focus, so its text is never hidden content at rest.
-function ProvCard({ armed, badge, info, receiptId, align = "left" }: { armed: boolean; badge?: string; info: Meta | null | undefined; receiptId?: string | null; align?: "left" | "right" }) {
+/** Hover waits a beat, keyboard focus does not; leaving or blurring closes. */
+function useHoverCard(onOpen: () => void) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [open, setOpen] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const show = (delay: number) => {
+    onOpen();
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setOpen(true), delay);
+  };
+  const hide = () => {
+    clearTimeout(timer.current);
+    setOpen(false);
+  };
+  useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => {
+    if (!open) return;
+    const close = () => setOpen(false);
+    window.addEventListener("scroll", close, true); // a scroll moves the anchor: close rather than float in the wrong place
+    window.addEventListener("resize", close);
+    return () => {
+      window.removeEventListener("scroll", close, true);
+      window.removeEventListener("resize", close);
+    };
+  }, [open]);
+  const handlers = {
+    onMouseEnter: () => show(700),
+    onMouseLeave: hide,
+    onFocus: (e: React.FocusEvent) => (e.target as HTMLElement).matches(":focus-visible") && show(0),
+    onBlur: hide,
+  };
+  return { ref, open, handlers };
+}
+
+const CARD_W = 288;
+/** The glass card a label or a figure shows. Drawn in a portal, so no panel or table can clip it. */
+function ProvCard({
+  open,
+  anchor,
+  badge,
+  info,
+  receiptId,
+  align = "left",
+}: {
+  open: boolean;
+  anchor: React.RefObject<HTMLElement>;
+  badge?: string;
+  info: Meta | null | undefined;
+  receiptId?: string | null;
+  align?: "left" | "right";
+}) {
+  if (!open || !anchor.current || typeof document === "undefined") return null;
+  const r = anchor.current.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const left = Math.min(Math.max(8, align === "right" ? r.right - CARD_W : r.left), vw - CARD_W - 8);
+  const below = r.bottom + 220 < window.innerHeight;
+  const pos: React.CSSProperties = below ? { top: r.bottom + 6, left } : { bottom: window.innerHeight - r.top + 6, left };
   const rows = metaRows(info);
-  if (!armed) return <span aria-hidden className={cx("prov-card block", align === "right" ? "right-0" : "left-0")} />;
-  return (
-    <span role="tooltip" className={cx("prov-card block", align === "right" ? "right-0" : "left-0")}>
+  return createPortal(
+    <span role="tooltip" className="prov-pop" style={{ ...pos, width: CARD_W }}>
       <span className="flex items-center gap-2 text-xs font-medium text-fg">
         {badge && <Glyph badge={badge} />}
         {badge ?? "Source"}
@@ -227,7 +281,8 @@ function ProvCard({ armed, badge, info, receiptId, align = "left" }: { armed: bo
         </span>
       ))}
       {receiptId && <span className="mt-2 block text-xs text-fg-3">Click for the receipt</span>}
-    </span>
+    </span>,
+    document.body
   );
 }
 
@@ -280,21 +335,17 @@ export function ProvBadge({
   const { audit } = useAudit();
   const scope = useContext(ScopeCtx);
   const [fetched, setFetched] = useState<Meta | null>(null);
-  const [armed, setArmed] = useState(false);
   const info = meta ?? fetched;
   const load = useCallback(() => {
     if (!meta && !fetched && receiptId) getReceipt(receiptId).then((r) => setFetched(receiptMeta(r)), () => setFetched({}));
   }, [meta, fetched, receiptId]);
-  const arm = () => {
-    setArmed(true);
-    load();
-  };
+  const card = useHoverCard(load);
   const mode = variant ?? (scope !== undefined ? "inline" : "label");
   if (mode === "inline" && !audit && badge === scope) return null;
   return (
-    <span className={cx("prov inline-flex", className)} onMouseEnter={arm} onFocus={arm}>
+    <span ref={card.ref} className={cx("prov inline-flex", className)} {...card.handlers}>
       <Mark badge={badge} mode={audit && mode !== "inline" ? "chip" : mode} fetchedAt={info?.fetched_at} receiptId={receiptId} />
-      <ProvCard armed={armed} badge={badge} info={info} receiptId={receiptId} align={mode === "label" ? "right" : "left"} />
+      <ProvCard open={card.open} anchor={card.ref} badge={badge} info={info} receiptId={receiptId} align={mode === "label" ? "right" : "left"} />
     </span>
   );
 }
@@ -326,14 +377,12 @@ export function Num({
   const id = rid ?? r?.receipt_id;
   const known = badge ?? r?.badge;
   const [rec, setRec] = useState<Meta | null>(null);
-  const [armed, setArmed] = useState(false);
   const load = useCallback(() => {
     if (id && !rec) getReceipt(id).then((x) => setRec(receiptMeta(x)), () => setRec({}));
   }, [id, rec]);
-  const arm = () => {
-    setArmed(true);
+  const card = useHoverCard(() => {
     if (!r) load();
-  };
+  });
   // In the audit view a figure outside any labelled panel finds its badge on its receipt.
   useEffect(() => {
     if (mark && audit && known === undefined && scope === undefined) load();
@@ -342,7 +391,7 @@ export function Num({
   const own = known ?? scope ?? (rec?.badge as string | undefined);
   const info = (r as Meta | undefined) ?? rec;
   return (
-    <span className="prov inline" onMouseEnter={arm} onFocus={arm}>
+    <span ref={card.ref} className="prov inline" {...card.handlers}>
       <button
         type="button"
         onClick={(e) => {
@@ -354,7 +403,7 @@ export function Num({
         {children}
       </button>
       {mark && own && (audit || own !== scope) && <Mark badge={own} mode="inline" fetchedAt={info?.fetched_at} receiptId={id} />}
-      <ProvCard armed={armed} badge={own} info={info} receiptId={id} />
+      <ProvCard open={card.open} anchor={card.ref} badge={own} info={info} receiptId={id} />
     </span>
   );
 }
