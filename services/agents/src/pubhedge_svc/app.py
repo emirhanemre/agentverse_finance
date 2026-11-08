@@ -30,6 +30,26 @@ def get_limits() -> dict:
     return {**DEFAULT_LIMITS, **rows}
 
 
+@app.on_event("startup")
+async def start_monitor():
+    """Optional scheduled monitor: PUBHEDGE_MONITOR_MINUTES=N re-runs the deterministic chain on this
+    coming weekend every N minutes (template narration, no model spend). Proposals land in the
+    approval queue like any other run; nothing executes without the owner."""
+    import os
+    minutes = float(os.environ.get("PUBHEDGE_MONITOR_MINUTES", "0") or 0)
+    if minutes <= 0:
+        return
+
+    async def loop():
+        while True:
+            try:
+                await run_chain("live", lambda e: None, get_limits(), run_id="monitor_" + uuid.uuid4().hex[:8], use_models=False)
+            except Exception as exc:  # keep monitoring; the failure is in the log
+                audit.append(None, "monitor", "monitor_error", {}, {"error": str(exc)[:300]}, "ERROR")
+            await asyncio.sleep(minutes * 60)
+    asyncio.create_task(loop())
+
+
 @app.get("/api/health")
 def health():
     return {"ok": True, "audit": audit.verify()["ok"], "offline": config.offline(), "paper_only": True}

@@ -113,12 +113,12 @@ async def _argon_rationale(run: Run, facts: dict) -> tuple:
     return (resp.text or "").strip(), (u.prompt_token_count or 0), (u.candidates_token_count or 0) + (u.thoughts_token_count or 0)
 
 
-async def run_chain(mode: str, emit, limits: dict, run_id: str = None) -> dict:
+async def run_chain(mode: str, emit, limits: dict, run_id: str = None, use_models: bool = True) -> dict:
     run_id = run_id or "run_" + uuid.uuid4().hex[:10]
     run = Run(run_id, mode, emit, limits)
     tools = make_tools(run)
     t0 = time.time()
-    live = live_models_allowed()
+    live = use_models and live_models_allowed()
     audit.db().execute("INSERT INTO runs (run_id, mode, started, status) VALUES (?,?,?,?)",
                        (run_id, mode, t0, "running"))
     audit.db().commit()

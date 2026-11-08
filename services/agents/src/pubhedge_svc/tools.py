@@ -161,6 +161,31 @@ def make_tools(run: Run) -> dict:
                 "summary": f"{len(tx):,} transactions · payroll £{-sum(pay) / len(pay) / 100:,.0f}/wk"}
 
     @tool
+    def check_bank_feed() -> dict:
+        """Run the transactions engine on the last 90 days of the bank feed: payment loops and large transfers."""
+        from pubhedge_core import transactions as core_tx
+        tx = E.bank_feed()
+        last = max(t["date"] for t in tx)
+        start = (date.fromisoformat(last) - timedelta(days=90)).isoformat()
+        rows = []
+        for t in tx:
+            if t["date"] < start:
+                continue
+            cp = t["MerchantDetails"]["MerchantName"]
+            out = t["amount_pence"] < 0
+            rows.append({"id": t["TransactionId"], "date": t["date"], "amount_pence": abs(t["amount_pence"]), "currency": "GBP",
+                         "sender": "pub" if out else cp, "recipient": cp if out else "pub"})
+        res = core_tx.analyse(rows, 500000)  # £5,000 and over is "large"
+        kinds = {t["TransactionId"]: t["ProprietaryBankTransactionCode"] for t in tx}
+        large = {}
+        for i in res["large_transfer_ids"]:
+            large[kinds[i]] = large.get(kinds[i], 0) + 1
+        return {"badge": "SYNTHETIC", "label": SYN, "engine": "pubhedge_core.transactions (the kit-scored engine)",
+                "window": [start, last], "transactions": len(rows), "payment_loops": len(res["loops"]),
+                "large_transfers": len(res["large_transfer_ids"]), "large_by_kind": large,
+                "summary": f"{len(res['loops'])} payment loops · {len(res['large_transfer_ids'])} transfers ≥£5,000"}
+
+    @tool
     def load_weather_history() -> dict:
         """Load real daily weather for the pub's grid point (Open-Meteo, CC BY 4.0)."""
         wx = E.weather(PUB["weather_loc"])
@@ -382,7 +407,7 @@ def make_tools(run: Run) -> dict:
 
     return {
         "verifier": [companies_house_profile, companies_house_officer_match, locate_postcode],
-        "ingest": [load_takings_history, load_stripe_test_charges, load_bank_feed, load_weather_history,
+        "ingest": [load_takings_history, load_stripe_test_charges, load_bank_feed, check_bank_feed, load_weather_history,
                    load_match_and_duty_dates],
         "risk": [fit_takings_model, weekend_rain_exposure],
         "pricer": [weekend_forecast, check_real_weather_markets, price_rain_contracts, project_payroll, size_hedges],
