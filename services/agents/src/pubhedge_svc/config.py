@@ -32,7 +32,7 @@ def load_env() -> None:
     # AI Studio only: never let ADK route to Vertex because GOOGLE_CLOUD_PROJECT is set.
     os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "FALSE"
     if os.environ.get("GEMINI_API_KEY"):
-        os.environ.setdefault("GOOGLE_API_KEY", os.environ["GEMINI_API_KEY"])
+        os.environ.setdefault("GOOGLE_API_KEY", os.environ.pop("GEMINI_API_KEY"))  # one key var, no SDK warning
     sk = os.environ.get("STRIPE_SECRET_KEY", "")
     if sk.startswith(("sk_live_", "rk_live_")):
         os.environ.pop("STRIPE_SECRET_KEY")  # hard rule: test mode only

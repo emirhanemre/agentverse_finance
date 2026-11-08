@@ -28,6 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TEST_START, TEST_END = date(2024, 11, 1), date(2026, 10, 31)
 WET_MM = 6.0  # rain assumed in the "event happens" scenario
 NAIVE_STAKE = 20.0
+SWEEP_GBP = 5000.0  # buffer the owner keeps in the current account, scaled by pub size
 LIMITS = {"weekly": 120.0, "monthly": 400.0, "market": 60.0}
 BOOT = 1000
 
@@ -60,6 +61,9 @@ def pot(feed, d):
                 if t["ProprietaryBankTransactionCode"] in ("RENT", "UTILITIES", "OTHER")) / 100
 
 
+BALANCES: dict = {}  # (pub, policy) -> {date: end-of-day balance}; used by the demo scenario
+
+
 def simulate(pub_id, policy):
     meta = next(p for p in E.manifest()["panel"] if p["pub_id"] == pub_id)
     loc, scale = meta["weather_location"], meta["scale"]
@@ -68,7 +72,7 @@ def simulate(pub_id, policy):
     beta_rain = -fit["coefficients"]["pm_rain_mm_weekend"]["estimate"]
     wx = E.weather(loc)
     feed = cash_by_date(rows, scale)
-    sweep = 5000 * scale
+    sweep = SWEEP_GBP * scale
     bal = sweep
     d = TEST_START - timedelta(days=60)
     week_rows, month_net = [], defaultdict(float)
@@ -112,6 +116,7 @@ def simulate(pub_id, policy):
                 cur_week["depth"] = cur_week.get("depth", 0.0) - bal
         if in_test:
             month_net[iso[:7]] += flows
+        BALANCES.setdefault((pub_id, policy), {})[iso] = round(bal, 2)
         d += timedelta(days=1)
     if cur_week["start"]:
         week_rows.append(cur_week)
@@ -126,14 +131,10 @@ def market(day, loc, wx, fit_beta):
             "loss": max(0.0, fit_beta * (WET_MM - fc))}
 
 
-def decide(policy, thu, sat, sun, bal, feed, fit, beta_rain, loc, wx, sweep, month_net_loss):
-    ms = [market(sat, loc, wx, beta_rain), market(sun, loc, wx, beta_rain)]
-    if policy == "naive":
-        return [{"day": m["day"], "shares": math.floor(NAIVE_STAKE / m["k"]),
-                 "cost": round(math.floor(NAIVE_STAKE / m["k"]) * m["k"], 2)} for m in ms]
-    # ours: will next Friday's payroll clear if the weekend is wet? Known schedule from the
-    # feed for non-card items (payroll, suppliers, fixed costs are scheduled in advance);
-    # card takings from the training-years model with the wet scenario.
+def project(feed, thu, sat, sun, bal, fit, wx, sweep, rain_override):
+    """Thursday projection to next Friday's payroll. Known schedule from the feed for
+    non-card items (payroll, suppliers, fixed costs are scheduled in advance); card takings
+    from the training-years model, with rain_override (date -> mm) for the weekend."""
     events = []
     for i in range(1, 9):
         dd = thu + timedelta(days=i)
@@ -144,10 +145,12 @@ def decide(policy, thu, sat, sun, bal, feed, fit, beta_rain, loc, wx, sweep, mon
                                else "other"})
         prev = dd - timedelta(days=1)
         r = wx[prev.isoformat()]
-        rain = WET_MM if prev in (sat, sun) else float(r["fc_pm_rain_mm"] or 0)
+        rain = rain_override.get(prev.isoformat(), float(r["fc_pm_rain_mm"] or 0))
         take = E.predict_day(fit, {"date": prev.isoformat(), "pm_rain_mm": rain,
                                    "tmax_c": r["fc_tmax_c"] or r["tmax_c"], "match_day": 0, "duty_rises": 3})
-        events.append({"id": f"card-{dd}", "date": dd.isoformat(), "amount_pence": int(max(0, take) * 98.5),
+        vat_move = gen.PARAMS["vat_share"] * 0.62
+        events.append({"id": f"card-{dd}", "date": dd.isoformat(), "amount_pence":
+                       int(max(0, take) * (1 - gen.PARAMS["card_fee"]) * (1 - vat_move) * 100),
                        "currency": "GBP", "kind": "card"})
     # the owner's standing Monday sweep is part of the plan, so project it too
     mon = thu + timedelta(days=4)
@@ -156,7 +159,15 @@ def decide(policy, thu, sat, sun, bal, feed, fit, beta_rain, loc, wx, sweep, mon
     if pre["closing_balance_pence"] > cap:
         events.append({"id": "0-sweep", "date": mon.isoformat(), "amount_pence": cap - pre["closing_balance_pence"],
                        "currency": "GBP", "kind": "sweep"})
-    chk = E.payroll_check(int(bal * 100), events)
+    return E.payroll_check(int(bal * 100), events)
+
+
+def decide(policy, thu, sat, sun, bal, feed, fit, beta_rain, loc, wx, sweep, month_net_loss):
+    ms = [market(sat, loc, wx, beta_rain), market(sun, loc, wx, beta_rain)]
+    if policy == "naive":
+        return [{"day": m["day"], "shares": math.floor(NAIVE_STAKE / m["k"]),
+                 "cost": round(math.floor(NAIVE_STAKE / m["k"]) * m["k"], 2)} for m in ms]
+    chk = project(feed, thu, sat, sun, bal, fit, wx, sweep, {sat.isoformat(): WET_MM, sun.isoformat(): WET_MM})
     at_risk = chk["first_failed_payroll"] is not None
     mk = [{"market_id": m["day"], "cost_per_share": m["k"], "model_prob": m["q"], "causes_shortfall": at_risk,
            "loss_if_event_gbp": m["loss"]} for m in ms]
