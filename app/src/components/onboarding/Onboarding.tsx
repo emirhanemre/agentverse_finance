@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Button, Icon, Logo, Spinner, ThemeToggle, cx } from "../ui";
 import { API, useAppState } from "../../lib/api";
-import { AuditSwitch } from "../Provenance";
+import { AuditKey, AuditSwitch } from "../Provenance";
 import { BusinessStep, RunStep, VerifyStep } from "./IdentitySteps";
 import { AnalysisStep, ImpactStep, RecommendationsStep, ReviewStep } from "./PlanSteps";
 
@@ -86,6 +86,7 @@ export default function Onboarding() {
           <ThemeToggle />
         </div>
       </header>
+      <AuditKey />
 
       <main ref={main} className="min-h-0 flex-1 overflow-y-auto">
         <div className={cx("mx-auto px-4 pb-10 pt-10 sm:px-10", step === 0 ? "max-w-[1200px]" : "max-w-[1040px]")}>

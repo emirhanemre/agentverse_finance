@@ -74,7 +74,6 @@ export function ProvenanceProvider({ children }: { children: React.ReactNode }) 
       <MotionConfig reducedMotion="user">
       <Ctx.Provider value={setOpen}>
         {children}
-        {audit && !open && <AuditLegend />}
         <AnimatePresence>{open && <ReceiptDrawer key={open} id={open} onClose={() => setOpen(null)} />}</AnimatePresence>
       </Ctx.Provider>
       </MotionConfig>
@@ -105,7 +104,7 @@ export function AuditSwitch() {
       >
         <span
           className={cx(
-            "absolute top-0.5 h-3 w-3 rounded-full transition-transform",
+            "absolute left-0 top-0.5 h-3 w-3 rounded-full transition-transform",
             audit ? "translate-x-[10px] bg-accent-ink" : "translate-x-0.5 bg-fg-3"
           )}
         />
@@ -136,15 +135,17 @@ const KIND: Record<string, { label: string; glyph: GlyphName }> = {
 const kind = (badge: string | null | undefined) =>
   badge ? (KIND[badge] ?? { label: badge.charAt(0) + badge.slice(1).toLowerCase(), glyph: "hollow" as GlyphName }) : { label: "No badge", glyph: "cross" as GlyphName };
 
-/** The key to the shapes, shown while the audit view is on. */
-function AuditLegend() {
+/** The key to the shapes: a strip under the top bar while the audit view is on, in the layout so it covers nothing. */
+export function AuditKey() {
+  const { audit } = useAudit();
+  if (!audit) return null;
   const items = ["REAL", CACHED, "SYNTHETIC", "TEST MODE", "PAPER", "REPLAY", "TEMPLATE", "MODEL"];
   return (
     <div
       role="note"
       aria-label="What the source shapes mean"
       data-testid="audit-legend"
-      className="prov-reveal fixed bottom-6 left-1/2 z-[var(--z-toast)] flex max-w-[calc(100vw-2rem)] -translate-x-1/2 flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-pill bg-[var(--popover)] px-4 py-2 text-xs text-fg-2 shadow-[var(--panel-hi),var(--panel-shadow)]"
+      className="prov-reveal relative z-[1] flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-b border-line bg-[var(--popover)] px-4 py-2 text-xs text-fg-2 sm:px-6"
     >
       <span className="text-fg">Sources</span>
       {items.map((b) => (
@@ -389,7 +390,14 @@ export function Num({
   useEffect(() => {
     if (mark && audit && known === undefined && scope === undefined) load();
   }, [mark, audit, known, scope, load]);
-  if (!id) return <span className={className}>{children}</span>;
+  if (!id)
+    // No receipt (a recorded figure): still show where it came from, just without a receipt to open.
+    return (
+      <span className="prov inline">
+        <span className={className}>{children}</span>
+        {mark && known && (audit || known !== scope) && <Mark badge={known} mode="inline" />}
+      </span>
+    );
   const own = known ?? scope ?? (rec?.badge as string | undefined);
   const info = (r as Meta | undefined) ?? rec;
   return (
