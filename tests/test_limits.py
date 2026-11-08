@@ -17,8 +17,9 @@ class Limits(unittest.TestCase):
         self.assertFalse(v["needs_second_approval"])
 
     def test_cap_edges_are_inclusive(self):
-        self.assertTrue(limits.check(6000, "m1", L, {"spent_this_week_pence": 6000})["allowed"])
-        v = limits.check(6001, "m1", L, {"spent_this_week_pence": 6000})
+        cap = L["weekly_spend_cap_pence"]
+        self.assertTrue(limits.check(6000, "m1", L, {"spent_this_week_pence": cap - 6000})["allowed"])
+        v = limits.check(6001, "m1", L, {"spent_this_week_pence": cap - 6000})
         self.assertFalse(v["allowed"])
         self.assertIn("weekly spend", v["reason"])
 
@@ -28,7 +29,7 @@ class Limits(unittest.TestCase):
         self.assertEqual(v["reason"], "weekly spend: £20.00 would exceed the £15.00 cap")
 
     def test_concentration_and_threshold(self):
-        v = limits.check(5500, "m1", L, {"by_market_pence": {"m1": 1000}})
+        v = limits.check(5500, "m1", L, {"by_market_pence": {"m1": L["per_market_cap_pence"] - 5000}})
         self.assertFalse(v["allowed"])
         self.assertTrue(v["needs_second_approval"])
 

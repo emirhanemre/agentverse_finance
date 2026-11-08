@@ -29,7 +29,7 @@ TEST_START, TEST_END = date(2024, 11, 1), date(2026, 10, 31)
 WET_MM = 6.0  # rain assumed in the "event happens" scenario
 NAIVE_STAKE = 20.0
 SWEEP_GBP = 5000.0  # buffer the owner keeps in the current account, scaled by pub size
-LIMITS = {"weekly": 120.0, "monthly": 400.0, "market": 60.0}
+LIMITS = {"weekly": 800.0, "monthly": 2000.0, "market": 600.0}  # the app defaults (pubhedge_core.limits)
 BOOT = 1000
 
 spec = importlib.util.spec_from_file_location("gen", ROOT / "scripts" / "gen_synthetic.py")

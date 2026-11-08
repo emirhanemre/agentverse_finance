@@ -39,7 +39,7 @@
     {
       "pub_id": "demo",
       "weather_location": "N4",
-      "scale": 1.0,
+      "scale": 3.5,
       "garden": 1.0
     },
     {
@@ -120,8 +120,8 @@
   },
   "method": "takings = base x weekday x season x growth x (1 + garden x heat uplift) x (1 - capped afternoon-rain loss) x match uplift x duty elasticity^rises x lognormal noise; bank feed derives card settlements (T+1), weekly payroll, 14-day supplier terms, monthly fixed costs and quarterly VAT from those takings.",
   "files": {
-    "bank_feed_demo.json": "572945e38d94c897595f90266a1d79aeec04c80cad41bdbdfacac0cb07343a4d",
+    "bank_feed_demo.json": "213e52ac1c11b89bbf157e9b29f3b4f27a77ba52ee1fc9e07578cd4a11a193e0",
     "fixed_costs_demo.json": "736ddb37c96a1328946440a97dded89d8cf6352fb42acd31787cab3d5e7d803f",
-    "takings_panel.csv": "a48f3fb340b45125d104b42e8cb39f4edb8defb89bc66197a5d29cfbcc5f9087"
+    "takings_panel.csv": "ae003493ff2d63736d41a0309d39b3d8038c588a161c462a4ceaa3d7aebef470"
   }
 }

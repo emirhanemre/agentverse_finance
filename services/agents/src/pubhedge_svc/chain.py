@@ -32,8 +32,9 @@ STEPS = [
      "project_payroll with scenario 'dry' and with scenario 'wet', then size_hedges. Write two sentences. If "
      "size_hedges finds nothing worth buying, say so and recommend nothing. Quote only numbers from tool results."),
     ("monitor", "Checking limits and queueing for approval", MODEL_FAST,
-     "Call check_limits, then queue_for_approval, then schedule_monitor. Write one sentence on what now waits for "
-     "the owner. Nothing executes without a human. Quote only numbers from tool results."),
+     "Call check_limits, then queue_for_approval, then schedule_monitor, then price_match_offer. Write one sentence "
+     "on what now waits for the owner (nothing executes without a human), then one sentence on the match-day offer "
+     "price_match_offer priced: its worst case and the fixed cost of covering it. Quote only numbers from tool results."),
 ]
 
 PRICE_PER_M = {MODEL_FAST: (0.75, 3.75), MODEL_REASONING: (2.0, 10.0)}

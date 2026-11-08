@@ -35,7 +35,7 @@ def test_offline_scenario_run_lowered_cap_blocks_and_is_logged():
     assert res["blocked"] and "weekly spend" in res["blocked"][0]["reason"]
     a = c.post(f"/api/proposals/{p['id']}/approve", json={"confirm_second": True}).json()
     assert a["status"] == "blocked"
-    c.put("/api/limits", json={"weekly_spend_cap_pence": 12000})
+    c.put("/api/limits", json={"weekly_spend_cap_pence": 80000})
     a = c.post(f"/api/proposals/{p['id']}/approve", json={"confirm_second": True}).json()
     assert a["status"] == "filled" and a["fill"]["venue"] == "PAPER"
     calls = [row["call"] for row in c.get("/api/audit?limit=500").json()["rows"]]
@@ -51,3 +51,13 @@ def test_replay_streams_recorded_run_with_badge():
                 ev.append(json.loads(line[6:]))
     assert ev[0]["mode"] == "replay" and ev[-1]["type"] == "done"
     assert all(e.get("replay") for e in ev if e["type"] == "tool")
+
+
+def test_match_offer_is_an_ordinary_capped_proposal():
+    q = c.post("/api/offers/queue").json()
+    o = q["quote"]
+    assert o["kind"] == "offer" and o["badge"].startswith("REAL")  # real market price (cached offline)
+    assert 0 < o["payout_if_event_gbp"] <= o["worst_case_gbp"]  # never more cover than the offer can cost
+    assert abs(o["hedge_cost_gbp"] - o["shares"] * o["cost_per_share"]) <= o["shares"] * 0.00005 + 0.01  # per-share cost shown to 4dp
+    a = c.post(f"/api/proposals/{q['id']}/approve", json={"confirm_second": True}).json()
+    assert a["status"] == "filled" and a["fill"]["venue"] == "PAPER"

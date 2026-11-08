@@ -85,7 +85,7 @@ figures are involved.
   ({o['shortfall_weeks_per_year']:.1f} against {v['shortfall_weeks_per_year']:.1f} with no hedge), worst week or
   CVaR in any meaningful way. Raising the caps five-fold doesn't change that.
 - **Why:** in this model most shortfalls are a few thousand pounds deep, driven by fixed costs and quiet trading
-  weeks. A weekend rain hedge capped at £60 a market pays out a few hundred pounds at most. The hedge cuts the depth
+  weeks. A weekend rain hedge capped at £600 a market pays out a couple of thousand pounds at most. The hedge cuts the depth
   of a wet-weekend shortfall. It cannot fix a structural cash gap, and a bigger cash buffer does more.
 - **Honest takeaway for the pitch:** the product's value on this evidence is the warning ("payroll on Friday won't
   clear; here's by how much"), with cheap, small, capped protection for the weather-driven part. It is not a

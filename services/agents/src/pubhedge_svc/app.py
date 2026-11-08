@@ -16,7 +16,7 @@ from . import audit, config
 from . import engines as E
 from .chain import run_chain
 from .config import DATA, RUNS
-from .tools import PUB, SCENARIO, SYN, current_ledger
+from .tools import PUB, SCENARIO, SYN, current_ledger, quote_offer
 
 config.load_env()
 app = FastAPI(title="Pub Hedge agents")
@@ -255,6 +255,27 @@ def reject(pid: str):
                        (time.time(), row["receipt_id"], pid))
     audit.db().commit()
     return {"status": "rejected", "receipt_id": row["receipt_id"]}
+
+
+@app.post("/api/offers/queue")
+def queue_offer():
+    """Turn the priced match-day offer into an ordinary pending proposal: same limits, approval and paper fill."""
+    q = quote_offer(get_limits(), current_ledger(None))
+    if not q["shares"]:
+        raise HTTPException(409, "nothing to cover inside the current caps")
+    run = latest_run()
+    run_id = run["run_id"] if run else "offer"
+    pid = f"p_offer_{uuid.uuid4().hex[:6]}"
+    market = {k: q[k] for k in ("market_id", "kind", "fixture", "competition", "venue", "kickoff", "market", "trigger", "offer",
+                                "covers_cap", "worst_case_gbp", "ask", "market_prob", "fee_rate", "cost_per_share",
+                                "payout_if_event_gbp", "fixed_cost_gbp")}
+    market["price_badge"] = q["badge"]
+    row = audit.append(run_id, "offer", "queue_offer", {"market_id": q["market_id"]}, q, q["badge"], None, 0)
+    audit.db().execute("INSERT INTO proposals (id, run_id, created, market, shares, cost_pence, status) VALUES (?,?,?,?,?,?,?)",
+                       (pid, run_id, time.time(), json.dumps(market), q["shares"], int(round(q["hedge_cost_gbp"] * 100)),
+                        "pending"))
+    audit.db().commit()
+    return {"status": "pending", "id": pid, "receipt_id": row["receipt_id"], "quote": q}
 
 
 @app.get("/api/limits")

@@ -17,8 +17,41 @@ from .config import REPO, offline
 
 PUB = {"trading_name": "The Faltering Fullback", "company_number": "05770953", "postcode": "N4 3HB",
        "address": "19 Perth Road, London N4 3HB", "lat": 51.568656, "lon": -0.108575, "weather_loc": "N4"}
-SCENARIO = {"name": "August bank holiday 2026", "decision_date": "2026-08-27", "weekend": ["2026-08-29", "2026-08-30"]}
+SCENARIO = {"name": "August bank holiday 2026", "decision_date": "2026-08-27", "weekend": ["2026-08-29", "2026-08-30"],
+            # illustrative: extra cash the owner keeps in the current account that week
+            "extra_buffer_gbp": 11360.0}
 SYN = "SYNTHETIC: modelled for a pub of this profile, not The Faltering Fullback's actual figures"
+# A match-day promotion the owner can run at a fixed cost: the hedge pays exactly when the offer does.
+OFFER = {"event_slug": "unl-eng-hrv-2026-11-12", "market_question": "Will Croatia win on 2026-11-12?",
+         "fixture": "England v Croatia", "competition": "UEFA Nations League", "venue": "Wembley",
+         "trigger": "If England lose", "offer": "mains half price", "covers_cap": 80,
+         "avg_main_gbp": 15.0, "discount_share": 0.5}  # menu price and cap: SYNTHETIC demo assumptions
+
+
+def quote_offer(limits: dict, ledger: dict) -> dict:
+    """Price the match-day offer against the real Polymarket market. Read-only: no order is placed."""
+    env = pm.event(OFFER["event_slug"])
+    ev = env["data"][0]
+    m = next(pm.parse_market(x) for x in ev["markets"] if x.get("question") == OFFER["market_question"])
+    ask = float(m["best_ask"] or m["yes_price"])
+    worst = round(OFFER["covers_cap"] * OFFER["avg_main_gbp"] * OFFER["discount_share"], 2)
+    cps = E.cost_per_share(ask, m["fee_rate"])
+    room = min(limits["per_market_cap_pence"], limits["weekly_spend_cap_pence"] - ledger["spent_this_week_pence"]) / 100
+    shares = int(min(worst, max(0, room) // cps))  # full cover up to the worst case, inside the caps
+    cost = round(shares * cps, 2)
+    market_id = f"pm-{OFFER['event_slug']}-croatia"
+    return {"badge": env["badge"], "source": env["source"], "licence": env["licence"], "fetched_at": env.get("fetched_at"),
+            "url": f"https://polymarket.com/event/{OFFER['event_slug']}", "kind": "offer", "market_id": market_id,
+            "fixture": OFFER["fixture"], "competition": OFFER["competition"], "venue": OFFER["venue"],
+            "kickoff": ev.get("endDate"), "market": m["question"], "trigger": OFFER["trigger"], "offer": OFFER["offer"],
+            "covers_cap": OFFER["covers_cap"], "avg_main_gbp": OFFER["avg_main_gbp"], "menu_badge": "SYNTHETIC",
+            "ask": ask, "market_prob": m["yes_price"], "fee_rate": m["fee_rate"], "cost_per_share": round(cps, 4),
+            "worst_case_gbp": worst, "shares": shares, "payout_if_event_gbp": float(shares), "hedge_cost_gbp": cost,
+            "uncovered_gbp": round(worst - shares, 2), "fixed_cost_gbp": round(cost + worst - shares, 2),
+            "verdict": E.check_limits(int(round(cost * 100)), market_id, limits, ledger),
+            "summary": f"{OFFER['fixture']}: {OFFER['trigger'].lower()}, {OFFER['offer']} (worst case £{worst:,.0f}) "
+                       f"· cover £{cost:,.2f} at {ask:.2f}"}
+
 
 _bt = None
 
@@ -297,26 +330,26 @@ def make_tools(run: Run) -> dict:
 
     @tool
     def project_payroll(scenario: str) -> dict:
-        """Project the cash balance to next Friday's payroll. scenario is 'dry' (forecast rain) or 'wet' (6mm each afternoon)."""
+        """Project the cash balance to next Friday's payroll. scenario is 'dry' (no rain) or 'wet' (6mm each afternoon)."""
         bt = backtest_module()
         fit = E.fit_takings("demo")
         d0 = run.decision_date()
         sat, sun = run.weekend()
-        fc = weekend_forecast().get("days", {})
-        rain = {d.isoformat(): (bt.WET_MM if scenario == "wet" else fc.get(d.isoformat(), {}).get("mm", 0.0))
-                for d in (sat, sun)}
+        rain = {d.isoformat(): (bt.WET_MM if scenario == "wet" else 0.0) for d in (sat, sun)}  # dry = no rain
         fri = sun + timedelta(days=5)
+        scale = next(p["scale"] for p in E.manifest()["panel"] if p["pub_id"] == "demo")
         if run.mode == "scenario":
             bt.simulate("demo", "none")
             bal = bt.BALANCES[("demo", "none")]
             known = max(k for k in bal if k <= d0.isoformat())
-            opening = bal[known]
-            feed = bt.cash_by_date(E.panel()["demo"], 1.0)
-            chk = bt.project(feed, d0, sat, sun, opening, fit, E.weather(PUB["weather_loc"]), bt.SWEEP_GBP, rain)
+            opening = bal[known] + SCENARIO["extra_buffer_gbp"]
+            feed = bt.cash_by_date(E.panel()["demo"], scale)
+            chk = bt.project(feed, d0, sat, sun, opening, fit, E.weather(PUB["weather_loc"]),
+                             bt.SWEEP_GBP * scale + SCENARIO["extra_buffer_gbp"], rain)
         else:
             # live: the synthetic history ends 2026-10-31, so roll its profile forward from the
             # buffer the owner keeps (same rule as the backtest).
-            known, opening = d0.isoformat(), float(bt.SWEEP_GBP)
+            known, opening = d0.isoformat(), float(bt.SWEEP_GBP * scale)
             events = [e for e in E.upcoming_events(d0 + timedelta(days=1), 2, fit, PUB["weather_loc"], rain)
                       if e["date"] <= fri.isoformat()]
             chk = E.payroll_check(int(opening * 100), events)
@@ -343,7 +376,7 @@ def make_tools(run: Run) -> dict:
         L = run.limits
         markets = [{"market_id": c["market_id"], "cost_per_share": c["cost_per_share"], "model_prob": c["model_prob"],
                     "causes_shortfall": not wet["payroll_clears"],
-                    "loss_if_event_gbp": max(0.0, exp["gbp_per_mm"] * (exp["wet_scenario_mm"] - c["forecast_mm"]))}
+                    "loss_if_event_gbp": exp["loss_wet_day_gbp"]}  # takings a wet afternoon costs against a dry one
                    for c in px["contracts"]]
         res = E.size_hedges(markets, L["weekly_spend_cap_pence"] / 100 - led["spent_this_week_pence"] / 100,
                             L["monthly_max_loss_pence"] / 100 - led["at_risk_this_month_pence"] / 100,
@@ -356,11 +389,16 @@ def make_tools(run: Run) -> dict:
         res["outcomes"] = {  # what the hedge does to payroll week, both ways
             "payroll_date": wet["payroll_date"],
             "wet_no_hedge_shortfall_gbp": wet["shortfall_gbp"],
-            "wet_with_hedge_shortfall_gbp": round(max(0.0, wet["shortfall_gbp"] - payout + cost), 2),
+            "wet_with_hedge_shortfall_gbp": round(max(0.0, -(wet["minimum_balance_gbp"] + payout - cost)), 2),
             "dry_no_hedge_shortfall_gbp": dry["shortfall_gbp"],
-            "wet_extra_shortfall_gbp": round(wet["shortfall_gbp"] - dry["shortfall_gbp"], 2),
-            "dry_with_hedge_shortfall_gbp": round(dry["shortfall_gbp"] + cost, 2),
-            "hedge_cost_gbp": cost, "hedge_payout_if_wet_gbp": payout}
+            "wet_extra_shortfall_gbp": round(dry["minimum_balance_gbp"] - wet["minimum_balance_gbp"], 2),
+            "dry_with_hedge_shortfall_gbp": round(max(0.0, -(dry["minimum_balance_gbp"] - cost)), 2),
+            "hedge_cost_gbp": cost, "hedge_payout_if_wet_gbp": payout,
+            # lowest balance up to payroll day: positive = clears with that much to spare, negative = short
+            "wet_no_hedge_headroom_gbp": wet["minimum_balance_gbp"],
+            "wet_with_hedge_headroom_gbp": round(wet["minimum_balance_gbp"] + payout - cost, 2),
+            "dry_no_hedge_headroom_gbp": dry["minimum_balance_gbp"],
+            "dry_with_hedge_headroom_gbp": round(dry["minimum_balance_gbp"] - cost, 2)}
         res["summary"] = (f"{len(res['positions'])} positions · £{res['total_cost_gbp']:.2f}" if res["positions"]
                           else "nothing worth buying at today's prices")
         return res
@@ -405,6 +443,11 @@ def make_tools(run: Run) -> dict:
                                              f"{days[0].isoformat()} 08:00"],
                 "summary": "re-check Fri 09:00 and Sat 08:00"}
 
+    @tool
+    def price_match_offer() -> dict:
+        """Price a match-day offer for the next England game, hedged on Polymarket's real match market (read-only)."""
+        return quote_offer(run.limits, ledger())
+
     def ledger() -> dict:
         return current_ledger(run.decision_date())
 
@@ -414,7 +457,7 @@ def make_tools(run: Run) -> dict:
                    load_match_and_duty_dates],
         "risk": [fit_takings_model, weekend_rain_exposure],
         "pricer": [weekend_forecast, check_real_weather_markets, price_rain_contracts, project_payroll, size_hedges],
-        "monitor": [check_limits, queue_for_approval, schedule_monitor],
+        "monitor": [check_limits, queue_for_approval, schedule_monitor, price_match_offer],
     }
 
 

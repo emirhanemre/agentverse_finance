@@ -5,9 +5,9 @@ from typing import Any, Dict, List
 from .validate import is_int, require
 
 DEFAULT_LIMITS = {
-    "weekly_spend_cap_pence": 12000,   # £120 a week
-    "monthly_max_loss_pence": 40000,   # £400 a month
-    "per_market_cap_pence": 6000,      # no more than £60 in one market
+    "weekly_spend_cap_pence": 80000,   # £800 a week
+    "monthly_max_loss_pence": 200000,  # £2,000 a month
+    "per_market_cap_pence": 60000,     # no more than £600 in one market
     "approval_threshold_pence": 5000,  # above £50 needs a second, explicit confirmation
 }
 
